@@ -1,0 +1,13 @@
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/config/signing/
+
+# Kotlin 2.0
+.kotlin/%
+
