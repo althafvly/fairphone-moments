@@ -18,33 +18,78 @@ package com.fairphone.spring.launcher.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.fairphone.spring.launcher.R
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+val BricolageGrotesque = FontFamily(
+    Font(R.font.bricolage_grotesque_light, FontWeight.Light),
+    Font(R.font.bricolage_grotesque_regular, FontWeight.Normal),
+    Font(R.font.bricolage_grotesque_medium, FontWeight.Medium),
+    Font(R.font.bricolage_grotesque_bold, FontWeight.Bold),
+)
+
+val DmSans = FontFamily(
+    Font(R.font.dm_sans_light, FontWeight.Light),
+    Font(R.font.dm_sans_regular, FontWeight.Normal),
+    Font(R.font.dm_sans_medium, FontWeight.Medium),
+    Font(R.font.dm_sans_semibold, FontWeight.SemiBold),
+    Font(R.font.dm_sans_bold, FontWeight.Bold),
+)
+
+val Inter = FontFamily(
+    Font(R.font.inter_light, FontWeight.Light),
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_medium, FontWeight.Medium),
+    Font(R.font.inter_semibold, FontWeight.SemiBold),
+    Font(R.font.inter_bold, FontWeight.Bold),
+)
+
+object FairphoneTypography {
+    val Time = TextStyle(
+        fontSize = 44.sp,
+        lineHeight = 44.sp,
+        fontFamily = BricolageGrotesque,
         fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+        textAlign = TextAlign.Center,
     )
-    */
+    val Date = TextStyle(
+        fontSize = 22.sp,
+        lineHeight = 22.sp,
+        fontFamily = BricolageGrotesque,
+        fontWeight = FontWeight.Normal,
+        textAlign = TextAlign.Center,
+    )
+    val ButtonDefault = TextStyle(
+        fontSize = 22.sp,
+        lineHeight = 26.4.sp,
+        fontFamily = Inter,
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center,
+    )
+}
+
+
+// Default Material 3 typography values
+val baseline = Typography()
+
+val LauncherTypography = Typography(
+    displayLarge = baseline.displayLarge.copy(fontFamily = BricolageGrotesque),
+    displayMedium = baseline.displayMedium.copy(fontFamily = BricolageGrotesque),
+    displaySmall = baseline.displaySmall.copy(fontFamily = BricolageGrotesque),
+    headlineLarge = baseline.headlineLarge.copy(fontFamily = BricolageGrotesque),
+    headlineMedium = baseline.headlineMedium.copy(fontFamily = BricolageGrotesque),
+    headlineSmall = baseline.headlineSmall.copy(fontFamily = BricolageGrotesque),
+    titleLarge = baseline.titleLarge.copy(fontFamily = BricolageGrotesque),
+    titleMedium = baseline.titleMedium.copy(fontFamily = BricolageGrotesque),
+    titleSmall = baseline.titleSmall.copy(fontFamily = BricolageGrotesque),
+    bodyLarge = baseline.bodyLarge.copy(fontFamily = Inter),
+    bodyMedium = baseline.bodyMedium.copy(fontFamily = Inter),
+    bodySmall = baseline.bodySmall.copy(fontFamily = Inter),
+    labelLarge = baseline.labelLarge.copy(fontFamily = Inter),
+    labelMedium = baseline.labelMedium.copy(fontFamily = Inter),
+    labelSmall = baseline.labelSmall.copy(fontFamily = Inter),
 )
