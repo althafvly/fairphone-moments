@@ -17,21 +17,67 @@
 
 <resources>
 
-    <style name="Theme.SpringLauncher" parent="android:Theme.Material.Light.NoActionBar">
-    </style>
+    <style name="Theme.SpringLauncher" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="Theme.Transparent" parent="android:Theme.Material.NoActionBar">
+    <style name="Theme.SpringLauncher.Transparent" parent="Theme.SpringLauncher">
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowShowWallpaper">true</item>
+        <!--<item name="android:windowActivityTransitions">true</item>
         <item name="android:windowEnterTransition">@android:transition/fade</item>
-        <item name="android:windowExitTransition">@android:transition/fade</item>
+        <item name="android:windowExitTransition">@android:transition/fade</item>-->
+
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
+        <!-- specify enter and exit transitions -->
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_in</item>
+
     </style>
 
-    <style name="FadeInAnimation">
-        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+    <style name="Theme.DialogFullScreen" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowSplashscreenContent">@null</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:taskOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
     </style>
+
+    <!-- just defines top layer "Animation" -->
+    <style name="Animation" parent="android:style/Animation.Activity"/>
+
+    <!-- the animations must have been defined in your "anim" folder, of course -->
+    <style name="Animation.FadeInAnimation" parent="@style/Animation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:taskOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 
 </resources>

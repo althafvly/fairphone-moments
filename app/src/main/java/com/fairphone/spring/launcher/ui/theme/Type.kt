@@ -70,6 +70,12 @@ object FairphoneTypography {
         fontWeight = FontWeight.Medium,
         textAlign = TextAlign.Center,
     )
+    val SwitchLabel = TextStyle(
+        fontSize = 15.sp,
+        lineHeight = 18.sp,
+        fontFamily = Inter,
+        fontWeight = FontWeight.SemiBold,
+    )
 }
 
 

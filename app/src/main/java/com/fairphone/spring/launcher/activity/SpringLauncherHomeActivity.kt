@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher
+package com.fairphone.spring.launcher.activity
 
 import android.graphics.Color
+import android.graphics.PixelFormat
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,24 +37,34 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 class SpringLauncherHomeActivity : ComponentActivity() {
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (!isTaskRoot) {
-            finish()
-            return
-        }
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
         )
         super.onCreate(savedInstanceState)
+
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY, // TYPE_SYSTEM_ALERT is denied in apiLevel >=19
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            PixelFormat.TRANSLUCENT
+        )
+        
         setContent {
             SpringLauncherTheme {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background)
+                AnimatedVisibility(
+                    visible = true,
+                    enter = fadeIn(),
+                    exit = fadeOut()
                 ) {
-                    HomeScreen()
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.background)
+                    ) {
+                        HomeScreen()
+                    }
                 }
             }
         }

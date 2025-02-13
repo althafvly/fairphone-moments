@@ -181,7 +181,7 @@ fun AppButton(appName: String, onAppClick: () -> Unit) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true, device = Devices.PIXEL_7A)
+@Preview(showBackground = true)
 fun HomeScreen_Preview() {
     SpringLauncherTheme {
         HomeScreen(

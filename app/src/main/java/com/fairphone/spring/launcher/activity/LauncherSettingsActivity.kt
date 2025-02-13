@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher
+package com.fairphone.spring.launcher.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

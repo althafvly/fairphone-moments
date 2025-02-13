@@ -20,7 +20,7 @@
 
     <application android:icon="@mipmap/ic_launcher">
         <activity
-            android:name=".SpringLauncherHomeActivity"
+            android:name=".activity.SpringLauncherHomeActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenSize|screenLayout|smallestScreenSize"
             android:excludeFromRecents="true"

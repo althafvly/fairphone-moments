@@ -23,8 +23,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.fairphone.spring.launcher.ui.ModeIcons
 import com.fairphone.spring.launcher.ui.modeicons.Vector
 
-enum class ModeState { ENABLED, DISABLED }
-
 data class Mode(
     val name: String,
     val icon: ImageVector,

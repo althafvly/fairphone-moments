@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.StrokeCap.Companion.Butt
 import androidx.compose.ui.graphics.StrokeJoin.Companion.Miter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.ImageVector.Builder
+import androidx.compose.ui.graphics.vector.group
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,28 +37,32 @@ import kotlin.Unit
 
 public val ModeIcons.Vector: ImageVector
     get() {
-        if (com.fairphone.spring.launcher.ui.modeicons._vector != null) {
-            return com.fairphone.spring.launcher.ui.modeicons._vector!!
+        if (_vector != null) {
+            return _vector!!
         }
-        com.fairphone.spring.launcher.ui.modeicons._vector = Builder(name = "Vector", defaultWidth = 24.0.dp, defaultHeight = 24.0.dp,
-                viewportWidth = 24.0f, viewportHeight = 24.0f).apply {
-            path(fill = SolidColor(Color(0xFFffffff)), stroke = null, strokeLineWidth = 0.0f,
+        _vector = Builder(name = "Vector", defaultWidth = 16.0.dp, defaultHeight = 16.0.dp,
+            viewportWidth = 16.0f, viewportHeight = 16.0f).apply {
+            group {
+            }
+            group {
+                path(fill = SolidColor(Color(0xFF000000)), stroke = null, strokeLineWidth = 0.0f,
                     strokeLineCap = Butt, strokeLineJoin = Miter, strokeLineMiter = 4.0f,
                     pathFillType = NonZero) {
-                moveTo(13.843f, 0.094f)
-                curveTo(15.663f, 0.062f, 15.74f, 4.432f, 17.56f, 4.4f)
-                curveTo(19.656f, 4.363f, 23.53f, 3.809f, 23.566f, 5.905f)
-                curveTo(23.598f, 7.725f, 19.229f, 7.801f, 19.261f, 9.622f)
-                curveTo(19.297f, 11.716f, 19.852f, 15.591f, 17.756f, 15.628f)
-                curveTo(15.936f, 15.66f, 15.859f, 11.29f, 14.039f, 11.322f)
-                curveTo(11.943f, 11.358f, 8.069f, 11.912f, 8.032f, 9.818f)
-                curveTo(8.001f, 7.997f, 12.371f, 7.921f, 12.339f, 6.101f)
-                curveTo(12.302f, 4.005f, 11.747f, 0.13f, 13.843f, 0.094f)
-                close()
+                    moveTo(9.621f, 15.6f)
+                    curveTo(7.8f, 15.6f, 7.8f, 11.23f, 5.979f, 11.23f)
+                    curveTo(3.883f, 11.23f, 0.0f, 11.716f, 0.0f, 9.62f)
+                    curveTo(0.0f, 7.8f, 4.37f, 7.8f, 4.37f, 5.979f)
+                    curveTo(4.37f, 3.884f, 3.883f, 0.0f, 5.979f, 0.0f)
+                    curveTo(7.8f, 0.0f, 7.8f, 4.37f, 9.621f, 4.37f)
+                    curveTo(11.717f, 4.37f, 15.6f, 3.884f, 15.6f, 5.979f)
+                    curveTo(15.6f, 7.8f, 11.229f, 7.8f, 11.229f, 9.62f)
+                    curveTo(11.229f, 11.716f, 11.717f, 15.6f, 9.621f, 15.6f)
+                    close()
+                }
             }
         }
-        .build()
-        return com.fairphone.spring.launcher.ui.modeicons._vector!!
+            .build()
+        return _vector!!
     }
 
 private var _vector: ImageVector? = null
