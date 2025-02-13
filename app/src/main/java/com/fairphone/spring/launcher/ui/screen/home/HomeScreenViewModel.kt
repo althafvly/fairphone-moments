@@ -17,126 +17,66 @@
 package com.fairphone.spring.launcher.ui.screen.home
 
 import android.app.Application
-import android.content.ComponentName
-import android.content.Context
-import android.content.pm.LauncherApps
-import android.os.UserHandle
-import android.os.UserManager
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.util.getUserHandleFromId
+import com.fairphone.spring.launcher.data.repository.AppInfoRepository
+import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
+import com.fairphone.spring.launcher.util.launchApp
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class HomeScreenViewModel(
-    app: Application
+    app: Application,
+    repository: IAppInfoRepository,
 ) : AndroidViewModel(app) {
 
     private val _screenState: MutableStateFlow<HomeScreenState> =
-        MutableStateFlow(HomeScreenState(emptyList()))
+        MutableStateFlow(HomeScreenState())
     val screenState: StateFlow<HomeScreenState> = _screenState.asStateFlow()
 
     init {
-        // TODO: Implement Default App loading algorithm
-        getAllApps().filter { it.packageName in DefaultApps }.let { homeApps ->
+        repository.getDefaultLauncherApps(context = getApplication()).let { homeApps ->
             _screenState.update { it.copy(appList = homeApps) }
         }
-    }
-
-    private fun getAllApps(): List<AppInfo> {
-        val context = getApplication<Application>()
-        val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
-        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-
-        return try {
-            val getIdentifierMethod = UserHandle::class.java.getDeclaredMethod("getIdentifier")
-
-            userManager.userProfiles.flatMap { profile ->
-                val userId = profile.hashCode()
-                // val userId = getIdentifierMethod.invoke(profile) as Int
-                launcherApps.getActivityList(null, profile)
-                    .filterNot { it.activityInfo.packageName != context.packageName }
-                    .mapNotNull {
-                        AppInfo(
-                            name = it.label.toString(),
-                            packageName = it.activityInfo.packageName,
-                            mainActivityClassName = it.componentName.className,
-                            userUuid = userId,
-                        )
-                    }
+        viewModelScope.launch {
+            while (isActive) {
+                _screenState.update { it.copy(dateTime = LocalDateTime.now()) }
+                delay(1000)
             }
-        } catch (e: Exception) {
-            Log.e(javaClass.name, "Error loading apps", e)
-            emptyList()
         }
     }
 
     fun onAppClick(appInfo: AppInfo) {
-        val primaryUserHandle = android.os.Process.myUserHandle()
-        launchApp(
-            appInfo.packageName,
-            appInfo.mainActivityClassName,
-            getApplication<Application>().getUserHandleFromId(appInfo.userUuid) ?: primaryUserHandle
-            //UserHandle.getUserHandleForUid(appInfo.userUuid)
-        )
-    }
-
-    private fun launchApp(packageName: String, activityClassName: String?, userHandle: UserHandle) {
-        val context = getApplication<Application>()
-        val launcher = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-        val activityInfo = launcher.getActivityList(packageName, userHandle)
-
-        val component = if (activityClassName.isNullOrBlank()) {
-            // activityClassName will be null for hidden apps.
-            when (activityInfo.size) {
-                0 -> {
-                    //context.showToast(context.getString(R.string.app_not_found))
-                    return
-                }
-
-                1 -> ComponentName(packageName, activityInfo[0].name)
-                else -> ComponentName(packageName, activityInfo[activityInfo.size - 1].name)
-            }
-        } else {
-            ComponentName(packageName, activityClassName)
-        }
-
-        try {
-            launcher.startMainActivity(component, userHandle, null, null)
-        } catch (e: SecurityException) {
-            Log.e(javaClass.name, e.message, e)
-            try {
-                launcher.startMainActivity(component, android.os.Process.myUserHandle(), null, null)
-            } catch (e: Exception) {
-                Log.e(javaClass.name, e.message, e)
-                //context.showToast(appContext.getString(R.string.unable_to_open_app))
-            }
-        } catch (e: Exception) {
-            Log.e(javaClass.name, e.message, e)
-            //appContext.showToast(appContext.getString(R.string.unable_to_open_app))
-        }
+        getApplication<Application>().launchApp(appInfo)
     }
 
     companion object {
-        val DefaultApps = listOf(
-            "com.android.phone",
-            "com.google.android.apps.messaging",
-            "com.android.chrome",
-            "com.fp.camera",
-            "com.google.android.apps.maps",
-        )
-        /*val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                HomeScreenViewModel(
-                )
+        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>,
+                extras: CreationExtras
+            ): T {
+                return HomeScreenViewModel(
+                    app = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]),
+                    repository = AppInfoRepository(),
+                ) as T
             }
-        }*/
+        }
     }
 }
 
 data class HomeScreenState(
-    val appList: List<AppInfo>,
+    val dateTime: LocalDateTime = LocalDateTime.now(),
+    val appList: List<AppInfo> = emptyList(),
 )

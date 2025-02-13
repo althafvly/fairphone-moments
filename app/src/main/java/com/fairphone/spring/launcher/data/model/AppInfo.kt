@@ -23,3 +23,11 @@ data class AppInfo(
     val userUuid: Int,
 )
 
+val Default_App_Packages = listOf(
+    "com.google.android.dialer",
+    "com.google.android.apps.messaging",
+    "com.android.chrome",
+    "com.fp.camera", // Camera app FP4
+    "com.fps.camera", // Camera app FP6
+    "com.google.android.apps.maps",
+)

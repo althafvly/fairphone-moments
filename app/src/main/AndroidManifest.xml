@@ -15,18 +15,15 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<manifest xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.REAL_GET_TASKS"
-        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.MANAGE_DEFAULT_APPLICATIONS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"
-        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
 
     <application
         android:hardwareAccelerated="true"
@@ -39,19 +36,16 @@
             android:name="com.fairphone.spring.launcher.SpringLauncherHomeActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenSize|screenLayout|smallestScreenSize"
-            android:enabled="true"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:resizeableActivity="true"
             android:resumeWhilePausing="true"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
-            android:taskAffinity=""
-            android:windowSoftInputMode="adjustPan"
-            tools:ignore="LockedOrientationActivity">
-            <intent-filter
-                android:priority="-1">
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
+            <intent-filter android:priority="-1">
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SHOW_WORK_APPS" />
 
@@ -63,26 +57,28 @@
 
         <activity
             android:name=".SwitchStateChangeActivity"
+            android:autoRemoveFromRecents="true"
+            android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="switch animation"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
-            android:autoRemoveFromRecents="true"
+            android:launchMode="singleTask"
             android:noHistory="true"
+            android:taskAffinity=""
             android:theme="@style/Theme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".LauncherSettingsActivity"
+        <activity
+            android:name=".LauncherSettingsActivity"
+            android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:taskAffinity=""
-            android:autoRemoveFromRecents="true"
             android:noHistory="true"
+            android:taskAffinity=""
             android:theme="@style/Theme.SpringLauncher"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>

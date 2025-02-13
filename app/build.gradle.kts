@@ -53,9 +53,9 @@ android {
 
     buildTypes {
         release {
-            isDebuggable = false
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
 
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
@@ -82,7 +82,8 @@ android {
     }
     kotlinOptions {
         freeCompilerArgs = listOf(
-            "-Xstring-concat=inline"
+            "-Xstring-concat=inline",
+            "-Xwhen-guards",
         )
     }
     buildFeatures {

@@ -17,9 +17,13 @@
 package com.fairphone.spring.launcher.util
 
 import android.app.role.RoleManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.pm.LauncherApps
 import android.os.UserHandle
 import android.os.UserManager
+import android.util.Log
+import com.fairphone.spring.launcher.data.model.AppInfo
 
 /**
  * @return [RoleManager]
@@ -30,4 +34,40 @@ fun Context.getUserHandleFromId(userId: Int): UserHandle? {
     val userManager = getSystemService(Context.USER_SERVICE) as UserManager
     val userProfiles = userManager.userProfiles
     return userProfiles.find { it.hashCode() == userId }
+}
+
+fun Context.launchApp(app: AppInfo) {
+    val primaryUserHandle = android.os.Process.myUserHandle()
+    val userHandle = getUserHandleFromId(app.userUuid) ?: primaryUserHandle
+    val launcher = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+    val activityInfo = launcher.getActivityList(app.packageName, userHandle)
+    val component = if (app.mainActivityClassName.isBlank()) {
+        // activityClassName will be null for hidden apps.
+        when (activityInfo.size) {
+            0 -> {
+                //context.showToast(context.getString(R.string.app_not_found))
+                return
+            }
+
+            1 -> ComponentName(app.packageName, activityInfo[0].name)
+            else -> ComponentName(packageName, activityInfo[activityInfo.size - 1].name)
+        }
+    } else {
+        ComponentName(app.packageName, app.mainActivityClassName)
+    }
+
+    try {
+        launcher.startMainActivity(component, userHandle, null, null)
+    } catch (e: SecurityException) {
+        Log.e(javaClass.name, e.message, e)
+        try {
+            launcher.startMainActivity(component, android.os.Process.myUserHandle(), null, null)
+        } catch (e: Exception) {
+            Log.e(javaClass.name, e.message, e)
+            //context.showToast(appContext.getString(R.string.unable_to_open_app))
+        }
+    } catch (e: Exception) {
+        Log.e(javaClass.name, e.message, e)
+        //appContext.showToast(appContext.getString(R.string.unable_to_open_app))
+    }
 }
