@@ -70,9 +70,7 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             tools:ignore="DiscouragedApi,LockedOrientationActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.fairphone.action.SHOW_SWITCH_BUTTON_HINT" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
