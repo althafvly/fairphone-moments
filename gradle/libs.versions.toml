@@ -1,8 +1,9 @@
 [versions]
-agp = "8.8.1"
+agp = "8.9.0"
 kotlin = "2.1.10"
 
 androidx-activity-compose = "1.10.0"
+androidx-appcompat = "1.7.0"
 androidx-compose-bom = "2025.02.00"
 androidx-core = "1.15.0"
 androidx-espresso-core = "3.6.1"
@@ -13,6 +14,7 @@ junitVersion = "1.2.1"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }

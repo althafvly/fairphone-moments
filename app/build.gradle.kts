@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2025. Fairphone B.V.
- *
+ * Copyright (C) 2025. Fairphone B.V.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
@@ -29,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId = "com.fairphone.spring.launcher"
-        minSdk = 33
+        minSdk = 35
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -43,7 +43,7 @@ android {
     }
 
     signingConfigs {
-        maybeCreate("release").apply {
+        create("release").apply {
             storeFile = file("../../config/signing/fp-apps-keystore.jks")
             storePassword = System.getenv("KEYSTORE_PASSWORD")
             keyAlias = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_ALIAS")
@@ -89,29 +89,6 @@ android {
     buildFeatures {
         compose = true
     }
-    /*// Instead, use the bundle block to control which types of configuration APKs
-    // you want your app bundle to support.
-    bundle {
-        language {
-            // This property is set to true by default.
-            // You can specify `false` to turn off
-            // generating configuration APKs for language resources.
-            // These resources are instead packaged with each base and
-            // feature APK.
-            // Continue reading below to learn about situations when an app
-            // might change setting to `false`, otherwise consider leaving
-            // the default on for more optimized downloads.
-            enableSplit = false
-        }
-        density {
-            // This property is set to true by default.
-            enableSplit = true
-        }
-        abi {
-            // This property is set to true by default.
-            enableSplit = true
-        }
-    }*/
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             (output as? BaseVariantOutputImpl)?.apply {
@@ -124,6 +101,7 @@ android {
 
 dependencies {
     compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
@@ -132,11 +110,14 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+
     testImplementation(libs.junit)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

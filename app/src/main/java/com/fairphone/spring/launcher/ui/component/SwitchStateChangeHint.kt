@@ -1,22 +1,23 @@
 /*
- * Copyright (c) 2025. Fairphone B.V.
- *
+ * Copyright (C) 2025. Fairphone B.V.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 package com.fairphone.spring.launcher.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateFloat
@@ -69,14 +70,23 @@ fun SwitchStateChangeHintScreen(
     modeTitle: String,
     state: State,
     onAnimationDone: () -> Unit,
+    visibilityState: MutableTransitionState<Boolean>,
 ) {
+    val transition = rememberTransition(visibilityState)
+    val background by transition.animateColor(
+        targetValueByState = { visible -> if (visible) Color.Black.copy(alpha = 0.6f) else Color.Transparent },
+        transitionSpec = {
+            tween()
+        }
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color.Black.copy(alpha = 0.6f),
+                        background,
                         Color.Transparent
                     )
                 )
@@ -86,6 +96,7 @@ fun SwitchStateChangeHintScreen(
             modeTitle = modeTitle,
             state = state,
             onAnimationDone = onAnimationDone,
+            visibilityState = visibilityState,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(
@@ -112,9 +123,9 @@ fun SwitchStateChangeHint(
     state: State,
     onAnimationDone: () -> Unit,
     modifier: Modifier = Modifier,
+    visibilityState: MutableTransitionState<Boolean>,
 ) {
     var greenBarAlignment by remember { mutableStateOf(state.getGreenBarHintAlignment()) }
-    val visibilityState = remember { MutableTransitionState(false) }
     val transition = rememberTransition(visibilityState)
     val iconRotationAngle by transition.animateFloat(
         targetValueByState = { visible -> if (visible) 180f else 0f },
@@ -216,7 +227,8 @@ fun SwitchStateChangeHintEnabled_Preview() {
         SwitchStateChangeHint(
             modeTitle = "Deep focus",
             state = State.ENABLED,
-            onAnimationDone = {}
+            onAnimationDone = {},
+            visibilityState = remember { MutableTransitionState(false) },
         )
     }
 }
@@ -228,7 +240,8 @@ fun SwitchStateChangeHintDisabled_Preview() {
         SwitchStateChangeHint(
             modeTitle = "Deep focus",
             state = State.DISABLED,
-            onAnimationDone = {}
+            onAnimationDone = {},
+            visibilityState = remember { MutableTransitionState(false) },
         )
     }
 }
