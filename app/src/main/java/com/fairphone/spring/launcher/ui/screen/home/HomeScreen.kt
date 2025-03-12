@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2025. Fairphone B.V.
+ * Copyright (c) 2025. Fairphone B.V.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,32 +12,46 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package com.fairphone.spring.launcher.ui.screen.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
 import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.ui.FP6Preview
+import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import java.time.format.DateTimeFormatter
@@ -49,6 +64,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel = viewModel(factory = HomeScreenViewModel.Factory)
 ) {
+    val context = LocalContext.current
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
     val date = remember(screenState.dateTime) {
@@ -62,9 +78,14 @@ fun HomeScreen(
         modifier = modifier,
         date = date,
         time = time,
+        modeButtonIcon = Icons.Filled.Settings,
+        modeButtonText = "Essentials",
         appList = screenState.appList,
         onAppClick = { appInfo ->
             viewModel.onAppClick(appInfo)
+        },
+        onModeSwitcherButtonClick = {
+            LauncherSettingsActivity.start(context)
         }
     )
 }
@@ -74,8 +95,11 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     date: String,
     time: String,
+    modeButtonIcon: ImageVector,
+    modeButtonText: String,
     appList: List<AppInfo>,
     onAppClick: (AppInfo) -> Unit,
+    onModeSwitcherButtonClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -100,35 +124,40 @@ fun HomeScreen(
                 style = FairphoneTypography.Date,
                 color = MaterialTheme.colorScheme.onBackground,
             )
+
+            OutlinedButton(
+                onClick = onModeSwitcherButtonClick,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
+                shape = RoundedCornerShape(size = 16.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 14.dp),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(size = 16.dp))
+                    .padding(top = 12.dp)
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = modeButtonIcon,
+                        contentDescription = null,
+                        modifier = Modifier.size(ButtonDefaults.IconSize),
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+
+                    Text(
+                        text = modeButtonText,
+                        style = FairphoneTypography.ButtonDefault,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                }
+            }
+
         }
-        // Mode Switcher Button - hidden until modes are implemented
-        /*Button(
-            onClick = onModeSwitcherButtonClick,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0x80FFFFFF),
-                contentColor = Color.Black,
-            ),
-            border = BorderStroke(1.dp, Color.White),
-            shape = RoundedCornerShape(size = 16.dp),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 14.dp),
-            modifier = Modifier
-                .clip(RoundedCornerShape(size = 16.dp))
-            //.background(color = Color(0x80FFFFFF))
-
-
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Settings, // Replace with your actual icon
-                contentDescription = null,
-                modifier = Modifier.size(ButtonDefaults.IconSize)
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(
-                text = currentMode.name,
-                fontSize = 18.sp,
-                lineHeight = 18.sp,
-            )
-        }*/
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -173,7 +202,7 @@ fun AppButton(appName: String, onAppClick: () -> Unit) {
     ) {
         Text(
             text = appName,
-            style = FairphoneTypography.ButtonDefault,
+            style = FairphoneTypography.AppButtonDefault,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.align(Alignment.Center)
         )
@@ -181,12 +210,14 @@ fun AppButton(appName: String, onAppClick: () -> Unit) {
 }
 
 @Composable
-@Preview(showBackground = true)
+@FP6Preview
 fun HomeScreen_Preview() {
     SpringLauncherTheme {
         HomeScreen(
             date = "Wed, 13 Feb",
             time = "12:30",
+            modeButtonIcon = Icons.Filled.Settings,
+            modeButtonText = "Essentials",
             appList = listOf(
                 AppInfo(
                     name = "Phone",
@@ -219,7 +250,55 @@ fun HomeScreen_Preview() {
                     userUuid = 0
                 ),
             ),
-            onAppClick = {}
+            onAppClick = {},
+            onModeSwitcherButtonClick = {},
+        )
+    }
+}
+
+@Composable
+@FP6PreviewDark
+fun HomeScreenDark_Preview() {
+    SpringLauncherTheme {
+        HomeScreen(
+            date = "Wed, 13 Feb",
+            time = "12:30",
+            modeButtonIcon = Icons.Filled.Settings,
+            modeButtonText = "Essentials",
+            appList = listOf(
+                AppInfo(
+                    name = "Phone",
+                    packageName = "com.package.app1",
+                    mainActivityClassName = "",
+                    userUuid = 0
+                ),
+                AppInfo(
+                    name = "Chrome",
+                    packageName = "com.package.app2",
+                    mainActivityClassName = "",
+                    userUuid = 0
+                ),
+                AppInfo(
+                    name = "Messages",
+                    packageName = "com.package.app3",
+                    mainActivityClassName = "",
+                    userUuid = 0
+                ),
+                AppInfo(
+                    name = "Camera",
+                    packageName = "com.package.app4",
+                    mainActivityClassName = "",
+                    userUuid = 0
+                ),
+                AppInfo(
+                    name = "Maps",
+                    packageName = "com.package.app5",
+                    mainActivityClassName = "",
+                    userUuid = 0
+                ),
+            ),
+            onAppClick = {},
+            onModeSwitcherButtonClick = {},
         )
     }
 }

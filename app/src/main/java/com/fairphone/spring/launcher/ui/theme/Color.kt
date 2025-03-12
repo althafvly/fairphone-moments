@@ -3,9 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,10 +41,10 @@ val errorContainerLight = Color(0xFFFFDBD1)
 val onErrorContainerLight = Color(0xFF723522)
 val backgroundLight = Color(0xFFEBEBE9)
 val onBackgroundLight = Color(0xFF141414)
-val surfaceLight = Color(0xFFF5FAFB)
+val surfaceLight = Color(0x80FFFFFF)
 val onSurfaceLight = Color(0xFF171D1E)
-val surfaceVariantLight = Color(0xFFDAE5E2)
-val onSurfaceVariantLight = Color(0xFF3F4947)
+val surfaceVariantLight = Color(0xFFFFFFFF)
+val onSurfaceVariantLight = Color(0xFFFFFFFF)
 val outlineLight = Color(0xFF6F7977)
 val outlineVariantLight = Color(0xFFBEC9C6)
 val scrimLight = Color(0xFF000000)
@@ -77,10 +77,10 @@ val errorContainerDark = Color(0xFF723522)
 val onErrorContainerDark = Color(0xFFFFDBD1)
 val backgroundDark = Color(0xFF221F1E)
 val onBackgroundDark = Color(0xFFFFFFFF)
-val surfaceDark = Color(0xFF0E1415)
+val surfaceDark = Color(0x803B3B3B)
 val onSurfaceDark = Color(0xFFDEE3E5)
 val surfaceVariantDark = Color(0xFF3F4947)
-val onSurfaceVariantDark = Color(0xFFBEC9C6)
+val onSurfaceVariantDark = Color(0xFF3e3e3d)
 val outlineDark = Color(0xFF899390)
 val outlineVariantDark = Color(0xFF3F4947)
 val scrimDark = Color(0xFF000000)
