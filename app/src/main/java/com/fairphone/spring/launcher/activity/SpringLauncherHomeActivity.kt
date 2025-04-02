@@ -88,16 +88,9 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         setContent {
             SpringLauncherTheme {
                 val density = LocalDensity.current
-                Box(modifier = Modifier.fillMaxSize().onGloballyPositioned { coordinates ->
-                    Log.d("onGloballyPositioned", coordinates.toString())
-                    Log.d("onGloballyPositioned", "width: ${coordinates.size.width} px")
-                    Log.d("onGloballyPositioned", "height: ${coordinates.size.height} px")
-
-                    with (density) {
-                        Log.d("onGloballyPositioned", "width: ${coordinates.size.width.toDp()} dp")
-                        Log.d("onGloballyPositioned", "height: ${coordinates.size.height.toDp()} dp")
-                    }
-                })
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                )
                 var visibility by remember { mutableStateOf(false) }
                 AnimatedVisibility(
                     visible = visibility,
@@ -122,7 +115,6 @@ class SpringLauncherHomeActivity : ComponentActivity() {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                //.background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f))
                         ) {
                             HomeScreen()
                         }
@@ -147,10 +139,28 @@ class SpringLauncherHomeActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         onBackInvokedDispatcher.registerOnBackInvokedCallback(0, onBackInInvokedCallback)
+        hideGestureBar()
     }
 
     override fun onPause() {
         super.onPause()
         onBackInvokedDispatcher.unregisterOnBackInvokedCallback(onBackInInvokedCallback)
+        showGestureBar()
+    }
+
+    private fun hideGestureBar() {
+        window.insetsController?.apply {
+            hide(android.view.WindowInsets.Type.navigationBars())
+            systemBarsBehavior =
+                android.view.WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
+    private fun showGestureBar() {
+        window.insetsController?.apply {
+            show(android.view.WindowInsets.Type.navigationBars())
+            systemBarsBehavior =
+                android.view.WindowInsetsController.BEHAVIOR_DEFAULT
+        }
     }
 }

@@ -18,11 +18,11 @@ package com.fairphone.spring.launcher.activity
 
 import android.app.Activity
 import android.app.ActivityManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
 import android.view.WindowManager
@@ -33,22 +33,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.lifecycleScope
 import com.fairphone.spring.launcher.data.model.State
-import com.fairphone.spring.launcher.ui.theme.Color_Orange
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
-import kotlinx.coroutines.launch
 
 const val EXTRA_SWITCH_BUTTON_STATE = "com.fairphone.spring.launcher.extra.switch_button_state"
 
 class SwitchStateChangeActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge(
@@ -66,26 +59,24 @@ class SwitchStateChangeActivity : ComponentActivity() {
             setBackgroundDrawableResource(android.R.color.transparent)
         }
 
-        val switchButtonState = intent.getStringExtra(EXTRA_SWITCH_BUTTON_STATE)?.let { state ->
-            State.valueOf(state)
-        }
-
         setContent {
             SpringLauncherTheme {
                 BlurBehindActivity {
                     Box(modifier = Modifier.fillMaxSize()) {}
-
-                    LaunchedEffect(Unit) {
-                        switchButtonState?.let {
-                            onSwitchStateChangeAnimationDone(switchButtonState)
-                        } ?: SpringLauncherHomeActivity.start(applicationContext)
-                    }
                 }
             }
         }
+
+        intent.getStringExtra(EXTRA_SWITCH_BUTTON_STATE)?.let { state ->
+            Log.i("SwitchStateChangeActivity", "state: $state")
+            State.valueOf(state)
+        }?.let { switchButtonState ->
+            onSwitchStateChangeAnimationDone(switchButtonState)
+        } ?: startLauncherIntent()
     }
 
-    private fun onSwitchStateChangeAnimationDone(switchButtonState: State) = lifecycleScope.launch {
+    private fun onSwitchStateChangeAnimationDone(switchButtonState: State) {
+        Log.d("onSwitchStateChangeAnimationDone()", "state: $switchButtonState")
         when (switchButtonState) {
             State.DISABLED -> {
                 startLauncherIntent()
@@ -148,7 +139,9 @@ class SwitchStateChangeActivity : ComponentActivity() {
 fun Context.startLauncherIntent() {
     val intent = Intent(Intent.ACTION_MAIN).apply {
         addCategory(Intent.CATEGORY_HOME)
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                Intent.FLAG_ACTIVITY_NO_ANIMATION
     }
     startActivity(intent)
 }
