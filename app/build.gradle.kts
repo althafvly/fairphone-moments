@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2025. Fairphone B.V.
+ * Copyright (c) 2025. Fairphone B.V.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
@@ -23,16 +23,23 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+val versionMajor: String by project
+val versionMinor: String by project
+val versionPatch: String by project
+
+val appVersionCode = versionMajor.toInt() * 100000 + versionMinor.toInt() * 100 + versionPatch.toInt()
+val appVersionName = "$versionMajor.$versionMinor.$versionPatch"
+
 android {
     namespace = "com.fairphone.spring.launcher"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.fairphone.spring.launcher"
-        minSdk = 35
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = appVersionCode
+        versionName = appVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters.add("arm64-v8a")
@@ -44,8 +51,8 @@ android {
 
     signingConfigs {
         create("release").apply {
-            storeFile = file("../../config/signing/fp-apps-keystore.jks")
-            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            storeFile = file("../spring_launcher_release_key.jks")
+            storePassword = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEYSTORE_PASSWORD")
             keyAlias = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_ALIAS")
             keyPassword = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_PASSWORD")
         }
@@ -53,9 +60,9 @@ android {
 
     buildTypes {
         release {
-            isDebuggable = true
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
 
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(

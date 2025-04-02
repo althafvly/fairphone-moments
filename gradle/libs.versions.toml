@@ -1,5 +1,13 @@
 [versions]
-agp = "8.9.0"
+
+# @keep
+compileSdk = "35"
+# @keep
+targetSdk = "35"
+# @keep
+minSdk = "35"
+
+agp = "8.9.1"
 kotlin = "2.1.10"
 
 androidx-activity-compose = "1.10.0"
