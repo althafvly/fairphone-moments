@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2025. Fairphone B.V.
+ * Copyright (c) 2025. Fairphone B.V.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package com.fairphone.spring.launcher.ui.component
@@ -55,8 +55,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.model.Presets
-import com.fairphone.spring.launcher.data.model.State
+import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import kotlinx.coroutines.delay
@@ -66,9 +67,9 @@ const val ANIMATION_STILL_DURATION = 1000
 const val EXIT_ANIMATION_DURATION = 500
 
 @Composable
-fun SwitchStateChangeHintScreen(
-    modeTitle: String,
-    state: State,
+fun SwitchStateChangeOverlayScreen(
+    moment: Moment,
+    switchState: SwitchState,
     onAnimationDone: () -> Unit,
     visibilityState: MutableTransitionState<Boolean>,
 ) {
@@ -92,40 +93,40 @@ fun SwitchStateChangeHintScreen(
                 )
             )
     ) {
-        SwitchStateChangeHint(
-            modeTitle = modeTitle,
-            state = state,
+        SwitchStateChangeOverlay(
+            moment = moment,
+            switchState = switchState,
             onAnimationDone = onAnimationDone,
             visibilityState = visibilityState,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(
                     end = 8.dp,
-                    top = when (state) {
-                        State.ENABLED -> 158.dp
-                        State.DISABLED -> 152.dp
+                    top = when (switchState) {
+                        SwitchState.ENABLED -> 158.dp
+                        SwitchState.DISABLED -> 152.dp
                     },
                 )
         )
     }
 }
 
-fun State.getGreenBarHintAlignment(): Alignment.Vertical {
+fun SwitchState.getGreenBarHintAlignment(): Alignment.Vertical {
     return when (this) {
-        State.ENABLED -> Alignment.Top
-        State.DISABLED -> Alignment.Bottom
+        SwitchState.ENABLED -> Alignment.Top
+        SwitchState.DISABLED -> Alignment.Bottom
     }
 }
 
 @Composable
-fun SwitchStateChangeHint(
-    modeTitle: String,
-    state: State,
+fun SwitchStateChangeOverlay(
+    moment: Moment,
+    switchState: SwitchState,
     onAnimationDone: () -> Unit,
     modifier: Modifier = Modifier,
     visibilityState: MutableTransitionState<Boolean>,
 ) {
-    var greenBarAlignment by remember { mutableStateOf(state.getGreenBarHintAlignment()) }
+    var greenBarAlignment by remember { mutableStateOf(switchState.getGreenBarHintAlignment()) }
     val transition = rememberTransition(visibilityState)
     val iconRotationAngle by transition.animateFloat(
         targetValueByState = { visible -> if (visible) 180f else 0f },
@@ -163,13 +164,13 @@ fun SwitchStateChangeHint(
                 horizontalAlignment = Alignment.End,
             ) {
                 Icon(
-                    imageVector = Presets.Spring.icon,
+                    imageVector = moment.icon,
                     contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.rotate(iconRotationAngle)
                 )
                 Text(
-                    text = "$modeTitle\n${state.name.lowercase()}",
+                    text = "${moment.name}\n${switchState.name.lowercase()}",
                     style = FairphoneTypography.SwitchLabel,
                     color = Color.White,
                     textAlign = TextAlign.Right,
@@ -224,9 +225,9 @@ fun SwitchStateChangeHint(
 @Preview
 fun SwitchStateChangeHintEnabled_Preview() {
     SpringLauncherTheme {
-        SwitchStateChangeHint(
-            modeTitle = "Deep focus",
-            state = State.ENABLED,
+        SwitchStateChangeOverlay(
+            moment = Presets.Essentials,
+            switchState = SwitchState.ENABLED,
             onAnimationDone = {},
             visibilityState = remember { MutableTransitionState(false) },
         )
@@ -237,9 +238,9 @@ fun SwitchStateChangeHintEnabled_Preview() {
 @Preview()
 fun SwitchStateChangeHintDisabled_Preview() {
     SpringLauncherTheme {
-        SwitchStateChangeHint(
-            modeTitle = "Deep focus",
-            state = State.DISABLED,
+        SwitchStateChangeOverlay(
+            moment = Presets.Essentials,
+            switchState = SwitchState.DISABLED,
             onAnimationDone = {},
             visibilityState = remember { MutableTransitionState(false) },
         )

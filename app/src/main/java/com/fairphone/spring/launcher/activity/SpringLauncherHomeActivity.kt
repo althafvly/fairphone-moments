@@ -30,14 +30,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,13 +42,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.component.AnimatedBackground
-import com.fairphone.spring.launcher.ui.component.Color_Shape_1
-import com.fairphone.spring.launcher.ui.component.Color_Shape_2
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+import com.fairphone.spring.launcher.util.Constants
 import kotlinx.coroutines.delay
 
 class SpringLauncherHomeActivity : ComponentActivity() {
@@ -65,7 +62,16 @@ class SpringLauncherHomeActivity : ComponentActivity() {
             }
             context.startActivity(intent)
         }
+        private var instance: SpringLauncherHomeActivity? = null
+
+        fun stop() {
+            Log.d(Constants.LOG_TAG, "Stopping SpringLauncherHomeActivity")
+            instance?.finish()
+        }
     }
+
+    private val moment: Moment
+        get() = Presets.Essentials
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +90,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
         )
         super.onCreate(savedInstanceState)
+        instance = this
 
         setContent {
             SpringLauncherTheme {
@@ -108,7 +115,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
                     ),
                 ) {
                     AnimatedBackground(
-                        colors = Pair(Color_Shape_1, Color_Shape_2),
+                        colors = moment.bgColors,
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.background)
                     ) {

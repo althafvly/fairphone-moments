@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2025. Fairphone B.V.
+ * Copyright (c) 2025. Fairphone B.V.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package com.fairphone.spring.launcher.ui.component
@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.PathParser
+import com.fairphone.spring.launcher.data.model.Presets
 
 /**
  * Shape for the background of the home screen
@@ -72,7 +74,7 @@ fun Blob_Preview() {
     ) {
         Surface(
             shape = Blob(),
-            color = Color_Shape_1,
+            color = Color(0xB2C3D1D0),
             modifier = Modifier
                 .width(200.dp)
                 .height(350.dp)
@@ -134,7 +136,7 @@ fun ShapePath_Preview() {
     val shapePath = remember { ShapePath(EGG_SHAPE_PATH) }
     Surface(
         shape = shapePath,
-        color = Color_Shape_1,
+        color = Color(0xB2C3D1D0),
         modifier = Modifier
             .width(500.dp)
             .height(676.dp)

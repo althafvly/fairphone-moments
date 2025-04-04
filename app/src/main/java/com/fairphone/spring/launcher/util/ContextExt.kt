@@ -3,9 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,9 +16,9 @@
 
 package com.fairphone.spring.launcher.util
 
-import android.app.role.RoleManager
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.content.pm.LauncherApps
 import android.os.UserHandle
 import android.os.UserManager
@@ -26,16 +26,21 @@ import android.util.Log
 import com.fairphone.spring.launcher.data.model.AppInfo
 
 /**
- * @return [RoleManager]
+ * Starts the launcher (home) activity.
  */
-fun Context.roleManager() = getSystemService(Context.ROLE_SERVICE) as RoleManager
-
-fun Context.getUserHandleFromId(userId: Int): UserHandle? {
-    val userManager = getSystemService(Context.USER_SERVICE) as UserManager
-    val userProfiles = userManager.userProfiles
-    return userProfiles.find { it.hashCode() == userId }
+fun startLauncherIntent(context: Context) {
+    val intent = Intent(Intent.ACTION_MAIN).apply {
+        addCategory(Intent.CATEGORY_HOME)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                Intent.FLAG_ACTIVITY_NO_ANIMATION
+    }
+    context.startActivity(intent)
 }
 
+/**
+ * Launches an app.
+ */
 fun Context.launchApp(app: AppInfo) {
     val primaryUserHandle = android.os.Process.myUserHandle()
     val userHandle = getUserHandleFromId(app.userUuid) ?: primaryUserHandle
@@ -70,4 +75,13 @@ fun Context.launchApp(app: AppInfo) {
         Log.e(javaClass.name, e.message, e)
         //appContext.showToast(appContext.getString(R.string.unable_to_open_app))
     }
+}
+
+/**
+ * Gets the user handle from the user ID.
+ */
+private fun Context.getUserHandleFromId(userId: Int): UserHandle? {
+    val userManager = getSystemService(Context.USER_SERVICE) as UserManager
+    val userProfiles = userManager.userProfiles
+    return userProfiles.find { it.hashCode() == userId }
 }

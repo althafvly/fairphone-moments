@@ -3,9 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,56 +23,56 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.fairphone.spring.launcher.ui.ModeIcons
 import com.fairphone.spring.launcher.ui.modeicons.Vector
 
-data class Mode(
+data class Moment(
     val name: String,
     val icon: ImageVector,
-    val bgColors: List<Color>,
+    val bgColors: Pair<Color, Color>,
 )
 
 object Presets {
-    val Spring = Mode(
-        name = "Spring",
+    val Essentials = Moment(
+        name = "Fairphone moments",
         icon = ModeIcons.Vector,
-        bgColors = listOf(
-            Color(0xFFC3D1D0),
-            Color(0xFFFFB14E),
+        bgColors = Pair(
+            Color(0xB2C3D1D0),
+            Color(0xB2FFBA63),
         ),
     )
-    val Journey = Mode(
+    val Journey = Moment(
         name = "Journey",
         icon = Icons.Filled.Settings,
-        bgColors = listOf(
+        bgColors = Pair(
             Color(0xFFD8FF4F),
             Color(0xFF00433D),
         ),
     )
-    val Recharge = Mode(
+    val Recharge = Moment(
         name = "Recharge",
         icon = Icons.Filled.Settings,
-        bgColors = listOf(
+        bgColors = Pair(
             Color(0xFF66A2DD),
             Color(0xFF2D9197),
         ),
     )
-    val Balance = Mode(
+    val Balance = Moment(
         name = "Balance",
         icon = Icons.Filled.Settings,
-        bgColors = listOf(
+        bgColors = Pair(
             Color(0xFF42CC60),
             Color(0xFFD8FF4F),
         ),
     )
-    val DeepFocus = Mode(
+    val DeepFocus = Moment(
         name = "Deep focus",
         icon = Icons.Filled.Settings,
-        bgColors = listOf(
+        bgColors = Pair(
             Color(0xFFF27696),
             Color(0xFFF26E6E),
         ),
     )
 
     val All = listOf(
-        Spring,
+        Essentials,
         Journey,
         Recharge,
         Balance,

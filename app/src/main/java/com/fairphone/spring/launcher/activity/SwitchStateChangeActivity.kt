@@ -17,8 +17,6 @@
 package com.fairphone.spring.launcher.activity
 
 import android.app.Activity
-import android.app.ActivityManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -31,19 +29,24 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.fairphone.spring.launcher.data.model.State
+import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.SwitchState
+import com.fairphone.spring.launcher.ui.component.SwitchStateChangeOverlayScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
-
-const val EXTRA_SWITCH_BUTTON_STATE = "com.fairphone.spring.launcher.extra.switch_button_state"
+import com.fairphone.spring.launcher.util.Constants
 
 class SwitchStateChangeActivity : ComponentActivity() {
 
+    private var switchState: SwitchState? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("Class", this.javaClass.name)
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
@@ -51,54 +54,83 @@ class SwitchStateChangeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // Enable blur behind
-        window.apply {
-            addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
-            attributes.blurBehindRadius = 20 // Adjust blur radius
+        setupWindow()
+        setupWindowBlurListener()
 
-            // Make background transparent
-            setBackgroundDrawableResource(android.R.color.transparent)
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        switchState = getSwitchState(intent) ?: run {
+            Log.e(Constants.LOG_TAG, "Could not read switch state")
+            finish()
+            return
         }
+        Log.i(Constants.LOG_TAG, "switchButtonState: $switchState")
 
-        setContent {
-            SpringLauncherTheme {
-                BlurBehindActivity {
-                    Box(modifier = Modifier.fillMaxSize()) {}
+        if (switchState == null) return
+
+        if (shouldShowOverlay(intent)) {
+            setContent {
+                SpringLauncherTheme {
+                    SwitchStateChangeScreen(
+                        switchButtonSwitchState = switchState!!,
+                        onOverlayAnimationDone = {
+                            onAnimationDone()
+                        }
+                    )
                 }
             }
+        } else {
+            when (switchState) {
+                SwitchState.ENABLED -> {
+                    SpringLauncherHomeActivity.start(context = this)
+                }
+                SwitchState.DISABLED -> {
+                    SpringLauncherHomeActivity.stop()
+                }
+                null -> {}
+            }
+            onAnimationDone()
         }
-
-        intent.getStringExtra(EXTRA_SWITCH_BUTTON_STATE)?.let { state ->
-            Log.i("SwitchStateChangeActivity", "state: $state")
-            State.valueOf(state)
-        }?.let { switchButtonState ->
-            onSwitchStateChangeAnimationDone(switchButtonState)
-        } ?: startLauncherIntent()
     }
 
-    private fun onSwitchStateChangeAnimationDone(switchButtonState: State) {
-        Log.d("onSwitchStateChangeAnimationDone()", "state: $switchButtonState")
-        when (switchButtonState) {
-            State.DISABLED -> {
-                startLauncherIntent()
-            }
-
-            State.ENABLED -> {
-                //if (isStockLauncherRunning(applicationContext)) {
-                SpringLauncherHomeActivity.start(applicationContext)
-                //}
-            }
+    private fun onAnimationDone() {
+        if (switchState == SwitchState.DISABLED) {
+            SpringLauncherHomeActivity.stop()
         }
-
-        //finish()
+        setResult(RESULT_OK)
+        finish()
     }
 
-    private fun isStockLauncherRunning(context: Context): Boolean {
-        // getRunningTasks() is deprecated in API 29 and above, and may not return accurate results
-        // Consider using UsageStatsManager for more reliable information
-        // This is a fallback solution for cases where UsageStatsManager is not available or not granted
-        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val runningTasks = activityManager.getRunningTasks(10)
-        return runningTasks.any { it.topActivity?.packageName == "com.android.launcher3" }
+    private fun getSwitchState(intent: Intent?): SwitchState? {
+        val statusString = intent?.getStringExtra(Constants.EXTRA_SWITCH_BUTTON_STATE) ?: return null
+        return try {
+            SwitchState.valueOf(statusString)
+        } catch (e: IllegalArgumentException) {
+            Log.e(Constants.LOG_TAG, "Could not read switch state: $statusString", e)
+            null
+        }
+    }
+
+    private fun shouldShowOverlay(intent: Intent?): Boolean {
+        return intent?.getBooleanExtra(Constants.EXTRA_SHOW_OVERLAY, false)?.run {
+            Log.d(Constants.LOG_TAG, "shouldShowOverlay: $this")
+            this == true
+        } == true
+    }
+
+    private fun setupWindow() {
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
+            attributes.blurBehindRadius = 20
+            setBackgroundDrawableResource(android.R.color.transparent)
+        }
     }
 
     private fun setupWindowBlurListener() {
@@ -136,15 +168,24 @@ class SwitchStateChangeActivity : ComponentActivity() {
     }
 }
 
-fun Context.startLauncherIntent() {
-    val intent = Intent(Intent.ACTION_MAIN).apply {
-        addCategory(Intent.CATEGORY_HOME)
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_NO_ANIMATION
+@Composable
+fun SwitchStateChangeScreen(
+    switchButtonSwitchState: SwitchState,
+    onOverlayAnimationDone: (SwitchState) -> Unit
+) {
+    BlurBehindActivity {
+        Box(modifier = Modifier.fillMaxSize()) {}
     }
-    startActivity(intent)
+
+    SwitchStateChangeOverlayScreen(
+        moment = Presets.Essentials,
+        switchState = switchButtonSwitchState,
+        onAnimationDone = { onOverlayAnimationDone(switchButtonSwitchState) },
+        visibilityState = MutableTransitionState(false)
+    )
 }
+
+
 
 @Composable
 fun BlurBehindActivity(content: @Composable () -> Unit) {
@@ -152,7 +193,7 @@ fun BlurBehindActivity(content: @Composable () -> Unit) {
         modifier = Modifier.fillMaxSize(),
         factory = { context ->
             FrameLayout(context).apply {
-                // Enable blur behind (programmatically)
+                // Enable blur behind
                 val window = (context as Activity).window
                 window.addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
                 window.attributes.blurBehindRadius = 10

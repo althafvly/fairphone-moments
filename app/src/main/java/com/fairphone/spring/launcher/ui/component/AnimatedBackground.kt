@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2025. Fairphone B.V.
+ * Copyright (c) 2025. Fairphone B.V.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -11,12 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package com.fairphone.spring.launcher.ui.component
 
-import androidx.compose.animation.core.EaseInOutSine
+import androidx.compose.animation.core.EaseOutCubic
 import androidx.compose.animation.core.ExperimentalAnimationSpecApi
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
@@ -42,11 +42,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import kotlinx.coroutines.delay
-
-val Color_Shape_1 = Color(0xB2C3D1D0)
-val Color_Shape_2 = Color(0xB2FFBA63)
 
 /**
  * FP6 specs:
@@ -91,14 +89,14 @@ fun AnimatedBackground(
         val offsetAnimationSpec = remember {
             tween<Dp>(
                 durationMillis = 800,
-                easing = EaseInOutSine,
+                easing = EaseOutCubic,
             )
         }
         val rotationAnimationSpec = remember {
             tween<Float>(
                 delayMillis = 400,
                 durationMillis = 400,
-                easing = EaseInOutSine,
+                easing = EaseOutCubic,
             )
         }
 
@@ -223,6 +221,6 @@ fun BackgroundBlob(
 @FP6Preview
 fun AnimatedBackground_Preview() {
     AnimatedBackground(
-        colors = Pair(Color_Shape_1, Color_Shape_2),
+        colors = Presets.Essentials.bgColors,
     )
 }

@@ -3,9 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,14 +41,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fairphone.spring.launcher.data.model.Mode
+import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
 fun ModeSwitcherScreen(
-    currentMode: Mode,
-    onModeSelected: (Mode) -> Unit,
+    currentMoment: Moment,
+    onModeSelected: (Moment) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,8 +73,8 @@ fun ModeSwitcherScreen(
         ) {
             Presets.All.forEach { mode ->
                 ModeSwitcherButton(
-                    mode = mode,
-                    isSelected = mode == currentMode,
+                    moment = mode,
+                    isSelected = mode == currentMoment,
                     onClick = { onModeSelected(mode) },
                     modifier = Modifier.padding(vertical = 4.dp)
                 )
@@ -85,7 +85,7 @@ fun ModeSwitcherScreen(
 
 @Composable
 fun ModeSwitcherButton(
-    mode: Mode,
+    moment: Moment,
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -117,13 +117,13 @@ fun ModeSwitcherButton(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Icon(
-                imageVector = mode.icon,
-                contentDescription = mode.name,
+                imageVector = moment.icon,
+                contentDescription = moment.name,
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp).size(20.dp)
             )
 
             Text(
-                mode.name,
+                moment.name,
                 fontSize = 18.sp,
                 lineHeight = 21.6.sp,
                 fontWeight = FontWeight(500),
@@ -138,11 +138,11 @@ fun ModeSwitcherButton(
 fun ModeSwitcherButton_Preview() {
     Column {
         ModeSwitcherButton(
-            mode = Presets.Spring,
+            moment = Presets.Essentials,
             isSelected = true,
             onClick = { /* Do nothing */ })
         ModeSwitcherButton(
-            mode = Presets.Journey,
+            moment = Presets.Journey,
             isSelected = false,
             onClick = { /* Do nothing */ })
     }
@@ -154,7 +154,7 @@ fun ModeSwitcherButton_Preview() {
 fun ModeSwitcherScreen_Preview() {
     SpringLauncherTheme {
         ModeSwitcherScreen(
-            currentMode = Presets.Spring
+            currentMoment = Presets.Essentials
         ) {}
     }
 }
