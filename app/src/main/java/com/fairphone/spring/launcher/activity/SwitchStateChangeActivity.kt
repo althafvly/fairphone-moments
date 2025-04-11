@@ -35,7 +35,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.ui.component.SwitchStateChangeOverlayScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
@@ -180,7 +180,7 @@ fun SwitchStateChangeScreen(
     }
 
     SwitchStateChangeOverlayScreen(
-        moment = Presets.Essentials,
+        moment = Default.DefaultMoment,
         switchState = switchButtonSwitchState,
         onAnimationDone = { onOverlayAnimationDone(switchButtonSwitchState) },
         visibilityState = MutableTransitionState(false)

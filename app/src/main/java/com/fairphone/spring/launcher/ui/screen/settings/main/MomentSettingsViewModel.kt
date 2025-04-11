@@ -20,14 +20,14 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.data.model.Moment
-import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
 import com.fairphone.spring.launcher.data.repository.IMomentRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 class MomentSettingsViewModel(
     context: Context,
@@ -35,25 +35,21 @@ class MomentSettingsViewModel(
     private val momentRepository: IMomentRepository,
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow(MomentSettingsScreenState())
-    val screenState = _screenState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            val currentMoment = momentRepository.getCurrentMoment()
-            val visibleApps = appInfoRepository.getAppInfos(context, currentMoment.visibleApps)
-
-            _screenState.update {
-                it.copy(
-                    moment = currentMoment,
-                    visibleApps = visibleApps
-                )
-            }
-        }
-    }
+    val screenState: StateFlow<MomentSettingsScreenState?> = momentRepository.getActiveMoment()
+        .map { moment ->
+            val visibleApps = appInfoRepository.getAppInfos(context, moment.visibleAppsList)
+            MomentSettingsScreenState(
+                moment = moment,
+                visibleApps = visibleApps
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = null
+        )
 }
 
 data class MomentSettingsScreenState(
-    val moment: Moment = Presets.Essentials,
+    val moment: Moment = Default.DefaultMoment,
     val visibleApps: List<AppInfo> = emptyList(),
 )

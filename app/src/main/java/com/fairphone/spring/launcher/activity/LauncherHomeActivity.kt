@@ -43,6 +43,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fairphone.spring.launcher.data.model.colors
 import com.fairphone.spring.launcher.ui.component.AnimatedBackground
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreen
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
@@ -96,6 +98,8 @@ class LauncherHomeActivity : ComponentActivity() {
             KoinContext {
                 SpringLauncherTheme {
                     val density = LocalDensity.current
+                    val screenState by homeScreenViewModel.screenState.collectAsStateWithLifecycle()
+
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -117,7 +121,7 @@ class LauncherHomeActivity : ComponentActivity() {
                         ),
                     ) {
                         AnimatedBackground(
-                            colors = homeScreenViewModel.currentMoment.bgColors,
+                            colors = screenState.currentMoment.colors(),
                             modifier = Modifier
                                 .background(MaterialTheme.colorScheme.background)
                         ) {

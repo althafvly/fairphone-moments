@@ -39,6 +39,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -64,7 +65,6 @@ const val CLOCK_DATE_FORMAT = "EEE, dd LLL"
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -78,7 +78,6 @@ fun HomeScreen(
     }
 
     HomeScreen(
-        modifier = modifier,
         date = date,
         time = time,
         modeButtonIcon = Icons.Filled.Settings,
@@ -91,6 +90,10 @@ fun HomeScreen(
             LauncherSettingsActivity.start(context)
         }
     )
+
+    LaunchedEffect(Unit) {
+        viewModel.refreshUiState(context)
+    }
 }
 
 @Composable

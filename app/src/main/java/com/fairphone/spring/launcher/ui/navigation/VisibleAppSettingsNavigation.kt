@@ -19,6 +19,7 @@ package com.fairphone.spring.launcher.ui.navigation
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreen
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsScreen
@@ -30,7 +31,7 @@ object VisibleAppSettings
 @Serializable
 object VisibleAppSelector
 
-fun NavGraphBuilder.visibleAppSettingsGraph() {
+fun NavGraphBuilder.visibleAppSettingsGraph(navController: NavHostController) {
     // Visible App Settings Screen
     composable<VisibleAppSettings>(
         enterTransition = {
@@ -90,7 +91,7 @@ fun NavGraphBuilder.visibleAppSettingsGraph() {
     ) {
         VisibleAppSelectorScreen(
             onConfirmAppSelection = {
-
+                navController.navigateUp()
             }
         )
     }

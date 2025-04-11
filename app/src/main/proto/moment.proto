@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "com.fairphone.spring.launcher.data.model";
+option java_multiple_files = true;
+
+message Moment {
+
+    string name = 1;
+    string icon = 2;
+    int64 bgColor1 = 3;
+    int64 bgColor2 = 4;
+    repeated string visibleApps = 5;
+}

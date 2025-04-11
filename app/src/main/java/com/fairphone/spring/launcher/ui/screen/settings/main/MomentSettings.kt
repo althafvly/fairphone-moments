@@ -25,13 +25,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.component.SettingListItem
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
@@ -42,12 +43,14 @@ fun MomentSettings(
     onNavigateToVisibleAppSettings: () -> Unit,
     viewModel: MomentSettingsViewModel = koinViewModel()
 ) {
-    val screenState = viewModel.screenState.collectAsStateWithLifecycle()
+    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
-    MomentSettings(
-        screenState = screenState.value,
-        onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings
-    )
+    screenState?.let {
+        MomentSettings(
+            screenState = it,
+            onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings
+        )
+    }
 }
 
 @Composable
@@ -84,7 +87,7 @@ fun MomentSettings_Preview() {
     SpringLauncherTheme {
         MomentSettings(
             screenState = MomentSettingsScreenState(
-                moment = Presets.Essentials,
+                moment = Default.DefaultMoment,
                 visibleApps = emptyList()
             ),
             onNavigateToVisibleAppSettings = {})

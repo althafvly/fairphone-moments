@@ -16,10 +16,12 @@
 
 package com.fairphone.spring.launcher.di
 
+import android.content.Context
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
 import com.fairphone.spring.launcher.data.repository.IMomentRepository
 import com.fairphone.spring.launcher.data.repository.MomentRepository
+import com.fairphone.spring.launcher.data.repository.momentDataStore
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -27,4 +29,5 @@ import org.koin.dsl.module
 val dataModule = module {
     factoryOf(::AppInfoRepository) { bind<IAppInfoRepository>() }
     factoryOf(::MomentRepository) { bind<IMomentRepository>() }
+    single { get<Context>().momentDataStore }
 }

@@ -27,6 +27,7 @@ import com.fairphone.spring.launcher.data.repository.IMomentRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -39,15 +40,14 @@ class VisibleAppSettingsViewModel(
     private val _screenState = MutableStateFlow(VisibleAppSelectorScreenState())
     val screenState = _screenState.asStateFlow()
 
-    val currentMoment = momentRepository.getCurrentMoment()
-
     private var appList = mutableStateListOf<AppInfo>()
     private var visibleApps = mutableStateListOf<AppInfo>()
 
     init {
         viewModelScope.launch {
             appList.addAll(appInfoRepository.getInstalledAppsLauncherApps(context))
-            visibleApps.addAll(appInfoRepository.getAppInfos(context,  currentMoment.visibleApps))
+            val currentMoment = momentRepository.getActiveMoment().first()
+            visibleApps.addAll(appInfoRepository.getAppInfos(context,  currentMoment.visibleAppsList))
 
             _screenState.update {
                 _screenState.value.copy(
@@ -109,7 +109,8 @@ class VisibleAppSettingsViewModel(
 
     fun confirmAppSelection() {
         viewModelScope.launch {
-            //momentRepository.updateVisibleApps(currentMoment, visibleApps)
+            momentRepository.updateVisibleApps(visibleApps.map { it.packageName })
+
         }
     }
 }

@@ -38,11 +38,13 @@ fun LauncherSettings(
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val navController = rememberNavController()
 
+    screenState ?: return
+
     Scaffold(
         topBar = {
                 SettingsTopBar(
                     navController = navController,
-                    moment = screenState.moment,
+                    moment = screenState!!.moment,
                     onNavigateBack = { navController.navigateUp() }
                 )
         },

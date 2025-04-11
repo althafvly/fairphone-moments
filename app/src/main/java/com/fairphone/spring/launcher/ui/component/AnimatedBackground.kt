@@ -43,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.colors
 import com.fairphone.spring.launcher.ui.FP6Preview
 import kotlinx.coroutines.delay
 
@@ -221,6 +222,6 @@ fun BackgroundBlob(
 @FP6Preview
 fun AnimatedBackground_Preview() {
     AnimatedBackground(
-        colors = Presets.Essentials.bgColors,
+        colors = Presets.Essentials.colors(),
     )
 }

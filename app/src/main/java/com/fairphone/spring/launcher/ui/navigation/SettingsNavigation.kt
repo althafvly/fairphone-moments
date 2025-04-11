@@ -73,5 +73,5 @@ fun SettingsNavGraph(
     }
 
     // Visible App Settings
-    visibleAppSettingsGraph()
+    visibleAppSettingsGraph(navController)
 }

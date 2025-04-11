@@ -14,15 +14,34 @@
  * limitations under the License.
  */
 
+
 package com.fairphone.spring.launcher.data.model
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.fairphone.spring.launcher.ui.ModeIcons
 import com.fairphone.spring.launcher.ui.modeicons.Vector
 
+fun Moment.getIconVector(): ImageVector {
+    return when {
+        icon == "Vector" -> ModeIcons.Vector
+        else -> ModeIcons.Vector
+    }
+}
+
+object Default {
+    val DefaultMoment = moment {
+        name = "Spring"
+        icon = "Vector"
+        bgColor1 = 0xB2C3D1D0
+        bgColor2 = 0xB2FFBA63
+        visibleApps.addAll(Default_Launcher_Apps)
+    }
+
+}
+
+
+
+/*
 data class Moment(
     val name: String,
     val icon: ImageVector,
@@ -80,3 +99,4 @@ object Presets {
         DeepFocus,
     )
 }
+*/

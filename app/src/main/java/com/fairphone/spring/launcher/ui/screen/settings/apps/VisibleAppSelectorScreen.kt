@@ -76,7 +76,10 @@ fun VisibleAppSelectorScreen(
         screenState = screenState,
         onAppClick = viewModel::onAppClick,
         onAppDeselected = viewModel::removeVisibleApp,
-        onConfirmAppSelection = onConfirmAppSelection,
+        onConfirmAppSelection = {
+            viewModel.confirmAppSelection()
+            onConfirmAppSelection()
+        }
     )
 }
 
@@ -131,7 +134,8 @@ fun VisibleAppSelectorScreen(
                     contentType = { index -> screenState.appList[index] },
                 ) { index ->
                     val appInfo = screenState.appList[index]
-                    val isSelected = appInfo.packageName in screenState.visibleApps.map { it.packageName }
+                    val isSelected =
+                        appInfo.packageName in screenState.visibleApps.map { it.packageName }
                     SelectableAppInfoListItem(
                         appInfo = appInfo,
                         isSelected = isSelected,

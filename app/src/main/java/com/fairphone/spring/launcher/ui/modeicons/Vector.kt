@@ -3,9 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +33,6 @@ import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.ui.ModeIcons
-import kotlin.Unit
 
 public val ModeIcons.Vector: ImageVector
     get() {
@@ -73,4 +72,18 @@ private fun Preview(): Unit {
     Box(modifier = Modifier.padding(12.dp)) {
         Image(imageVector = ModeIcons.Vector, contentDescription = "")
     }
+}
+
+val iconMap: Map<String, ImageVector> = mapOf(
+    "Vector" to ModeIcons.Vector,
+)
+
+
+fun ImageVector.Companion.fromString(string: String): ImageVector {
+    return iconMap.getOrElse(
+        key = string,
+        defaultValue = {
+            ModeIcons.Vector
+        }
+    )
 }

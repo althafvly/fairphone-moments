@@ -49,8 +49,9 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.data.model.Moment
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.getIconVector
 import com.fairphone.spring.launcher.ui.navigation.MomentSettings
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSelector
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSettings
@@ -137,7 +138,7 @@ fun MomentSettingsTopBar(
                 .background(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(size = 12.dp))
         ) {
             Icon(
-                imageVector = currentMoment.icon,
+                imageVector = currentMoment.getIconVector(),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.align(Alignment.Center)
@@ -193,7 +194,7 @@ fun MomentSettingsTopBar(
 fun MomentSettingsTopBar_Preview() {
     SpringLauncherTheme {
         MomentSettingsTopBar(
-            currentMoment = Presets.Essentials,
+            currentMoment = Default.DefaultMoment,
             onEditMomentName = {}
         )
     }
