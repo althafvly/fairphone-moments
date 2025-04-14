@@ -3,9 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,18 +16,35 @@
 
 package com.fairphone.spring.launcher.data.model
 
+import android.graphics.drawable.Drawable
+
 data class AppInfo(
     val name: String,
     val packageName: String,
     val mainActivityClassName: String,
     val userUuid: Int,
-)
+    val icon: Drawable,
+) {
+    override fun equals(other: Any?): Boolean {
+        return other is AppInfo && other.packageName == packageName
+    }
 
-val Default_App_Packages = listOf(
+    override fun hashCode(): Int {
+        var result = userUuid
+        result = 31 * result + name.hashCode()
+        result = 31 * result + packageName.hashCode()
+        result = 31 * result + mainActivityClassName.hashCode()
+        result = 31 * result + icon.hashCode()
+        return result
+    }
+}
+
+const val LAUNCHER_MAX_APP_COUNT = 5
+
+val Default_Launcher_Apps = listOf(
     "com.google.android.dialer",
     "com.google.android.apps.messaging",
     "com.android.chrome",
-    "com.fp.camera", // Camera app FP4
     "com.fps.camera", // Camera app FP6
     "com.google.android.apps.maps",
 )

@@ -34,7 +34,7 @@
         android:theme="@style/Theme.SpringLauncher">
 
         <activity
-            android:name=".activity.SpringLauncherHomeActivity"
+            android:name=".activity.LauncherHomeActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenSize|screenLayout|smallestScreenSize"
             android:enableOnBackInvokedCallback="true"

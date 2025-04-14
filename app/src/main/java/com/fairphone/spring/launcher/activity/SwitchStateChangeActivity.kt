@@ -40,13 +40,13 @@ import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.ui.component.SwitchStateChangeOverlayScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
+import org.koin.compose.KoinContext
 
 class SwitchStateChangeActivity : ComponentActivity() {
 
     private var switchState: SwitchState? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("Class", this.javaClass.name)
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
@@ -77,22 +77,24 @@ class SwitchStateChangeActivity : ComponentActivity() {
 
         if (shouldShowOverlay(intent)) {
             setContent {
-                SpringLauncherTheme {
-                    SwitchStateChangeScreen(
-                        switchButtonSwitchState = switchState!!,
-                        onOverlayAnimationDone = {
-                            onAnimationDone()
-                        }
-                    )
+                KoinContext {
+                    SpringLauncherTheme {
+                        SwitchStateChangeScreen(
+                            switchButtonSwitchState = switchState!!,
+                            onOverlayAnimationDone = {
+                                onAnimationDone()
+                            }
+                        )
+                    }
                 }
             }
         } else {
             when (switchState) {
                 SwitchState.ENABLED -> {
-                    SpringLauncherHomeActivity.start(context = this)
+                    LauncherHomeActivity.start(context = this)
                 }
                 SwitchState.DISABLED -> {
-                    SpringLauncherHomeActivity.stop()
+                    LauncherHomeActivity.stop()
                 }
                 null -> {}
             }
@@ -102,7 +104,7 @@ class SwitchStateChangeActivity : ComponentActivity() {
 
     private fun onAnimationDone() {
         if (switchState == SwitchState.DISABLED) {
-            SpringLauncherHomeActivity.stop()
+            LauncherHomeActivity.stop()
         }
         setResult(RESULT_OK)
         finish()

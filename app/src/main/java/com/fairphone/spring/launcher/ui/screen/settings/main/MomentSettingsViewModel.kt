@@ -14,56 +14,46 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.home
+package com.fairphone.spring.launcher.ui.screen.settings.main
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
 import com.fairphone.spring.launcher.data.repository.IMomentRepository
-import com.fairphone.spring.launcher.util.launchApp
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 
-class HomeScreenViewModel(
+class MomentSettingsViewModel(
     context: Context,
-    appInfoRepository: IAppInfoRepository,
-    private val momentRepository: IMomentRepository
+    private val appInfoRepository: IAppInfoRepository,
+    private val momentRepository: IMomentRepository,
 ) : ViewModel() {
 
-    val currentMoment = momentRepository.getCurrentMoment()
-
-    private val _screenState: MutableStateFlow<HomeScreenState> =
-        MutableStateFlow(HomeScreenState())
-    val screenState: StateFlow<HomeScreenState> = _screenState.asStateFlow()
+    private val _screenState = MutableStateFlow(MomentSettingsScreenState())
+    val screenState = _screenState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            appInfoRepository.getAppInfos(context, currentMoment.visibleApps).let { homeApps ->
-                _screenState.update { it.copy(appList = homeApps) }
-            }
+            val currentMoment = momentRepository.getCurrentMoment()
+            val visibleApps = appInfoRepository.getAppInfos(context, currentMoment.visibleApps)
 
-            while (isActive) {
-                _screenState.update { it.copy(dateTime = LocalDateTime.now()) }
-                delay(1000)
+            _screenState.update {
+                it.copy(
+                    moment = currentMoment,
+                    visibleApps = visibleApps
+                )
             }
         }
     }
-
-    fun onAppClick(context: Context, appInfo: AppInfo) {
-        context.launchApp(appInfo)
-    }
 }
 
-data class HomeScreenState(
-    val dateTime: LocalDateTime = LocalDateTime.now(),
-    val appList: List<AppInfo> = emptyList(),
+data class MomentSettingsScreenState(
+    val moment: Moment = Presets.Essentials,
+    val visibleApps: List<AppInfo> = emptyList(),
 )

@@ -85,7 +85,7 @@ fun HomeScreen(
         modeButtonText = "Essentials",
         appList = screenState.appList,
         onAppClick = { appInfo ->
-            viewModel.onAppClick(appInfo)
+            viewModel.onAppClick(context, appInfo)
         },
         onModeSwitcherButtonClick = {
             LauncherSettingsActivity.start(context)
@@ -221,38 +221,7 @@ fun HomeScreen_Preview() {
             time = "12:30",
             modeButtonIcon = Icons.Filled.Settings,
             modeButtonText = "Essentials",
-            appList = listOf(
-                AppInfo(
-                    name = "Phone",
-                    packageName = "com.package.app1",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-                AppInfo(
-                    name = "Chrome",
-                    packageName = "com.package.app2",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-                AppInfo(
-                    name = "Messages",
-                    packageName = "com.package.app3",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-                AppInfo(
-                    name = "Camera",
-                    packageName = "com.package.app4",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-                AppInfo(
-                    name = "Maps",
-                    packageName = "com.package.app5",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-            ),
+            appList = previewAppList(LocalContext.current),
             onAppClick = {},
             onModeSwitcherButtonClick = {},
         )
@@ -268,40 +237,47 @@ fun HomeScreenDark_Preview() {
             time = "12:30",
             modeButtonIcon = Icons.Filled.Settings,
             modeButtonText = "Essentials",
-            appList = listOf(
-                AppInfo(
-                    name = "Phone",
-                    packageName = "com.package.app1",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-                AppInfo(
-                    name = "Chrome",
-                    packageName = "com.package.app2",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-                AppInfo(
-                    name = "Messages",
-                    packageName = "com.package.app3",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-                AppInfo(
-                    name = "Camera",
-                    packageName = "com.package.app4",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-                AppInfo(
-                    name = "Maps",
-                    packageName = "com.package.app5",
-                    mainActivityClassName = "",
-                    userUuid = 0
-                ),
-            ),
+            appList = previewAppList(LocalContext.current),
             onAppClick = {},
             onModeSwitcherButtonClick = {},
         )
     }
 }
+
+fun previewAppList(context: Context) = listOf(
+    AppInfo(
+        name = "Phone",
+        packageName = "com.package.app1",
+        mainActivityClassName = "",
+        userUuid = 0,
+        icon = ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground)!!,
+    ),
+    AppInfo(
+        name = "Chrome",
+        packageName = "com.package.app2",
+        mainActivityClassName = "",
+        userUuid = 0,
+        icon = ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground)!!,
+    ),
+    AppInfo(
+        name = "Messages",
+        packageName = "com.package.app3",
+        mainActivityClassName = "",
+        userUuid = 0,
+        icon = ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground)!!,
+    ),
+    AppInfo(
+        name = "Camera",
+        packageName = "com.package.app4",
+        mainActivityClassName = "",
+        userUuid = 0,
+        icon = ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground)!!,
+    ),
+    AppInfo(
+        name = "Maps",
+        packageName = "com.package.app5",
+        mainActivityClassName = "",
+        userUuid = 0,
+        icon = ContextCompat.getDrawable(context, R.drawable.ic_launcher_foreground)!!,
+    ),
+)

@@ -1,0 +1,121 @@
+/*
+ * Copyright (c) 2025. Fairphone B.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.fairphone.spring.launcher.ui.component
+
+import android.content.res.Configuration
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
+import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
+import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+
+@Composable
+fun SelectableAppInfoListItem(
+    appInfo: AppInfo,
+    isSelected: Boolean,
+    onAppToggled: (AppInfo) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 12.dp)
+            .clickable { onAppToggled(appInfo) },
+    ) {
+        AppIcon(appInfo = appInfo, modifier = Modifier.size(32.dp))
+
+        Text(
+            text = appInfo.name,
+            style = FairphoneTypography.BodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.weight(1f),
+        )
+
+        Box(
+            modifier = Modifier
+                .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(size = 33.dp))
+                .width(24.dp)
+                .height(24.dp)
+                .clip(CircleShape)
+                .background(if (isSelected) Color_FP_Brand_Lime else Color.Transparent)
+
+        ) {
+            if (isSelected) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "selected",
+                    tint = Color(0xFF1C1B1F),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .width(16.dp)
+                        .height(16.dp)
+                )
+            }
+        }
+
+    }
+}
+
+@Composable
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+fun AppInfoListItem_Preview() {
+    SpringLauncherTheme {
+        SelectableAppInfoListItem(
+            appInfo = AppInfo(
+                name = "App Name",
+                packageName = "com.example.app",
+                mainActivityClassName = "com.example.app.MainActivity",
+                userUuid = 0,
+                icon = ContextCompat.getDrawable(
+                    LocalContext.current,
+                    R.drawable.ic_launcher_foreground
+                )!!,
+            ),
+            isSelected = true,
+            onAppToggled = {}
+        )
+    }
+}

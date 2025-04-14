@@ -27,11 +27,12 @@ data class Moment(
     val name: String,
     val icon: ImageVector,
     val bgColors: Pair<Color, Color>,
+    val visibleApps: List<String> = Default_Launcher_Apps
 )
 
 object Presets {
     val Essentials = Moment(
-        name = "Fairphone moments",
+        name = "Spring",
         icon = ModeIcons.Vector,
         bgColors = Pair(
             Color(0xB2C3D1D0),

@@ -17,6 +17,7 @@
 package com.fairphone.spring.launcher
 
 import android.app.Application
+import androidx.annotation.VisibleForTesting
 import com.fairphone.spring.launcher.di.dataModule
 import com.fairphone.spring.launcher.di.uiModule
 import org.koin.android.ext.koin.androidContext
@@ -26,10 +27,13 @@ import org.koin.core.logger.Level
 
 class App : Application() {
 
-    private val koinModules = listOf(
-        uiModule,
-        dataModule,
-    )
+    companion object {
+        @VisibleForTesting
+        val koinModules = listOf(
+            uiModule,
+            dataModule,
+        )
+    }
 
     override fun onCreate() {
         super.onCreate()

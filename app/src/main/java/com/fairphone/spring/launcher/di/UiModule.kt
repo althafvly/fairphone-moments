@@ -17,11 +17,13 @@
 package com.fairphone.spring.launcher.di
 
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
-import com.fairphone.spring.launcher.ui.screen.settings.LauncherSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.main.MomentSettingsViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val uiModule = module {
     viewModelOf(::HomeScreenViewModel)
-    viewModelOf(::LauncherSettingsViewModel)
+    viewModelOf(::MomentSettingsViewModel)
+    viewModelOf(::VisibleAppSettingsViewModel)
 }

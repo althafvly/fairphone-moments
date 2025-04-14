@@ -3,9 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.settings
+package com.fairphone.spring.launcher.ui.component
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import coil3.compose.AsyncImage
+import com.fairphone.spring.launcher.data.model.AppInfo
 
 @Composable
-fun SettingsScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            text = "Settings Screen",
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
+fun AppIcon(appInfo: AppInfo, modifier: Modifier = Modifier) {
+    AsyncImage(
+        model = appInfo.icon,
+        contentDescription = appInfo.name,
+        contentScale = ContentScale.Fit,
+        modifier = modifier,
+    )
 }

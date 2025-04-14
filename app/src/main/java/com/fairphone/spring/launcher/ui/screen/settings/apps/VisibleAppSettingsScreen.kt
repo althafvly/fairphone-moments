@@ -3,9 +3,9 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License
+ * You may obtain a copy of the License at
  *
- *         at http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,20 +14,10 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher
+package com.fairphone.spring.launcher.ui.screen.settings.apps
 
-import org.junit.Test
+import androidx.compose.runtime.Composable
 
-import org.junit.Assert.*
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+@Composable
+fun VisibleAppSettingsScreen() {
 }

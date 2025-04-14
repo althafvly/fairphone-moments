@@ -111,6 +111,8 @@ object FairphoneTypography {
         fontFamily = DmSans,
         fontWeight = FontWeight.SemiBold,
     )
+
+
 }
 
 

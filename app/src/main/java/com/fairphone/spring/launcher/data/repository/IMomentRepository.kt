@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.di
+package com.fairphone.spring.launcher.data.repository
 
-import com.fairphone.spring.launcher.data.repository.AppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IMomentRepository
-import com.fairphone.spring.launcher.data.repository.MomentRepository
-import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.factoryOf
-import org.koin.dsl.module
+import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.Presets
 
-val dataModule = module {
-    factoryOf(::AppInfoRepository) { bind<IAppInfoRepository>() }
-    factoryOf(::MomentRepository) { bind<IMomentRepository>() }
+interface IMomentRepository {
+    fun getCurrentMoment(): Moment
+}
+
+class MomentRepository : IMomentRepository {
+    override fun getCurrentMoment(): Moment {
+        return Presets.Essentials
+    }
 }

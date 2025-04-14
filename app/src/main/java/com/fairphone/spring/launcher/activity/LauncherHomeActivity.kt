@@ -43,26 +43,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import com.fairphone.spring.launcher.data.model.Moment
-import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.component.AnimatedBackground
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreen
+import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
 import kotlinx.coroutines.delay
+import org.koin.android.ext.android.inject
+import org.koin.compose.KoinContext
 
-class SpringLauncherHomeActivity : ComponentActivity() {
+class LauncherHomeActivity : ComponentActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, SpringLauncherHomeActivity::class.java).apply {
+            val intent = Intent(context, LauncherHomeActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                         Intent.FLAG_ACTIVITY_CLEAR_TASK or
                         Intent.FLAG_ACTIVITY_NO_ANIMATION
             }
             context.startActivity(intent)
         }
-        private var instance: SpringLauncherHomeActivity? = null
+        private var instance: LauncherHomeActivity? = null
 
         fun stop() {
             Log.d(Constants.LOG_TAG, "Stopping SpringLauncherHomeActivity")
@@ -70,8 +71,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         }
     }
 
-    private val moment: Moment
-        get() = Presets.Essentials
+    private val homeScreenViewModel: HomeScreenViewModel by inject<HomeScreenViewModel>()
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,44 +93,47 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         instance = this
 
         setContent {
-            SpringLauncherTheme {
-                val density = LocalDensity.current
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                )
-                var visibility by remember { mutableStateOf(false) }
-                AnimatedVisibility(
-                    visible = visibility,
-                    enter = expandVertically(
-                        expandFrom = Alignment.Top,
-                        animationSpec = tween(
-                            durationMillis = 200
-                        )
-                    ),
-                    exit = shrinkVertically(
-                        shrinkTowards = Alignment.Top,
-                        animationSpec = tween(
-                            durationMillis = 200
-                        )
-                    ),
-                ) {
-                    AnimatedBackground(
-                        colors = moment.bgColors,
+            KoinContext {
+                SpringLauncherTheme {
+                    val density = LocalDensity.current
+                    Box(
                         modifier = Modifier
-                            .background(MaterialTheme.colorScheme.background)
+                            .fillMaxSize()
+                    )
+                    var visibility by remember { mutableStateOf(false) }
+                    AnimatedVisibility(
+                        visible = visibility,
+                        enter = expandVertically(
+                            expandFrom = Alignment.Top,
+                            animationSpec = tween(
+                                durationMillis = 200
+                            )
+                        ),
+                        exit = shrinkVertically(
+                            shrinkTowards = Alignment.Top,
+                            animationSpec = tween(
+                                durationMillis = 200
+                            )
+                        ),
                     ) {
-                        Box(
+                        AnimatedBackground(
+                            colors = homeScreenViewModel.currentMoment.bgColors,
                             modifier = Modifier
-                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.background)
                         ) {
-                            HomeScreen()
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            ) {
+                                HomeScreen()
+                            }
                         }
                     }
-                }
 
-                LaunchedEffect(Unit) {
-                    delay(100)
-                    visibility = true
+                    LaunchedEffect(Unit) {
+                        delay(100)
+                        visibility = true
+                    }
                 }
             }
         }
