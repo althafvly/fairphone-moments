@@ -12,8 +12,8 @@ kotlin = "2.1.10"
 
 androidx-activity-compose = "1.10.1"
 androidx-appcompat = "1.7.0"
-androidx-compose-bom = "2025.03.01"
-androidx-core = "1.15.0"
+androidx-compose-bom = "2025.04.00"
+androidx-core = "1.16.0"
 androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.8.7"
 
