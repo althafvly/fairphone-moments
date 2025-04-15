@@ -16,6 +16,7 @@
 
 package com.fairphone.spring.launcher.ui.screen.home
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,14 +47,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 
 const val CLOCK_TIME_FORMAT = "HH:mm"
@@ -62,7 +65,7 @@ const val CLOCK_DATE_FORMAT = "EEE, dd LLL"
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeScreenViewModel = viewModel(factory = HomeScreenViewModel.Factory)
+    viewModel: HomeScreenViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()

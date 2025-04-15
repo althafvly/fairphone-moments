@@ -18,12 +18,8 @@ package com.fairphone.spring.launcher.ui.screen.home
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
@@ -58,21 +54,6 @@ class HomeScreenViewModel(
 
     fun onAppClick(appInfo: AppInfo) {
         getApplication<Application>().launchApp(appInfo)
-    }
-
-    companion object {
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                return HomeScreenViewModel(
-                    app = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY]),
-                    repository = AppInfoRepository(),
-                ) as T
-            }
-        }
     }
 }
 

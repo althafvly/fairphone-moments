@@ -16,6 +16,7 @@ androidx-compose-bom = "2025.04.00"
 androidx-core = "1.16.0"
 androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.8.7"
+koin-bom = "4.0.3"
 
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -36,6 +37,10 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin-bom" }
+koin-android = { group = "io.insert-koin", name = "koin-android" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
