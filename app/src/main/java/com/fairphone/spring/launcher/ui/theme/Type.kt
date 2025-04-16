@@ -49,6 +49,34 @@ val Inter = FontFamily(
 )
 
 object FairphoneTypography {
+    // Headings
+    val H4 = TextStyle(
+        fontSize = 20.sp,
+        lineHeight = 24.sp,
+        fontFamily = DmSans,
+        fontWeight = FontWeight.Medium,
+    )
+    // Body
+    val BodyMedium = TextStyle(
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        fontFamily = DmSans,
+        fontWeight = FontWeight.Medium,
+    )
+    val BodySmall = TextStyle(
+        fontSize = 14.sp,
+        lineHeight = 19.6.sp,
+        fontFamily = DmSans,
+        fontWeight = FontWeight.Normal,
+    )
+    // Labels
+    val LabelMedium = TextStyle(
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+        fontFamily = DmSans,
+        fontWeight = FontWeight.Medium,
+    )
+    // Custom
     val Time = TextStyle(
         fontSize = 44.sp,
         lineHeight = 44.sp,
@@ -66,21 +94,21 @@ object FairphoneTypography {
     val ButtonDefault = TextStyle(
         fontSize = 18.sp,
         lineHeight = 18.sp,
-        fontFamily = Inter,
+        fontFamily = DmSans,
         fontWeight = FontWeight.Medium,
         textAlign = TextAlign.Center,
     )
     val AppButtonDefault = TextStyle(
         fontSize = 22.sp,
         lineHeight = 26.4.sp,
-        fontFamily = Inter,
+        fontFamily = DmSans,
         fontWeight = FontWeight.Medium,
         textAlign = TextAlign.Center,
     )
     val SwitchLabel = TextStyle(
         fontSize = 15.sp,
         lineHeight = 18.sp,
-        fontFamily = Inter,
+        fontFamily = DmSans,
         fontWeight = FontWeight.SemiBold,
     )
 }
@@ -99,10 +127,10 @@ val LauncherTypography = Typography(
     titleLarge = baseline.titleLarge.copy(fontFamily = BricolageGrotesque),
     titleMedium = baseline.titleMedium.copy(fontFamily = BricolageGrotesque),
     titleSmall = baseline.titleSmall.copy(fontFamily = BricolageGrotesque),
-    bodyLarge = baseline.bodyLarge.copy(fontFamily = Inter),
-    bodyMedium = baseline.bodyMedium.copy(fontFamily = Inter),
-    bodySmall = baseline.bodySmall.copy(fontFamily = Inter),
-    labelLarge = baseline.labelLarge.copy(fontFamily = Inter),
-    labelMedium = baseline.labelMedium.copy(fontFamily = Inter),
-    labelSmall = baseline.labelSmall.copy(fontFamily = Inter),
+    bodyLarge = baseline.bodyLarge.copy(fontFamily = DmSans),
+    bodyMedium = baseline.bodyMedium.copy(fontFamily = DmSans),
+    bodySmall = baseline.bodySmall.copy(fontFamily = DmSans),
+    labelLarge = baseline.labelLarge.copy(fontFamily = DmSans),
+    labelMedium = baseline.labelMedium.copy(fontFamily = DmSans),
+    labelSmall = baseline.labelSmall.copy(fontFamily = DmSans),
 )
