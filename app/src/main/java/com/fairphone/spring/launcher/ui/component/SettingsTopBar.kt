@@ -120,7 +120,10 @@ fun MomentSettingsTopBar(
                 )
                 .width(64.dp)
                 .height(64.dp)
-                .background(color = MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(size = 12.dp))
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(size = 12.dp)
+                )
         ) {
             Icon(
                 imageVector = currentMoment.getIconVector(),

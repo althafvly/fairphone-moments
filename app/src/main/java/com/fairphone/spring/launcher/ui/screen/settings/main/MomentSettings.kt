@@ -34,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.ui.FP6Preview
@@ -42,23 +41,6 @@ import com.fairphone.spring.launcher.ui.component.MomentNameEditor
 import com.fairphone.spring.launcher.ui.component.MomentSettingsTopBar
 import com.fairphone.spring.launcher.ui.component.SettingListItem
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
-import org.koin.androidx.compose.koinViewModel
-
-@Composable
-fun MomentSettings(
-    onNavigateToVisibleAppSettings: () -> Unit,
-    viewModel: MomentSettingsViewModel = koinViewModel()
-) {
-    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-
-    screenState?.let {
-        MomentSettings(
-            screenState = it,
-            onEditMomentName = viewModel::updateMomentName,
-            onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings
-        )
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,9 +88,6 @@ fun MomentSettings(
         MomentNameEditor(
             show = showMomentNameEditor,
             currentName = screenState.moment.name,
-            onNameChange = {
-
-            },
             onConfirm = {
                 onEditMomentName(it)
                 showMomentNameEditor = false

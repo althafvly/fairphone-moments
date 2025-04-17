@@ -19,11 +19,15 @@ package com.fairphone.spring.launcher.ui.navigation
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fairphone.spring.launcher.ui.screen.settings.main.MomentSettings
+import com.fairphone.spring.launcher.ui.screen.settings.main.MomentSettingsViewModel
 import kotlinx.serialization.Serializable
+import org.koin.androidx.compose.koinViewModel
 
 const val SLIDE_ANIMATION_DURATION_MILLIS = 300
 
@@ -65,11 +69,18 @@ fun SettingsNavigation(
             )
         }
     ) {
-        MomentSettings(
-            onNavigateToVisibleAppSettings = {
-                navController.navigate(VisibleAppSelector)
-            }
-        )
+        val viewModel: MomentSettingsViewModel = koinViewModel()
+        val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+
+        screenState?.let {
+            MomentSettings(
+                screenState = it,
+                onEditMomentName = viewModel::updateMomentName,
+                onNavigateToVisibleAppSettings = {
+                    navController.navigate(VisibleAppSelector)
+                }
+            )
+        }
     }
 
     // Visible App Settings

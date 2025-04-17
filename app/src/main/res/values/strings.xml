@@ -28,4 +28,5 @@
     <string name="bt_cancel">Cancel</string>
     <string name="moment_name_editor_title">Rename mode</string>
     <string name="moment_name_max_length_error">Keep your mode name under 15 characters</string>
+    <string name="search_app_info_bar_placeholder">Search apps</string>
 </resources>

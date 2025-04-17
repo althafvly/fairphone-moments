@@ -30,19 +30,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,38 +45,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.isTraversalGroup
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.component.ConfirmButton
+import com.fairphone.spring.launcher.ui.component.SearchBar
 import com.fairphone.spring.launcher.ui.component.SelectableListItem
 import com.fairphone.spring.launcher.ui.component.SelectedListItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
-import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
-import org.koin.androidx.compose.koinViewModel
-
-@Composable
-fun VisibleAppSelectorScreen(
-    onConfirmAppSelection: () -> Unit = {},
-    viewModel: VisibleAppSettingsViewModel = koinViewModel()
-) {
-    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-
-    VisibleAppSelectorScreen(
-        screenState = screenState,
-        onAppClick = viewModel::onAppClick,
-        onAppDeselected = viewModel::removeVisibleApp,
-        onConfirmAppSelection = {
-            viewModel.confirmAppSelection()
-            onConfirmAppSelection()
-        }
-    )
-}
 
 @Composable
 fun VisibleAppSelectorScreen(
@@ -91,6 +62,19 @@ fun VisibleAppSelectorScreen(
     onAppDeselected: (AppInfo) -> Unit = {},
     onConfirmAppSelection: () -> Unit,
 ) {
+    var filter by remember { mutableStateOf("") }
+    val filteredList = remember { mutableStateListOf<AppInfo>() }
+
+    LaunchedEffect(screenState.appList, filter) {
+        val filtered = if (filter.isEmpty()) {
+            screenState.appList
+        } else {
+            screenState.appList.filter { it.name.contains(filter, ignoreCase = true) }
+        }
+        filteredList.clear()
+        filteredList.addAll(filtered)
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -100,14 +84,11 @@ fun VisibleAppSelectorScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-//            AppSearchBar(
-//                query = "",
-//                onQueryChange = {},
-//                onSearch = {},
-//                searchResults = listOf("App 1", "App 2", "App 3"),
-//                onResultClick = {},
-//                modifier = Modifier.padding(horizontal = 20.dp)
-//            )
+            SearchBar(
+                query = filter,
+                onQueryChange = { filter = it },
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
 
             SelectedAppsRow(
                 selectedApps = screenState.visibleApps,
@@ -130,10 +111,10 @@ fun VisibleAppSelectorScreen(
                     .clip(RoundedCornerShape(size = 12.dp))
             ) {
                 items(
-                    count = screenState.appList.size,
-                    contentType = { index -> screenState.appList[index] },
+                    count = filteredList.size,
+                    contentType = { index -> filteredList[index] },
                 ) { index ->
-                    val appInfo = screenState.appList[index]
+                    val appInfo = filteredList[index]
                     val isSelected =
                         appInfo.packageName in screenState.visibleApps.map { it.packageName }
                     SelectableListItem(
@@ -236,71 +217,6 @@ fun ErrorView(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppSearchBar(
-    query: String,
-    onQueryChange: (String) -> Unit,
-    onSearch: (String) -> Unit,
-    searchResults: List<String>,
-    onResultClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    supportingContent: (@Composable (String) -> Unit)? = null,
-    leadingContent: (@Composable () -> Unit)? = null,
-) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
-
-    Box(
-        modifier
-            .fillMaxWidth()
-            .semantics { isTraversalGroup = true }
-    ) {
-        SearchBar(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .semantics { traversalIndex = 0f },
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = query,
-                    onQueryChange = onQueryChange,
-                    onSearch = {
-                        onSearch(query)
-                        expanded = false
-                    },
-                    expanded = expanded,
-                    onExpandedChange = { expanded = it },
-                    placeholder = { Text("Search apps") },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-
-                    )
-            },
-            expanded = expanded,
-            onExpandedChange = { expanded = it },
-        ) {
-            /*// Show search results in a lazy column for better performance
-            LazyColumn {
-                items(count = searchResults.size) { index ->
-                    val resultText = searchResults[index]
-                    ListItem(
-                        headlineContent = { Text(resultText) },
-                        supportingContent = supportingContent?.let { { it(resultText) } },
-                        leadingContent = leadingContent,
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                        modifier = Modifier
-                            .clickable {
-                                onResultClick(resultText)
-                                expanded = false
-                            }
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 4.dp)
-                    )
-                }
-            }*/
-        }
-    }
-}
-
-
 @Composable
 fun SelectedAppsRow(
     selectedApps: List<AppInfo>,
@@ -331,16 +247,5 @@ fun SelectedAppsRow(
                 onDeleteClick = { onDeletedClick(appInfo) },
             )
         }
-    }
-}
-
-
-@Composable
-@FP6Preview
-fun VisibleAppSelectorScreen_Preview() {
-    SpringLauncherTheme {
-        VisibleAppSelectorScreen(
-
-        )
     }
 }

@@ -46,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -152,6 +153,7 @@ fun HomeScreen(
                     Text(
                         text = modeButtonText,
                         style = FairphoneTypography.ButtonDefault,
+                        textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                 }

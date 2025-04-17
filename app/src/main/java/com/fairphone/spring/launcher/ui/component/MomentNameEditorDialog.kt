@@ -23,8 +23,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,7 +43,6 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 fun MomentNameEditor(
     show: Boolean,
     currentName: String,
-    onNameChange: (String) -> Unit,
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -74,33 +71,14 @@ fun MomentNameEditor(
                 )
             },
             text = {
-                Column { // Use Column in case you want to add more elements later
-                    OutlinedTextField(
-                        value = newName,
+                Column {
+                    DefaultTextField(
+                        text = newName,
                         onValueChange = {
                             showError = it.length >= maxNameLength
                             newName = it
                         },
-                        label = null,
-                        singleLine = true,
-                        shape = RoundedCornerShape(12.dp),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                            unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            cursorColor = MaterialTheme.colorScheme.onSurface,
-                            focusedBorderColor = if (showError) {
-                                MaterialTheme.colorScheme.error
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
-                            },
-                            unfocusedLabelColor = if (showError) {
-                                MaterialTheme.colorScheme.error
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
-                            },
-                        )
+                        showError = showError,
                     )
 
                     if (showError) {
@@ -138,8 +116,7 @@ fun MomentNameEditor_Preview() {
     SpringLauncherTheme {
         MomentNameEditor(
             show = true,
-            currentName = "Test22342342233224",
-            onNameChange = {},
+            currentName = "Test",
             onConfirm = {},
             onDismiss = {}
         )
