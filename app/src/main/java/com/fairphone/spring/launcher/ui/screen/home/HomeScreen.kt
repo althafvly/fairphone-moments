@@ -39,7 +39,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -68,21 +67,20 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
+    val dateTime by viewModel.dateTime.collectAsStateWithLifecycle()
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
-    val date = remember(screenState.dateTime) {
-        screenState.dateTime.format(DateTimeFormatter.ofPattern(CLOCK_DATE_FORMAT))
-    }
-    val time = remember(screenState.dateTime) {
-        screenState.dateTime.format(DateTimeFormatter.ofPattern(CLOCK_TIME_FORMAT))
+    val (date, time) = remember(dateTime) {
+        dateTime.format(DateTimeFormatter.ofPattern(CLOCK_DATE_FORMAT)) to
+                dateTime.format(DateTimeFormatter.ofPattern(CLOCK_TIME_FORMAT))
     }
 
     HomeScreen(
         date = date,
         time = time,
         modeButtonIcon = Icons.Filled.Settings,
-        modeButtonText = "Essentials",
-        appList = screenState.appList,
+        modeButtonText = screenState.activeMoment.name,
+        appList = screenState.visibleApps,
         onAppClick = { appInfo ->
             viewModel.onAppClick(context, appInfo)
         },
@@ -90,10 +88,6 @@ fun HomeScreen(
             LauncherSettingsActivity.start(context)
         }
     )
-
-    LaunchedEffect(Unit) {
-        viewModel.refreshUiState(context)
-    }
 }
 
 @Composable

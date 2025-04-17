@@ -26,14 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.fairphone.spring.launcher.ui.component.SettingsTopBar
-import com.fairphone.spring.launcher.ui.navigation.SettingsNavGraph
+import com.fairphone.spring.launcher.ui.navigation.SettingsNavigation
 import com.fairphone.spring.launcher.ui.screen.settings.main.MomentSettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LauncherSettings(
-    viewModel: MomentSettingsViewModel = koinViewModel()
+fun LauncherSettingsScreen(
+    viewModel: MomentSettingsViewModel = koinViewModel(),
+    onCloseSettings: () -> Unit
 ) {
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val navController = rememberNavController()
@@ -42,15 +43,19 @@ fun LauncherSettings(
 
     Scaffold(
         topBar = {
-                SettingsTopBar(
-                    navController = navController,
-                    moment = screenState!!.moment,
-                    onNavigateBack = { navController.navigateUp() }
-                )
+            SettingsTopBar(
+                navController = navController,
+                moment = screenState!!.moment,
+                onNavigateBack = {
+                    if (!navController.navigateUp()) {
+                        onCloseSettings()
+                    }
+                }
+            )
         },
         content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
-                SettingsNavGraph(navController = navController)
+                SettingsNavigation(navController = navController)
             }
         }
     )

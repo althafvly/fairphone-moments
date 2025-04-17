@@ -14,30 +14,22 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.data.repository
+package com.fairphone.spring.launcher.data.datasource
 
-import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import com.fairphone.spring.launcher.data.model.Moment
-
-
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import java.io.IOException
 
-val Context.momentDataStore: DataStore<Moment> by dataStore(
-    fileName = "moment.pb",
-    serializer = MomentSerializer
-)
-
-interface IMomentRepository {
+interface IMomentDataSource {
     fun getActiveMoment(): Flow<Moment>
     suspend fun updateVisibleApps(visibleApps: List<String>)
+    suspend fun updateName(name: String)
 }
 
-class MomentRepository(private val dataStore: DataStore<Moment>) : IMomentRepository {
+class MomentDataSource(private val dataStore: DataStore<Moment>) : IMomentDataSource {
     override fun getActiveMoment(): Flow<Moment> {
         return dataStore.data
             .catch { exception ->
@@ -59,28 +51,14 @@ class MomentRepository(private val dataStore: DataStore<Moment>) : IMomentReposi
                 .build()
         }
     }
-}
 
-/*
-
-
-
-
-class MomentRepository(private val dataStore: DataStore<Moment>) {
-    fun readMoment(): Flow<Moment> {
-        return dataStore.data
-    }
-
-    suspend fun saveMoment(name: String, icon: ImageVector, colors: Pair<Color, Color>, appPackages: List<String>) {
+    override suspend fun updateName(name: String) {
         dataStore.updateData { moment ->
-            moment {
-                this.name = name
-                this.icon = icon.name
-                this.bgColor1 = colors.first.value.toLong()
-                this.bgColor2 = colors.second.value.toLong()
-                this.allowedApps.addAll(appPackages)
-            }
+            moment.toBuilder()
+                .setName(name)
+                .build()
         }
     }
+
 }
-*/
+

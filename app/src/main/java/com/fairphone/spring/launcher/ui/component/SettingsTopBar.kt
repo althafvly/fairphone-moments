@@ -18,6 +18,7 @@ package com.fairphone.spring.launcher.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +27,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -42,17 +42,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.model.getIconVector
-import com.fairphone.spring.launcher.ui.navigation.MomentSettings
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSelector
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSettings
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
@@ -70,46 +67,34 @@ fun SettingsTopBar(
 
     val title = currentDestination?.let {
         when {
-            it.hasRoute<MomentSettings>() -> "Moment settings"
+            //it.hasRoute<MomentSettings>() -> "Moment settings"
             it.hasRoute<VisibleAppSettings>() -> "Visible apps"
             it.hasRoute<VisibleAppSelector>() -> "Select visible apps"
             else -> ""
         }
     } ?: ""
 
-    val isMomentMainSettingsDestination = currentDestination?.hasRoute<MomentSettings>() == true
-
-    if (isMomentMainSettingsDestination) {
-        MomentSettingsTopBar(
-            currentMoment = moment,
-            onEditMomentName = {},
-            modifier = Modifier.windowInsetsPadding(TopAppBarDefaults.windowInsets)
-        )
-    } else {
-        CenterAlignedTopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.background,
-                titleContentColor = MaterialTheme.colorScheme.onBackground,
-            ),
-            title = {
-                Text(
-                    text = title,
-                    style = FairphoneTypography.H4,
-                    color = MaterialTheme.colorScheme.onBackground,
+    CenterAlignedTopAppBar(
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            titleContentColor = MaterialTheme.colorScheme.onBackground,
+        ),
+        title = {
+            Text(
+                text = title,
+                style = FairphoneTypography.H4,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = onNavigateBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = "Localized description"
                 )
-            },
-            navigationIcon = {
-                if (currentDestination?.hasRoute<MomentSettings>() != true) {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                            contentDescription = "Localized description"
-                        )
-                    }
-                }
-            },
-        )
-    }
+            }
+        },
+    )
 }
 
 @Composable
@@ -123,7 +108,7 @@ fun MomentSettingsTopBar(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 40.dp)
+            .padding(bottom = 40.dp)
     ) {
         // Moment Icon
         Box(
@@ -147,45 +132,41 @@ fun MomentSettingsTopBar(
 
         // Moment name + edit button
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.clickable { onEditMomentName() }
         ) {
             Text(
                 text = currentMoment.name,
                 style = FairphoneTypography.H4,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(start = 16.dp)
             )
-            IconButton(
-                onClick = onEditMomentName
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Edit,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface,
-                )
-            }
+            Icon(
+                imageVector = Icons.Outlined.Edit,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurface,
+            )
         }
 
         // Moment active/inactive
-        Box(
-            Modifier
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(size = 100.dp)
-                )
-                .width(74.dp)
-                .height(36.dp)
-                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 8.dp)
-        ) {
-
-            Text(
-                text = stringResource(R.string.moment_state_active),
-                style = FairphoneTypography.BodySmall,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-        }
+//        Box(
+//            Modifier
+//                .border(
+//                    width = 1.dp,
+//                    color = MaterialTheme.colorScheme.outline,
+//                    shape = RoundedCornerShape(size = 100.dp)
+//                )
+//                .width(74.dp)
+//                .height(36.dp)
+//                .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 8.dp)
+//        ) {
+//
+//            Text(
+//                text = stringResource(R.string.moment_state_active),
+//                style = FairphoneTypography.BodySmall,
+//                color = MaterialTheme.colorScheme.onSurface
+//            )
+//        }
     }
 }
 

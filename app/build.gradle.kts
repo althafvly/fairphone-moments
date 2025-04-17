@@ -51,6 +51,15 @@ android {
         base.archivesName = "SpringLauncher_$versionName"
     }
 
+    sourceSets {
+        getByName("main") {
+            java.srcDirs("src/main/java")
+            kotlin.srcDirs("src/main/kotlin")
+            res.srcDirs("src/main/res")
+        }
+    }
+
+
     signingConfigs {
         create("release").apply {
             storeFile = file("../spring_launcher_release_key.jks")

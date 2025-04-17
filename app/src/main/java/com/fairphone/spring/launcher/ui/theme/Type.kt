@@ -56,6 +56,12 @@ object FairphoneTypography {
         fontFamily = DmSans,
         fontWeight = FontWeight.Medium,
     )
+    val H5 = TextStyle(
+        fontSize = 18.sp,
+        lineHeight = 21.6.sp,
+        fontFamily = DmSans,
+        fontWeight = FontWeight(500),
+    )
     // Body
     val BodyMedium = TextStyle(
         fontSize = 16.sp,

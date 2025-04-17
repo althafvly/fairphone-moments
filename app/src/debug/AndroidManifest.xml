@@ -18,9 +18,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <application android:icon="@mipmap/ic_launcher">
+    <application android:icon="@drawable/ic_launcher_png">
         <activity
-            android:name=".activity.LauncherHomeActivity"
+            android:name=".activity.SpringLauncherHomeActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="keyboard|keyboardHidden|mcc|mnc|navigation|orientation|screenSize|screenLayout|smallestScreenSize"
             android:excludeFromRecents="true"

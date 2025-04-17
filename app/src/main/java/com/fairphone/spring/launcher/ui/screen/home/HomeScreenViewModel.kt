@@ -19,40 +19,50 @@ package com.fairphone.spring.launcher.ui.screen.home
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fairphone.spring.launcher.data.datasource.IMomentDataSource
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IMomentRepository
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 class HomeScreenViewModel(
+    context: Context,
     private val appInfoRepository: IAppInfoRepository,
-    private val momentRepository: IMomentRepository
+    private val momentDataSource: IMomentDataSource
 ) : ViewModel() {
 
-    private val _screenState: MutableStateFlow<HomeScreenState> =
-        MutableStateFlow(HomeScreenState())
-    val screenState: StateFlow<HomeScreenState> = _screenState.asStateFlow()
+    private val _dateTime: MutableStateFlow<LocalDateTime> = MutableStateFlow(LocalDateTime.now())
+    val dateTime: StateFlow<LocalDateTime> = _dateTime.asStateFlow()
 
-    fun refreshUiState(context: Context) {
+    val screenState = momentDataSource.getActiveMoment()
+        .map { moment ->
+            val visibleApps = appInfoRepository.getAppInfos(context, moment.visibleAppsList)
+            HomeScreenState(
+                activeMoment = moment,
+                visibleApps = visibleApps
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = HomeScreenState(),
+        )
+
+    init {
         viewModelScope.launch {
-            val currentMoment = momentRepository.getActiveMoment().first()
-            appInfoRepository.getAppInfos(context, currentMoment.visibleAppsList).let { homeApps ->
-                _screenState.update { it.copy(appList = homeApps) }
-            }
-
             while (isActive) {
-                _screenState.update { it.copy(dateTime = LocalDateTime.now()) }
+                _dateTime.update { LocalDateTime.now() }
                 delay(1000)
             }
         }
@@ -64,7 +74,6 @@ class HomeScreenViewModel(
 }
 
 data class HomeScreenState(
-    val dateTime: LocalDateTime = LocalDateTime.now(),
-    val appList: List<AppInfo> = emptyList(),
-    val currentMoment: Moment = Default.DefaultMoment,
+    val visibleApps: List<AppInfo> = emptyList(),
+    val activeMoment: Moment = Default.DefaultMoment,
 )

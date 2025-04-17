@@ -30,7 +30,7 @@ fun Moment.getIconVector(): ImageVector {
 
 object Default {
     val DefaultMoment = moment {
-        name = "Spring"
+        name = "Essentials"
         icon = "Vector"
         bgColor1 = 0xB2C3D1D0
         bgColor2 = 0xB2FFBA63

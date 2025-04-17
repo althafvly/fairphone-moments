@@ -54,18 +54,18 @@ import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 import org.koin.compose.KoinContext
 
-class LauncherHomeActivity : ComponentActivity() {
+class SpringLauncherHomeActivity : ComponentActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, LauncherHomeActivity::class.java).apply {
+            val intent = Intent(context, SpringLauncherHomeActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                         Intent.FLAG_ACTIVITY_CLEAR_TASK or
                         Intent.FLAG_ACTIVITY_NO_ANIMATION
             }
             context.startActivity(intent)
         }
-        private var instance: LauncherHomeActivity? = null
+        private var instance: SpringLauncherHomeActivity? = null
 
         fun stop() {
             Log.d(Constants.LOG_TAG, "Stopping SpringLauncherHomeActivity")
@@ -121,7 +121,7 @@ class LauncherHomeActivity : ComponentActivity() {
                         ),
                     ) {
                         AnimatedBackground(
-                            colors = screenState.currentMoment.colors(),
+                            colors = screenState.activeMoment.colors(),
                             modifier = Modifier
                                 .background(MaterialTheme.colorScheme.background)
                         ) {

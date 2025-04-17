@@ -59,8 +59,8 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.component.ConfirmButton
-import com.fairphone.spring.launcher.ui.component.SelectableAppInfoListItem
-import com.fairphone.spring.launcher.ui.component.SelectedAppInfoListItem
+import com.fairphone.spring.launcher.ui.component.SelectableListItem
+import com.fairphone.spring.launcher.ui.component.SelectedListItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import org.koin.androidx.compose.koinViewModel
@@ -136,10 +136,11 @@ fun VisibleAppSelectorScreen(
                     val appInfo = screenState.appList[index]
                     val isSelected =
                         appInfo.packageName in screenState.visibleApps.map { it.packageName }
-                    SelectableAppInfoListItem(
-                        appInfo = appInfo,
+                    SelectableListItem(
+                        icon = appInfo.icon,
+                        title = appInfo.name,
                         isSelected = isSelected,
-                        onAppToggled = onAppClick
+                        onClick = { onAppClick(appInfo) }
                     )
                 }
             }
@@ -169,6 +170,7 @@ fun VisibleAppSelectorScreen(
                     onClick = onConfirmAppSelection,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(48.dp)
                         .padding(horizontal = 20.dp)
                 )
             }
@@ -322,9 +324,11 @@ fun SelectedAppsRow(
             )
     ) {
         items(selectedApps.size) { index ->
-            SelectedAppInfoListItem(
-                appInfo = selectedApps[index],
-                onDeleteAppClick = onDeletedClick,
+            val appInfo = selectedApps[index]
+            SelectedListItem(
+                icon = appInfo.icon,
+                title = appInfo.name,
+                onDeleteClick = { onDeletedClick(appInfo) },
             )
         }
     }

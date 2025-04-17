@@ -24,7 +24,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.fairphone.spring.launcher.ui.screen.settings.LauncherSettings
+import com.fairphone.spring.launcher.ui.screen.settings.LauncherSettingsScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import org.koin.compose.KoinContext
 
@@ -61,10 +61,11 @@ class LauncherSettingsActivity : ComponentActivity() {
         setContent {
             KoinContext {
                 SpringLauncherTheme {
-                    LauncherSettings()
+                    LauncherSettingsScreen(
+                        onCloseSettings = { finish() }
+                    )
                 }
             }
-
         }
     }
 }

@@ -20,9 +20,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
+import android.content.pm.PackageManager
 import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
+import androidx.core.net.toUri
 import com.fairphone.spring.launcher.data.model.AppInfo
 
 /**
@@ -36,6 +38,14 @@ fun startLauncherIntent(context: Context) {
                 Intent.FLAG_ACTIVITY_NO_ANIMATION
     }
     context.startActivity(intent)
+}
+
+fun getDefaultBrowserPackageName(context: Context): String? {
+    val intent = Intent(Intent.ACTION_VIEW, "https://example.com".toUri())
+    intent.addCategory(Intent.CATEGORY_BROWSABLE) // Specify that it's for browsing
+    val resolveInfo = context.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+
+    return resolveInfo?.activityInfo?.packageName
 }
 
 /**

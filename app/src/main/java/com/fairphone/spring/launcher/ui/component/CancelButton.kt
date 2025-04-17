@@ -29,7 +29,7 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 
 @Composable
-fun ConfirmButton(
+fun CancelButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
@@ -38,14 +38,14 @@ fun ConfirmButton(
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
         )
     ) {
         Text(
-            text = stringResource(R.string.bt_confirm),
+            text = stringResource(R.string.bt_cancel),
             style = FairphoneTypography.AppButtonDefault,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.onSecondaryContainer
         )
     }
 }

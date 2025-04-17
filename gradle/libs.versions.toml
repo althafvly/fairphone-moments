@@ -9,6 +9,7 @@ minSdk = "35"
 
 agp = "8.9.1"
 kotlin = "2.1.10"
+protobuf-plugin = "0.9.5"
 
 androidx-activity-compose = "1.10.1"
 androidx-appcompat = "1.7.0"
@@ -20,7 +21,6 @@ androidx-lifecycle = "2.8.7"
 androidx-navigation = "2.8.9"
 androidx-test-core = "1.6.1"
 coil = "3.1.0"
-google-protobuf-plugin = "0.9.5"
 koin-bom = "4.0.3"
 kotlinx-serialization = "1.8.1"
 protobuf = "4.29.2"
@@ -65,5 +65,5 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-google-protobuf = { id = "com.google.protobuf", version.ref = "google-protobuf-plugin" }
+google-protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 

@@ -17,17 +17,25 @@
 package com.fairphone.spring.launcher.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import com.fairphone.spring.launcher.data.datasource.IMomentDataSource
+import com.fairphone.spring.launcher.data.datasource.MomentDataSource
+import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IMomentRepository
-import com.fairphone.spring.launcher.data.repository.MomentRepository
-import com.fairphone.spring.launcher.data.repository.momentDataStore
+import com.fairphone.spring.launcher.data.repository.MomentSerializer
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val dataModule = module {
     factoryOf(::AppInfoRepository) { bind<IAppInfoRepository>() }
-    factoryOf(::MomentRepository) { bind<IMomentRepository>() }
+    factoryOf(::MomentDataSource) { bind<IMomentDataSource>() }
     single { get<Context>().momentDataStore }
 }
+
+val Context.momentDataStore: DataStore<Moment> by dataStore(
+    fileName = "moment.pb",
+    serializer = MomentSerializer
+)

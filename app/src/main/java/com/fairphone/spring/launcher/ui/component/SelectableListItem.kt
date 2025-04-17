@@ -17,6 +17,7 @@
 package com.fairphone.spring.launcher.ui.component
 
 import android.content.res.Configuration
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -40,22 +41,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import coil3.compose.AsyncImage
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun SelectableAppInfoListItem(
-    appInfo: AppInfo,
+fun SelectableListItem(
+    modifier: Modifier = Modifier,
+    title: String,
     isSelected: Boolean,
-    onAppToggled: (AppInfo) -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit,
+    icon: Drawable? = null,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -63,12 +66,19 @@ fun SelectableAppInfoListItem(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 12.dp)
-            .clickable { onAppToggled(appInfo) },
+            .clickable { onClick() },
     ) {
-        AppIcon(appInfo = appInfo, modifier = Modifier.size(32.dp))
+        icon?.let {
+            AsyncImage(
+                model = it,
+                contentDescription = title,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(32.dp),
+            )
+        }
 
         Text(
-            text = appInfo.name,
+            text = title,
             style = FairphoneTypography.BodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f),
@@ -103,19 +113,14 @@ fun SelectableAppInfoListItem(
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 fun AppInfoListItem_Preview() {
     SpringLauncherTheme {
-        SelectableAppInfoListItem(
-            appInfo = AppInfo(
-                name = "App Name",
-                packageName = "com.example.app",
-                mainActivityClassName = "com.example.app.MainActivity",
-                userUuid = 0,
-                icon = ContextCompat.getDrawable(
-                    LocalContext.current,
-                    R.drawable.ic_launcher_foreground
-                )!!,
-            ),
+        SelectableListItem(
+            title = "App Name",
+            icon = ContextCompat.getDrawable(
+                LocalContext.current,
+                R.drawable.ic_launcher_foreground
+            )!!,
             isSelected = true,
-            onAppToggled = {}
+            onClick = {}
         )
     }
 }

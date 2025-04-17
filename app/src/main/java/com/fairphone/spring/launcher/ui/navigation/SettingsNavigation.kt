@@ -32,7 +32,7 @@ object MomentSettings
 
 
 @Composable
-fun SettingsNavGraph(
+fun SettingsNavigation(
     navController: NavHostController,
 ) = NavHost(
     navController = navController,

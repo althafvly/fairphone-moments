@@ -91,10 +91,10 @@ class SwitchStateChangeActivity : ComponentActivity() {
         } else {
             when (switchState) {
                 SwitchState.ENABLED -> {
-                    LauncherHomeActivity.start(context = this)
+                    SpringLauncherHomeActivity.start(context = this)
                 }
                 SwitchState.DISABLED -> {
-                    LauncherHomeActivity.stop()
+                    SpringLauncherHomeActivity.stop()
                 }
                 null -> {}
             }
@@ -104,7 +104,7 @@ class SwitchStateChangeActivity : ComponentActivity() {
 
     private fun onAnimationDone() {
         if (switchState == SwitchState.DISABLED) {
-            LauncherHomeActivity.stop()
+            SpringLauncherHomeActivity.stop()
         }
         setResult(RESULT_OK)
         finish()

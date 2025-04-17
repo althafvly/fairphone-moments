@@ -23,9 +23,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -34,6 +38,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.ui.FP6Preview
+import com.fairphone.spring.launcher.ui.component.MomentNameEditor
+import com.fairphone.spring.launcher.ui.component.MomentSettingsTopBar
 import com.fairphone.spring.launcher.ui.component.SettingListItem
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import org.koin.androidx.compose.koinViewModel
@@ -48,38 +54,73 @@ fun MomentSettings(
     screenState?.let {
         MomentSettings(
             screenState = it,
+            onEditMomentName = viewModel::updateMomentName,
             onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings
         )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MomentSettings(
     screenState: MomentSettingsScreenState,
+    onEditMomentName: (String) -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)
+    var showMomentNameEditor by remember { mutableStateOf(false) }
+
+    Box(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(size = 12.dp)
-                )
-                .clip(RoundedCornerShape(size = 12.dp))
-                //.clickable { onNavigateToVisibleAppSettings() }
+                .fillMaxSize()
+                .padding(horizontal = 20.dp)
         ) {
-            SettingListItem(
-                title = stringResource(R.string.settings_title_visible_apps),
-                subtitle = screenState.visibleApps.joinToString(", ") { it.name },
-                onClick = onNavigateToVisibleAppSettings
+            MomentSettingsTopBar(
+                currentMoment = screenState.moment,
+                onEditMomentName = {
+                    showMomentNameEditor = true
+                },
+                //modifier = Modifier.windowInsetsPadding(TopAppBarDefaults.windowInsets)
             )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.outline,
+                        shape = RoundedCornerShape(size = 12.dp)
+                    )
+                    .clip(RoundedCornerShape(size = 12.dp))
+            ) {
+                SettingListItem(
+                    title = stringResource(R.string.settings_title_visible_apps),
+                    subtitle = screenState.visibleApps.joinToString(", ") { it.name },
+                    onClick = onNavigateToVisibleAppSettings
+                )
+            }
         }
+
+        MomentNameEditor(
+            show = showMomentNameEditor,
+            currentName = screenState.moment.name,
+            onNameChange = {
+
+            },
+            onConfirm = {
+                onEditMomentName(it)
+                showMomentNameEditor = false
+            },
+            onDismiss = {
+                showMomentNameEditor = false
+            }
+        )
     }
 }
+
+
 
 @Composable
 @FP6Preview()
@@ -90,6 +131,7 @@ fun MomentSettings_Preview() {
                 moment = Default.DefaultMoment,
                 visibleApps = emptyList()
             ),
+            onEditMomentName = {},
             onNavigateToVisibleAppSettings = {})
     }
 }
