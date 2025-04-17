@@ -24,3 +24,5 @@
 -keepclassmembers class * extends androidx.datastore.preferences.protobuf.GeneratedMessageLite {
     <fields>;
 }
+-keep class androidx.datastore.*.** {*;}
+-keep class com.fairphone.** { *; }
