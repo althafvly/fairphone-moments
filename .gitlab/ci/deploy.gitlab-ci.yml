@@ -1,0 +1,82 @@
+deploy:release:apk:gitlab-registry:
+  image: alpine:latest
+  stage: deploy
+  extends: .release-rule
+  needs:
+    - job: build:release
+      artifacts: true
+    - job: test:release
+      artifacts: false
+    - job: lint:release
+      artifacts: false
+  variables:
+    FILENAME: SpringLauncher_${CI_COMMIT_TAG}-release.apk
+    ARTIFACT_PREFIX: app/build/outputs/apk/release
+    ARTIFACT_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/apk/${CI_COMMIT_TAG}/${FILENAME}
+  before_script:
+    - apk --no-cache add curl
+    - echo "Uploading ${ARTIFACT_PREFIX}/${FILENAME} to ${ARTIFACT_URL}"
+  script:
+    - |
+      curl --fail --location --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+      --upload-file $ARTIFACT_PREFIX/$FILENAME \
+      $ARTIFACT_URL
+    - echo "ARTIFACT_URL=$ARTIFACT_URL" >> upload.env
+    - echo "FILENAME=$FILENAME" >> upload.env
+  artifacts:
+    reports:
+      dotenv: upload.env
+
+deploy:release:bundle:play-store:internal:
+  image: fabernovel/android:api-35-v1.9.0
+  extends: .release-rule
+  interruptible: true
+  stage: deploy
+  rules:
+    - !reference [ .release-rule, rules ]
+  needs:
+    - job: build:release:bundle
+      artifacts: true
+    - job: test:release
+      artifacts: false
+    - job: lint:release
+      artifacts: false
+  variables:
+    SECURE_FILES_DOWNLOAD_PATH: './'
+  script:
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - bundle install
+#    - bundle exec fastlane internal
+    - bundle exec fastlane supply
+      --aab app/build/outputs/bundle/release/SpringLauncher_${CI_COMMIT_TAG}-release.aab
+      --track internal
+      --release_status draft
+
+
+
+#upload:drive:
+#  image: rclone/rclone
+#  stage: deploy
+#  extends: .release-rule
+#  needs:
+#    - job: build:release
+#      artifacts: true
+#    - job: test:release
+#      artifacts: false
+#    - job: lint:release
+#      artifacts: false
+#  variables:
+#    FILENAME: SpringLauncher_${CI_COMMIT_TAG}-release.apk
+#    ARTIFACT_PREFIX: app/build/outputs/apk/release
+#  before_script:
+#    - echo "$RCLONE_CONFIG" > rclone.config
+#    - _rclone() { rclone --config ./rclone.config $@; }
+#  script:
+#    - _rclone copy "$ARTIFACT_PREFIX/$FILENAME" "releases:"
+#    - GDRIVE_ID="$(_rclone lsf --format "i" "releases:$FILENAME")"
+#    - echo "ARTIFACT_URL=https://drive.google.com/file/d/$GDRIVE_ID/view" > upload.env
+#    - echo "FILENAME=$FILENAME" >> upload.env
+#  artifacts:
+#    reports:
+#      dotenv: upload.env
+

@@ -1,0 +1,52 @@
+sign:release:apk:
+  extends: .release-rule
+  image: openjdk:8-jdk
+  interruptible: true
+  stage: sign
+  dependencies:
+    - build:release
+  variables:
+    APK_BUILD_PATH: app/build/outputs/apk/release
+    UNSIGNED_APK_PATH: SpringLauncher_${CI_COMMIT_TAG}-release.apk
+    SIGNED_APK_PATH: SpringLauncher_${CI_COMMIT_TAG}-release-signed.apk
+    SECURE_FILES_DOWNLOAD_PATH: '$(pwd)'
+    KEYSTORE_FILE: spring_launcher_release_key.jks
+  before_script:
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+  script:
+    - apksigner sign
+      -ks $SECURE_FILES_DOWNLOAD_PATH/$KEYSTORE_FILE
+      --ks-pass env:KEYSTORE_PASSWORD
+      -ks-key-alias $KEY_ALIAS
+      --key-pass env:KEY_PASSWORD
+      --out $SIGNED_APK_PATH
+      $APK_BUILD_PATH/$UNSIGNED_APK_PATH
+  artifacts:
+    paths:
+      - $SIGNED_APK_PATH
+
+sign:release:bundle:
+  extends: .release-rule
+  image: openjdk:8-jdk
+  interruptible: true
+  stage: sign
+  dependencies:
+    - build:release:bundle
+  variables:
+    BUNDLE_BUILD_PATH: app/build/outputs/bundle/release
+    UNSIGNED_BUNDLE_PATH: SpringLauncher_${CI_COMMIT_TAG}-release.aab
+    SIGNED_BUNDLE_PATH: SpringLauncherApp-release-signed.aab
+    SECURE_FILES_DOWNLOAD_PATH: '$(pwd)/'
+    KEYSTORE_FILE: spring_launcher_release_key.jks
+  before_script:
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+  script:
+    - jarsigner
+      -keystore $(pwd)/$KEYSTORE_FILE
+      -storepass $FAIRPHONE_FAIRBUDS_ANDROID_KEYSTORE_PASSWORD
+      -keypass $FAIRPHONE_FAIRBUDS_ANDROID_KEY_PASSWORD
+      -signedjar $SIGNED_BUNDLE_PATH
+      $BUNDLE_BUILD_PATH/$UNSIGNED_BUNDLE_PATH $FAIRPHONE_FAIRBUDS_ANDROID_KEY_ALIAS
+  artifacts:
+    paths:
+      - $SIGNED_BUNDLE_PATH

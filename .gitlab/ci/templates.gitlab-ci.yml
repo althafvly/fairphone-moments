@@ -1,0 +1,3 @@
+include:
+  - local: .gitlab/ci/templates/gradle-android-job.gitlab-ci.yml
+  - local: .gitlab/ci/templates/rules.gitlab-ci.yml

@@ -1,0 +1,14 @@
+.gradle-android-job:
+  image: cimg/android:2025.04
+  extends: .rule:if-no-version-upgrade-requested
+  variables:
+    GRADLE_OPTS: "-Dorg.gradle.project.ci=true -Dorg.gradle.daemon=false"
+  before_script:
+    - export GRADLE_USER_HOME=$(pwd)/.gradle
+  cache:
+    # Re-use the cache when the branch or tag name matches
+    key: $CI_COMMIT_REF_NAME
+    paths:
+      - .gradle/
+      - build/
+      - app/build/
