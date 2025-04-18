@@ -1,0 +1,16 @@
+lint:debug:
+  extends:
+    - .gradle-android-job
+  interruptible: true
+  stage: test
+  script:
+    - ./gradlew lintDebug -PbuildDir=lint
+
+lint:release:
+  extends:
+    - .gradle-android-job
+    - .release-rule
+  interruptible: true
+  stage: test
+  script:
+    - ./gradlew lintRelease -PbuildDir=lint

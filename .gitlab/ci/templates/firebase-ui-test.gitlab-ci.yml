@@ -1,0 +1,15 @@
+.firebase-ui-test:
+  image: google/cloud-sdk:alpine
+  variables:
+    PROJECT_ID: fairphone-app
+  script:
+    - gcloud components update
+    - echo $GCLOUD_SERVICE_ACCOUNT > /tmp/gcloud-service-account.json
+    - gcloud auth activate-service-account --key-file /tmp/gcloud-service-account.json
+    - gcloud firebase test android run
+      --type instrumentation
+      --project $PROJECT_ID
+      --app $APK
+      --test $TEST_APK
+      --device model=redfin,version=30
+      --client-details matrixLabel="$CI_COMMIT_BRANCH $CI_COMMIT_SHORT_SHA $CI_JOB_NAME"

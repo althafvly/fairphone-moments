@@ -29,7 +29,7 @@ val versionMajor: String by project
 val versionMinor: String by project
 val versionPatch: String by project
 
-val appVersionCode = versionMajor.toInt() * 100000 + versionMinor.toInt() * 100 + versionPatch.toInt()
+val appVersionCode = versionMajor.toInt() * 10000 + versionMinor.toInt() * 100 + versionPatch.toInt()
 val appVersionName = "$versionMajor.$versionMinor.$versionPatch"
 
 android {
@@ -61,8 +61,8 @@ android {
 
 
     signingConfigs {
-        create("release").apply {
-            storeFile = file("../spring_launcher_release_key.jks")
+        maybeCreate("release").apply {
+            storeFile = file("$rootDir/spring_launcher_release_key.jks")
             storePassword = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEYSTORE_PASSWORD")
             keyAlias = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_ALIAS")
             keyPassword = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_PASSWORD")

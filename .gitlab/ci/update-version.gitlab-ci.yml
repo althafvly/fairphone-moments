@@ -1,0 +1,14 @@
+# Job to update the version in a new commit.
+#
+# If this is run, no other job should be run because they will not pick up the
+# change committed by this job. To make sure this is the case, all other jobs
+# should extend .rule:if-no-version-upgrade-requested
+update-version:
+  image:
+    name: alpine/git
+    entrypoint: [ "/bin/busybox" ]
+  rules:
+    - !reference [ .rule:if-version-upgrade-requested, rules ]
+  stage: build
+  script:
+    - scripts/change-version.sh $NEW_VERSION

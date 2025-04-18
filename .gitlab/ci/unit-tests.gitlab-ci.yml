@@ -1,0 +1,28 @@
+test:debug:
+  extends: .gradle-android-job
+  interruptible: true
+  stage: test
+  script:
+    - ./gradlew testDebugUnitTest
+  artifacts:
+    reports:
+      junit:
+        - app/build/test-results/testDebugUnitTest/TEST-*.xml
+    paths:
+      - app/build/test-results/testDebugUnitTest/TEST-*.xml
+
+# Run unit tests in the 'domain' module
+test:release:
+  extends:
+    - .gradle-android-job
+    - .release-rule
+  interruptible: true
+  stage: test
+  script:
+    - ./gradlew testReleaseUnitTest
+  artifacts:
+    reports:
+      junit:
+        - app/build/test-results/testReleaseUnitTest/TEST-*.xml
+    paths:
+      - app/build/test-results/testReleaseUnitTest/TEST-*.xml

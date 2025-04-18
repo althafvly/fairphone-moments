@@ -1,0 +1,44 @@
+#deploy:debug:
+#  stage: deploy
+#  image: andreysenov/firebase-tools:latest
+#  interruptible: true
+#  rules:
+#    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+#      when: never
+#    - !reference [ .rule:if-no-version-upgrade-requested, rules ]
+#    - when: never
+#  variables:
+#    APK: SpringLauncherApp-debug.apk
+#    APP_ID: "1:143699164046:android:c225893df5e44e0c"
+#    TESTERS_FILE_PATH: "firebase-testers.txt"
+#  dependencies:
+#    - build:debug
+#    - lint:debug
+#    - test:debug
+#  script:
+#    - firebase appdistribution:distribute $APK
+#      --app $APP_ID
+#      --token $FIREBASE_TOKEN
+#      --release-notes "$CI_COMMIT_MESSAGE"
+#      --testers-file $TESTERS_FILE_PATH
+
+
+deploy:release:bundle:internal-testing:
+  image: fabernovel/android:api-35-v1.9.0
+  extends: .release-rule
+  interruptible: true
+  stage: deploy
+  rules:
+    - !reference [ .release-rule, rules ]
+  needs:
+    - job: build:release:bundle
+      artifacts: true
+    - job: test:release
+      artifacts: false
+    - job: lint:release
+      artifacts: false
+  script:
+#    - fastlane beta
+    - fastlane supply
+      --aab app/build/outputs/bundle/release/SpringLauncher_${CI_COMMIT_TAG}-release.aab
+      --track internal-testing
