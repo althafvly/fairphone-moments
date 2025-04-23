@@ -41,10 +41,9 @@ deploy:release:bundle:play-store:internal:
       artifacts: false
     - job: lint:release
       artifacts: false
-  variables:
-    SECURE_FILES_DOWNLOAD_PATH: './'
+  before_script:
+    - echo "$play_store_service_account" > play-store-service-account.json
   script:
-    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - bundle install
 #    - bundle exec fastlane internal
     - bundle exec fastlane supply
