@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <string name="app_name" translatable="false">Spring Launcher</string>
+    <string name="app_name" translatable="false">Fairphone Moments</string>
 
     <string name="settings_title_visible_apps" translatable="false">Visible apps</string>
     <string name="moment_state_active">Active</string>
