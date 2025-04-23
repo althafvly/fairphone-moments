@@ -19,11 +19,10 @@ package com.fairphone.spring.launcher.ui.screen.settings.main
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fairphone.spring.launcher.data.datasource.IMomentDataSource
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
+import com.fairphone.spring.launcher.data.repository.IMomentRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -33,10 +32,10 @@ import kotlinx.coroutines.launch
 class MomentSettingsViewModel(
     context: Context,
     private val appInfoRepository: IAppInfoRepository,
-    private val momentDataSource: IMomentDataSource,
+    private val momentRepository: IMomentRepository,
 ) : ViewModel() {
 
-    val screenState: StateFlow<MomentSettingsScreenState?> = momentDataSource.getActiveMoment()
+    val screenState: StateFlow<MomentSettingsScreenState?> = momentRepository.getActiveMoment()
         .map { moment ->
             val visibleApps = appInfoRepository.getAppInfos(context, moment.visibleAppsList)
             MomentSettingsScreenState(
@@ -51,12 +50,12 @@ class MomentSettingsViewModel(
 
     fun updateMomentName(name: String) {
         viewModelScope.launch {
-            momentDataSource.updateName(name)
+            momentRepository.updateName(name)
         }
     }
 }
 
 data class MomentSettingsScreenState(
-    val moment: Moment = Default.DefaultMoment,
+    val moment: Moment,
     val visibleApps: List<AppInfo> = emptyList(),
 )

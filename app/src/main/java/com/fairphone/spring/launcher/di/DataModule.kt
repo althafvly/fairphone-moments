@@ -24,14 +24,17 @@ import com.fairphone.spring.launcher.data.datasource.MomentDataSource
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
-import com.fairphone.spring.launcher.data.repository.MomentSerializer
+import com.fairphone.spring.launcher.data.repository.IMomentRepository
+import com.fairphone.spring.launcher.data.repository.MomentRepository
+import com.fairphone.spring.launcher.data.serializer.MomentSerializer
 import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dataModule = module {
-    factoryOf(::AppInfoRepository) { bind<IAppInfoRepository>() }
-    factoryOf(::MomentDataSource) { bind<IMomentDataSource>() }
+    singleOf(::AppInfoRepository) { bind<IAppInfoRepository>() }
+    singleOf(::MomentRepository) { bind<IMomentRepository>() }
+    singleOf(::MomentDataSource) { bind<IMomentDataSource>() }
     single { get<Context>().momentDataStore }
 }
 

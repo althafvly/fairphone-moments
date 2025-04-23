@@ -10,4 +10,38 @@ message Moment {
     int64 bgColor1 = 3;
     int64 bgColor2 = 4;
     repeated string visibleApps = 5;
+    AllowedContacts allowedContacts = 6;
+    repeated string customContacts = 7;
+    bool repeatCallEnabled = 8;
+    repeated string appNotifications = 9;
+    int32 wallpaperId = 10;
+    DarkModeSetting darkModeSetting = 11;
+    bool blueLightFilterEnabled = 12;
+    SoundSetting soundSetting = 13;
+    bool batterySaverEnabled = 14;
+    bool reduceBrightnessEnabled = 15;
+    bool ecoChargeEnabled = 16;
+    bool alwaysOnDisplayEnabled = 17;
+    bool airplaneModeEnabled = 18;
+}
+
+enum AllowedContacts {
+    EVERYONE = 0;
+    NONE = 1;
+    ALL_CONTACTS = 2;
+    STARRED_CONTACTS = 3;
+    CUSTOM = 4;
+}
+
+enum DarkModeSetting {
+    LIGHT = 0;
+    DARK = 1;
+    SYSTEM = 2;
+}
+
+enum SoundSetting {
+    LOUD = 0;
+    VIBRATE = 1;
+    SILENT = 2;
+    FOLLOW_DEVICE_SETTINGS = 3;
 }

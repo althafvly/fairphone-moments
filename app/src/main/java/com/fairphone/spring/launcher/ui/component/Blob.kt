@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.PathParser
-import com.fairphone.spring.launcher.data.model.Presets
 
 /**
  * Shape for the background of the home screen
@@ -86,6 +85,7 @@ fun Blob_Preview() {
 /**
  * Alternative implementation of the background shape of the home screen
  */
+@Suppress("DEPRECATION")
 class ShapePath(private val pathData: String) : Shape {
 
     override fun createOutline(

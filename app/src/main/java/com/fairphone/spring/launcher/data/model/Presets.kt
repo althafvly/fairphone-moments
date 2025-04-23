@@ -18,17 +18,6 @@ package com.fairphone.spring.launcher.data.model
 
 import androidx.compose.ui.graphics.Color
 
-/*
-@Serializable
-data class Moment(
-    val name: String,
-    val icon: String,
-    val bgColors: Pair<Long, Long>,
-)
-*/
-
-
-
 object Presets {
     val Essentials = moment {
         name = "Spring"

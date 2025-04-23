@@ -19,11 +19,10 @@ package com.fairphone.spring.launcher.ui.screen.home
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fairphone.spring.launcher.data.datasource.IMomentDataSource
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.Default
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
+import com.fairphone.spring.launcher.data.repository.IMomentRepository
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,13 +39,13 @@ import java.time.LocalDateTime
 class HomeScreenViewModel(
     context: Context,
     private val appInfoRepository: IAppInfoRepository,
-    private val momentDataSource: IMomentDataSource
+    private val momentRepository: IMomentRepository,
 ) : ViewModel() {
 
     private val _dateTime: MutableStateFlow<LocalDateTime> = MutableStateFlow(LocalDateTime.now())
     val dateTime: StateFlow<LocalDateTime> = _dateTime.asStateFlow()
 
-    val screenState = momentDataSource.getActiveMoment()
+    val screenState = momentRepository.getActiveMoment()
         .map { moment ->
             val visibleApps = appInfoRepository.getAppInfos(context, moment.visibleAppsList)
             HomeScreenState(
@@ -56,7 +55,7 @@ class HomeScreenViewModel(
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            initialValue = HomeScreenState(),
+            initialValue = null,
         )
 
     init {
@@ -74,6 +73,6 @@ class HomeScreenViewModel(
 }
 
 data class HomeScreenState(
+    val activeMoment: Moment,
     val visibleApps: List<AppInfo> = emptyList(),
-    val activeMoment: Moment = Default.DefaultMoment,
 )

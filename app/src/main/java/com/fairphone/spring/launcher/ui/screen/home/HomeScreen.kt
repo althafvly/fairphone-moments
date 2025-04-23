@@ -76,12 +76,14 @@ fun HomeScreen(
                 dateTime.format(DateTimeFormatter.ofPattern(CLOCK_TIME_FORMAT))
     }
 
+    screenState ?: return
+
     HomeScreen(
         date = date,
         time = time,
         modeButtonIcon = Icons.Filled.Settings,
-        modeButtonText = screenState.activeMoment.name,
-        appList = screenState.visibleApps,
+        modeButtonText = screenState!!.activeMoment.name,
+        appList = screenState!!.visibleApps,
         onAppClick = { appInfo ->
             viewModel.onAppClick(context, appInfo)
         },

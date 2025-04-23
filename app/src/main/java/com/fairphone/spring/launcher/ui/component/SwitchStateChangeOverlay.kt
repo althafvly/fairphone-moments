@@ -52,14 +52,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.model.SwitchState
-import com.fairphone.spring.launcher.ui.modeicons.fromString
+import com.fairphone.spring.launcher.data.model.getIconVector
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import kotlinx.coroutines.delay
@@ -166,7 +165,7 @@ fun SwitchStateChangeOverlay(
                 horizontalAlignment = Alignment.End,
             ) {
                 Icon(
-                    imageVector = ImageVector.fromString(moment.icon),
+                    imageVector = moment.getIconVector(),
                     contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.rotate(iconRotationAngle)

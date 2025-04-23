@@ -35,7 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Default
+import com.fairphone.spring.launcher.data.serializer.MomentSerializer
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.component.MomentNameEditor
 import com.fairphone.spring.launcher.ui.component.MomentSettingsTopBar
@@ -107,7 +107,7 @@ fun MomentSettings_Preview() {
     SpringLauncherTheme {
         MomentSettings(
             screenState = MomentSettingsScreenState(
-                moment = Default.DefaultMoment,
+                moment = MomentSerializer.defaultValue,
                 visibleApps = emptyList()
             ),
             onEditMomentName = {},
