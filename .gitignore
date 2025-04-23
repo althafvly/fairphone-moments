@@ -12,5 +12,5 @@
 .kotlin/%
 
 # Secrets files
-./play-store-service-account.json
-./spring_launcher_release_key.jks
+play-store-service-account.json
+spring_launcher_release_key.jks
