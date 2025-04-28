@@ -19,26 +19,39 @@ package com.fairphone.spring.launcher.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.fairphone.spring.launcher.data.datasource.IMomentDataSource
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import com.fairphone.spring.launcher.data.AppPrefs
+import com.fairphone.spring.launcher.data.AppPrefsImpl
 import com.fairphone.spring.launcher.data.datasource.MomentDataSource
+import com.fairphone.spring.launcher.data.datasource.MomentDataSourceImpl
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IMomentRepository
+import com.fairphone.spring.launcher.data.repository.AppInfoRepositoryImpl
 import com.fairphone.spring.launcher.data.repository.MomentRepository
+import com.fairphone.spring.launcher.data.repository.MomentRepositoryImpl
 import com.fairphone.spring.launcher.data.serializer.MomentSerializer
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dataModule = module {
-    singleOf(::AppInfoRepository) { bind<IAppInfoRepository>() }
-    singleOf(::MomentRepository) { bind<IMomentRepository>() }
-    singleOf(::MomentDataSource) { bind<IMomentDataSource>() }
-    single { get<Context>().momentDataStore }
+    singleOf(::AppInfoRepositoryImpl) { bind<AppInfoRepository>() }
+    singleOf(::MomentRepositoryImpl) { bind<MomentRepository>() }
+    singleOf(::MomentDataSourceImpl) { bind<MomentDataSource>() }
+    singleOf(::AppPrefsImpl) { bind<AppPrefs>() }
 }
 
+/**
+ * DataStore used to store App Prefs
+ */
+val Context.appPrefsDataStore: DataStore<Preferences> by preferencesDataStore(name = "app_prefs")
+
+/**
+ * DataStore used to store Moments
+ */
 val Context.momentDataStore: DataStore<Moment> by dataStore(
     fileName = "moment.pb",
     serializer = MomentSerializer
 )
+

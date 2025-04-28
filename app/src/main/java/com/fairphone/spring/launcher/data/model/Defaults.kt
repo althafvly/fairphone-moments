@@ -36,8 +36,7 @@ object Defaults {
     val DEFAULT_VISIBLE_APPS = listOf(
         "com.google.android.dialer",
         "com.google.android.apps.messaging",
-        "com.android.chrome",
-        "com.fps.camera", // Camera app FP6
+        "com.fps.camera",
         "com.google.android.apps.maps",
     )
     val DEFAULT_ALLOWED_CONTACTS = AllowedContacts.NONE

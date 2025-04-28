@@ -24,13 +24,13 @@ import com.fairphone.spring.launcher.data.model.AppInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-interface IAppInfoRepository {
+interface AppInfoRepository {
     suspend fun getInstalledAppsLauncherApps(context: Context): List<AppInfo>
     suspend fun getAppInfo(context: Context, packageName: String): AppInfo?
     suspend fun getAppInfos(context: Context, packageNames: List<String>): List<AppInfo>
 }
 
-class AppInfoRepository : IAppInfoRepository {
+class AppInfoRepositoryImpl : AppInfoRepository {
 
     override suspend fun getInstalledAppsLauncherApps(context: Context): List<AppInfo> =
         getInstalledAppsLauncherApps(context, null)

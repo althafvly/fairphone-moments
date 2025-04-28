@@ -21,8 +21,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.Moment
-import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IMomentRepository
+import com.fairphone.spring.launcher.data.repository.AppInfoRepository
+import com.fairphone.spring.launcher.data.repository.MomentRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -31,8 +31,8 @@ import kotlinx.coroutines.launch
 
 class MomentSettingsViewModel(
     context: Context,
-    private val appInfoRepository: IAppInfoRepository,
-    private val momentRepository: IMomentRepository,
+    private val appInfoRepository: AppInfoRepository,
+    private val momentRepository: MomentRepository,
 ) : ViewModel() {
 
     val screenState: StateFlow<MomentSettingsScreenState?> = momentRepository.getActiveMoment()

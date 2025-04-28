@@ -22,8 +22,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
-import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IMomentRepository
+import com.fairphone.spring.launcher.data.repository.AppInfoRepository
+import com.fairphone.spring.launcher.data.repository.MomentRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,8 +33,8 @@ import kotlinx.coroutines.launch
 
 class VisibleAppSettingsViewModel(
     context: Context,
-    appInfoRepository: IAppInfoRepository,
-    private val momentRepository: IMomentRepository,
+    appInfoRepository: AppInfoRepository,
+    private val momentRepository: MomentRepository,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(VisibleAppSelectorScreenState())

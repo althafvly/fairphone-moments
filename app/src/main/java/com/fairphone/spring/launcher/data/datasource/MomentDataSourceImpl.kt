@@ -16,18 +16,21 @@
 
 package com.fairphone.spring.launcher.data.datasource
 
+import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
 import com.fairphone.spring.launcher.data.model.AllowedContacts
 import com.fairphone.spring.launcher.data.model.DarkModeSetting
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.model.SoundSetting
+import com.fairphone.spring.launcher.di.momentDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import java.io.IOException
 
-interface IMomentDataSource {
+interface MomentDataSource {
     fun getActiveMoment(): Flow<Moment>
+    suspend fun updateMoment(moment: Moment)
     suspend fun updateVisibleApps(visibleApps: List<String>)
     suspend fun updateName(name: String)
     suspend fun updateAllowedContacts(allowedContacts: AllowedContacts)
@@ -45,7 +48,9 @@ interface IMomentDataSource {
     suspend fun updateAirplaneModeEnabled(enabled: Boolean)
 }
 
-class MomentDataSource(private val dataStore: DataStore<Moment>) : IMomentDataSource {
+class MomentDataSourceImpl(context: Context) : MomentDataSource {
+    private val dataStore: DataStore<Moment> = context.momentDataStore
+
     override fun getActiveMoment(): Flow<Moment> {
         return dataStore.data
             .catch { exception ->
@@ -57,6 +62,10 @@ class MomentDataSource(private val dataStore: DataStore<Moment>) : IMomentDataSo
                     throw exception
                 }
             }
+    }
+
+    override suspend fun updateMoment(moment: Moment) {
+        dataStore.updateData { moment }
     }
 
     override suspend fun updateVisibleApps(visibleApps: List<String>) {

@@ -24,7 +24,6 @@ object Presets {
         icon = "Vector"
         bgColor1 = 0xB2C3D1D0
         bgColor2 = 0xB2FFBA63
-        visibleApps.addAll(Default_Launcher_Apps)
     }
     val Journey = moment {
         name = "Journey"

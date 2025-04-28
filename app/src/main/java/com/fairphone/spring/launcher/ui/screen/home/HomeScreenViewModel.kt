@@ -21,8 +21,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.Moment
-import com.fairphone.spring.launcher.data.repository.IAppInfoRepository
-import com.fairphone.spring.launcher.data.repository.IMomentRepository
+import com.fairphone.spring.launcher.data.repository.AppInfoRepository
+import com.fairphone.spring.launcher.data.repository.MomentRepository
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,8 +38,8 @@ import java.time.LocalDateTime
 
 class HomeScreenViewModel(
     context: Context,
-    private val appInfoRepository: IAppInfoRepository,
-    private val momentRepository: IMomentRepository,
+    private val appInfoRepository: AppInfoRepository,
+    private val momentRepository: MomentRepository,
 ) : ViewModel() {
 
     private val _dateTime: MutableStateFlow<LocalDateTime> = MutableStateFlow(LocalDateTime.now())

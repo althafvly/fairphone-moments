@@ -22,7 +22,7 @@ data class AppInfo(
     val name: String,
     val packageName: String,
     val mainActivityClassName: String,
-    val userUuid: Int,
+    val userUuid: Int = 0,
     val icon: Drawable,
 ) {
     override fun equals(other: Any?): Boolean {
@@ -40,11 +40,3 @@ data class AppInfo(
 }
 
 const val LAUNCHER_MAX_APP_COUNT = 5
-
-val Default_Launcher_Apps = listOf(
-    "com.google.android.dialer",
-    "com.google.android.apps.messaging",
-    "com.android.chrome",
-    "com.fps.camera", // Camera app FP6
-    "com.google.android.apps.maps",
-)

@@ -17,15 +17,26 @@
 package com.fairphone.spring.launcher
 
 import android.app.Application
+import android.content.Context
 import androidx.annotation.VisibleForTesting
+import com.fairphone.spring.launcher.data.AppPrefsImpl
+import com.fairphone.spring.launcher.data.repository.MomentRepository
 import com.fairphone.spring.launcher.di.dataModule
 import com.fairphone.spring.launcher.di.uiModule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
-class App : Application() {
+class App : Application(), KoinComponent {
 
     companion object {
         @VisibleForTesting
@@ -34,6 +45,10 @@ class App : Application() {
             dataModule,
         )
     }
+
+    private val appPrefs: AppPrefsImpl by inject()
+    private val momentRepository: MomentRepository by inject()
+    private lateinit var applicationScope: CoroutineScope
 
     override fun onCreate() {
         super.onCreate()
@@ -44,5 +59,27 @@ class App : Application() {
             androidLogger(level = if (BuildConfig.DEBUG) Level.DEBUG else Level.INFO)
             modules(koinModules)
         }
+        initApp(this)
+    }
+
+    private fun initApp(context: Context) {
+        applicationScope = MainScope()
+        applicationScope.launch {
+            prepareInitialMoment(context)
+        }
+    }
+
+    //TODO: This probably should be moved elsewhere
+    private suspend fun prepareInitialMoment(context: Context) = withContext(Dispatchers.IO) {
+        if (appPrefs.isFistTimeUse()) {
+            momentRepository.initFirstMoment(context)
+            appPrefs.setFirstTimeUse(false)
+        }
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        applicationScope.cancel()
+        applicationScope = MainScope()
     }
 }

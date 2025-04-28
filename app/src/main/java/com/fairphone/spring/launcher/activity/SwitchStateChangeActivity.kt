@@ -42,7 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.fairphone.spring.launcher.data.model.Moment
 import com.fairphone.spring.launcher.data.model.SwitchState
-import com.fairphone.spring.launcher.data.repository.IMomentRepository
+import com.fairphone.spring.launcher.data.repository.MomentRepository
 import com.fairphone.spring.launcher.ui.component.SwitchStateChangeOverlayScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
@@ -52,7 +52,7 @@ import org.koin.compose.KoinContext
 
 class SwitchStateChangeActivity : ComponentActivity() {
 
-    private val momentRepository: IMomentRepository by inject()
+    private val momentRepository: MomentRepository by inject()
     private var switchState: SwitchState? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

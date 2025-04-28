@@ -136,6 +136,7 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.kotlinx.serialization)
     implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.protobuf.kotlin.lite)
 
     debugImplementation(libs.androidx.compose.ui.tooling)

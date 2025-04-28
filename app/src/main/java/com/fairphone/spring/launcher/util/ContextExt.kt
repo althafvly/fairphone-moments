@@ -40,12 +40,15 @@ fun startLauncherIntent(context: Context) {
     context.startActivity(intent)
 }
 
-fun getDefaultBrowserPackageName(context: Context): String? {
+/**
+ * @return the package name of the default browser app.
+ */
+fun getDefaultBrowserPackageName(context: Context): String {
     val intent = Intent(Intent.ACTION_VIEW, "https://example.com".toUri())
     intent.addCategory(Intent.CATEGORY_BROWSABLE) // Specify that it's for browsing
     val resolveInfo = context.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
 
-    return resolveInfo?.activityInfo?.packageName
+    return resolveInfo?.activityInfo?.packageName ?: "com.android.chrome"
 }
 
 /**
