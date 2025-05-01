@@ -21,37 +21,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreen
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsScreen
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.contacts.AllowedContactSettingsScreen
+import com.fairphone.spring.launcher.ui.screen.settings.contacts.AllowedContactSettingsViewModel
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
 @Serializable
-object VisibleAppSettings
+object AllowedContactSettings
 
-@Serializable
-object VisibleAppSelector
-
-
-fun NavGraphBuilder.visibleAppSettingsNavGraph(navController: NavHostController) {
-    // Visible App Settings Screen
-    composable<VisibleAppSettings> {
-        VisibleAppSettingsScreen()
-    }
-
-    // Visible App Selector Screen
-    composable<VisibleAppSelector> {
-        val viewModel: VisibleAppSettingsViewModel = koinViewModel()
+fun NavGraphBuilder.allowedContactSettingsNavGraph(navController: NavHostController) {
+    //Allowed Contact Settings Screen
+    composable<AllowedContactSettings> {
+        val viewModel: AllowedContactSettingsViewModel = koinViewModel()
         val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
-        VisibleAppSelectorScreen(
+        AllowedContactSettingsScreen(
             screenState = screenState,
-            onAppClick = viewModel::onAppClick,
-            onAppDeselected = viewModel::removeVisibleApp,
-            onConfirmAppSelection = {
-                viewModel.confirmAppSelection()
-                navController.navigateUp()
+            onContactTypeSelected = { contactType ->
+                viewModel.onContactTypeSelected(contactType)
             }
         )
     }

@@ -33,27 +33,22 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fairphone.spring.launcher.activity.viewmodel.SwitchStateChangeViewModel
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SwitchState
-import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.ui.component.SwitchStateChangeOverlayScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
-import kotlinx.coroutines.flow.first
 import org.koin.android.ext.android.inject
 import org.koin.compose.KoinContext
 
 class SwitchStateChangeActivity : ComponentActivity() {
 
-    private val launcherProfileRepository: LauncherProfileRepository by inject()
-    private var switchState: SwitchState? = null
+    private val viewModel: SwitchStateChangeViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge(
@@ -75,28 +70,27 @@ class SwitchStateChangeActivity : ComponentActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
-        switchState = getSwitchState(intent) ?: run {
+        val switchState = getSwitchState(intent) ?: run {
             Log.e(Constants.LOG_TAG, "Could not read switch state")
             finish()
             return
         }
 
+        // handleDnd
+        handleDnd(switchState)
+
         if (shouldShowOverlay(intent)) {
             setContent {
                 KoinContext {
                     SpringLauncherTheme {
-                        var activeProfile: LauncherProfile? by remember { mutableStateOf(null) }
+                        val activeProfile by viewModel.activeProfile.collectAsStateWithLifecycle()
 
-                        LaunchedEffect(Unit) {
-                            activeProfile = launcherProfileRepository.getActiveProfile().first()
-                        }
-
-                        if (activeProfile != null && switchState != null) {
+                        if (activeProfile != null) {
                             SwitchStateChangeScreen(
                                 activeProfile = activeProfile!!,
-                                switchButtonSwitchState = switchState!!,
+                                switchButtonSwitchState = switchState,
                                 onOverlayAnimationDone = {
-                                    onAnimationDone()
+                                    onAnimationDone(switchState)
                                 }
                             )
                         }
@@ -108,16 +102,31 @@ class SwitchStateChangeActivity : ComponentActivity() {
                 SwitchState.ENABLED -> {
                     SpringLauncherHomeActivity.start(context = this)
                 }
+
                 SwitchState.DISABLED -> {
                     SpringLauncherHomeActivity.stop()
                 }
-                null -> {}
             }
-            onAnimationDone()
+            onAnimationDone(switchState)
         }
     }
 
-    private fun onAnimationDone() {
+    private fun handleDnd(switchState: SwitchState) {
+        when (switchState) {
+            SwitchState.ENABLED -> enableDnd()
+            SwitchState.DISABLED -> disableDnd()
+        }
+    }
+
+    private fun enableDnd() {
+        viewModel.enableDnd(enabled = true)
+    }
+
+    private fun disableDnd() {
+        viewModel.enableDnd(enabled = false)
+    }
+
+    private fun onAnimationDone(switchState: SwitchState) {
         if (switchState == SwitchState.DISABLED) {
             SpringLauncherHomeActivity.stop()
         }
@@ -125,8 +134,13 @@ class SwitchStateChangeActivity : ComponentActivity() {
         finish()
     }
 
+    /**
+     * Reads the switch state from the intent.
+     */
     private fun getSwitchState(intent: Intent?): SwitchState? {
-        val statusString = intent?.getStringExtra(Constants.EXTRA_SWITCH_BUTTON_STATE) ?: return null
+        val statusString = intent?.getStringExtra(Constants.EXTRA_SWITCH_BUTTON_STATE)
+            ?: return null
+
         return try {
             SwitchState.valueOf(statusString)
         } catch (e: IllegalArgumentException) {
@@ -135,11 +149,11 @@ class SwitchStateChangeActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Checks if the overlay should be shown.
+     */
     private fun shouldShowOverlay(intent: Intent?): Boolean {
-        return intent?.getBooleanExtra(Constants.EXTRA_SHOW_OVERLAY, false)?.run {
-            Log.d(Constants.LOG_TAG, "shouldShowOverlay: $this")
-            this == true
-        } == true
+        return intent?.getBooleanExtra(Constants.EXTRA_SHOW_OVERLAY, false) == true
     }
 
     private fun setupWindow() {
@@ -202,7 +216,6 @@ fun SwitchStateChangeScreen(
         visibilityState = MutableTransitionState(false)
     )
 }
-
 
 
 @Composable

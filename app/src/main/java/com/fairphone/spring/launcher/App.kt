@@ -18,11 +18,16 @@ package com.fairphone.spring.launcher
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.annotation.VisibleForTesting
-import com.fairphone.spring.launcher.data.AppPrefs
-import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
+import com.fairphone.spring.launcher.data.model.Defaults
+import com.fairphone.spring.launcher.data.model.Defaults.DEFAULT_VISIBLE_APPS
+import com.fairphone.spring.launcher.data.prefs.AppPrefs
 import com.fairphone.spring.launcher.di.dataModule
+import com.fairphone.spring.launcher.di.domainModule
 import com.fairphone.spring.launcher.di.uiModule
+import com.fairphone.spring.launcher.usecase.profile.CreateLauncherProfileUseCase
+import com.fairphone.spring.launcher.util.getDefaultBrowserPackageName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -43,11 +48,12 @@ class App : Application(), KoinComponent {
         val koinModules = listOf(
             uiModule,
             dataModule,
+            domainModule,
         )
     }
 
     private val appPrefs: AppPrefs by inject()
-    private val LauncherProfileRepository: LauncherProfileRepository by inject()
+    private val createLauncherProfileUseCase: CreateLauncherProfileUseCase by inject()
     private lateinit var applicationScope: CoroutineScope
 
     override fun onCreate() {
@@ -69,10 +75,33 @@ class App : Application(), KoinComponent {
         }
     }
 
-    //TODO: This probably should be moved elsewhere
+    //TODO: This should be moved elsewhere
     private suspend fun prepareInitialProfile(context: Context) = withContext(Dispatchers.IO) {
         if (appPrefs.isFistTimeUse()) {
-            LauncherProfileRepository.initialize(context)
+            val defaultBrowser = getDefaultBrowserPackageName(context)
+            val defaultVisibleApps = DEFAULT_VISIBLE_APPS + defaultBrowser
+
+            val createLauncherProfileParams = CreateLauncherProfileUseCase.Params(
+                name = Defaults.DEFAULT_NAME,
+                icon = Defaults.DEFAULT_ICON,
+                bgColor1 = Defaults.DEFAULT_BG_COLOR1,
+                bgColor2 = Defaults.DEFAULT_BG_COLOR2,
+                visibleApps = defaultVisibleApps,
+                allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
+                repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
+                wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
+                uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
+                blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
+                soundSetting = Defaults.DEFAULT_SOUND_SETTING,
+                batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
+                reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
+            )
+            val result = createLauncherProfileUseCase.execute(createLauncherProfileParams)
+
+            if (result.isFailure) {
+                Log.e("App", "Failed to create initial profile", result.exceptionOrNull())
+            }
+
             appPrefs.setFirstTimeUse(false)
         }
     }

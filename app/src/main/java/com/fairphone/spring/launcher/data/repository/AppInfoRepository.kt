@@ -53,12 +53,12 @@ class AppInfoRepositoryImpl : AppInfoRepository {
         val density = context.resources.displayMetrics.densityDpi
 
         try {
+            // TODO: App appears multiple times if installed in multiple profiles (personal + work)
             // Get all user profiles associated with the current user
             userManager.userProfiles.flatMap { profile -> // Iterate through each profile (UserHandle)
                 // Get the list of launchable activities for the specific profile
                 val activities = packageNames?.flatMap { packageName ->
                     launcherApps.getActivityList(packageName, profile)
-
                 } ?: launcherApps.getActivityList(null, profile)
                     .sortedBy { it.label.toString().lowercase() }
 

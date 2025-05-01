@@ -23,8 +23,10 @@ import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
+import com.fairphone.spring.launcher.usecase.profile.UpdateLauncherProfileUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -33,29 +35,36 @@ class ProfileSettingsViewModel(
     context: Context,
     private val appInfoRepository: AppInfoRepository,
     private val launcherProfileRepository: LauncherProfileRepository,
+    private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
 ) : ViewModel() {
 
-    val screenState: StateFlow<ProfileSettingsScreenState?> = launcherProfileRepository.getActiveProfile()
-        .map { profile ->
-            val visibleApps = appInfoRepository.getAppInfos(context, profile.visibleAppsList)
-            ProfileSettingsScreenState(
-                profile = profile,
-                visibleApps = visibleApps
+    val screenState: StateFlow<ProfileSettingsScreenState> =
+        launcherProfileRepository.getActiveProfile()
+            .map { profile ->
+                val visibleApps = getAppInfoList(context, profile.visibleAppsList)
+                ProfileSettingsScreenState.Success(
+                    profile = profile,
+                    visibleApps = visibleApps,
+                )
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(),
+                initialValue = ProfileSettingsScreenState.Loading
             )
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = null
-        )
 
-    fun updateProfileName(name: String) {
-        viewModelScope.launch {
-            launcherProfileRepository.updateName(name)
-        }
+    private suspend fun getAppInfoList(context: Context, appIds: List<String>): List<AppInfo> {
+        return appInfoRepository.getAppInfos(context, appIds)
+    }
+
+    fun updateProfileName(name: String) = viewModelScope.launch {
+        val activeProfile = launcherProfileRepository.getActiveProfile().first()
+        val updatedProfile = activeProfile.toBuilder().setName(name.trim()).build()
+        updateLauncherProfileUseCase.execute(updatedProfile)
     }
 }
 
-data class ProfileSettingsScreenState(
-    val profile: LauncherProfile,
-    val visibleApps: List<AppInfo> = emptyList(),
-)
+sealed interface ProfileSettingsScreenState {
+    object Loading : ProfileSettingsScreenState
+    data class Success(val profile: LauncherProfile, val visibleApps: List<AppInfo>) :
+        ProfileSettingsScreenState
+}

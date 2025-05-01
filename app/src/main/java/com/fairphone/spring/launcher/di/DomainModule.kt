@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.settings.apps
+package com.fairphone.spring.launcher.di
 
-import androidx.compose.runtime.Composable
+import com.fairphone.spring.launcher.usecase.EnableDndUseCase
+import com.fairphone.spring.launcher.usecase.profile.CreateLauncherProfileUseCase
+import com.fairphone.spring.launcher.usecase.profile.UpdateLauncherProfileUseCase
+import com.fairphone.spring.launcher.util.ZenNotificationManager
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.module
 
-@Composable
-fun VisibleAppSettingsScreen() {
-    TODO()
+val domainModule = module {
+    factoryOf(::EnableDndUseCase)
+    factoryOf(::CreateLauncherProfileUseCase)
+    factoryOf(::UpdateLauncherProfileUseCase)
+
+    factoryOf(::ZenNotificationManager)
 }

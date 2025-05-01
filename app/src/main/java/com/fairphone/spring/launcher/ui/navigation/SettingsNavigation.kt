@@ -41,48 +41,51 @@ fun SettingsNavigation(
 ) = NavHost(
     navController = navController,
     startDestination = ProfileSettings,
+    enterTransition = {
+        slideIntoContainer(
+            AnimatedContentTransitionScope.SlideDirection.Left,
+            animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
+        )
+    },
+    exitTransition = {
+        slideOutOfContainer(
+            AnimatedContentTransitionScope.SlideDirection.Left,
+            animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
+        )
+    },
+    popEnterTransition = {
+        slideIntoContainer(
+            AnimatedContentTransitionScope.SlideDirection.Right,
+            animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
+        )
+    },
+    popExitTransition = {
+        slideOutOfContainer(
+            AnimatedContentTransitionScope.SlideDirection.Right,
+            animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
+        )
+    }
 ) {
-    // Profile Settings Screen
-    composable<ProfileSettings>(
-        enterTransition = {
-            slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
-            )
-        },
-        exitTransition = {
-            slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
-            )
-        },
-        popEnterTransition = {
-            slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
-            )
-        },
-        popExitTransition = {
-            slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
-            )
-        }
-    ) {
+    // Moment Settings Screen
+    composable<ProfileSettings> {
         val viewModel: ProfileSettingsViewModel = koinViewModel()
         val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
-        screenState?.let {
-            ProfileSettingsScreen(
-                screenState = it,
-                onEditProfileName = viewModel::updateProfileName,
-                onNavigateToVisibleAppSettings = {
-                    navController.navigate(VisibleAppSelector)
-                }
-            )
-        }
+        ProfileSettingsScreen(
+            screenState = screenState,
+            onEditProfileName = viewModel::updateProfileName,
+            onNavigateToVisibleAppSettings = {
+                navController.navigate(VisibleAppSelector)
+            },
+            onNavigateToAllowedContactSettings = {
+                navController.navigate(AllowedContactSettings)
+            }
+        )
     }
 
     // Visible App Settings
-    visibleAppSettingsGraph(navController)
+    visibleAppSettingsNavGraph(navController)
+
+    // Allowed Contact Settings
+    allowedContactSettingsNavGraph(navController)
 }

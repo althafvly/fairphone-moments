@@ -21,31 +21,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.fairphone.spring.launcher.ui.component.SettingsTopBar
 import com.fairphone.spring.launcher.ui.navigation.SettingsNavigation
-import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsViewModel
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LauncherSettingsScreen(
-    viewModel: ProfileSettingsViewModel = koinViewModel(),
     onCloseSettings: () -> Unit
 ) {
-    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
     val navController = rememberNavController()
-
-    screenState ?: return
 
     Scaffold(
         topBar = {
             SettingsTopBar(
                 navController = navController,
-                profile = screenState!!.profile,
                 onNavigateBack = {
                     if (!navController.navigateUp()) {
                         onCloseSettings()

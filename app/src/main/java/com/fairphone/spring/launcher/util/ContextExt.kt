@@ -98,3 +98,5 @@ private fun Context.getUserHandleFromId(userId: Int): UserHandle? {
     val userProfiles = userManager.userProfiles
     return userProfiles.find { it.hashCode() == userId }
 }
+
+fun Context.notificationManager() = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager

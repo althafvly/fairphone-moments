@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.ui.ModeIcons
 
-public val ModeIcons.Vector: ImageVector
+val ModeIcons.Vector: ImageVector
     get() {
         if (_vector != null) {
             return _vector!!
@@ -68,7 +68,7 @@ private var _vector: ImageVector? = null
 
 @Preview
 @Composable
-private fun Preview(): Unit {
+private fun Preview() {
     Box(modifier = Modifier.padding(12.dp)) {
         Image(imageVector = ModeIcons.Vector, contentDescription = "")
     }

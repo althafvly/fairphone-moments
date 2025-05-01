@@ -18,10 +18,7 @@ package com.fairphone.spring.launcher.data.datasource
 
 import android.util.Log
 import androidx.datastore.core.DataStore
-import com.fairphone.spring.launcher.data.model.ContactType
 import com.fairphone.spring.launcher.data.model.LauncherProfile
-import com.fairphone.spring.launcher.data.model.SoundSetting
-import com.fairphone.spring.launcher.data.model.UiMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import java.io.IOException
@@ -30,20 +27,6 @@ interface ProfileDataSource {
     fun getActiveProfile(): Flow<LauncherProfile>
     suspend fun updateLauncherProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(visibleApps: List<String>)
-    suspend fun updateName(name: String)
-    suspend fun updateAllowedContacts(allowedContacts: ContactType)
-    suspend fun updateCustomContacts(customContacts: List<String>)
-    suspend fun updateRepeatCallEnabled(enabled: Boolean)
-    suspend fun updateAppNotifications(appNotifications: List<String>)
-    suspend fun updateWallpaperId(wallpaperId: Int)
-    suspend fun updateDarkModeSetting(darkModeSetting: UiMode)
-    suspend fun updateBlueFilterEnabled(enabled: Boolean)
-    suspend fun updateSoundSetting(soundSetting: SoundSetting)
-    suspend fun updateBatterySaverEnabled(enabled: Boolean)
-    suspend fun updateReduceBrightnessEnabled(enabled: Boolean)
-    suspend fun updateEchoChargeEnabled(enabled: Boolean)
-    suspend fun updateAlwaysOnDisplayEnabled(enabled: Boolean)
-    suspend fun updateAirplaneModeEnabled(enabled: Boolean)
 }
 
 class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfile>) : ProfileDataSource {
@@ -71,121 +54,6 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfile>) :
             profile.toBuilder()
                 .clearVisibleApps()
                 .addAllVisibleApps(visibleApps)
-                .build()
-        }
-    }
-
-    override suspend fun updateName(name: String) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setName(name)
-                .build()
-        }
-    }
-
-    override suspend fun updateAllowedContacts(allowedContacts: ContactType) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setAllowedContact(allowedContacts)
-                .build()
-        }
-    }
-
-    override suspend fun updateCustomContacts(customContacts: List<String>) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .clearCustomContacts()
-                .addAllCustomContacts(customContacts)
-                .build()
-        }
-    }
-
-    override suspend fun updateRepeatCallEnabled(enabled: Boolean) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setRepeatCallEnabled(enabled)
-                .build()
-        }
-
-    }
-
-    override suspend fun updateAppNotifications(appNotifications: List<String>) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .clearAppNotifications()
-                .addAllAppNotifications(appNotifications)
-                .build()
-        }
-    }
-
-    override suspend fun updateWallpaperId(wallpaperId: Int) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setWallpaperId(wallpaperId)
-                .build()
-        }
-    }
-
-    override suspend fun updateDarkModeSetting(uiMode: UiMode) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setUiMode(uiMode)
-                .build()
-        }
-    }
-
-    override suspend fun updateBlueFilterEnabled(enabled: Boolean) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setBlueLightFilterEnabled(enabled)
-                .build()
-        }
-    }
-
-    override suspend fun updateSoundSetting(soundSetting: SoundSetting) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setSoundSetting(soundSetting)
-                .build()
-        }
-    }
-
-    override suspend fun updateBatterySaverEnabled(enabled: Boolean) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setBatterySaverEnabled(enabled)
-                .build()
-        }
-    }
-
-    override suspend fun updateReduceBrightnessEnabled(enabled: Boolean) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setReduceBrightnessEnabled(enabled)
-                .build()
-        }
-    }
-
-    override suspend fun updateEchoChargeEnabled(enabled: Boolean) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setEcoChargeEnabled(enabled)
-                .build()
-        }
-    }
-
-    override suspend fun updateAlwaysOnDisplayEnabled(enabled: Boolean) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setAlwaysOnDisplayEnabled(enabled)
-                .build()
-        }
-    }
-
-    override suspend fun updateAirplaneModeEnabled(enabled: Boolean) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .setAirplaneModeEnabled(enabled)
                 .build()
         }
     }

@@ -42,14 +42,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.getIconVector
 import com.fairphone.spring.launcher.data.serializer.LauncherProfileSerializer
+import com.fairphone.spring.launcher.ui.navigation.AllowedContactSettings
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSelector
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSettings
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
@@ -59,20 +62,19 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 @Composable
 fun SettingsTopBar(
     navController: NavHostController,
-    profile: LauncherProfile,
     onNavigateBack: () -> Unit,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    val title = currentDestination?.let {
+    val titleResId = currentDestination?.let {
         when {
-            //it.hasRoute<LauncherProfileSettings>() -> "LauncherProfile settings"
-            it.hasRoute<VisibleAppSettings>() -> "Visible apps"
-            it.hasRoute<VisibleAppSelector>() -> "Select visible apps"
-            else -> ""
+            it.hasRoute<VisibleAppSettings>() -> R.string.setting_title_visible_apps
+            it.hasRoute<VisibleAppSelector>() -> R.string.setting_title_visible_apps_selector
+            it.hasRoute<AllowedContactSettings>() -> R.string.setting_title_allowed_contacts
+            else -> null
         }
-    } ?: ""
+    }
 
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -80,11 +82,13 @@ fun SettingsTopBar(
             titleContentColor = MaterialTheme.colorScheme.onBackground,
         ),
         title = {
-            Text(
-                text = title,
-                style = FairphoneTypography.H4,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
+            if (titleResId != null) {
+                Text(
+                    text = stringResource(titleResId),
+                    style = FairphoneTypography.H4,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            }
         },
         navigationIcon = {
             IconButton(onClick = onNavigateBack) {

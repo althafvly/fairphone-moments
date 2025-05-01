@@ -117,8 +117,6 @@ object FairphoneTypography {
         fontFamily = DmSans,
         fontWeight = FontWeight.SemiBold,
     )
-
-
 }
 
 
@@ -130,15 +128,15 @@ val LauncherTypography = Typography(
     displayMedium = baseline.displayMedium.copy(fontFamily = BricolageGrotesque),
     displaySmall = baseline.displaySmall.copy(fontFamily = BricolageGrotesque),
     headlineLarge = baseline.headlineLarge.copy(fontFamily = BricolageGrotesque),
-    headlineMedium = baseline.headlineMedium.copy(fontFamily = BricolageGrotesque),
-    headlineSmall = baseline.headlineSmall.copy(fontFamily = BricolageGrotesque),
+    headlineMedium = FairphoneTypography.H4,
+    headlineSmall =FairphoneTypography.H5,
     titleLarge = baseline.titleLarge.copy(fontFamily = BricolageGrotesque),
     titleMedium = baseline.titleMedium.copy(fontFamily = BricolageGrotesque),
     titleSmall = baseline.titleSmall.copy(fontFamily = BricolageGrotesque),
     bodyLarge = baseline.bodyLarge.copy(fontFamily = DmSans),
-    bodyMedium = baseline.bodyMedium.copy(fontFamily = DmSans),
-    bodySmall = baseline.bodySmall.copy(fontFamily = DmSans),
+    bodyMedium = FairphoneTypography.BodyMedium,
+    bodySmall = FairphoneTypography.BodySmall,
     labelLarge = baseline.labelLarge.copy(fontFamily = DmSans),
-    labelMedium = baseline.labelMedium.copy(fontFamily = DmSans),
+    labelMedium = FairphoneTypography.LabelMedium,
     labelSmall = baseline.labelSmall.copy(fontFamily = DmSans),
 )

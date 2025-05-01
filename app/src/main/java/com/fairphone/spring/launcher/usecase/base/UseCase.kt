@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.settings.apps
+package com.fairphone.spring.launcher.usecase.base
 
-import androidx.compose.runtime.Composable
-
-@Composable
-fun VisibleAppSettingsScreen() {
-    TODO()
+/**
+ * Base class for Use Cases
+ */
+abstract class UseCase<INPUT, RESULT> {
+    abstract suspend fun execute(params: INPUT): Result<RESULT>
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.data
+package com.fairphone.spring.launcher.data.prefs
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -34,14 +34,14 @@ class AppPrefsImpl(private val dataStore: DataStore<Preferences>): AppPrefs {
     }
 
     override suspend fun isFistTimeUse(): Boolean {
-        return dataStore.data.map { preferences ->
-            preferences[FIRST_TIME_USE] != false
+        return dataStore.data.map { prefs ->
+            prefs[FIRST_TIME_USE] != false
         }.first()
     }
 
     override suspend fun setFirstTimeUse(value: Boolean) {
-        dataStore.edit { preferences ->
-            preferences[FIRST_TIME_USE] = value
+        dataStore.edit { prefs ->
+            prefs[FIRST_TIME_USE] = value
         }
     }
 }

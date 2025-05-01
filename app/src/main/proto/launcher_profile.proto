@@ -10,7 +10,7 @@ message LauncherProfile {
     int64 bgColor1 = 3;
     int64 bgColor2 = 4;
     repeated string visibleApps = 5;
-    ContactType allowedContact = 6;
+    ContactType allowedContacts = 6;
     repeated string customContacts = 7;
     bool repeatCallEnabled = 8;
     repeated string appNotifications = 9;
@@ -23,6 +23,7 @@ message LauncherProfile {
     bool ecoChargeEnabled = 16;
     bool alwaysOnDisplayEnabled = 17;
     bool airplaneModeEnabled = 18;
+    string zenRuleId = 19;
 }
 
 enum ContactType {
