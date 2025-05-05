@@ -19,26 +19,26 @@ package com.fairphone.spring.launcher.data.datasource
 import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
-import com.fairphone.spring.launcher.data.model.AllowedContacts
-import com.fairphone.spring.launcher.data.model.DarkModeSetting
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.ContactType
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SoundSetting
-import com.fairphone.spring.launcher.di.momentDataStore
+import com.fairphone.spring.launcher.data.model.UiMode
+import com.fairphone.spring.launcher.di.profileDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import java.io.IOException
 
-interface MomentDataSource {
-    fun getActiveMoment(): Flow<Moment>
-    suspend fun updateMoment(moment: Moment)
+interface ProfileDataSource {
+    fun getActiveProfile(): Flow<LauncherProfile>
+    suspend fun updateLauncherProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(visibleApps: List<String>)
     suspend fun updateName(name: String)
-    suspend fun updateAllowedContacts(allowedContacts: AllowedContacts)
+    suspend fun updateAllowedContacts(allowedContacts: ContactType)
     suspend fun updateCustomContacts(customContacts: List<String>)
     suspend fun updateRepeatCallEnabled(enabled: Boolean)
     suspend fun updateAppNotifications(appNotifications: List<String>)
     suspend fun updateWallpaperId(wallpaperId: Int)
-    suspend fun updateDarkModeSetting(darkModeSetting: DarkModeSetting)
+    suspend fun updateDarkModeSetting(darkModeSetting: UiMode)
     suspend fun updateBlueFilterEnabled(enabled: Boolean)
     suspend fun updateSoundSetting(soundSetting: SoundSetting)
     suspend fun updateBatterySaverEnabled(enabled: Boolean)
@@ -48,29 +48,29 @@ interface MomentDataSource {
     suspend fun updateAirplaneModeEnabled(enabled: Boolean)
 }
 
-class MomentDataSourceImpl(context: Context) : MomentDataSource {
-    private val dataStore: DataStore<Moment> = context.momentDataStore
+class ProfileDataSourceImpl(context: Context) : ProfileDataSource {
+    private val dataStore: DataStore<LauncherProfile> = context.profileDataStore
 
-    override fun getActiveMoment(): Flow<Moment> {
+    override fun getActiveProfile(): Flow<LauncherProfile> {
         return dataStore.data
             .catch { exception ->
                 // dataStore.data throws an IOException when an error is encountered when reading data
                 if (exception is IOException) {
-                    Log.e("MomentRepository", "Error reading sort order preferences.", exception)
-                    emit(Moment.getDefaultInstance())
+                    Log.e("ProfileDataSource", "Error reading sort order preferences.", exception)
+                    emit(LauncherProfile.getDefaultInstance())
                 } else {
                     throw exception
                 }
             }
     }
 
-    override suspend fun updateMoment(moment: Moment) {
-        dataStore.updateData { moment }
+    override suspend fun updateLauncherProfile(profile: LauncherProfile) {
+        dataStore.updateData { profile }
     }
 
     override suspend fun updateVisibleApps(visibleApps: List<String>) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .clearVisibleApps()
                 .addAllVisibleApps(visibleApps)
                 .build()
@@ -78,24 +78,24 @@ class MomentDataSourceImpl(context: Context) : MomentDataSource {
     }
 
     override suspend fun updateName(name: String) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setName(name)
                 .build()
         }
     }
 
-    override suspend fun updateAllowedContacts(allowedContacts: AllowedContacts) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
-                .setAllowedContacts(allowedContacts)
+    override suspend fun updateAllowedContacts(allowedContacts: ContactType) {
+        dataStore.updateData { profile ->
+            profile.toBuilder()
+                .setAllowedContact(allowedContacts)
                 .build()
         }
     }
 
     override suspend fun updateCustomContacts(customContacts: List<String>) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .clearCustomContacts()
                 .addAllCustomContacts(customContacts)
                 .build()
@@ -103,8 +103,8 @@ class MomentDataSourceImpl(context: Context) : MomentDataSource {
     }
 
     override suspend fun updateRepeatCallEnabled(enabled: Boolean) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setRepeatCallEnabled(enabled)
                 .build()
         }
@@ -112,8 +112,8 @@ class MomentDataSourceImpl(context: Context) : MomentDataSource {
     }
 
     override suspend fun updateAppNotifications(appNotifications: List<String>) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .clearAppNotifications()
                 .addAllAppNotifications(appNotifications)
                 .build()
@@ -121,72 +121,72 @@ class MomentDataSourceImpl(context: Context) : MomentDataSource {
     }
 
     override suspend fun updateWallpaperId(wallpaperId: Int) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setWallpaperId(wallpaperId)
                 .build()
         }
     }
 
-    override suspend fun updateDarkModeSetting(darkModeSetting: DarkModeSetting) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
-                .setDarkModeSetting(darkModeSetting)
+    override suspend fun updateDarkModeSetting(uiMode: UiMode) {
+        dataStore.updateData { profile ->
+            profile.toBuilder()
+                .setUiMode(uiMode)
                 .build()
         }
     }
 
     override suspend fun updateBlueFilterEnabled(enabled: Boolean) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setBlueLightFilterEnabled(enabled)
                 .build()
         }
     }
 
     override suspend fun updateSoundSetting(soundSetting: SoundSetting) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setSoundSetting(soundSetting)
                 .build()
         }
     }
 
     override suspend fun updateBatterySaverEnabled(enabled: Boolean) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setBatterySaverEnabled(enabled)
                 .build()
         }
     }
 
     override suspend fun updateReduceBrightnessEnabled(enabled: Boolean) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setReduceBrightnessEnabled(enabled)
                 .build()
         }
     }
 
     override suspend fun updateEchoChargeEnabled(enabled: Boolean) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setEcoChargeEnabled(enabled)
                 .build()
         }
     }
 
     override suspend fun updateAlwaysOnDisplayEnabled(enabled: Boolean) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setAlwaysOnDisplayEnabled(enabled)
                 .build()
         }
     }
 
     override suspend fun updateAirplaneModeEnabled(enabled: Boolean) {
-        dataStore.updateData { moment ->
-            moment.toBuilder()
+        dataStore.updateData { profile ->
+            profile.toBuilder()
                 .setAirplaneModeEnabled(enabled)
                 .build()
         }

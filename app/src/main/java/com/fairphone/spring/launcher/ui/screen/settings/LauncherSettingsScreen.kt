@@ -27,13 +27,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.fairphone.spring.launcher.ui.component.SettingsTopBar
 import com.fairphone.spring.launcher.ui.navigation.SettingsNavigation
-import com.fairphone.spring.launcher.ui.screen.settings.main.MomentSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LauncherSettingsScreen(
-    viewModel: MomentSettingsViewModel = koinViewModel(),
+    viewModel: ProfileSettingsViewModel = koinViewModel(),
     onCloseSettings: () -> Unit
 ) {
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
@@ -45,7 +45,7 @@ fun LauncherSettingsScreen(
         topBar = {
             SettingsTopBar(
                 navController = navController,
-                moment = screenState!!.moment,
+                profile = screenState!!.profile,
                 onNavigateBack = {
                     if (!navController.navigateUp()) {
                         onCloseSettings()

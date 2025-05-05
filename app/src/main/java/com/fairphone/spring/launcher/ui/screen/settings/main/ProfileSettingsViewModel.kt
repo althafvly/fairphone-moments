@@ -20,26 +20,26 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
-import com.fairphone.spring.launcher.data.repository.MomentRepository
+import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class MomentSettingsViewModel(
+class ProfileSettingsViewModel(
     context: Context,
     private val appInfoRepository: AppInfoRepository,
-    private val momentRepository: MomentRepository,
+    private val launcherProfileRepository: LauncherProfileRepository,
 ) : ViewModel() {
 
-    val screenState: StateFlow<MomentSettingsScreenState?> = momentRepository.getActiveMoment()
-        .map { moment ->
-            val visibleApps = appInfoRepository.getAppInfos(context, moment.visibleAppsList)
-            MomentSettingsScreenState(
-                moment = moment,
+    val screenState: StateFlow<ProfileSettingsScreenState?> = launcherProfileRepository.getActiveProfile()
+        .map { profile ->
+            val visibleApps = appInfoRepository.getAppInfos(context, profile.visibleAppsList)
+            ProfileSettingsScreenState(
+                profile = profile,
                 visibleApps = visibleApps
             )
         }.stateIn(
@@ -48,14 +48,14 @@ class MomentSettingsViewModel(
             initialValue = null
         )
 
-    fun updateMomentName(name: String) {
+    fun updateProfileName(name: String) {
         viewModelScope.launch {
-            momentRepository.updateName(name)
+            launcherProfileRepository.updateName(name)
         }
     }
 }
 
-data class MomentSettingsScreenState(
-    val moment: Moment,
+data class ProfileSettingsScreenState(
+    val profile: LauncherProfile,
     val visibleApps: List<AppInfo> = emptyList(),
 )

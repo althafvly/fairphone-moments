@@ -23,7 +23,7 @@ import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
-import com.fairphone.spring.launcher.data.repository.MomentRepository
+import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 class VisibleAppSettingsViewModel(
     context: Context,
     appInfoRepository: AppInfoRepository,
-    private val momentRepository: MomentRepository,
+    private val launcherProfileRepository: LauncherProfileRepository,
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow(VisibleAppSelectorScreenState())
@@ -46,8 +46,8 @@ class VisibleAppSettingsViewModel(
     init {
         viewModelScope.launch {
             appList.addAll(appInfoRepository.getInstalledAppsLauncherApps(context))
-            val currentMoment = momentRepository.getActiveMoment().first()
-            visibleApps.addAll(appInfoRepository.getAppInfos(context,  currentMoment.visibleAppsList))
+            val currentProfile = launcherProfileRepository.getActiveProfile().first()
+            visibleApps.addAll(appInfoRepository.getAppInfos(context,  currentProfile.visibleAppsList))
 
             _screenState.update {
                 _screenState.value.copy(
@@ -109,7 +109,7 @@ class VisibleAppSettingsViewModel(
 
     fun confirmAppSelection() {
         viewModelScope.launch {
-            momentRepository.updateVisibleApps(visibleApps.map { it.packageName })
+            launcherProfileRepository.updateVisibleApps(visibleApps.map { it.packageName })
         }
     }
 }

@@ -40,7 +40,7 @@ import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun MomentNameEditor(
+fun ProfileNameEditorDialog(
     show: Boolean,
     currentName: String,
     onConfirm: (String) -> Unit,
@@ -65,7 +65,7 @@ fun MomentNameEditor(
             onDismissRequest = onDismiss,
             title = {
                 Text(
-                    text = stringResource(R.string.moment_name_editor_title),
+                    text = stringResource(R.string.profile_name_editor_title),
                     style = FairphoneTypography.H5,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -83,7 +83,7 @@ fun MomentNameEditor(
 
                     if (showError) {
                         Text(
-                            text = stringResource(R.string.moment_name_max_length_error),
+                            text = stringResource(R.string.profile_name_max_length_error),
                             style = FairphoneTypography.BodySmall,
                             color = MaterialTheme.colorScheme.error,
                         )
@@ -112,9 +112,9 @@ fun MomentNameEditor(
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-fun MomentNameEditor_Preview() {
+fun ProfileNameEditorDialog_Preview() {
     SpringLauncherTheme {
-        MomentNameEditor(
+        ProfileNameEditorDialog(
             show = true,
             currentName = "Test",
             onConfirm = {},

@@ -55,7 +55,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.data.model.getIconVector
@@ -69,7 +69,7 @@ const val EXIT_ANIMATION_DURATION = 500
 
 @Composable
 fun SwitchStateChangeOverlayScreen(
-    moment: Moment,
+    profile: LauncherProfile,
     switchState: SwitchState,
     onAnimationDone: () -> Unit,
     visibilityState: MutableTransitionState<Boolean>,
@@ -95,7 +95,7 @@ fun SwitchStateChangeOverlayScreen(
             )
     ) {
         SwitchStateChangeOverlay(
-            moment = moment,
+            profile = profile,
             switchState = switchState,
             onAnimationDone = onAnimationDone,
             visibilityState = visibilityState,
@@ -121,7 +121,7 @@ fun SwitchState.getGreenBarHintAlignment(): Alignment.Vertical {
 
 @Composable
 fun SwitchStateChangeOverlay(
-    moment: Moment,
+    profile: LauncherProfile,
     switchState: SwitchState,
     onAnimationDone: () -> Unit,
     modifier: Modifier = Modifier,
@@ -165,13 +165,13 @@ fun SwitchStateChangeOverlay(
                 horizontalAlignment = Alignment.End,
             ) {
                 Icon(
-                    imageVector = moment.getIconVector(),
+                    imageVector = profile.getIconVector(),
                     contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.rotate(iconRotationAngle)
                 )
                 Text(
-                    text = "${moment.name}\n${switchState.name.lowercase()}",
+                    text = "${profile.name}\n${switchState.name.lowercase()}",
                     style = FairphoneTypography.SwitchLabel,
                     color = Color.White,
                     textAlign = TextAlign.Right,
@@ -227,7 +227,7 @@ fun SwitchStateChangeOverlay(
 fun SwitchStateChangeHintEnabled_Preview() {
     SpringLauncherTheme {
         SwitchStateChangeOverlay(
-            moment = Presets.Essentials,
+            profile = Presets.Essentials,
             switchState = SwitchState.ENABLED,
             onAnimationDone = {},
             visibilityState = remember { MutableTransitionState(false) },
@@ -240,7 +240,7 @@ fun SwitchStateChangeHintEnabled_Preview() {
 fun SwitchStateChangeHintDisabled_Preview() {
     SpringLauncherTheme {
         SwitchStateChangeOverlay(
-            moment = Presets.Essentials,
+            profile = Presets.Essentials,
             switchState = SwitchState.DISABLED,
             onAnimationDone = {},
             visibilityState = remember { MutableTransitionState(false) },

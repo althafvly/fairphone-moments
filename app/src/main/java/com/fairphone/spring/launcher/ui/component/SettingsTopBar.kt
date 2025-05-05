@@ -47,9 +47,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.getIconVector
-import com.fairphone.spring.launcher.data.serializer.MomentSerializer
+import com.fairphone.spring.launcher.data.serializer.LauncherProfileSerializer
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSelector
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSettings
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
@@ -59,7 +59,7 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 @Composable
 fun SettingsTopBar(
     navController: NavHostController,
-    moment: Moment,
+    profile: LauncherProfile,
     onNavigateBack: () -> Unit,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -67,7 +67,7 @@ fun SettingsTopBar(
 
     val title = currentDestination?.let {
         when {
-            //it.hasRoute<MomentSettings>() -> "Moment settings"
+            //it.hasRoute<LauncherProfileSettings>() -> "LauncherProfile settings"
             it.hasRoute<VisibleAppSettings>() -> "Visible apps"
             it.hasRoute<VisibleAppSelector>() -> "Select visible apps"
             else -> ""
@@ -98,9 +98,9 @@ fun SettingsTopBar(
 }
 
 @Composable
-fun MomentSettingsTopBar(
-    currentMoment: Moment,
-    onEditMomentName: () -> Unit,
+fun LauncherProfileSettingsTopBar(
+    currentLauncherProfile: LauncherProfile,
+    onEditLauncherProfileName: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -110,7 +110,7 @@ fun MomentSettingsTopBar(
             .fillMaxWidth()
             .padding(bottom = 40.dp)
     ) {
-        // Moment Icon
+        // LauncherProfile Icon
         Box(
             Modifier
                 .border(
@@ -126,21 +126,21 @@ fun MomentSettingsTopBar(
                 )
         ) {
             Icon(
-                imageVector = currentMoment.getIconVector(),
+                imageVector = currentLauncherProfile.getIconVector(),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.align(Alignment.Center)
             )
         }
 
-        // Moment name + edit button
+        // LauncherProfile name + edit button
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.clickable { onEditMomentName() }
+            modifier = Modifier.clickable { onEditLauncherProfileName() }
         ) {
             Text(
-                text = currentMoment.name,
+                text = currentLauncherProfile.name,
                 style = FairphoneTypography.H4,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -151,7 +151,7 @@ fun MomentSettingsTopBar(
             )
         }
 
-        // Moment active/inactive
+        // LauncherProfile active/inactive
 //        Box(
 //            Modifier
 //                .border(
@@ -165,7 +165,7 @@ fun MomentSettingsTopBar(
 //        ) {
 //
 //            Text(
-//                text = stringResource(R.string.moment_state_active),
+//                text = stringResource(R.string.profile_state_active),
 //                style = FairphoneTypography.BodySmall,
 //                color = MaterialTheme.colorScheme.onSurface
 //            )
@@ -175,11 +175,11 @@ fun MomentSettingsTopBar(
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFEBEBE9)
-fun MomentSettingsTopBar_Preview() {
+fun LauncherProfileSettingsTopBar_Preview() {
     SpringLauncherTheme {
-        MomentSettingsTopBar(
-            currentMoment = MomentSerializer.defaultValue,
-            onEditMomentName = {}
+        LauncherProfileSettingsTopBar(
+            currentLauncherProfile = LauncherProfileSerializer.defaultValue,
+            onEditLauncherProfileName = {}
         )
     }
 }

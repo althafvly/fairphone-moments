@@ -82,7 +82,7 @@ fun HomeScreen(
         date = date,
         time = time,
         modeButtonIcon = Icons.Filled.Settings,
-        modeButtonText = screenState!!.activeMoment.name,
+        modeButtonText = screenState!!.activeProfile.name,
         appList = screenState!!.visibleApps,
         onAppClick = { appInfo ->
             viewModel.onAppClick(context, appInfo)

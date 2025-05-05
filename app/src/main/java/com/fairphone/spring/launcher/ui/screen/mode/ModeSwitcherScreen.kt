@@ -42,15 +42,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.modeicons.fromString
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
 fun ModeSwitcherScreen(
-    currentMoment: Moment,
-    onModeSelected: (Moment) -> Unit,
+    currentLauncherProfile: LauncherProfile,
+    onModeSelected: (LauncherProfile) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -75,8 +75,8 @@ fun ModeSwitcherScreen(
         ) {
             Presets.All.forEach { mode ->
                 ModeSwitcherButton(
-                    moment = mode,
-                    isSelected = mode == currentMoment,
+                    profile = mode,
+                    isSelected = mode == currentLauncherProfile,
                     onClick = { onModeSelected(mode) },
                     modifier = Modifier.padding(vertical = 4.dp)
                 )
@@ -87,7 +87,7 @@ fun ModeSwitcherScreen(
 
 @Composable
 fun ModeSwitcherButton(
-    moment: Moment,
+    profile: LauncherProfile,
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -119,13 +119,13 @@ fun ModeSwitcherButton(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Icon(
-                imageVector = ImageVector.fromString(moment.icon),
-                contentDescription = moment.name,
+                imageVector = ImageVector.fromString(profile.icon),
+                contentDescription = profile.name,
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp).size(20.dp)
             )
 
             Text(
-                moment.name,
+                profile.name,
                 fontSize = 18.sp,
                 lineHeight = 21.6.sp,
                 fontWeight = FontWeight(500),
@@ -140,11 +140,11 @@ fun ModeSwitcherButton(
 fun ModeSwitcherButton_Preview() {
     Column {
         ModeSwitcherButton(
-            moment = Presets.Essentials,
+            profile = Presets.Essentials,
             isSelected = true,
             onClick = { /* Do nothing */ })
         ModeSwitcherButton(
-            moment = Presets.Journey,
+            profile = Presets.Journey,
             isSelected = false,
             onClick = { /* Do nothing */ })
     }
@@ -156,7 +156,7 @@ fun ModeSwitcherButton_Preview() {
 fun ModeSwitcherScreen_Preview() {
     SpringLauncherTheme {
         ModeSwitcherScreen(
-            currentMoment = Presets.Essentials
+            currentLauncherProfile = Presets.Essentials
         ) {}
     }
 }

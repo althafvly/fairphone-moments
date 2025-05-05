@@ -23,22 +23,22 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.fairphone.spring.launcher.data.AppPrefs
 import com.fairphone.spring.launcher.data.AppPrefsImpl
-import com.fairphone.spring.launcher.data.datasource.MomentDataSource
-import com.fairphone.spring.launcher.data.datasource.MomentDataSourceImpl
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
+import com.fairphone.spring.launcher.data.datasource.ProfileDataSourceImpl
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.data.repository.AppInfoRepositoryImpl
-import com.fairphone.spring.launcher.data.repository.MomentRepository
-import com.fairphone.spring.launcher.data.repository.MomentRepositoryImpl
-import com.fairphone.spring.launcher.data.serializer.MomentSerializer
+import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
+import com.fairphone.spring.launcher.data.repository.LauncherProfileRepositoryImpl
+import com.fairphone.spring.launcher.data.serializer.LauncherProfileSerializer
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dataModule = module {
     singleOf(::AppInfoRepositoryImpl) { bind<AppInfoRepository>() }
-    singleOf(::MomentRepositoryImpl) { bind<MomentRepository>() }
-    singleOf(::MomentDataSourceImpl) { bind<MomentDataSource>() }
+    singleOf(::LauncherProfileRepositoryImpl) { bind<LauncherProfileRepository>() }
+    singleOf(::ProfileDataSourceImpl) { bind<ProfileDataSource>() }
     singleOf(::AppPrefsImpl) { bind<AppPrefs>() }
 }
 
@@ -48,10 +48,10 @@ val dataModule = module {
 val Context.appPrefsDataStore: DataStore<Preferences> by preferencesDataStore(name = "app_prefs")
 
 /**
- * DataStore used to store Moments
+ * DataStore used to store LauncherProfiles
  */
-val Context.momentDataStore: DataStore<Moment> by dataStore(
-    fileName = "moment.pb",
-    serializer = MomentSerializer
+val Context.profileDataStore: DataStore<LauncherProfile> by dataStore(
+    fileName = "profile.pb",
+    serializer = LauncherProfileSerializer
 )
 

@@ -20,9 +20,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
-import com.fairphone.spring.launcher.data.repository.MomentRepository
+import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,17 +39,17 @@ import java.time.LocalDateTime
 class HomeScreenViewModel(
     context: Context,
     private val appInfoRepository: AppInfoRepository,
-    private val momentRepository: MomentRepository,
+    private val launcherProfileRepository: LauncherProfileRepository,
 ) : ViewModel() {
 
     private val _dateTime: MutableStateFlow<LocalDateTime> = MutableStateFlow(LocalDateTime.now())
     val dateTime: StateFlow<LocalDateTime> = _dateTime.asStateFlow()
 
-    val screenState = momentRepository.getActiveMoment()
-        .map { moment ->
-            val visibleApps = appInfoRepository.getAppInfos(context, moment.visibleAppsList)
+    val screenState = launcherProfileRepository.getActiveProfile()
+        .map { profile ->
+            val visibleApps = appInfoRepository.getAppInfos(context, profile.visibleAppsList)
             HomeScreenState(
-                activeMoment = moment,
+                activeProfile = profile,
                 visibleApps = visibleApps
             )
         }.stateIn(
@@ -73,6 +73,6 @@ class HomeScreenViewModel(
 }
 
 data class HomeScreenState(
-    val activeMoment: Moment,
+    val activeProfile: LauncherProfile,
     val visibleApps: List<AppInfo> = emptyList(),
 )

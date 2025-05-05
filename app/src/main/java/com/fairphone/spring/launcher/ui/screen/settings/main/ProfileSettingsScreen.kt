@@ -35,21 +35,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.serializer.MomentSerializer
+import com.fairphone.spring.launcher.data.serializer.LauncherProfileSerializer
 import com.fairphone.spring.launcher.ui.FP6Preview
-import com.fairphone.spring.launcher.ui.component.MomentNameEditor
-import com.fairphone.spring.launcher.ui.component.MomentSettingsTopBar
+import com.fairphone.spring.launcher.ui.component.LauncherProfileSettingsTopBar
+import com.fairphone.spring.launcher.ui.component.ProfileNameEditorDialog
 import com.fairphone.spring.launcher.ui.component.SettingListItem
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MomentSettings(
-    screenState: MomentSettingsScreenState,
-    onEditMomentName: (String) -> Unit,
+fun ProfileSettingsScreen(
+    screenState: ProfileSettingsScreenState,
+    onEditProfileName: (String) -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
 ) {
-    var showMomentNameEditor by remember { mutableStateOf(false) }
+    var showProfileNameEditor by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -59,10 +59,10 @@ fun MomentSettings(
                 .fillMaxSize()
                 .padding(horizontal = 20.dp)
         ) {
-            MomentSettingsTopBar(
-                currentMoment = screenState.moment,
-                onEditMomentName = {
-                    showMomentNameEditor = true
+            LauncherProfileSettingsTopBar(
+                currentLauncherProfile = screenState.profile,
+                onEditLauncherProfileName = {
+                    showProfileNameEditor = true
                 },
                 //modifier = Modifier.windowInsetsPadding(TopAppBarDefaults.windowInsets)
             )
@@ -85,15 +85,15 @@ fun MomentSettings(
             }
         }
 
-        MomentNameEditor(
-            show = showMomentNameEditor,
-            currentName = screenState.moment.name,
+        ProfileNameEditorDialog(
+            show = showProfileNameEditor,
+            currentName = screenState.profile.name,
             onConfirm = {
-                onEditMomentName(it)
-                showMomentNameEditor = false
+                onEditProfileName(it)
+                showProfileNameEditor = false
             },
             onDismiss = {
-                showMomentNameEditor = false
+                showProfileNameEditor = false
             }
         )
     }
@@ -103,14 +103,14 @@ fun MomentSettings(
 
 @Composable
 @FP6Preview()
-fun MomentSettings_Preview() {
+fun ProfileSettings_Preview() {
     SpringLauncherTheme {
-        MomentSettings(
-            screenState = MomentSettingsScreenState(
-                moment = MomentSerializer.defaultValue,
+        ProfileSettingsScreen(
+            screenState = ProfileSettingsScreenState(
+                profile = LauncherProfileSerializer.defaultValue,
                 visibleApps = emptyList()
             ),
-            onEditMomentName = {},
+            onEditProfileName = {},
             onNavigateToVisibleAppSettings = {})
     }
 }

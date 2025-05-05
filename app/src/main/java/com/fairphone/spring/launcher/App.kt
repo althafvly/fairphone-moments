@@ -20,7 +20,7 @@ import android.app.Application
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.fairphone.spring.launcher.data.AppPrefsImpl
-import com.fairphone.spring.launcher.data.repository.MomentRepository
+import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.di.dataModule
 import com.fairphone.spring.launcher.di.uiModule
 import kotlinx.coroutines.CoroutineScope
@@ -47,7 +47,7 @@ class App : Application(), KoinComponent {
     }
 
     private val appPrefs: AppPrefsImpl by inject()
-    private val momentRepository: MomentRepository by inject()
+    private val LauncherProfileRepository: LauncherProfileRepository by inject()
     private lateinit var applicationScope: CoroutineScope
 
     override fun onCreate() {
@@ -65,14 +65,14 @@ class App : Application(), KoinComponent {
     private fun initApp(context: Context) {
         applicationScope = MainScope()
         applicationScope.launch {
-            prepareInitialMoment(context)
+            prepareInitialProfile(context)
         }
     }
 
     //TODO: This probably should be moved elsewhere
-    private suspend fun prepareInitialMoment(context: Context) = withContext(Dispatchers.IO) {
+    private suspend fun prepareInitialProfile(context: Context) = withContext(Dispatchers.IO) {
         if (appPrefs.isFistTimeUse()) {
-            momentRepository.initFirstMoment(context)
+            LauncherProfileRepository.initialize(context)
             appPrefs.setFirstTimeUse(false)
         }
     }

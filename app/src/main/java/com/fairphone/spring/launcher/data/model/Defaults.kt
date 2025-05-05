@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.fairphone.spring.launcher.ui.ModeIcons
 import com.fairphone.spring.launcher.ui.modeicons.Vector
 
-fun Moment.getIconVector(): ImageVector {
+fun LauncherProfile.getIconVector(): ImageVector {
     return when {
         icon == "Vector" -> ModeIcons.Vector
         else -> ModeIcons.Vector
@@ -39,12 +39,12 @@ object Defaults {
         "com.fps.camera",
         "com.google.android.apps.maps",
     )
-    val DEFAULT_ALLOWED_CONTACTS = AllowedContacts.NONE
+    val DEFAULT_ALLOWED_CONTACTS = ContactType.CONTACT_TYPE_NONE
     const val DEFAULT_REPEAT_CALL_ENABLED = true
     const val DEFAULT_WALLPAPER_ID = 0
-    val DEFAULT_DARK_MODE_SETTING = DarkModeSetting.SYSTEM
+    val DEFAULT_DARK_MODE_SETTING = UiMode.UI_MODE_SYSTEM
     const val DEFAULT_BLUE_LIGHT_FILTER_ENABLED = false
-    val DEFAULT_SOUND_SETTING = SoundSetting.FOLLOW_DEVICE_SETTINGS
+    val DEFAULT_SOUND_SETTING = SoundSetting.SOUND_SETTING_FOLLOW_DEVICE_SETTINGS
     const val BATTERY_SAVER_ENABLED = false
     const val REDUCE_BRIGHTNESS_ENABLED = false
     const val ECO_CHARGE_ENABLED = false

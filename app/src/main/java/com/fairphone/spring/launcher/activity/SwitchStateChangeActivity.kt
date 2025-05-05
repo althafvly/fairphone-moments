@@ -40,9 +40,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SwitchState
-import com.fairphone.spring.launcher.data.repository.MomentRepository
+import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.ui.component.SwitchStateChangeOverlayScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
@@ -52,7 +52,7 @@ import org.koin.compose.KoinContext
 
 class SwitchStateChangeActivity : ComponentActivity() {
 
-    private val momentRepository: MomentRepository by inject()
+    private val launcherProfileRepository: LauncherProfileRepository by inject()
     private var switchState: SwitchState? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,15 +85,15 @@ class SwitchStateChangeActivity : ComponentActivity() {
             setContent {
                 KoinContext {
                     SpringLauncherTheme {
-                        var activeMoment: Moment? by remember { mutableStateOf(null) }
+                        var activeProfile: LauncherProfile? by remember { mutableStateOf(null) }
 
                         LaunchedEffect(Unit) {
-                            activeMoment = momentRepository.getActiveMoment().first()
+                            activeProfile = launcherProfileRepository.getActiveProfile().first()
                         }
 
-                        if (activeMoment != null && switchState != null) {
+                        if (activeProfile != null && switchState != null) {
                             SwitchStateChangeScreen(
-                                activeMoment = activeMoment!!,
+                                activeProfile = activeProfile!!,
                                 switchButtonSwitchState = switchState!!,
                                 onOverlayAnimationDone = {
                                     onAnimationDone()
@@ -187,7 +187,7 @@ class SwitchStateChangeActivity : ComponentActivity() {
 
 @Composable
 fun SwitchStateChangeScreen(
-    activeMoment: Moment,
+    activeProfile: LauncherProfile,
     switchButtonSwitchState: SwitchState,
     onOverlayAnimationDone: (SwitchState) -> Unit
 ) {
@@ -196,7 +196,7 @@ fun SwitchStateChangeScreen(
     }
 
     SwitchStateChangeOverlayScreen(
-        moment = activeMoment,
+        profile = activeProfile,
         switchState = switchButtonSwitchState,
         onAnimationDone = { onOverlayAnimationDone(switchButtonSwitchState) },
         visibilityState = MutableTransitionState(false)

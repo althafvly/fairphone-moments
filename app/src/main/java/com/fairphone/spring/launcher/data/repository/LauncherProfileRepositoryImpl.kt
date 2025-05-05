@@ -17,9 +17,8 @@
 package com.fairphone.spring.launcher.data.repository
 
 import android.content.Context
-import com.fairphone.spring.launcher.data.datasource.MomentDataSource
-import com.fairphone.spring.launcher.data.model.AllowedContacts
-import com.fairphone.spring.launcher.data.model.DarkModeSetting
+import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
+import com.fairphone.spring.launcher.data.model.ContactType
 import com.fairphone.spring.launcher.data.model.Defaults.AIRPLANE_MODE_ENABLED
 import com.fairphone.spring.launcher.data.model.Defaults.ALWAYS_ON_DISPLAY_ENABLED
 import com.fairphone.spring.launcher.data.model.Defaults.BATTERY_SAVER_ENABLED
@@ -36,23 +35,24 @@ import com.fairphone.spring.launcher.data.model.Defaults.DEFAULT_VISIBLE_APPS
 import com.fairphone.spring.launcher.data.model.Defaults.DEFAULT_WALLPAPER_ID
 import com.fairphone.spring.launcher.data.model.Defaults.ECO_CHARGE_ENABLED
 import com.fairphone.spring.launcher.data.model.Defaults.REDUCE_BRIGHTNESS_ENABLED
-import com.fairphone.spring.launcher.data.model.Moment
+import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SoundSetting
-import com.fairphone.spring.launcher.data.model.moment
+import com.fairphone.spring.launcher.data.model.UiMode
+import com.fairphone.spring.launcher.data.model.launcherProfile
 import com.fairphone.spring.launcher.util.getDefaultBrowserPackageName
 import kotlinx.coroutines.flow.Flow
 
-interface MomentRepository {
-    suspend fun initFirstMoment(context: Context)
-    fun getActiveMoment(): Flow<Moment>
+interface LauncherProfileRepository {
+    suspend fun initialize(context: Context)
+    fun getActiveProfile(): Flow<LauncherProfile>
     suspend fun updateVisibleApps(visibleApps: List<String>)
     suspend fun updateName(name: String)
-    suspend fun updateAllowedContacts(allowedContacts: AllowedContacts)
+    suspend fun updateAllowedContacts(allowedContacts: ContactType)
     suspend fun updateCustomContacts(customContacts: List<String>)
     suspend fun updateRepeatCallEnabled(enabled: Boolean)
     suspend fun updateAppNotifications(appNotifications: List<String>)
     suspend fun updateWallpaperId(wallpaperId: Int)
-    suspend fun updateDarkModeSetting(darkModeSetting: DarkModeSetting)
+    suspend fun updateDarkModeSetting(darkModeSetting: UiMode)
     suspend fun updateBlueFilterEnabled(enabled: Boolean)
     suspend fun updateSoundSetting(soundSetting: SoundSetting)
     suspend fun updateBatterySaverEnabled(enabled: Boolean)
@@ -62,20 +62,20 @@ interface MomentRepository {
     suspend fun updateAirplaneModeEnabled(enabled: Boolean)
 }
 
-class MomentRepositoryImpl(private val dataSource: MomentDataSource) : MomentRepository {
-    override suspend fun initFirstMoment(context: Context) {
+class LauncherProfileRepositoryImpl(private val dataSource: ProfileDataSource) : LauncherProfileRepository {
+    override suspend fun initialize(context: Context) {
         val defaultBrowser = getDefaultBrowserPackageName(context)
         val defaultVisibleApps = DEFAULT_VISIBLE_APPS + defaultBrowser
-        val firstMoment = moment {
+        val firstLauncherProfile = launcherProfile {
             name = DEFAULT_NAME
             icon = DEFAULT_ICON
             bgColor1 = DEFAULT_BG_COLOR1
             bgColor2 = DEFAULT_BG_COLOR2
             visibleApps.addAll(defaultVisibleApps)
-            allowedContacts = DEFAULT_ALLOWED_CONTACTS
+            allowedContact = DEFAULT_ALLOWED_CONTACTS
             repeatCallEnabled = DEFAULT_REPEAT_CALL_ENABLED
             wallpaperId = DEFAULT_WALLPAPER_ID
-            darkModeSetting = DEFAULT_DARK_MODE_SETTING
+            uiMode = DEFAULT_DARK_MODE_SETTING
             blueLightFilterEnabled = DEFAULT_BLUE_LIGHT_FILTER_ENABLED
             soundSetting = DEFAULT_SOUND_SETTING
             batterySaverEnabled = BATTERY_SAVER_ENABLED
@@ -84,10 +84,10 @@ class MomentRepositoryImpl(private val dataSource: MomentDataSource) : MomentRep
             alwaysOnDisplayEnabled = ALWAYS_ON_DISPLAY_ENABLED
             airplaneModeEnabled = AIRPLANE_MODE_ENABLED
         }
-        dataSource.updateMoment(firstMoment)
+        dataSource.updateLauncherProfile(firstLauncherProfile)
     }
 
-    override fun getActiveMoment(): Flow<Moment> = dataSource.getActiveMoment()
+    override fun getActiveProfile(): Flow<LauncherProfile> = dataSource.getActiveProfile()
 
     override suspend fun updateVisibleApps(visibleApps: List<String>) =
         dataSource.updateVisibleApps(visibleApps)
@@ -96,7 +96,7 @@ class MomentRepositoryImpl(private val dataSource: MomentDataSource) : MomentRep
     dataSource.updateName(name)
     }
 
-    override suspend fun updateAllowedContacts(allowedContacts: AllowedContacts) =
+    override suspend fun updateAllowedContacts(allowedContacts: ContactType) =
         dataSource.updateAllowedContacts(allowedContacts)
 
     override suspend fun updateCustomContacts(customContacts: List<String>) =
@@ -111,7 +111,7 @@ class MomentRepositoryImpl(private val dataSource: MomentDataSource) : MomentRep
     override suspend fun updateWallpaperId(wallpaperId: Int) =
         dataSource.updateWallpaperId(wallpaperId)
 
-    override suspend fun updateDarkModeSetting(darkModeSetting: DarkModeSetting) =
+    override suspend fun updateDarkModeSetting(darkModeSetting: UiMode) =
         dataSource.updateDarkModeSetting(darkModeSetting)
 
     override suspend fun updateBlueFilterEnabled(enabled: Boolean) =

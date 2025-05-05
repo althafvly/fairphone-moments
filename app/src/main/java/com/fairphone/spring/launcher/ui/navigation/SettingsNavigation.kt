@@ -24,15 +24,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.fairphone.spring.launcher.ui.screen.settings.main.MomentSettings
-import com.fairphone.spring.launcher.ui.screen.settings.main.MomentSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsScreen
+import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsViewModel
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
 const val SLIDE_ANIMATION_DURATION_MILLIS = 300
 
 @Serializable
-object MomentSettings
+object ProfileSettings
 
 
 @Composable
@@ -40,10 +40,10 @@ fun SettingsNavigation(
     navController: NavHostController,
 ) = NavHost(
     navController = navController,
-    startDestination = MomentSettings,
+    startDestination = ProfileSettings,
 ) {
-    // Moment Settings Screen
-    composable<MomentSettings>(
+    // Profile Settings Screen
+    composable<ProfileSettings>(
         enterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Left,
@@ -69,13 +69,13 @@ fun SettingsNavigation(
             )
         }
     ) {
-        val viewModel: MomentSettingsViewModel = koinViewModel()
+        val viewModel: ProfileSettingsViewModel = koinViewModel()
         val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
         screenState?.let {
-            MomentSettings(
+            ProfileSettingsScreen(
                 screenState = it,
-                onEditMomentName = viewModel::updateMomentName,
+                onEditProfileName = viewModel::updateProfileName,
                 onNavigateToVisibleAppSettings = {
                     navController.navigate(VisibleAppSelector)
                 }

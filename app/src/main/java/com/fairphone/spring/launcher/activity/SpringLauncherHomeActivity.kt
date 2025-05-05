@@ -117,7 +117,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
                             ),
                         ) {
                             AnimatedBackground(
-                                colors = screenState!!.activeMoment.colors(),
+                                colors = screenState!!.activeProfile.colors(),
                                 modifier = Modifier
                                     .background(MaterialTheme.colorScheme.background)
                             ) {

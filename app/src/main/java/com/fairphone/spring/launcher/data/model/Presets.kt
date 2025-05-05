@@ -19,31 +19,31 @@ package com.fairphone.spring.launcher.data.model
 import androidx.compose.ui.graphics.Color
 
 object Presets {
-    val Essentials = moment {
+    val Essentials = launcherProfile {
         name = "Spring"
         icon = "Vector"
         bgColor1 = 0xB2C3D1D0
         bgColor2 = 0xB2FFBA63
     }
-    val Journey = moment {
+    val Journey = launcherProfile {
         name = "Journey"
         icon = "Vector"
         bgColor1 = 0xFFD8FF4F
         bgColor2 = 0xFF00433D
     }
-    val Recharge = moment {
+    val Recharge = launcherProfile {
         name = "Recharge"
         icon = "Vector"
         bgColor1 = 0xFF66A2DD
         bgColor2 = 0xFF2D9197
     }
-    val Balance = moment {
+    val Balance = launcherProfile {
         name = "Balance"
         icon = "Vector"
         bgColor1 = 0xFF42CC60
         bgColor2 = 0xFFD8FF4F
     }
-    val DeepFocus = moment {
+    val DeepFocus = launcherProfile {
         name = "Deep focus"
         icon = "Vector"
         bgColor1 = 0xFFF27696
@@ -59,6 +59,6 @@ object Presets {
     )
 }
 
-fun Moment.colors(): Pair<Color, Color> {
+fun LauncherProfile.colors(): Pair<Color, Color> {
     return Pair(Color(bgColor1), Color(bgColor2))
 }
