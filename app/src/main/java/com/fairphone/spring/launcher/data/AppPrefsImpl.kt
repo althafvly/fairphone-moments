@@ -16,10 +16,10 @@
 
 package com.fairphone.spring.launcher.data
 
-import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import com.fairphone.spring.launcher.di.appPrefsDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
@@ -28,12 +28,10 @@ interface AppPrefs {
     suspend fun setFirstTimeUse(value: Boolean)
 }
 
-class AppPrefsImpl(context: Context): AppPrefs {
+class AppPrefsImpl(private val dataStore: DataStore<Preferences>): AppPrefs {
     companion object {
         val FIRST_TIME_USE = booleanPreferencesKey("first_time_use")
     }
-
-    private val dataStore = context.appPrefsDataStore
 
     override suspend fun isFistTimeUse(): Boolean {
         return dataStore.data.map { preferences ->

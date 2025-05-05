@@ -16,14 +16,12 @@
 
 package com.fairphone.spring.launcher.data.datasource
 
-import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
 import com.fairphone.spring.launcher.data.model.ContactType
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SoundSetting
 import com.fairphone.spring.launcher.data.model.UiMode
-import com.fairphone.spring.launcher.di.profileDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import java.io.IOException
@@ -48,8 +46,8 @@ interface ProfileDataSource {
     suspend fun updateAirplaneModeEnabled(enabled: Boolean)
 }
 
-class ProfileDataSourceImpl(context: Context) : ProfileDataSource {
-    private val dataStore: DataStore<LauncherProfile> = context.profileDataStore
+class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfile>) : ProfileDataSource {
+
 
     override fun getActiveProfile(): Flow<LauncherProfile> {
         return dataStore.data

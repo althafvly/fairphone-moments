@@ -31,6 +31,7 @@ import com.fairphone.spring.launcher.data.repository.AppInfoRepositoryImpl
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepositoryImpl
 import com.fairphone.spring.launcher.data.serializer.LauncherProfileSerializer
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -38,8 +39,8 @@ import org.koin.dsl.module
 val dataModule = module {
     singleOf(::AppInfoRepositoryImpl) { bind<AppInfoRepository>() }
     singleOf(::LauncherProfileRepositoryImpl) { bind<LauncherProfileRepository>() }
-    singleOf(::ProfileDataSourceImpl) { bind<ProfileDataSource>() }
-    singleOf(::AppPrefsImpl) { bind<AppPrefs>() }
+    single<ProfileDataSource>{ ProfileDataSourceImpl(androidContext().profileDataStore) }
+    single<AppPrefs>{ AppPrefsImpl(androidContext().appPrefsDataStore) }
 }
 
 /**

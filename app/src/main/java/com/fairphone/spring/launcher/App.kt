@@ -19,7 +19,7 @@ package com.fairphone.spring.launcher
 import android.app.Application
 import android.content.Context
 import androidx.annotation.VisibleForTesting
-import com.fairphone.spring.launcher.data.AppPrefsImpl
+import com.fairphone.spring.launcher.data.AppPrefs
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.di.dataModule
 import com.fairphone.spring.launcher.di.uiModule
@@ -46,7 +46,7 @@ class App : Application(), KoinComponent {
         )
     }
 
-    private val appPrefs: AppPrefsImpl by inject()
+    private val appPrefs: AppPrefs by inject()
     private val LauncherProfileRepository: LauncherProfileRepository by inject()
     private lateinit var applicationScope: CoroutineScope
 
