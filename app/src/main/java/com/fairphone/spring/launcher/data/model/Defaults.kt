@@ -18,15 +18,11 @@
 package com.fairphone.spring.launcher.data.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.fairphone.spring.launcher.ui.ModeIcons
-import com.fairphone.spring.launcher.ui.modeicons.Vector
+import com.fairphone.spring.launcher.ui.modeicons.fromString
 
-fun LauncherProfile.getIconVector(): ImageVector {
-    return when {
-        icon == "Vector" -> ModeIcons.Vector
-        else -> ModeIcons.Vector
-    }
-}
+fun LauncherProfile.getIconVector(): ImageVector =
+    ImageVector.fromString(icon)
+
 
 object Defaults {
     const val DEFAULT_NAME = "Essentials"

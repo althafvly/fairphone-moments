@@ -17,7 +17,7 @@
 package com.fairphone.spring.launcher.ui
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.fairphone.spring.launcher.ui.modeicons.Vector
+import com.fairphone.spring.launcher.ui.modeicons.ModeIcon
 import kotlin.collections.List as ____KtList
 
 public object ModeIcons
@@ -29,6 +29,6 @@ public val ModeIcons.AllIcons: ____KtList<ImageVector>
     if (__AllIcons != null) {
       return __AllIcons!!
     }
-    __AllIcons = listOf(Vector)
+    __AllIcons = ModeIcon.entries.map { it.imageVector }
     return __AllIcons!!
   }
