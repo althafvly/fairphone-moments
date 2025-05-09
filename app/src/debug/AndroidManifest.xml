@@ -18,7 +18,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <application android:icon="@drawable/ic_launcher_png">
+    <application android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".activity.SpringLauncherHomeActivity"
             android:clearTaskOnLaunch="true"
