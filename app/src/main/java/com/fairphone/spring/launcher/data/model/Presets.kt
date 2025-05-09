@@ -20,36 +20,42 @@ import androidx.compose.ui.graphics.Color
 
 object Presets {
     val Essentials = launcherProfile {
+        id = "Spring"
         name = "Spring"
         icon = "Vector"
         bgColor1 = 0xB2C3D1D0
         bgColor2 = 0xB2FFBA63
     }
     val Journey = launcherProfile {
+        id = "Journey"
         name = "Journey"
         icon = "Vector"
         bgColor1 = 0xFFD8FF4F
         bgColor2 = 0xFF00433D
     }
     val Recharge = launcherProfile {
+        id = "Recharge"
         name = "Recharge"
         icon = "Vector"
         bgColor1 = 0xFF66A2DD
         bgColor2 = 0xFF2D9197
     }
     val Balance = launcherProfile {
+        id = "Balance"
         name = "Balance"
         icon = "Vector"
         bgColor1 = 0xFF42CC60
         bgColor2 = 0xFFD8FF4F
     }
     val DeepFocus = launcherProfile {
+        id = "Deep focus"
         name = "Deep focus"
         icon = "Vector"
         bgColor1 = 0xFFF27696
         bgColor2 = 0xFFF26E6E
     }
     val Custom = launcherProfile {
+        id = "Custom"
         name = "Custom"
         icon = "Vector"
         bgColor1 = 0xFFF27696

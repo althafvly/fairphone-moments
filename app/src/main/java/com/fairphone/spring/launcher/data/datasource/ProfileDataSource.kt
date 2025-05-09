@@ -19,43 +19,128 @@ package com.fairphone.spring.launcher.data.datasource
 import android.util.Log
 import androidx.datastore.core.DataStore
 import com.fairphone.spring.launcher.data.model.LauncherProfile
+import com.fairphone.spring.launcher.data.model.LauncherProfiles
+import com.fairphone.spring.launcher.data.model.launcherProfiles
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import java.io.IOException
 
 interface ProfileDataSource {
     fun getActiveProfile(): Flow<LauncherProfile>
+    fun getProfiles(): Flow<List<LauncherProfile>>
+
+    suspend fun setActiveProfile(profile: LauncherProfile)
+    suspend fun createLauncherProfile(profile: LauncherProfile)
     suspend fun updateLauncherProfile(profile: LauncherProfile)
-    suspend fun updateVisibleApps(visibleApps: List<String>)
+    suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
 }
 
-class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfile>) : ProfileDataSource {
+class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) :
+    ProfileDataSource {
 
-
-    override fun getActiveProfile(): Flow<LauncherProfile> {
-        return dataStore.data
-            .catch { exception ->
-                // dataStore.data throws an IOException when an error is encountered when reading data
-                if (exception is IOException) {
-                    Log.e("ProfileDataSource", "Error reading sort order preferences.", exception)
-                    emit(LauncherProfile.getDefaultInstance())
-                } else {
-                    throw exception
-                }
+    override fun getActiveProfile(): Flow<LauncherProfile> =
+        getLauncherProfiles().transform { profile ->
+            if(profile.profilesList.isNotEmpty()) {
+                // We only emit the profile when the list is populated
+                emit(profile.profilesList.first { it.id == profile.active })
             }
+        }
+
+    override fun getProfiles(): Flow<List<LauncherProfile>> =
+        getLauncherProfiles().map { it.profilesList }
+
+    private fun getLauncherProfiles(): Flow<LauncherProfiles> {
+        return dataStore.data.catch { exception ->
+            // dataStore.data throws an IOException when an error is encountered when reading data
+            if (exception is IOException) {
+                Log.e("ProfileDataSource", "Error reading sort order preferences.", exception)
+                emit(LauncherProfiles.getDefaultInstance())
+            } else {
+                throw exception
+            }
+        }
     }
 
-    override suspend fun updateLauncherProfile(profile: LauncherProfile) {
-        dataStore.updateData { profile }
-    }
-
-    override suspend fun updateVisibleApps(visibleApps: List<String>) {
-        dataStore.updateData { profile ->
-            profile.toBuilder()
-                .clearVisibleApps()
-                .addAllVisibleApps(visibleApps)
+    override suspend fun setActiveProfile(profile: LauncherProfile) {
+        dataStore.updateData { profiles ->
+            profiles
+                .toBuilder()
+                .setActive(profile.id)
                 .build()
         }
     }
+
+    override suspend fun createLauncherProfile(profile: LauncherProfile) {
+        val existing = getLauncherProfiles().firstOrNull()
+        if (existing == null || existing.profilesList.isEmpty()) {
+            dataStore.updateData {
+                launcherProfiles {
+                    profiles.add(profile)
+                    active = profile.id
+                }
+            }
+        } else {
+            if(existing.profilesList.map { it.id }.contains(profile.id)) {
+                // In a perfect world we must never create a profile with the same id. If we
+                // try we update the existing profile
+                updateLauncherProfile(profile)
+            } else {
+                dataStore.updateData { profiles ->
+                    profiles
+                        .toBuilder()
+                        .clearProfiles()
+                        .addAllProfiles((existing.profilesList + listOf(profile)).toMutableList())
+                        .build()
+                }
+            }
+        }
+    }
+
+    override suspend fun updateLauncherProfile(profile: LauncherProfile) {
+        dataStore.updateData { profiles ->
+            profiles
+                .toBuilder()
+                .clearProfiles()
+                .addAllProfiles(updateLauncherProfileInList(profile.id) {
+                    profile
+                })
+                .build()
+        }
+    }
+
+    override suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>) {
+        dataStore.updateData { profiles ->
+            profiles
+                .toBuilder()
+                .clearProfiles()
+                .addAllProfiles(updateLauncherProfileInList(profileId) {
+                    it.toBuilder()
+                        .clearVisibleApps()
+                        .addAllVisibleApps(visibleApps)
+                        .build()
+                })
+                .build()
+        }
+    }
+
+    /**
+     * In this case we have at least one element in the list and the list must contain the
+     * given profile id
+     */
+    private suspend fun updateLauncherProfileInList(
+        profileId: String,
+        profileUpdateAction: (LauncherProfile) -> LauncherProfile
+    ): List<LauncherProfile> =
+        getProfiles().first().toMutableList().also {
+            it.replaceAll{
+                // We update only the given profile id inthe list
+                if (profileId == it.id) profileUpdateAction(it) else it
+            }
+        }
+
 }
 

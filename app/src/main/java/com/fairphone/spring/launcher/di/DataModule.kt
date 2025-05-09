@@ -23,14 +23,14 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSourceImpl
-import com.fairphone.spring.launcher.data.model.LauncherProfile
+import com.fairphone.spring.launcher.data.model.LauncherProfiles
 import com.fairphone.spring.launcher.data.prefs.AppPrefs
 import com.fairphone.spring.launcher.data.prefs.AppPrefsImpl
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.data.repository.AppInfoRepositoryImpl
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepositoryImpl
-import com.fairphone.spring.launcher.data.serializer.LauncherProfileSerializer
+import com.fairphone.spring.launcher.data.serializer.LauncherProfilesSerializer
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
@@ -39,8 +39,8 @@ import org.koin.dsl.module
 val dataModule = module {
     singleOf(::AppInfoRepositoryImpl) { bind<AppInfoRepository>() }
     singleOf(::LauncherProfileRepositoryImpl) { bind<LauncherProfileRepository>() }
-    single<ProfileDataSource>{ ProfileDataSourceImpl(androidContext().profileDataStore) }
-    single<AppPrefs>{ AppPrefsImpl(androidContext().appPrefsDataStore) }
+    single<ProfileDataSource> { ProfileDataSourceImpl(androidContext().profileDataStore) }
+    single<AppPrefs> { AppPrefsImpl(androidContext().appPrefsDataStore) }
 }
 
 /**
@@ -51,8 +51,8 @@ val Context.appPrefsDataStore: DataStore<Preferences> by preferencesDataStore(na
 /**
  * DataStore used to store LauncherProfiles
  */
-val Context.profileDataStore: DataStore<LauncherProfile> by dataStore(
-    fileName = "profile.pb",
-    serializer = LauncherProfileSerializer
+val Context.profileDataStore: DataStore<LauncherProfiles> by dataStore(
+    fileName = "profiles.pb",
+    serializer = LauncherProfilesSerializer
 )
 

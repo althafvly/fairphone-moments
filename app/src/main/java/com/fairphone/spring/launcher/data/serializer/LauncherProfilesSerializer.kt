@@ -19,26 +19,26 @@ package com.fairphone.spring.launcher.data.serializer
 import android.util.Log
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.fairphone.spring.launcher.data.model.LauncherProfile
+import com.fairphone.spring.launcher.data.model.LauncherProfiles
 import kotlinx.serialization.SerializationException
 import java.io.InputStream
 import java.io.OutputStream
 
-object LauncherProfileSerializer : Serializer<LauncherProfile> {
-    override val defaultValue: LauncherProfile
-        get() = LauncherProfile.getDefaultInstance()
+object LauncherProfilesSerializer : Serializer<LauncherProfiles> {
+    override val defaultValue: LauncherProfiles
+        get() = LauncherProfiles.getDefaultInstance()
 
-    override suspend fun readFrom(input: InputStream): LauncherProfile {
+    override suspend fun readFrom(input: InputStream): LauncherProfiles {
         return try {
-            LauncherProfile.parseFrom(input)
+            LauncherProfiles.parseFrom(input)
         } catch (e: SerializationException) {
-            Log.e("LauncherProfileSerializer", "Error deserializing proto", e)
+            Log.e("LauncherProfilesSerializer", "Error deserializing proto", e)
             throw CorruptionException("Cannot read proto.", e)
         }
     }
 
     override suspend fun writeTo(
-        t: LauncherProfile,
+        t: LauncherProfiles,
         output: OutputStream
     ) {
         t.writeTo(output)

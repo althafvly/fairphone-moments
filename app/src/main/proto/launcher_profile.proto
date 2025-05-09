@@ -3,27 +3,32 @@ syntax = "proto3";
 option java_package = "com.fairphone.spring.launcher.data.model";
 option java_multiple_files = true;
 
-message LauncherProfile {
+message LauncherProfiles {
+  string active = 1;
+  repeated LauncherProfile profiles = 2;
+}
 
-    string name = 1;
-    string icon = 2;
-    int64 bgColor1 = 3;
-    int64 bgColor2 = 4;
-    repeated string visibleApps = 5;
-    ContactType allowedContacts = 6;
-    repeated string customContacts = 7;
-    bool repeatCallEnabled = 8;
-    repeated string appNotifications = 9;
-    int32 wallpaperId = 10;
-    UiMode uiMode = 11;
-    bool blueLightFilterEnabled = 12;
-    SoundSetting soundSetting = 13;
-    bool batterySaverEnabled = 14;
-    bool reduceBrightnessEnabled = 15;
-    bool ecoChargeEnabled = 16;
-    bool alwaysOnDisplayEnabled = 17;
-    bool airplaneModeEnabled = 18;
-    string zenRuleId = 19;
+message LauncherProfile {
+    string id = 1;
+    string name = 2;
+    string icon = 3;
+    int64 bgColor1 = 4;
+    int64 bgColor2 = 5;
+    repeated string visibleApps = 6;
+    ContactType allowedContacts = 7;
+    repeated string customContacts = 8;
+    bool repeatCallEnabled = 9;
+    repeated string appNotifications = 10;
+    int32 wallpaperId = 11;
+    UiMode uiMode = 12;
+    bool blueLightFilterEnabled = 13;
+    SoundSetting soundSetting = 14;
+    bool batterySaverEnabled = 15;
+    bool reduceBrightnessEnabled = 16;
+    bool ecoChargeEnabled = 17;
+    bool alwaysOnDisplayEnabled = 18;
+    bool airplaneModeEnabled = 19;
+    string zenRuleId = 20;
 }
 
 enum ContactType {

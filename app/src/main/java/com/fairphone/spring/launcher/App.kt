@@ -98,6 +98,25 @@ class App : Application(), KoinComponent {
             )
             val result = createLauncherProfileUseCase.execute(createLauncherProfileParams)
 
+            // TODO remove this code (necessary to have 2 default prfiles)
+            createLauncherProfileUseCase.execute(
+                CreateLauncherProfileUseCase.Params(
+                    name = "Balance",
+                    icon = Defaults.DEFAULT_ICON,
+                    bgColor1 = Defaults.DEFAULT_BG_COLOR1,
+                    bgColor2 = Defaults.DEFAULT_BG_COLOR2,
+                    visibleApps = defaultVisibleApps,
+                    allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
+                    repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
+                    wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
+                    uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
+                    blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
+                    soundSetting = Defaults.DEFAULT_SOUND_SETTING,
+                    batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
+                    reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
+                )
+            )
+
             if (result.isFailure) {
                 Log.e("App", "Failed to create initial profile", result.exceptionOrNull())
             }

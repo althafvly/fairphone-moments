@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LauncherProfile
-import com.fairphone.spring.launcher.data.serializer.LauncherProfileSerializer
+import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.LauncherProfileSettingsTopBar
 import com.fairphone.spring.launcher.ui.component.ProfileNameEditorDialog
@@ -167,7 +167,7 @@ fun ProfileSettingsScreen(
 fun ProfileSettings_Preview() {
     SpringLauncherTheme {
         ProfileSettingsScreen(
-            profile = LauncherProfileSerializer.defaultValue,
+            profile = Presets.Essentials,
             visibleApps = emptyList(),
             onEditProfileName = {},
             onNavigateToVisibleAppSettings = {},

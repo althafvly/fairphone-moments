@@ -38,7 +38,7 @@ class UpdateLauncherProfileUseCase(
         )
 
         if (result.isSuccess) {
-            launcherProfileRepository.saveProfile(profile = params)
+            launcherProfileRepository.updateProfile(profile = params)
             return Result.success(params)
         } else {
             return Result.failure(Exception("Failed to update zen rule"))

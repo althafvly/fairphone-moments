@@ -24,6 +24,7 @@ import com.fairphone.spring.launcher.data.model.launcherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.ZenNotificationManager
+import com.fairphone.spring.launcher.util.sanitizeToId
 
 /**
  * Use case to create a new launcher profile.
@@ -57,6 +58,7 @@ class CreateLauncherProfileUseCase(
             uiMode = params.uiMode,
         )
         val launcherProfile = launcherProfile {
+            id = params.name.sanitizeToId()
             name = params.name
             icon = params.icon
             bgColor1 = params.bgColor1
@@ -74,7 +76,7 @@ class CreateLauncherProfileUseCase(
             zenRuleId = createdZenRuleId
         }
 
-        launcherProfileRepository.saveProfile(profile = launcherProfile)
+        launcherProfileRepository.createProfile(profile = launcherProfile)
 
         return Result.success(launcherProfile)
     }

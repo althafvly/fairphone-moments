@@ -47,10 +47,16 @@ class VisibleAppSettingsViewModel(
         viewModelScope.launch {
             appList.addAll(appInfoRepository.getInstalledAppsLauncherApps(context))
             val currentProfile = launcherProfileRepository.getActiveProfile().first()
-            visibleApps.addAll(appInfoRepository.getAppInfos(context,  currentProfile.visibleAppsList))
+            visibleApps.addAll(
+                appInfoRepository.getAppInfos(
+                    context,
+                    currentProfile.visibleAppsList
+                )
+            )
 
             _screenState.update {
                 _screenState.value.copy(
+                    profileId = currentProfile.id,
                     appList = appList,
                     visibleApps = visibleApps,
                     showConfirmButton = false,
@@ -109,12 +115,17 @@ class VisibleAppSettingsViewModel(
 
     fun confirmAppSelection() {
         viewModelScope.launch {
-            launcherProfileRepository.updateVisibleApps(visibleApps.map { it.packageName })
+            launcherProfileRepository.updateVisibleApps(
+                _screenState.value.profileId
+                    ?: throw IllegalStateException("Profile id can't be null when we update a profile apps"),
+                visibleApps.map { it.packageName }
+            )
         }
     }
 }
 
 data class VisibleAppSelectorScreenState(
+    val profileId: String? = null,
     val appList: List<AppInfo> = emptyList(),
     val visibleApps: List<AppInfo> = emptyList(),
     val showConfirmButton: Boolean = false,
