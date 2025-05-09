@@ -19,9 +19,11 @@ package com.fairphone.spring.launcher.data.repository
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 interface LauncherProfileRepository {
     fun getActiveProfile(): Flow<LauncherProfile>
+    fun getProfiles(): Flow<List<LauncherProfile>>
     suspend fun saveProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(visibleApps: List<String>)
 }
@@ -30,6 +32,10 @@ class LauncherProfileRepositoryImpl(private val dataSource: ProfileDataSource) :
     LauncherProfileRepository {
 
     override fun getActiveProfile(): Flow<LauncherProfile> = dataSource.getActiveProfile()
+
+    // TODO manage several profiles
+    override fun getProfiles(): Flow<List<LauncherProfile>> =
+        dataSource.getActiveProfile().map { listOf(it) }
 
     override suspend fun saveProfile(profile: LauncherProfile) =
         dataSource.updateLauncherProfile(profile)

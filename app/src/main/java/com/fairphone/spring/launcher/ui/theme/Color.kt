@@ -23,6 +23,13 @@ val Color_FP_Brand_Forest = Color(0xFF00433D)
 val Color_FP_Brand_Lime = Color(0xFFD8FF4F)
 val Color_Orange = Color(0xFFFFB14E)
 
+val actionButtonBackground = Color(red = 255, green = 255, blue = 255, alpha = 30)
+val actionButtonStroke = Color(0xFFFFFFFF)
+val selectedActionButtonBackground = Color(red = 255, green = 255, blue = 255, alpha = 50)
+val selectedActionButtonStroke = Color_FP_Brand_Lime
+val selectedActionButtonStrokeEndGradient = Color(red = 255, green = 255, blue = 255, alpha = 55)
+
+
 val primaryLight = Color(0xFF006A61)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF141414)

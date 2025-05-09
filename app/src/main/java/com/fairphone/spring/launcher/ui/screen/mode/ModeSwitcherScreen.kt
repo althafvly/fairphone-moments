@@ -16,147 +16,103 @@
 
 package com.fairphone.spring.launcher.ui.screen.mode
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
-import com.fairphone.spring.launcher.ui.modeicons.fromString
+import com.fairphone.spring.launcher.ui.FP6Preview
+import com.fairphone.spring.launcher.ui.FP6PreviewDark
+import com.fairphone.spring.launcher.ui.component.ActionButton
+import com.fairphone.spring.launcher.ui.screen.mode.component.ModeSwitcherButton
+import com.fairphone.spring.launcher.ui.screen.mode.component.ModeSwitcherHeader
+import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
 fun ModeSwitcherScreen(
     currentLauncherProfile: LauncherProfile,
-    onModeSelected: (LauncherProfile) -> Unit,
+    profiles: List<LauncherProfile>,
+    onModeSelected: (LauncherProfile) -> Unit = {},
+    onCancel: () -> Unit = {}
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Transparent)
-            .padding(top = 50.dp, start = 24.dp, end = 24.dp),
-    ) {
-        Text(
-            "What's your next focus?",
-            fontSize = 32.sp,
-            lineHeight = 38.4.sp,
-            fontWeight = FontWeight.W600,
-            color = Color(0xFF373737),
-            textAlign = TextAlign.Center,
-        )
-
+    ModeSwitcherContainer(endColor = Color_FP_Brand_Lime, onClick = onCancel) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 24.dp)
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 80.dp, start = 20.dp, end = 20.dp),
         ) {
-            Presets.All.forEach { mode ->
-                ModeSwitcherButton(
-                    profile = mode,
-                    isSelected = mode == currentLauncherProfile,
-                    onClick = { onModeSelected(mode) },
-                    modifier = Modifier.padding(vertical = 4.dp)
+            ModeSwitcherHeader()
+
+            Spacer(modifier = Modifier.weight(1.0f))
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                profiles.forEach { mode ->
+                    ModeSwitcherButton(
+                        profile = mode,
+                        isSelected = mode == currentLauncherProfile,
+                        onClick = { onModeSelected(mode) },
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.weight(1.0f))
+
+            if (profiles.size < 6) {
+                ActionButton(
+                    icon = Icons.Filled.Add,
+                    description = "Add Moment",
+                    displayLabel = true,
+                    modifier = Modifier.padding(bottom = 56.dp)
                 )
             }
+
         }
     }
 }
 
 @Composable
-fun ModeSwitcherButton(
-    profile: LauncherProfile,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val colors = if (isSelected) {
-        ButtonDefaults.buttonColors(
-            containerColor = Color.Black,
-            contentColor = Color.White,
-        )
-    } else {
-        ButtonDefaults.buttonColors(
-            containerColor = Color.White,
-            contentColor = Color.Black,
-        )
-    }
-    Button(
-        onClick = onClick,
-        border = BorderStroke(1.dp, Color.White),
-        shape = RoundedCornerShape(16.dp),
-        colors = colors,
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 14.dp),
-        modifier = modifier
-            .height(64.dp)
-            .fillMaxWidth(),
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Icon(
-                imageVector = ImageVector.fromString(profile.icon),
-                contentDescription = profile.name,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp).size(20.dp)
-            )
-
-            Text(
-                profile.name,
-                fontSize = 18.sp,
-                lineHeight = 21.6.sp,
-                fontWeight = FontWeight(500),
-                //color = colors.contentColor,
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun ModeSwitcherButton_Preview() {
-    Column {
-        ModeSwitcherButton(
-            profile = Presets.Essentials,
-            isSelected = true,
-            onClick = { /* Do nothing */ })
-        ModeSwitcherButton(
-            profile = Presets.Journey,
-            isSelected = false,
-            onClick = { /* Do nothing */ })
-    }
-
-}
-
-@Composable
-@Preview(showBackground = true)
-fun ModeSwitcherScreen_Preview() {
+private fun ModeSwitcherScreen_Preview(nbMoment: Int = 2) {
     SpringLauncherTheme {
         ModeSwitcherScreen(
-            currentLauncherProfile = Presets.Essentials
-        ) {}
+            currentLauncherProfile = Presets.Essentials,
+            profiles = Presets.All.subList(0, nbMoment),
+        )
     }
+}
+
+@Composable
+@FP6Preview()
+private fun ModeSwitcherScreen_LightPreview() {
+    ModeSwitcherScreen_Preview()
+}
+
+@Composable
+@FP6PreviewDark()
+private fun ModeSwitcherScreen_DarkPreview() {
+    ModeSwitcherScreen_Preview(nbMoment = 3)
+}
+
+@Composable
+@FP6Preview()
+private fun ModeSwitcherFullScreen_LightPreview() {
+    ModeSwitcherScreen_Preview(nbMoment = 6)
+}
+
+@Composable
+@FP6PreviewDark()
+private fun ModeSwitcherFullScreen_DarkPreview() {
+    ModeSwitcherScreen_Preview(nbMoment = 5)
 }

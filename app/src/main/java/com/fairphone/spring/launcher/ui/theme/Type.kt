@@ -40,14 +40,6 @@ val DmSans = FontFamily(
     Font(R.font.dm_sans_bold, FontWeight.Bold),
 )
 
-val Inter = FontFamily(
-    Font(R.font.inter_light, FontWeight.Light),
-    Font(R.font.inter_regular, FontWeight.Normal),
-    Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_semibold, FontWeight.SemiBold),
-    Font(R.font.inter_bold, FontWeight.Bold),
-)
-
 object FairphoneTypography {
     // Headings
     val H4 = TextStyle(
@@ -61,7 +53,16 @@ object FairphoneTypography {
         lineHeight = 21.6.sp,
         fontFamily = DmSans,
         fontWeight = FontWeight(500),
+        letterSpacing = -0.36.sp
     )
+    val H2 = TextStyle(
+        fontSize = 28.sp,
+        lineHeight = 33.6.sp,
+        fontFamily = DmSans,
+        fontWeight = FontWeight(500),
+        letterSpacing = -0.56.sp
+    )
+
     // Body
     val BodyMedium = TextStyle(
         fontSize = 16.sp,
@@ -75,6 +76,7 @@ object FairphoneTypography {
         fontFamily = DmSans,
         fontWeight = FontWeight.Normal,
     )
+
     // Labels
     val LabelMedium = TextStyle(
         fontSize = 12.sp,
@@ -82,6 +84,7 @@ object FairphoneTypography {
         fontFamily = DmSans,
         fontWeight = FontWeight.Medium,
     )
+
     // Custom
     val Time = TextStyle(
         fontSize = 44.sp,
@@ -95,6 +98,13 @@ object FairphoneTypography {
         lineHeight = 22.sp,
         fontFamily = BricolageGrotesque,
         fontWeight = FontWeight.Normal,
+        textAlign = TextAlign.Center,
+    )
+    val ButtonLegend = TextStyle(
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+        fontFamily = DmSans,
+        fontWeight = FontWeight.Medium,
         textAlign = TextAlign.Center,
     )
     val ButtonDefault = TextStyle(
@@ -129,7 +139,7 @@ val LauncherTypography = Typography(
     displaySmall = baseline.displaySmall.copy(fontFamily = BricolageGrotesque),
     headlineLarge = baseline.headlineLarge.copy(fontFamily = BricolageGrotesque),
     headlineMedium = FairphoneTypography.H4,
-    headlineSmall =FairphoneTypography.H5,
+    headlineSmall = FairphoneTypography.H5,
     titleLarge = baseline.titleLarge.copy(fontFamily = BricolageGrotesque),
     titleMedium = baseline.titleMedium.copy(fontFamily = BricolageGrotesque),
     titleSmall = baseline.titleSmall.copy(fontFamily = BricolageGrotesque),

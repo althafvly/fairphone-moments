@@ -51,7 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
+import com.fairphone.spring.launcher.activity.ModeSwitcherActivity
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
@@ -88,7 +88,7 @@ fun HomeScreen(
             viewModel.onAppClick(context, appInfo)
         },
         onModeSwitcherButtonClick = {
-            LauncherSettingsActivity.start(context)
+            ModeSwitcherActivity.start(context)
         }
     )
 }

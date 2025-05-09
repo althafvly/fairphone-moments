@@ -49,6 +49,12 @@ object Presets {
         bgColor1 = 0xFFF27696
         bgColor2 = 0xFFF26E6E
     }
+    val Custom = launcherProfile {
+        name = "Custom"
+        icon = "Vector"
+        bgColor1 = 0xFFF27696
+        bgColor2 = 0xFFF26E6E
+    }
 
     val All = listOf(
         Essentials,
@@ -56,6 +62,7 @@ object Presets {
         Recharge,
         Balance,
         DeepFocus,
+        Custom
     )
 }
 
