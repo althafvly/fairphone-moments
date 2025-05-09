@@ -31,9 +31,11 @@ import java.io.IOException
 
 interface ProfileDataSource {
     fun getActiveProfile(): Flow<LauncherProfile>
+    fun getEditedProfile(): Flow<LauncherProfile>
     fun getProfiles(): Flow<List<LauncherProfile>>
 
     suspend fun setActiveProfile(profile: LauncherProfile)
+    suspend fun setEditedProfile(profile: LauncherProfile)
     suspend fun createLauncherProfile(profile: LauncherProfile)
     suspend fun updateLauncherProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
@@ -44,9 +46,20 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
 
     override fun getActiveProfile(): Flow<LauncherProfile> =
         getLauncherProfiles().transform { profile ->
-            if(profile.profilesList.isNotEmpty()) {
+            if (profile.profilesList.isNotEmpty()) {
                 // We only emit the profile when the list is populated
                 emit(profile.profilesList.first { it.id == profile.active })
+            }
+        }
+
+    override fun getEditedProfile(): Flow<LauncherProfile> =
+        getLauncherProfiles().transform { profile ->
+            if (profile.profilesList.isNotEmpty()) {
+                // We only emit the profile when the list is populated
+                emit(
+                    profile.profilesList.firstOrNull { it.id == profile.edited }
+                    ?: profile.profilesList.first { it.id == profile.active }
+                )
             }
         }
 
@@ -74,6 +87,15 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
         }
     }
 
+    override suspend fun setEditedProfile(profile: LauncherProfile) {
+        dataStore.updateData { profiles ->
+            profiles
+                .toBuilder()
+                .setEdited(profile.id)
+                .build()
+        }
+    }
+
     override suspend fun createLauncherProfile(profile: LauncherProfile) {
         val existing = getLauncherProfiles().firstOrNull()
         if (existing == null || existing.profilesList.isEmpty()) {
@@ -84,7 +106,7 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
                 }
             }
         } else {
-            if(existing.profilesList.map { it.id }.contains(profile.id)) {
+            if (existing.profilesList.map { it.id }.contains(profile.id)) {
                 // In a perfect world we must never create a profile with the same id. If we
                 // try we update the existing profile
                 updateLauncherProfile(profile)
@@ -136,7 +158,7 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
         profileUpdateAction: (LauncherProfile) -> LauncherProfile
     ): List<LauncherProfile> =
         getProfiles().first().toMutableList().also {
-            it.replaceAll{
+            it.replaceAll {
                 // We update only the given profile id inthe list
                 if (profileId == it.id) profileUpdateAction(it) else it
             }

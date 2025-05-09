@@ -33,9 +33,9 @@ class AllowedContactSettingsViewModel(
     private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
 ) : ViewModel() {
 
-    private val activeProfile = profileRepository.getActiveProfile()
+    private val editedProfile = profileRepository.getEditedProfile()
 
-    val screenState = activeProfile
+    val screenState = editedProfile
         .map { profile ->
             AllowedContactSettingsScreenState.Success(
                 activeProfileName = profile.name,
@@ -49,7 +49,7 @@ class AllowedContactSettingsViewModel(
         )
 
     fun onContactTypeSelected(peopleType: ContactType) = viewModelScope.launch {
-        val profile = activeProfile.first()
+        val profile = editedProfile.first()
         val updatedProfile = profile.toBuilder().setAllowedContacts(peopleType).build()
         updateLauncherProfileUseCase.execute(updatedProfile)
     }

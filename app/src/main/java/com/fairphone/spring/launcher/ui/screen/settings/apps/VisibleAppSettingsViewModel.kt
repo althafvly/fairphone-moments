@@ -46,7 +46,7 @@ class VisibleAppSettingsViewModel(
     init {
         viewModelScope.launch {
             appList.addAll(appInfoRepository.getInstalledAppsLauncherApps(context))
-            val currentProfile = launcherProfileRepository.getActiveProfile().first()
+            val currentProfile = launcherProfileRepository.getEditedProfile().first()
             visibleApps.addAll(
                 appInfoRepository.getAppInfos(
                     context,

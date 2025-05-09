@@ -20,12 +20,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.launch
 
-class ModeSwitcherViewModel(launcherProfileRepository: LauncherProfileRepository) : ViewModel() {
+class ModeSwitcherViewModel(private val launcherProfileRepository: LauncherProfileRepository) :
+    ViewModel() {
 
     val screenState: StateFlow<ModeSwitcherScreenState?> =
         launcherProfileRepository
@@ -40,6 +44,18 @@ class ModeSwitcherViewModel(launcherProfileRepository: LauncherProfileRepository
                 started = SharingStarted.WhileSubscribed(),
                 initialValue = null,
             )
+
+    fun updateActiveProfile(profile: LauncherProfile) {
+        viewModelScope.launch {
+            launcherProfileRepository.setActiveProfile(profile)
+        }
+    }
+
+    fun editActiveProfileSettings(profile: LauncherProfile): Flow<Boolean> =
+        flow {
+            launcherProfileRepository.setEditedProfile(profile)
+            emit(true)
+        }
 }
 
 data class ModeSwitcherScreenState(

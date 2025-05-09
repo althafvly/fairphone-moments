@@ -26,10 +26,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fairphone.spring.launcher.data.model.LauncherProfile
+import androidx.lifecycle.lifecycleScope
 import com.fairphone.spring.launcher.ui.screen.mode.ModeSwitcherScreen
 import com.fairphone.spring.launcher.ui.screen.mode.ModeSwitcherViewModel
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.compose.KoinContext
 
@@ -63,10 +64,6 @@ class ModeSwitcherActivity : ComponentActivity() {
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
         )
-        val selectProfile: (LauncherProfile) -> Unit = {
-            // TODO send the selected profile
-            LauncherSettingsActivity.start(this)
-        }
 
         super.onCreate(savedInstanceState)
         setContent {
@@ -77,7 +74,18 @@ class ModeSwitcherActivity : ComponentActivity() {
                         ModeSwitcherScreen(
                             currentLauncherProfile = screenState!!.activeProfile,
                             profiles = screenState!!.profiles,
-                            onModeSelected = selectProfile,
+                            onModeSettingsClick = {
+                                lifecycleScope.launch {
+                                    profileSwitcherViewModel.editActiveProfileSettings(it).collect {
+                                        LauncherSettingsActivity.start(this@ModeSwitcherActivity)
+                                        finish()
+                                    }
+                                }
+                            },
+                            onModeSelected = {
+                                profileSwitcherViewModel.updateActiveProfile(it)
+                                finish()
+                            },
                             onCancel = { finish() }
                         )
                     }

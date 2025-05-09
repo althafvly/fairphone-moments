@@ -23,13 +23,6 @@ val Color_FP_Brand_Forest = Color(0xFF00433D)
 val Color_FP_Brand_Lime = Color(0xFFD8FF4F)
 val Color_Orange = Color(0xFFFFB14E)
 
-val actionButtonBackground = Color(red = 255, green = 255, blue = 255, alpha = 30)
-val actionButtonStroke = Color(0xFFFFFFFF)
-val selectedActionButtonBackground = Color(red = 255, green = 255, blue = 255, alpha = 50)
-val selectedActionButtonStroke = Color_FP_Brand_Lime
-val selectedActionButtonStrokeEndGradient = Color(red = 255, green = 255, blue = 255, alpha = 55)
-
-
 val primaryLight = Color(0xFF006A61)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF141414)
@@ -101,6 +94,26 @@ val surfaceContainerLowDark = Color(0xFF171D1E)
 val surfaceContainerDark = Color(0xFF222222)
 val surfaceContainerHighDark = Color(0xFF252B2C)
 val surfaceContainerHighestDark = Color(0xFF303637)
+
+val modeButtonBackgroundLight = Color(red = 255, green = 255, blue = 255, alpha = 30)
+val actionButtonBackgroundLight = Color(red = 255, green = 255, blue = 255, alpha = 30)
+val actionButtonStrokeLight = Color(0xFFFFFFFF)
+val selectedActionButtonBackgroundLight = Color(red = 255, green = 255, blue = 255, alpha = 50)
+val selectedActionButtonStrokeLight = Color_FP_Brand_Lime
+val selectedActionButtonStrokeEndGradientLight = Color(red = 255, green = 255, blue = 255, alpha = 55)
+val focusActionButtonStrokeLight = Color(0xFF141414)
+val pressedActionButtonStartGradienLight = Color(red = 94, green = 94, blue = 94, alpha = 60)
+val pressedActionButtonEndGradienLight = Color(red = 255, green = 255, blue = 255, alpha = 30)
+
+val modeButtonBackgroundDark = Color(red = 59, green = 59, blue = 59, alpha = 30)
+val actionButtonBackgroundDark = Color(red = 59, green = 59, blue = 59, alpha = 50)
+val actionButtonStrokeDark = Color(0xFFFFFFFF)
+val selectedActionButtonBackgroundDark = Color(red = 255, green = 255, blue = 255, alpha = 50)
+val selectedActionButtonStrokeDark = Color_FP_Brand_Lime
+val selectedActionButtonStrokeEndGradientDark = Color(red = 153, green = 153, blue = 153, alpha = 100)
+val focusActionButtonStrokeDark = Color(0xFFFFFFFF)
+val pressedActionButtonStartGradienDark = Color(red = 94, green = 94, blue = 94, alpha = 70)
+val pressedActionButtonEndGradienDark = Color(red = 59, green = 59, blue = 59, alpha = 30)
 
 val brandAccentLight = Color(0xFF556423)
 val onBrandAccentLight = Color(0xFFFFFFFF)

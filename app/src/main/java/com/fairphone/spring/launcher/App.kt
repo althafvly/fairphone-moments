@@ -103,8 +103,8 @@ class App : Application(), KoinComponent {
                 CreateLauncherProfileUseCase.Params(
                     name = "Balance",
                     icon = Defaults.DEFAULT_ICON,
-                    bgColor1 = Defaults.DEFAULT_BG_COLOR1,
-                    bgColor2 = Defaults.DEFAULT_BG_COLOR2,
+                    bgColor1 = 0xFF66A2DD,
+                    bgColor2 = 0xFF2D9197,
                     visibleApps = defaultVisibleApps,
                     allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
                     repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,

@@ -5,7 +5,8 @@ option java_multiple_files = true;
 
 message LauncherProfiles {
   string active = 1;
-  repeated LauncherProfile profiles = 2;
+  string edited = 2;
+  repeated LauncherProfile profiles = 3;
 }
 
 message LauncherProfile {

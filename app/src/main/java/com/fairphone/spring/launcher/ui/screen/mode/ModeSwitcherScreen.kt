@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
@@ -34,7 +35,6 @@ import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.ActionButton
 import com.fairphone.spring.launcher.ui.screen.mode.component.ModeSwitcherButton
 import com.fairphone.spring.launcher.ui.screen.mode.component.ModeSwitcherHeader
-import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
@@ -42,9 +42,10 @@ fun ModeSwitcherScreen(
     currentLauncherProfile: LauncherProfile,
     profiles: List<LauncherProfile>,
     onModeSelected: (LauncherProfile) -> Unit = {},
+    onModeSettingsClick: (LauncherProfile) -> Unit = {},
     onCancel: () -> Unit = {}
 ) {
-    ModeSwitcherContainer(endColor = Color_FP_Brand_Lime, onClick = onCancel) {
+    ModeSwitcherContainer(endColor = Color(currentLauncherProfile.bgColor2), onClick = onCancel) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -62,9 +63,11 @@ fun ModeSwitcherScreen(
                     ModeSwitcherButton(
                         profile = mode,
                         isSelected = mode == currentLauncherProfile,
-                        onClick = { onModeSelected(mode) },
-                        modifier = Modifier.padding(vertical = 4.dp)
-                    )
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        onModeSettingsClick = onModeSettingsClick
+                    ) {
+                        onModeSelected(mode)
+                    }
                 }
             }
 

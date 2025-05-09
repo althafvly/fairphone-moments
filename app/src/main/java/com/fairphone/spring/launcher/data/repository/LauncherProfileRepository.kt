@@ -22,7 +22,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface LauncherProfileRepository {
     fun getActiveProfile(): Flow<LauncherProfile>
+    fun getEditedProfile(): Flow<LauncherProfile>
     fun getProfiles(): Flow<List<LauncherProfile>>
+
+    suspend fun setActiveProfile(profile: LauncherProfile)
+    suspend fun setEditedProfile(profile: LauncherProfile)
     suspend fun createProfile(profile: LauncherProfile)
     suspend fun updateProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
@@ -31,10 +35,20 @@ interface LauncherProfileRepository {
 class LauncherProfileRepositoryImpl(private val dataSource: ProfileDataSource) :
     LauncherProfileRepository {
 
-    override fun getActiveProfile(): Flow<LauncherProfile> = dataSource.getActiveProfile()
+    override fun getActiveProfile(): Flow<LauncherProfile> =
+        dataSource.getActiveProfile()
+
+    override fun getEditedProfile(): Flow<LauncherProfile> =
+        dataSource.getEditedProfile()
 
     override fun getProfiles(): Flow<List<LauncherProfile>> =
         dataSource.getProfiles()
+
+    override suspend fun setActiveProfile(profile: LauncherProfile) =
+        dataSource.setActiveProfile(profile)
+
+    override suspend fun setEditedProfile(profile: LauncherProfile) =
+        dataSource.setEditedProfile(profile)
 
     override suspend fun createProfile(profile: LauncherProfile) =
         dataSource.createLauncherProfile(profile)

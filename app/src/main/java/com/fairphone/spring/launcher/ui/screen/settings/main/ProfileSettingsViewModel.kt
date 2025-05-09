@@ -39,7 +39,7 @@ class ProfileSettingsViewModel(
 ) : ViewModel() {
 
     val screenState: StateFlow<ProfileSettingsScreenState> =
-        launcherProfileRepository.getActiveProfile()
+        launcherProfileRepository.getEditedProfile()
             .map { profile ->
                 val visibleApps = getAppInfoList(context, profile.visibleAppsList)
                 ProfileSettingsScreenState.Success(
@@ -57,8 +57,8 @@ class ProfileSettingsViewModel(
     }
 
     fun updateProfileName(name: String) = viewModelScope.launch {
-        val activeProfile = launcherProfileRepository.getActiveProfile().first()
-        val updatedProfile = activeProfile.toBuilder().setName(name.trim()).build()
+        val editedProfile = launcherProfileRepository.getEditedProfile().first()
+        val updatedProfile = editedProfile.toBuilder().setName(name.trim()).build()
         updateLauncherProfileUseCase.execute(updatedProfile)
     }
 }
