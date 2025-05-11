@@ -79,6 +79,9 @@ class SwitchStateChangeActivity : ComponentActivity() {
         // handleDnd
         handleDnd(switchState)
 
+        // Handle lockscreen wallpaper
+        handleLockscreenWallpaper(switchState)
+
         if (shouldShowOverlay(intent)) {
             setContent {
                 KoinContext {
@@ -112,18 +115,11 @@ class SwitchStateChangeActivity : ComponentActivity() {
     }
 
     private fun handleDnd(switchState: SwitchState) {
-        when (switchState) {
-            SwitchState.ENABLED -> enableDnd()
-            SwitchState.DISABLED -> disableDnd()
-        }
+        viewModel.handleDnd(switchState)
     }
 
-    private fun enableDnd() {
-        viewModel.enableDnd(enabled = true)
-    }
-
-    private fun disableDnd() {
-        viewModel.enableDnd(enabled = false)
+    private fun handleLockscreenWallpaper(switchState: SwitchState) {
+        // TODO: Handle lockscreen wallpaper
     }
 
     private fun onAnimationDone(switchState: SwitchState) {

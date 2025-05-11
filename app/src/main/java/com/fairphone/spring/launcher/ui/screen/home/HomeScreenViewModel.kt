@@ -22,7 +22,7 @@ import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
-import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
+import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,15 +39,15 @@ import java.time.LocalDateTime
 class HomeScreenViewModel(
     context: Context,
     private val appInfoRepository: AppInfoRepository,
-    private val launcherProfileRepository: LauncherProfileRepository,
+    private val getActiveProfileUseCase: GetActiveProfileUseCase,
 ) : ViewModel() {
 
     private val _dateTime: MutableStateFlow<LocalDateTime> = MutableStateFlow(LocalDateTime.now())
     val dateTime: StateFlow<LocalDateTime> = _dateTime.asStateFlow()
 
-    val screenState = launcherProfileRepository.getActiveProfile()
+    val screenState: StateFlow<HomeScreenState?> = getActiveProfileUseCase.execute(Unit)
         .map { profile ->
-            val visibleApps = appInfoRepository.getAppInfos(context, profile.visibleAppsList)
+            val visibleApps = appInfoRepository.getAppInfosByPackageNames(context, profile.visibleAppsList)
             HomeScreenState(
                 activeProfile = profile,
                 visibleApps = visibleApps
@@ -59,11 +59,13 @@ class HomeScreenViewModel(
         )
 
     init {
-        viewModelScope.launch {
-            while (isActive) {
-                _dateTime.update { LocalDateTime.now() }
-                delay(1000)
-            }
+        refreshTime()
+    }
+
+    private fun refreshTime() = viewModelScope.launch {
+        while (isActive) {
+            _dateTime.update { LocalDateTime.now() }
+            delay(1000)
         }
     }
 

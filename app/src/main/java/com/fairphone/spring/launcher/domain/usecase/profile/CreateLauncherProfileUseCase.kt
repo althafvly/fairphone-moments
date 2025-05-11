@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.usecase.profile
+package com.fairphone.spring.launcher.domain.usecase.profile
 
 import com.fairphone.spring.launcher.data.model.ContactType
 import com.fairphone.spring.launcher.data.model.LauncherProfile
@@ -22,7 +22,7 @@ import com.fairphone.spring.launcher.data.model.SoundSetting
 import com.fairphone.spring.launcher.data.model.UiMode
 import com.fairphone.spring.launcher.data.model.launcherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
-import com.fairphone.spring.launcher.usecase.base.UseCase
+import com.fairphone.spring.launcher.domain.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.ZenNotificationManager
 import com.fairphone.spring.launcher.util.sanitizeToId
 

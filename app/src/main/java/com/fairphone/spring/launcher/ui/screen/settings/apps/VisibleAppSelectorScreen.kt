@@ -33,12 +33,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,42 +51,67 @@ import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 
 @Composable
 fun VisibleAppSelectorScreen(
-    modifier: Modifier = Modifier,
     screenState: VisibleAppSelectorScreenState,
+    filter: String,
+    onFilterChanged: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit = {},
     onAppDeselected: (AppInfo) -> Unit = {},
     onConfirmAppSelection: () -> Unit,
 ) {
-    var filter by remember { mutableStateOf("") }
-    val filteredList = remember { mutableStateListOf<AppInfo>() }
-
-    LaunchedEffect(screenState.appList, filter) {
-        val filtered = if (filter.isEmpty()) {
-            screenState.appList
-        } else {
-            screenState.appList.filter { it.name.contains(filter, ignoreCase = true) }
-        }
-        filteredList.clear()
-        filteredList.addAll(filtered)
-    }
-
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
+        when (screenState) {
+            is VisibleAppSelectorScreenState.Ready -> {
+                VisibleAppSelectorScreen(
+                    visibleApps = screenState.data.visibleApps,
+                    appList = screenState.data.appList,
+                    filter = filter,
+                    showConfirmButton = screenState.data.showConfirmButton,
+                    showAppCounter = screenState.data.showAppCounter,
+                    showEmptyAppSelectedError = screenState.data.showEmptyAppSelectedError,
+                    showMaxAppSelectedError = screenState.data.showMaxAppSelectedError,
+                    onFilterChanged = onFilterChanged,
+                    onAppClick = onAppClick,
+                    onAppDeselected = onAppDeselected,
+                    onConfirmAppSelection = onConfirmAppSelection,
+                )
+            }
+
+            else -> {}
+        }
+    }
+}
+
+@Composable
+fun VisibleAppSelectorScreen(
+    appList: List<AppInfo>,
+    visibleApps: List<AppInfo>,
+    filter: String,
+    showConfirmButton: Boolean,
+    showAppCounter: Boolean,
+    showEmptyAppSelectedError: Boolean,
+    showMaxAppSelectedError: Boolean,
+    onFilterChanged: (String) -> Unit,
+    onAppClick: (AppInfo) -> Unit = {},
+    onAppDeselected: (AppInfo) -> Unit = {},
+    onConfirmAppSelection: () -> Unit,
+) {
+    Box(Modifier.fillMaxSize()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             SearchBar(
                 query = filter,
-                onQueryChange = { filter = it },
+                onQueryChange = onFilterChanged,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
 
             SelectedAppsRow(
-                selectedApps = screenState.visibleApps,
+                selectedApps = visibleApps,
                 onDeletedClick = onAppDeselected,
             )
 
@@ -111,12 +131,12 @@ fun VisibleAppSelectorScreen(
                     .clip(RoundedCornerShape(size = 12.dp))
             ) {
                 items(
-                    count = filteredList.size,
-                    contentType = { index -> filteredList[index] },
+                    count = appList.size,
+                    contentType = { index -> appList[index] },
                 ) { index ->
-                    val appInfo = filteredList[index]
+                    val appInfo = appList[index]
                     val isSelected =
-                        appInfo.packageName in screenState.visibleApps.map { it.packageName }
+                        appInfo.packageName in visibleApps.map { it.packageName }
                     SelectableListItem(
                         icon = appInfo.icon,
                         title = appInfo.name,
@@ -134,19 +154,19 @@ fun VisibleAppSelectorScreen(
                 .padding(bottom = 12.dp),
         ) {
             when {
-                screenState.showMaxAppSelectedError -> {
+                showMaxAppSelectedError -> {
                     ErrorView(errorText = R.string.visible_apps_error_max_selected)
                 }
 
-                screenState.showEmptyAppSelectedError -> {
+                showEmptyAppSelectedError -> {
                     ErrorView(errorText = R.string.visible_apps_error_empty_selected)
                 }
 
-                screenState.showAppCounter -> {
+                showAppCounter -> {
                     MaximumAppCountReached()
                 }
             }
-            if (screenState.showConfirmButton) {
+            if (showConfirmButton) {
                 ConfirmButton(
                     onClick = onConfirmAppSelection,
                     modifier = Modifier

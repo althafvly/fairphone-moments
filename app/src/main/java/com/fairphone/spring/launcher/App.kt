@@ -26,7 +26,7 @@ import com.fairphone.spring.launcher.data.prefs.AppPrefs
 import com.fairphone.spring.launcher.di.dataModule
 import com.fairphone.spring.launcher.di.domainModule
 import com.fairphone.spring.launcher.di.uiModule
-import com.fairphone.spring.launcher.usecase.profile.CreateLauncherProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.CreateLauncherProfileUseCase
 import com.fairphone.spring.launcher.util.getDefaultBrowserPackageName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,51 +78,74 @@ class App : Application(), KoinComponent {
     //TODO: This should be moved elsewhere
     private suspend fun prepareInitialProfile(context: Context) = withContext(Dispatchers.IO) {
         if (appPrefs.isFistTimeUse()) {
-            val defaultBrowser = getDefaultBrowserPackageName(context)
-            val defaultVisibleApps = DEFAULT_VISIBLE_APPS + defaultBrowser
 
-            val createLauncherProfileParams = CreateLauncherProfileUseCase.Params(
-                name = Defaults.DEFAULT_NAME,
-                icon = Defaults.DEFAULT_ICON,
-                bgColor1 = Defaults.DEFAULT_BG_COLOR1,
-                bgColor2 = Defaults.DEFAULT_BG_COLOR2,
-                visibleApps = defaultVisibleApps,
-                allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
-                repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
-                wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
-                uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
-                blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
-                soundSetting = Defaults.DEFAULT_SOUND_SETTING,
-                batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
-                reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
-            )
-            val result = createLauncherProfileUseCase.execute(createLauncherProfileParams)
-
-            // TODO remove this code (necessary to have 2 default prfiles)
-            createLauncherProfileUseCase.execute(
-                CreateLauncherProfileUseCase.Params(
-                    name = "Balance",
-                    icon = Defaults.DEFAULT_ICON,
-                    bgColor1 = 0xFF66A2DD,
-                    bgColor2 = 0xFF2D9197,
-                    visibleApps = defaultVisibleApps,
-                    allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
-                    repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
-                    wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
-                    uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
-                    blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
-                    soundSetting = Defaults.DEFAULT_SOUND_SETTING,
-                    batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
-                    reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
-                )
-            )
-
-            if (result.isFailure) {
-                Log.e("App", "Failed to create initial profile", result.exceptionOrNull())
-            }
+            createInitialPresets(context)
 
             appPrefs.setFirstTimeUse(false)
         }
+    }
+
+    private suspend fun createInitialPresets(context: Context) {
+        val defaultBrowser = getDefaultBrowserPackageName(context)
+        val defaultVisibleApps = DEFAULT_VISIBLE_APPS + defaultBrowser
+        val essentials = CreateLauncherProfileUseCase.Params(
+            name = "Essentials",
+            icon = Defaults.DEFAULT_ICON,
+            bgColor1 = Defaults.DEFAULT_BG_COLOR1,
+            bgColor2 = Defaults.DEFAULT_BG_COLOR2,
+            visibleApps = defaultVisibleApps,
+            allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
+            repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
+            wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
+            uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
+            blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
+            soundSetting = Defaults.DEFAULT_SOUND_SETTING,
+            batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
+            reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
+        )
+        val result = createLauncherProfileUseCase.execute(essentials)
+
+        // TODO remove this code (necessary to have 2 default prfiles)
+        val balance = CreateLauncherProfileUseCase.Params(
+            name = "Balance",
+            icon = Defaults.DEFAULT_ICON,
+            bgColor1 = 0xFF66A2DD,
+            bgColor2 = 0xFF2D9197,
+            visibleApps = defaultVisibleApps,
+            allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
+            repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
+            wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
+            uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
+            blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
+            soundSetting = Defaults.DEFAULT_SOUND_SETTING,
+            batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
+            reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
+        )
+
+        val spring = CreateLauncherProfileUseCase.Params(
+            name = "Spring",
+            icon = Defaults.DEFAULT_ICON,
+            bgColor1 = Defaults.DEFAULT_BG_COLOR1,
+            bgColor2 = 0xFFD8FF4F,
+            visibleApps = defaultVisibleApps,
+            allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
+            repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
+            wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
+            uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
+            blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
+            soundSetting = Defaults.DEFAULT_SOUND_SETTING,
+            batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
+            reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
+        )
+
+
+        createLauncherProfileUseCase.execute(balance)
+        createLauncherProfileUseCase.execute(spring)
+
+        if (result.isFailure) {
+            Log.e("App", "Failed to create initial profile", result.exceptionOrNull())
+        }
+
     }
 
     override fun onLowMemory() {

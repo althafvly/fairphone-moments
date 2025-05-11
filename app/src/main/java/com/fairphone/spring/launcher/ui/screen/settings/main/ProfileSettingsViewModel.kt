@@ -22,8 +22,8 @@ import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
-import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
-import com.fairphone.spring.launcher.usecase.profile.UpdateLauncherProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -34,12 +34,12 @@ import kotlinx.coroutines.launch
 class ProfileSettingsViewModel(
     context: Context,
     private val appInfoRepository: AppInfoRepository,
-    private val launcherProfileRepository: LauncherProfileRepository,
+    private val getEditedProfileUseCase: GetEditedProfileUseCase,
     private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
 ) : ViewModel() {
 
     val screenState: StateFlow<ProfileSettingsScreenState> =
-        launcherProfileRepository.getEditedProfile()
+        getEditedProfileUseCase.execute(Unit)
             .map { profile ->
                 val visibleApps = getAppInfoList(context, profile.visibleAppsList)
                 ProfileSettingsScreenState.Success(
@@ -52,12 +52,13 @@ class ProfileSettingsViewModel(
                 initialValue = ProfileSettingsScreenState.Loading
             )
 
-    private suspend fun getAppInfoList(context: Context, appIds: List<String>): List<AppInfo> {
-        return appInfoRepository.getAppInfos(context, appIds)
+
+    private fun getAppInfoList(context: Context, appIds: List<String>): List<AppInfo> {
+        return appInfoRepository.getAppInfosByPackageNames(context, appIds)
     }
 
     fun updateProfileName(name: String) = viewModelScope.launch {
-        val editedProfile = launcherProfileRepository.getEditedProfile().first()
+        val editedProfile = getEditedProfileUseCase.execute(Unit).first()
         val updatedProfile = editedProfile.toBuilder().setName(name.trim()).build()
         updateLauncherProfileUseCase.execute(updatedProfile)
     }

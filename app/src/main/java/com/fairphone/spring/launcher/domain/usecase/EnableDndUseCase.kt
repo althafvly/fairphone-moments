@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.usecase
+package com.fairphone.spring.launcher.domain.usecase
 
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
-import com.fairphone.spring.launcher.usecase.base.UseCase
+import com.fairphone.spring.launcher.domain.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.ZenNotificationManager
 import kotlinx.coroutines.flow.firstOrNull
 
@@ -36,7 +36,7 @@ class EnableDndUseCase(
         if (params) {
             zenNotificationManager.enableDnd(activeProfile.zenRuleId, activeProfile.name)
         } else {
-            zenNotificationManager.disableDnd(activeProfile.zenRuleId, activeProfile.name)
+            zenNotificationManager.disableAllDnd()
         }
         return Result.success(Unit)
     }

@@ -20,23 +20,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.ContactType
 import com.fairphone.spring.launcher.data.model.Defaults
-import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
-import com.fairphone.spring.launcher.usecase.profile.UpdateLauncherProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AllowedContactSettingsViewModel(
-    profileRepository: LauncherProfileRepository,
+    private val getEditedProfileUseCase: GetEditedProfileUseCase,
     private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
 ) : ViewModel() {
 
-    private val editedProfile = profileRepository.getEditedProfile()
-
-    val screenState = editedProfile
-        .map { profile ->
+    val screenState: StateFlow<AllowedContactSettingsScreenState> =
+        getEditedProfileUseCase.execute(Unit).map { profile ->
             AllowedContactSettingsScreenState.Success(
                 activeProfileName = profile.name,
                 allowedContactTypeList = Defaults.CONTACT_TYPE_LIST,
@@ -49,7 +48,7 @@ class AllowedContactSettingsViewModel(
         )
 
     fun onContactTypeSelected(peopleType: ContactType) = viewModelScope.launch {
-        val profile = editedProfile.first()
+        val profile = getEditedProfileUseCase.execute(Unit).first()
         val updatedProfile = profile.toBuilder().setAllowedContacts(peopleType).build()
         updateLauncherProfileUseCase.execute(updatedProfile)
     }

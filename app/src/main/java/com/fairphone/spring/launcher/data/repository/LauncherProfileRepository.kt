@@ -19,14 +19,16 @@ package com.fairphone.spring.launcher.data.repository
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 interface LauncherProfileRepository {
     fun getActiveProfile(): Flow<LauncherProfile>
     fun getEditedProfile(): Flow<LauncherProfile>
     fun getProfiles(): Flow<List<LauncherProfile>>
+    fun getProfile(profileId: String): Flow<LauncherProfile>
 
-    suspend fun setActiveProfile(profile: LauncherProfile)
-    suspend fun setEditedProfile(profile: LauncherProfile)
+    suspend fun setActiveProfile(profileId: String)
+    suspend fun setEditedProfile(profileId: String)
     suspend fun createProfile(profile: LauncherProfile)
     suspend fun updateProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
@@ -44,11 +46,14 @@ class LauncherProfileRepositoryImpl(private val dataSource: ProfileDataSource) :
     override fun getProfiles(): Flow<List<LauncherProfile>> =
         dataSource.getProfiles()
 
-    override suspend fun setActiveProfile(profile: LauncherProfile) =
-        dataSource.setActiveProfile(profile)
+    override fun getProfile(profileId: String): Flow<LauncherProfile> =
+        dataSource.getProfiles().map { it.first { it.id == profileId } }
 
-    override suspend fun setEditedProfile(profile: LauncherProfile) =
-        dataSource.setEditedProfile(profile)
+    override suspend fun setActiveProfile(profileId: String) =
+        dataSource.setActiveProfile(profileId)
+
+    override suspend fun setEditedProfile(profileId: String) =
+        dataSource.setEditedProfile(profileId)
 
     override suspend fun createProfile(profile: LauncherProfile) =
         dataSource.createLauncherProfile(profile)

@@ -19,8 +19,9 @@ package com.fairphone.spring.launcher.activity.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.LauncherProfile
-import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
-import com.fairphone.spring.launcher.usecase.EnableDndUseCase
+import com.fairphone.spring.launcher.data.model.SwitchState
+import com.fairphone.spring.launcher.domain.usecase.EnableDndUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -28,15 +29,20 @@ import kotlinx.coroutines.launch
 
 class SwitchStateChangeViewModel(
     private val enableDndUseCase: EnableDndUseCase,
-    private val profileRepository: LauncherProfileRepository,
+    private val getActiveProfileUseCase: GetActiveProfileUseCase,
 ) : ViewModel() {
 
-    val activeProfile: StateFlow<LauncherProfile?> = profileRepository.getActiveProfile()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val activeProfile: StateFlow<LauncherProfile?> =
+        getActiveProfileUseCase.execute(Unit)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    fun enableDnd(enabled: Boolean) {
+    fun handleDnd(switchState: SwitchState) {
         viewModelScope.launch {
-            enableDndUseCase.execute(enabled)
+            val enableDnd = when (switchState) {
+                SwitchState.ENABLED -> true
+                SwitchState.DISABLED -> false
+            }
+            enableDndUseCase.execute(enableDnd)
         }
     }
 }

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.usecase.profile
+package com.fairphone.spring.launcher.domain.usecase.profile
 
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
-import com.fairphone.spring.launcher.usecase.base.UseCase
+import com.fairphone.spring.launcher.domain.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.ZenNotificationManager
 
 /**

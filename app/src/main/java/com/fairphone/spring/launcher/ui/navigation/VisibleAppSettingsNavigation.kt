@@ -16,14 +16,16 @@
 
 package com.fairphone.spring.launcher.ui.navigation
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreen
+import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreenState
+import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorViewModel
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsScreen
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsViewModel
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
@@ -42,16 +44,23 @@ fun NavGraphBuilder.visibleAppSettingsNavGraph(navController: NavHostController)
 
     // Visible App Selector Screen
     composable<VisibleAppSelector> {
-        val viewModel: VisibleAppSettingsViewModel = koinViewModel()
+        val viewModel: VisibleAppSelectorViewModel = koinViewModel()
         val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+
+        LaunchedEffect(screenState) {
+            if (screenState is VisibleAppSelectorScreenState.UpdateAppSelectionSuccess) {
+                navController.popBackStack()
+            }
+        }
 
         VisibleAppSelectorScreen(
             screenState = screenState,
             onAppClick = viewModel::onAppClick,
+            filter = viewModel.filter,
+            onFilterChanged = viewModel::onFilterChanged,
             onAppDeselected = viewModel::removeVisibleApp,
             onConfirmAppSelection = {
                 viewModel.confirmAppSelection()
-                navController.navigateUp()
             }
         )
     }

@@ -76,7 +76,8 @@ class ModeSwitcherActivity : ComponentActivity() {
                             profiles = screenState!!.profiles,
                             onModeSettingsClick = {
                                 lifecycleScope.launch {
-                                    profileSwitcherViewModel.editActiveProfileSettings(it).collect {
+                                    val result = profileSwitcherViewModel.editActiveProfileSettings(it)
+                                    if (result.isSuccess) {
                                         LauncherSettingsActivity.start(this@ModeSwitcherActivity)
                                         finish()
                                     }

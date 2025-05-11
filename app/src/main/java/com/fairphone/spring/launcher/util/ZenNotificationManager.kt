@@ -46,6 +46,15 @@ class ZenNotificationManager(private val context: Context) {
     }
 
     /**
+     * Disables Do Not Disturb mode for all automatic zen rules.
+     */
+    fun disableAllDnd() {
+        context.notificationManager().automaticZenRules.forEach { ruleId, rule ->
+            disableDnd(ruleId, rule.name)
+        }
+    }
+
+    /**
      * Sets the state of the given automatic zen rule.
      */
     private fun setAutomaticZenRuleState(

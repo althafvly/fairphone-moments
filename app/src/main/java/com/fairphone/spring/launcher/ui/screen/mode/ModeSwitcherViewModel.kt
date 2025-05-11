@@ -19,22 +19,26 @@ package com.fairphone.spring.launcher.ui.screen.mode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.LauncherProfile
-import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
-import kotlinx.coroutines.flow.Flow
+import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.GetAllProfilesUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.SetActiveProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.SetEditedProfileUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
-class ModeSwitcherViewModel(private val launcherProfileRepository: LauncherProfileRepository) :
-    ViewModel() {
+class ModeSwitcherViewModel(
+    private val getActiveProfileUseCase: GetActiveProfileUseCase,
+    private val getAllProfilesUseCase: GetAllProfilesUseCase,
+    private val setActiveProfileUseCase: SetActiveProfileUseCase,
+    private val setEditedProfileUseCase: SetEditedProfileUseCase,
+) : ViewModel() {
 
     val screenState: StateFlow<ModeSwitcherScreenState?> =
-        launcherProfileRepository
-            .getProfiles()
-            .zip(launcherProfileRepository.getActiveProfile()) { profiles, active ->
+        getAllProfilesUseCase.execute(Unit)
+            .zip(getActiveProfileUseCase.execute(Unit)) { profiles, active ->
                 ModeSwitcherScreenState(
                     activeProfile = active,
                     profiles = profiles
@@ -45,17 +49,21 @@ class ModeSwitcherViewModel(private val launcherProfileRepository: LauncherProfi
                 initialValue = null,
             )
 
+    /**
+     * TODO: Add javadoc
+     */
     fun updateActiveProfile(profile: LauncherProfile) {
         viewModelScope.launch {
-            launcherProfileRepository.setActiveProfile(profile)
+            setActiveProfileUseCase.execute(profile.id)
         }
     }
 
-    fun editActiveProfileSettings(profile: LauncherProfile): Flow<Boolean> =
-        flow {
-            launcherProfileRepository.setEditedProfile(profile)
-            emit(true)
-        }
+    /**
+     * TODO: Add javadoc
+     */
+    suspend fun editActiveProfileSettings(profile: LauncherProfile): Result<Unit> {
+        return setEditedProfileUseCase.execute(profile.id)
+    }
 }
 
 data class ModeSwitcherScreenState(

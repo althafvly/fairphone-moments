@@ -19,7 +19,7 @@ package com.fairphone.spring.launcher.di
 import com.fairphone.spring.launcher.activity.viewmodel.SwitchStateChangeViewModel
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
 import com.fairphone.spring.launcher.ui.screen.mode.ModeSwitcherViewModel
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorViewModel
 import com.fairphone.spring.launcher.ui.screen.settings.contacts.AllowedContactSettingsViewModel
 import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsViewModel
 import org.koin.core.module.dsl.viewModelOf
@@ -29,7 +29,7 @@ val uiModule = module {
     viewModelOf(::HomeScreenViewModel)
     viewModelOf(::ModeSwitcherViewModel)
     viewModelOf(::ProfileSettingsViewModel)
-    viewModelOf(::VisibleAppSettingsViewModel)
+    viewModelOf(::VisibleAppSelectorViewModel)
     viewModelOf(::AllowedContactSettingsViewModel)
     viewModelOf(::SwitchStateChangeViewModel)
 }

@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.usecase.base
+package com.fairphone.spring.launcher.domain.usecase.base
+
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Base class for Use Cases
  */
-abstract class UseCase<INPUT, RESULT> {
-    abstract suspend fun execute(params: INPUT): Result<RESULT>
+abstract class FlowUseCase<INPUT, RESULT> {
+    abstract fun execute(params: INPUT): Flow<RESULT>
 }

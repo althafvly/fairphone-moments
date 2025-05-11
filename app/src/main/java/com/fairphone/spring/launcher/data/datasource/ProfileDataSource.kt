@@ -34,8 +34,8 @@ interface ProfileDataSource {
     fun getEditedProfile(): Flow<LauncherProfile>
     fun getProfiles(): Flow<List<LauncherProfile>>
 
-    suspend fun setActiveProfile(profile: LauncherProfile)
-    suspend fun setEditedProfile(profile: LauncherProfile)
+    suspend fun setActiveProfile(profileId: String)
+    suspend fun setEditedProfile(profileId: String)
     suspend fun createLauncherProfile(profile: LauncherProfile)
     suspend fun updateLauncherProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
@@ -78,20 +78,20 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
         }
     }
 
-    override suspend fun setActiveProfile(profile: LauncherProfile) {
+    override suspend fun setActiveProfile(profileId: String) {
         dataStore.updateData { profiles ->
             profiles
                 .toBuilder()
-                .setActive(profile.id)
+                .setActive(profileId)
                 .build()
         }
     }
 
-    override suspend fun setEditedProfile(profile: LauncherProfile) {
+    override suspend fun setEditedProfile(profileId: String) {
         dataStore.updateData { profiles ->
             profiles
                 .toBuilder()
-                .setEdited(profile.id)
+                .setEdited(profileId)
                 .build()
         }
     }
