@@ -16,12 +16,14 @@
 
 package com.fairphone.spring.launcher.activity.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.domain.usecase.EnableDndUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
+import com.fairphone.spring.launcher.util.LockscreenWallpaperSwitcherWorker
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -44,5 +46,13 @@ class SwitchStateChangeViewModel(
             }
             enableDndUseCase.execute(enableDnd)
         }
+    }
+
+    fun handleLockscreenWallpaper(context: Context, switchState: SwitchState) {
+        val enableDnd = when (switchState) {
+            SwitchState.ENABLED -> true
+            SwitchState.DISABLED -> false
+        }
+        LockscreenWallpaperSwitcherWorker.enqueueWallpaperWork(context, enableDnd)
     }
 }

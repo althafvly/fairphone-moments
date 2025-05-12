@@ -16,6 +16,8 @@
 
 package com.fairphone.spring.launcher.util
 
+import android.app.UiModeManager
+import android.app.WallpaperManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -26,6 +28,7 @@ import android.os.UserManager
 import android.util.Log
 import androidx.core.net.toUri
 import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.repository.AppInfoRepositoryImpl.Companion.TAG
 
 /**
  * Starts the launcher (home) activity.
@@ -91,6 +94,54 @@ fun Context.launchApp(app: AppInfo) {
 }
 
 /**
+ * Loads the app infos for the given package names.
+ */
+fun Context.loadAppInfosByPackageNames(packageNames: List<String>?
+): List<AppInfo>  {
+    val userManager = getSystemService(Context.USER_SERVICE) as UserManager
+    val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+    val density = resources.displayMetrics.densityDpi
+
+    return try {
+        // TODO: App appears multiple times if installed in multiple profiles (personal + work)
+        // Get all user profiles associated with the current user
+        userManager.userProfiles.flatMap { profile -> // Iterate through each profile (UserHandle)
+            // Get the list of launchable activities for the specific profile
+            val activities = packageNames?.flatMap { packageName ->
+                launcherApps.getActivityList(packageName, profile)
+            } ?: launcherApps.getActivityList(null, profile)
+                .sortedBy { it.label.toString().lowercase() }
+
+            activities.mapNotNull { activityInfo ->
+                try {
+                    AppInfo(
+                        name = activityInfo.label.toString(),
+                        mainActivityClassName = activityInfo.componentName.className,
+                        packageName = activityInfo.componentName.packageName,
+                        icon = activityInfo.getIcon(density),
+                        userUuid = activityInfo.user.hashCode()
+                    )
+                } catch (e: Exception) {
+                    Log.w(TAG, "Failed to load info for ${activityInfo.componentName.flattenToString()}", e)
+                    null
+                }
+            }
+        }
+    } catch (e: SecurityException) {
+        Log.e(TAG, "SecurityException accessing LauncherApps. Check permissions or device policy.", e)
+        emptyList() // Return empty on permission errors
+    } catch (e: Exception) {
+        Log.e(TAG, "Error loading apps using LauncherApps", e)
+        emptyList() // Return empty list on other errors
+    }
+}
+
+fun Context.isDarkModeEnabled(): Boolean {
+    return uiModeManager().nightMode == UiModeManager.MODE_NIGHT_YES
+}
+
+
+/**
  * Gets the user handle from the user ID.
  */
 private fun Context.getUserHandleFromId(userId: Int): UserHandle? {
@@ -100,3 +151,5 @@ private fun Context.getUserHandleFromId(userId: Int): UserHandle? {
 }
 
 fun Context.notificationManager() = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+fun Context.uiModeManager() = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+fun Context.wallpaperManager() = getSystemService(Context.WALLPAPER_SERVICE) as WallpaperManager

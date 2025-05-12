@@ -119,7 +119,7 @@ class SwitchStateChangeActivity : ComponentActivity() {
     }
 
     private fun handleLockscreenWallpaper(switchState: SwitchState) {
-        // TODO: Handle lockscreen wallpaper
+        viewModel.handleLockscreenWallpaper(this, switchState)
     }
 
     private fun onAnimationDone(switchState: SwitchState) {

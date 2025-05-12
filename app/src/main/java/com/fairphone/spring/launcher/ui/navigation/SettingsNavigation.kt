@@ -19,9 +19,7 @@ package com.fairphone.spring.launcher.ui.navigation
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -73,7 +71,6 @@ fun SettingsNavigation(
     composable<ProfileSettings> {
         val viewModel: ProfileSettingsViewModel = koinViewModel()
         val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-        val context = LocalContext.current
 
         ProfileSettingsScreen(
             screenState = screenState,
@@ -89,10 +86,6 @@ fun SettingsNavigation(
             onNavigateToSoundAndVibrationSettings = {},
             onNavigateToPowerSavingSettings = {}
         )
-
-        LaunchedEffect(Unit) {
-            viewModel.refreshState(context)
-        }
     }
 
     // Visible App Settings
