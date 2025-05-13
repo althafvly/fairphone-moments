@@ -79,7 +79,11 @@ fun SettingsNavigation(
             },
             onNavigateToAllowedContactSettings = {
                 navController.navigate(AllowedContactSettings)
-            }
+            },
+            onNavigateToNotificationSettings = {},
+            onNavigateToAppearanceSettings = {},
+            onNavigateToSoundAndVibrationSettings = {},
+            onNavigateToPowerSavingSettings = {}
         )
     }
 

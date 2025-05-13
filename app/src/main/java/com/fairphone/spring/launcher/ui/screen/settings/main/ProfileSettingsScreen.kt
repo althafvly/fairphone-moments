@@ -53,6 +53,10 @@ fun ProfileSettingsScreen(
     onEditProfileName: (String) -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
     onNavigateToAllowedContactSettings: () -> Unit,
+    onNavigateToNotificationSettings: () -> Unit,
+    onNavigateToAppearanceSettings: () -> Unit,
+    onNavigateToSoundAndVibrationSettings: () -> Unit,
+    onNavigateToPowerSavingSettings: () -> Unit,
 ) {
     when (screenState) {
         is ProfileSettingsScreenState.Loading -> {
@@ -67,7 +71,11 @@ fun ProfileSettingsScreen(
                 visibleApps = screenState.visibleApps,
                 onEditProfileName = onEditProfileName,
                 onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings,
-                onNavigateToAllowedContactSettings = onNavigateToAllowedContactSettings
+                onNavigateToAllowedContactSettings = onNavigateToAllowedContactSettings,
+                onNavigateToNotificationSettings = onNavigateToNotificationSettings,
+                onNavigateToAppearanceSettings = onNavigateToAppearanceSettings,
+                onNavigateToSoundAndVibrationSettings = onNavigateToSoundAndVibrationSettings,
+                onNavigateToPowerSavingSettings = onNavigateToPowerSavingSettings
             )
         }
     }
@@ -81,6 +89,10 @@ fun ProfileSettingsScreen(
     onEditProfileName: (String) -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
     onNavigateToAllowedContactSettings: () -> Unit,
+    onNavigateToNotificationSettings: () -> Unit,
+    onNavigateToAppearanceSettings: () -> Unit,
+    onNavigateToSoundAndVibrationSettings: () -> Unit,
+    onNavigateToPowerSavingSettings: () -> Unit,
 ) {
     var showProfileNameEditor by remember { mutableStateOf(false) }
 
@@ -144,6 +156,39 @@ fun ProfileSettingsScreen(
                     ),
                     onClick = onNavigateToAllowedContactSettings
                 )
+//                SettingListItem(
+//                    enabled = false,
+//                    title = stringResource(R.string.setting_title_notification),
+//                    subtitle = stringResource(R.string.setting_subtitle_notification),
+//                    onClick = onNavigateToNotificationSettings
+//                )
+//                SettingListItem(
+//                    enabled = false,
+//                    title = stringResource(R.string.setting_title_appearance),
+//                    subtitle = stringResource(
+//                        R.string.setting_subtitle_appearance,
+//                        contactType
+//                    ),
+//                    onClick = onNavigateToAppearanceSettings
+//                )
+//                SettingListItem(
+//                    enabled = false,
+//                    title = stringResource(R.string.setting_title_sound_and_vibration),
+//                    subtitle = stringResource(
+//                        R.string.setting_subtitle_sound_and_vibration,
+//                        contactType
+//                    ),
+//                    onClick = onNavigateToSoundAndVibrationSettings
+//                )
+//                SettingListItem(
+//                    enabled = false,
+//                    title = stringResource(R.string.setting_title_power_saving),
+//                    subtitle = stringResource(
+//                        R.string.setting_subtitle_power_saving,
+//                        contactType
+//                    ),
+//                    onClick = onNavigateToPowerSavingSettings
+//                )
             }
         }
 
@@ -172,6 +217,10 @@ fun ProfileSettings_Preview() {
             onEditProfileName = {},
             onNavigateToVisibleAppSettings = {},
             onNavigateToAllowedContactSettings = {},
+            onNavigateToNotificationSettings = {},
+            onNavigateToAppearanceSettings = {},
+            onNavigateToSoundAndVibrationSettings = {},
+            onNavigateToPowerSavingSettings = {}
         )
     }
 }

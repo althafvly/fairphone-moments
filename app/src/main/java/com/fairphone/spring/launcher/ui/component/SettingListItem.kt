@@ -41,16 +41,19 @@ fun SettingListItem(
     title: String,
     subtitle: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .clickable { onClick() }
-            .background(color = MaterialTheme.colorScheme.surface)
+            .background(color = if (enabled) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceDim)
             .padding(16.dp),
     ) {
+        val onSurfaceDynamic =
+            if (enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -59,18 +62,18 @@ fun SettingListItem(
             Text(
                 text = title,
                 style = FairphoneTypography.BodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = onSurfaceDynamic
             )
             Text(
                 text = subtitle,
                 style = FairphoneTypography.BodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = onSurfaceDynamic
             )
         }
         Icon(
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
+            tint = onSurfaceDynamic
         )
     }
 }
