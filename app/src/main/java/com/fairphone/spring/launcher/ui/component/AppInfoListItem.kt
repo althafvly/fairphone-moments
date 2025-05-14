@@ -1,0 +1,57 @@
+package com.fairphone.spring.launcher.ui.component
+
+import android.graphics.drawable.Drawable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
+
+@Composable
+fun AppInfoListItem(
+    icon: Drawable? = null,
+    title: String
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = RoundedCornerShape(size = 12.dp)
+            )
+            .clip(RoundedCornerShape(size = 12.dp))
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(horizontal = 20.dp, vertical = 16.dp)
+    ) {
+        icon?.let {
+            AsyncImage(
+                model = it,
+                contentDescription = title,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(32.dp),
+            )
+        }
+
+        Text(
+            text = title,
+            style = FairphoneTypography.BodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+    }
+}

@@ -16,9 +16,115 @@
 
 package com.fairphone.spring.launcher.ui.screen.settings.apps
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.ui.component.AppInfoListItem
+import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
+import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun VisibleAppSettingsScreen() {
-    TODO()
+fun VisibleAppSettingsScreen(
+    screenState: VisibleAppSettingsScreenState,
+    onChangeAppsClick: () -> Unit,
+){
+    when (screenState) {
+        is VisibleAppSettingsScreenState.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        is VisibleAppSettingsScreenState.Ready -> {
+            VisibleAppSettingsScreen(
+                visibleApps = screenState.visibleApps,
+                onChangeAppsClick = onChangeAppsClick
+            )
+        }
+    }
+}
+
+@Composable
+fun VisibleAppSettingsScreen(
+    visibleApps: List<AppInfo>,
+    onChangeAppsClick: () -> Unit,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Text(
+            text = stringResource(R.string.setting_header_visible_apps),
+            style = FairphoneTypography.BodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(start = 36.dp, end = 36.dp, top = 24.dp)
+        )
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(horizontal = 20.dp)
+        ) {
+            visibleApps.forEach { appInfo ->
+                AppInfoListItem(
+                    icon = appInfo.icon,
+                    title = appInfo.name
+                )
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(size = 100.dp)
+                )
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(size = 100.dp)
+                )
+                .padding(horizontal = 12.dp, vertical = 8.dp)
+                .clickable {
+                    onChangeAppsClick()
+                }
+        ) {
+            Text(
+                text = stringResource(R.string.bt_change_apps),
+                style = FairphoneTypography.LabelMedium,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+    }
+}
+@Composable
+@Preview
+fun VisibleAppsSettingsScreen_Preview(){
+    SpringLauncherTheme {
+        VisibleAppSettingsScreen(
+            visibleApps = emptyList(),
+            onChangeAppsClick = {}
+        )
+    }
 }

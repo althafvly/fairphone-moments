@@ -26,6 +26,7 @@ import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorS
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreenState
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorViewModel
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsScreen
+import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsViewModel
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
@@ -39,7 +40,15 @@ object VisibleAppSelector
 fun NavGraphBuilder.visibleAppSettingsNavGraph(navController: NavHostController) {
     // Visible App Settings Screen
     composable<VisibleAppSettings> {
-        VisibleAppSettingsScreen()
+        val viewModel: VisibleAppSettingsViewModel = koinViewModel()
+        val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+
+        VisibleAppSettingsScreen(
+            screenState = screenState,
+            onChangeAppsClick = {
+                navController.navigate(VisibleAppSelector)
+            }
+        )
     }
 
     // Visible App Selector Screen
