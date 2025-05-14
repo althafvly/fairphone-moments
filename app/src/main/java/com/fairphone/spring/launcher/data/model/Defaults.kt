@@ -28,7 +28,12 @@ object Defaults {
     const val DEFAULT_NAME = "Spring"
     const val DEFAULT_ICON = "Vector"
     const val DEFAULT_BG_COLOR1 = 0xB2C3D1D0
-    const val DEFAULT_BG_COLOR2 = 0xFFD8FF4F
+    const val DEFAULT_BG_COLOR2 = 0xB2FFBA63
+    const val Color_BG_Orange = 0xB2FFBA63
+    const val Color_BG_Green = 0xFFD8FF4F
+    const val Color_BG_Blue = 0xB282C9F1
+    const val Color_BG_Pink = 0xB2F7CAC9
+    const val Color_BG_Purple = 0xB2C0AFFF
     val DEFAULT_VISIBLE_APPS = listOf(
         "com.google.android.dialer",
         "com.google.android.apps.messaging",
