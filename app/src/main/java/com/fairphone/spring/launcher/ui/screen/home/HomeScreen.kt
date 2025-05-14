@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.activity.ModeSwitcherActivity
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
@@ -65,6 +64,7 @@ const val CLOCK_DATE_FORMAT = "EEE, dd LLL"
 
 @Composable
 fun HomeScreen(
+    onModeSwitcherButtonClick: () -> Unit,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -87,9 +87,7 @@ fun HomeScreen(
         onAppClick = { appInfo ->
             viewModel.onAppClick(context, appInfo)
         },
-        onModeSwitcherButtonClick = {
-            ModeSwitcherActivity.start(context)
-        }
+        onModeSwitcherButtonClick = onModeSwitcherButtonClick
     )
 }
 

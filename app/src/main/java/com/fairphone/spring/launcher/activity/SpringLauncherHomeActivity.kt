@@ -27,29 +27,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fairphone.spring.launcher.data.model.colors
-import com.fairphone.spring.launcher.ui.component.AnimatedBackground
-import com.fairphone.spring.launcher.ui.screen.home.HomeScreen
+import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
-import kotlinx.coroutines.delay
 import org.koin.android.ext.android.inject
 import org.koin.compose.KoinContext
 
@@ -97,44 +78,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         setContent {
             KoinContext {
                 SpringLauncherTheme {
-                    val screenState by homeScreenViewModel.screenState.collectAsStateWithLifecycle()
-                    var visibility by remember { mutableStateOf(false) }
-
-                    if (screenState != null) {
-                        AnimatedVisibility(
-                            visible = visibility,
-                            enter = expandVertically(
-                                expandFrom = Alignment.Top,
-                                animationSpec = tween(
-                                    durationMillis = 200
-                                )
-                            ),
-                            exit = shrinkVertically(
-                                shrinkTowards = Alignment.Top,
-                                animationSpec = tween(
-                                    durationMillis = 200
-                                )
-                            ),
-                        ) {
-                            AnimatedBackground(
-                                colors = screenState!!.activeProfile.colors(),
-                                modifier = Modifier
-                                    .background(MaterialTheme.colorScheme.background)
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                ) {
-                                    HomeScreen()
-                                }
-                            }
-                        }
-
-                        LaunchedEffect(Unit) {
-                            delay(100)
-                            visibility = true
-                        }
-                    }
+                    HomeNavigation()
                 }
             }
         }
