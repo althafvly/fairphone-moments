@@ -56,6 +56,7 @@ object Defaults {
         ContactType.CONTACT_TYPE_NONE,
         ContactType.CONTACT_TYPE_ALL_CONTACTS,
         ContactType.CONTACT_TYPE_STARRED,
-        ContactType.CONTACT_TYPE_CUSTOM,
+        // TODO: Add custom type when contact list screen is implemented
+        //ContactType.CONTACT_TYPE_CUSTOM,
     )
 }
