@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2025. Fairphone B.V.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="default_profile_name">Esenciales</string>
+    <string name="setting_title_visible_apps">Aplicaciones visibles</string>
+    <string name="setting_title_visible_apps_selector">Seleccionar aplicaciones visibles</string>
+    <string name="setting_title_allowed_contacts">Contactos permitidos</string>
+    <string name="setting_subtitle_allowed_contacts">%1$s contactos permitidos</string>
+    <string name="setting_title_customization_settings">Configuración de personalización</string>
+    <string name="setting_header_allowed_contacts">¿Quién puede comunicarse contigo mientras estás en %1$s momento?</string>
+    <string name="visible_apps_count">5/5 seleccionado</string>
+    <string name="visible_apps_error_empty_selected">Elige al menos una aplicación</string>
+    <string name="visible_apps_error_max_selected">5/5 seleccionado</string>
+    <string name="bt_confirm">Confirmar</string>
+    <string name="search_app_info_bar_placeholder">Buscar aplicaciones</string>
+    <string name="people_type_everyone">Todos</string>
+    <string name="people_type_none">Nadie</string>
+    <string name="people_type_all_contacts">Todos los contactos</string>
+    <string name="people_type_starred">Sólo contactos destacados</string>
+    <string name="people_type_custom">Elegir</string>
+    <string name="setting_header_visible_apps">Organiza el orden de las aplicaciones en tu pantalla</string>
+    <string name="bt_switch_to_profile">Cambiar a este momento</string>
+    <string name="bt_change_apps">Cambiar aplicaciones</string>
+    <string name="mode_switcher_screen_header">¿Cuál es tu próximo momento?</string>
+</resources>

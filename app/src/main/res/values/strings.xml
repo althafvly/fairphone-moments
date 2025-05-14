@@ -18,6 +18,8 @@
 <resources>
     <string name="app_name" translatable="false">Fairphone Moments</string>
 
+    <string name="default_profile_name">Essentials</string>
+
     <string name="setting_title_visible_apps">Visible apps</string>
     <string name="setting_title_visible_apps_selector">Select visible apps</string>
     <string name="setting_title_allowed_contacts">Allowed contacts</string>
@@ -32,7 +34,9 @@
     <string name="visible_apps_error_empty_selected">Pick at least one app</string>
     <string name="visible_apps_error_max_selected">5 / 5 selected</string>
     <string name="bt_confirm">Confirm</string>
-    <string name="bt_cancel">Cancel</string>
+    <string name="bt_switch_to_profile">Switch to this moment</string>
+    <string name="bt_change_apps">Change apps</string>
+    <!-- TODO: Add missing translations -->
     <string name="profile_name_editor_title">Rename mode</string>
     <string name="profile_name_max_length_error">Keep your mode name under 15 characters</string>
     <string name="search_app_info_bar_placeholder">Search apps</string>
@@ -45,6 +49,7 @@
 
 
     <string name="mode_switcher_screen_header">What\'s your next moment?</string>
+    <!-- TODO: Add missing translations -->
     <string name="mode_switcher_screen_settings">Specific Moment settings</string>
     <string name="setting_title_notification">Notification settings</string>
     <string name="setting_title_appearance">Customize appearance</string>
@@ -55,5 +60,5 @@
     <string name="setting_subtitle_appearance">Personalize the look and feel</string>
     <string name="setting_subtitle_notification">None allowed</string>
     <string name="setting_header_visible_apps">Arrange the order of the apps on your screen</string>
-    <string name="bt_change_apps">Change apps</string>
+
 </resources>

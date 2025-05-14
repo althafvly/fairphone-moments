@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 
 @Composable
@@ -43,7 +42,7 @@ fun CancelButton(
         )
     ) {
         Text(
-            text = stringResource(R.string.bt_cancel),
+            text = stringResource(android.R.string.cancel),
             style = FairphoneTypography.AppButtonDefault,
             color = MaterialTheme.colorScheme.onSecondaryContainer
         )

@@ -89,7 +89,7 @@ class App : Application(), KoinComponent {
         val defaultBrowser = getDefaultBrowserPackageName(context)
         val defaultVisibleApps = DEFAULT_VISIBLE_APPS + defaultBrowser
         val essentials = CreateLauncherProfileUseCase.Params(
-            name = "Essentials",
+            name = context.getString(R.string.default_profile_name),
             icon = Defaults.DEFAULT_ICON,
             bgColor1 = Defaults.DEFAULT_BG_COLOR1,
             bgColor2 = Defaults.Color_BG_Orange,

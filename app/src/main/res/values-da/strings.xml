@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2025. Fairphone B.V.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="default_profile_name">Essentials</string>
+    <string name="setting_title_visible_apps">Synlige apps</string>
+    <string name="setting_title_visible_apps_selector">Vælg synlige apps</string>
+    <string name="setting_title_allowed_contacts">Tilladte kontakter</string>
+    <string name="setting_subtitle_allowed_contacts">%1$s kontakter tilladt</string>
+    <string name="setting_title_customization_settings">Tilpasningsindstillinger</string>
+    <string name="setting_header_allowed_contacts">Hvem kan nå ud til dig, mens du er i %1$s moment?</string>
+    <string name="visible_apps_count">5 / 5 valgt</string>
+    <string name="visible_apps_error_empty_selected">Vælg mindst én app</string>
+    <string name="visible_apps_error_max_selected">5 / 5 valgt</string>
+    <string name="bt_confirm">Bekræfte</string>
+    <string name="search_app_info_bar_placeholder">Søg i apps</string>
+    <string name="people_type_everyone">Alle sammen</string>
+    <string name="people_type_none">Ingen</string>
+    <string name="people_type_all_contacts">Alle kontakter</string>
+    <string name="people_type_starred">Kun stjernemarkerede kontakter</string>
+    <string name="people_type_custom">Vælge</string>
+    <string name="setting_header_visible_apps">Arranger rækkefølgen af ​​apps på din skærm</string>
+    <string name="bt_switch_to_profile">Skift til dette øjeblik</string>
+    <string name="bt_change_apps">Skift apps</string>
+    <string name="mode_switcher_screen_header">Hvad er dit næste øjeblik?</string>
+</resources>

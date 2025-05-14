@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2025. Fairphone B.V.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="default_profile_name">Essentials</string>
+    <string name="setting_title_visible_apps">Zichtbare apps</string>
+    <string name="setting_title_visible_apps_selector">Selecteer zichtbare apps</string>
+    <string name="setting_title_allowed_contacts">Toegestane contacten</string>
+    <string name="setting_subtitle_allowed_contacts">%1$s contacten toegestaan</string>
+    <string name="setting_title_customization_settings">Personalisatie instellingen</string>
+    <string name="setting_header_allowed_contacts">Wie mag je in %1$s storen?</string>
+    <string name="visible_apps_count">5 / 5 geselecteerd</string>
+    <string name="visible_apps_error_empty_selected">Kies ten minste één app</string>
+    <string name="visible_apps_error_max_selected">5 / 5 geselecteerd</string>
+    <string name="bt_confirm">Bevestigen</string>
+    <string name="search_app_info_bar_placeholder">Zoek apps</string>
+    <string name="people_type_everyone">Iedereen</string>
+    <string name="people_type_none">Niemand</string>
+    <string name="people_type_all_contacts">Alle contacten</string>
+    <string name="people_type_starred">Alleen contacten met ster</string>
+    <string name="people_type_custom">Kiezen</string>
+    <string name="setting_header_visible_apps">Wijzig de volgorde van de apps op je scherm</string>
+    <string name="bt_switch_to_profile">Switch naar dit moment</string>
+    <string name="bt_change_apps">Wijzig apps</string>
+    <string name="mode_switcher_screen_header">Wat is je volgende moment?</string>
+</resources>
