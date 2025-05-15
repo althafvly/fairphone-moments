@@ -54,6 +54,7 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
+import com.fairphone.spring.launcher.ui.component.FairphoneMomentsDemoCard
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import org.koin.androidx.compose.koinViewModel
@@ -65,6 +66,7 @@ const val CLOCK_DATE_FORMAT = "EEE, dd LLL"
 @Composable
 fun HomeScreen(
     onModeSwitcherButtonClick: () -> Unit,
+    onDemoCardClick: () -> Unit,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -84,10 +86,14 @@ fun HomeScreen(
         modeButtonIcon = Icons.Filled.Settings,
         modeButtonText = screenState!!.activeProfile.name,
         appList = screenState!!.visibleApps,
+        isRetailDemoMode = screenState!!.isRetailDemoMode,
         onAppClick = { appInfo ->
             viewModel.onAppClick(context, appInfo)
         },
-        onModeSwitcherButtonClick = onModeSwitcherButtonClick
+        onModeSwitcherButtonClick = onModeSwitcherButtonClick,
+        onDemoCardClick = {
+            onDemoCardClick()
+        }
     )
 }
 
@@ -99,8 +105,10 @@ fun HomeScreen(
     modeButtonIcon: ImageVector,
     modeButtonText: String,
     appList: List<AppInfo>,
+    isRetailDemoMode: Boolean,
     onAppClick: (AppInfo) -> Unit,
     onModeSwitcherButtonClick: () -> Unit,
+    onDemoCardClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -170,6 +178,14 @@ fun HomeScreen(
                 .fillMaxWidth()
                 .padding(24.dp)
         )
+
+
+        if(isRetailDemoMode){
+            FairphoneMomentsDemoCard(
+                modifier = Modifier.padding(30.dp),
+                onClick = { onDemoCardClick() }
+            )
+        }
     }
 }
 
@@ -221,8 +237,10 @@ fun HomeScreen_Preview() {
             modeButtonIcon = Icons.Filled.Settings,
             modeButtonText = "Essentials",
             appList = previewAppList(LocalContext.current),
+            isRetailDemoMode = false,
             onAppClick = {},
             onModeSwitcherButtonClick = {},
+            onDemoCardClick = {}
         )
     }
 }
@@ -236,9 +254,46 @@ fun HomeScreenDark_Preview() {
             time = "12:30",
             modeButtonIcon = Icons.Filled.Settings,
             modeButtonText = "Essentials",
+            isRetailDemoMode = false,
             appList = previewAppList(LocalContext.current),
             onAppClick = {},
             onModeSwitcherButtonClick = {},
+            onDemoCardClick = {}
+        )
+    }
+}
+@Composable
+@FP6Preview
+fun HomeScreenRetailDemo_Preview() {
+    SpringLauncherTheme {
+        HomeScreen(
+            date = "Wed, 13 Feb",
+            time = "12:30",
+            modeButtonIcon = Icons.Filled.Settings,
+            modeButtonText = "Essentials",
+            isRetailDemoMode = true,
+            appList = previewAppList(LocalContext.current),
+            onAppClick = {},
+            onModeSwitcherButtonClick = {},
+            onDemoCardClick = {}
+        )
+    }
+}
+
+@Composable
+@FP6PreviewDark
+fun HomeScreenRetailDemoDark_Preview() {
+    SpringLauncherTheme {
+        HomeScreen(
+            date = "Wed, 13 Feb",
+            time = "12:30",
+            modeButtonIcon = Icons.Filled.Settings,
+            modeButtonText = "Essentials",
+            isRetailDemoMode = true,
+            appList = previewAppList(LocalContext.current),
+            onAppClick = {},
+            onModeSwitcherButtonClick = {},
+            onDemoCardClick = {}
         )
     }
 }

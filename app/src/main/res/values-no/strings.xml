@@ -52,4 +52,7 @@
     <string name="profile_switch_state_disabled">%1$s\naktiviert</string>
     <string name="do_not_disturb_access_rationale_title">Tillgang til Ikke forstyrr kreves</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments trenger tilgang til Ikke forstyrr for å fungere riktig. Tillat tilgang i innstillingene dine.</string>
+    <string name="moments_demo_card_text">Denne Fairphone (Gen. 6) kjører for tiden Fairphone Moments, en ny måte å bruke telefonen din på. Bytt tilbake til vanlig Android med kalkbryteren på siden. Eller klikk her for å lære mer.</string>
+    <string name="close">Lukk</string>
+    <string name="no_internet_connection">Ingen internettforbindelse</string>
 </resources>

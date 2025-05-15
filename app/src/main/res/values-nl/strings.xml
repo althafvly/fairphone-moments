@@ -52,4 +52,7 @@
     <string name="profile_switch_state_disabled">%1$s\ningeschakeld</string>
     <string name="do_not_disturb_access_rationale_title">Niet storen-toegang vereist</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments heeft toegang tot Niet storen nodig om correct te functioneren. Sta toegang toe in je instellingen.</string>
+    <string name="moments_demo_card_text">Deze Fairphone (Gen. 6) laat Fairphone Moments zien, een nieuwe manier om je telefoon verantwoord te gebruiken. Zet de groene switch aan de zijkant om om terug te gaan naar het reguliere Android thuisschem. Of klik hier om meer te weten te komen.</string>
+    <string name="close">Sluiten</string>
+    <string name="no_internet_connection">Geen internetverbinding</string>
 </resources>

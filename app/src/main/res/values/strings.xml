@@ -64,4 +64,7 @@
     <string name="do_not_disturb_access_rationale_title">Do Not Disturb access needed</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments needs Do Not Disturb access to run correctly. Allow access in your settings.</string>
 
+    <string name="moments_demo_card_text">This Fairphone (Gen. 6) is currently running Moments, a new way to use your phone.\n\n Switch back to regular Android with the lime switch on the side. Or click here to learn more</string>
+    <string name="close">Close</string>
+    <string name="no_internet_connection">No internet connection</string>
 </resources>

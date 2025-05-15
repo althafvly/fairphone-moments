@@ -52,4 +52,7 @@
     <string name="profile_switch_state_disabled">%1$s\nactivé</string>
     <string name="do_not_disturb_access_rationale_title">Accès Ne pas déranger requis</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments a besoin de l\'accès à Ne pas déranger pour fonctionner correctement. Autorisez l\'accès dans vos paramètres.</string>
+    <string name="moments_demo_card_text">Ce Fairphone (Gen. 6) exécute actuellement Fairphone Moments, une nouvelle façon d\'utiliser votre téléphone. Revenez à Android standard avec l\'interrupteur vert sur le côté droit. Ou cliquez ici pour en savoir plus.</string>
+    <string name="close">Fermer</string>
+    <string name="no_internet_connection">Pas de connexion Internet</string>
 </resources>

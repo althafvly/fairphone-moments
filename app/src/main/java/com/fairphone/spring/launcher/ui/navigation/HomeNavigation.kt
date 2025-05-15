@@ -46,6 +46,8 @@ import com.fairphone.spring.launcher.ui.screen.home.HomeScreen
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
 import com.fairphone.spring.launcher.ui.screen.mode.ModeSwitcherScreen
 import com.fairphone.spring.launcher.ui.screen.mode.ModeSwitcherViewModel
+import com.fairphone.spring.launcher.util.FairphoneWebViewScreen
+import com.fairphone.spring.launcher.util.MOMENTS_DEMO_URL
 import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
@@ -55,6 +57,9 @@ object Home
 
 @Serializable
 object ModeSwitcher
+
+@Serializable
+object FairphoneDemoWebView
 
 @Composable
 fun HomeNavigation(
@@ -130,6 +135,9 @@ fun HomeNavigation(
                             onModeSwitcherButtonClick = {
                                 navController.navigate(ModeSwitcher)
                             },
+                            onDemoCardClick = {
+                                navController.navigate(FairphoneDemoWebView)
+                            },
                             viewModel = viewModel,
                         )
                     }
@@ -179,6 +187,15 @@ fun HomeNavigation(
         }
     }
 
+    composable<FairphoneDemoWebView>{
+        FairphoneWebViewScreen(
+            url = MOMENTS_DEMO_URL,
+            showCloseButton = true,
+            hideHeaderAndFooter = true,
+            disableUrlLoading = true,
+            onBackPressed = { navController.navigateUp() }
+        )
+    }
     // Create new Mode
     createModeNavGraph(navController)
 

@@ -52,4 +52,7 @@
     <string name="profile_switch_state_disabled">%1$s\naktiveret</string>
     <string name="do_not_disturb_access_rationale_title">Adgang til Forstyr ikke kræves</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments har brug for adgang til Forstyr ikke for at fungere korrekt. Giv adgang i dine indstillinger.</string>
+    <string name="moments_demo_card_text">This Fairphone (Gen. 6) is currently running Moments, a new way to use your phone.</string>
+    <string name="close">Luk</string>
+    <string name="no_internet_connection">Ingen internetforbindelse</string>
 </resources>
