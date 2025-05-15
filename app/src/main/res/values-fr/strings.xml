@@ -29,7 +29,7 @@
     <string name="visible_apps_error_max_selected">5 / 5 sélectionnés</string>
     <string name="bt_confirm">Confirmer</string>
     <string name="profile_name_editor_title">Renommer le moment</string>
-    <string name="profile_name_max_length_error">Gardez le nom de votre moment sous 15 caractères</string>
+    <string name="profile_name_max_length_error">Gardez le nom de votre moment sous 15 caractères</string>
     <string name="search_app_info_bar_placeholder">Rechercher des applications</string>
     <string name="people_type_everyone">Tout le monde</string>
     <string name="people_type_none">Personne</string>
@@ -37,7 +37,7 @@
     <string name="people_type_starred">Uniquement les contacts favoris</string>
     <string name="people_type_custom">Choisir</string>
     <string name="setting_title_appearance">Personnaliser l\'apparence</string>
-    <string name="setting_title_sound_and_vibration">Son et vibrations</string>
+    <string name="setting_title_sound_and_vibration">Son et vibration</string>
     <string name="setting_title_power_saving">Paramètres d\'économie d\'énergie</string>
     <string name="setting_subtitle_sound_and_vibration">Faire correspondre au paramètres de l\'appareil</string>
     <string name="setting_subtitle_power_saving">Économisez de l\'énergie et prolongez la durée de vie de votre batterie</string>

@@ -30,13 +30,13 @@
     <string name="bt_confirm">Bevestigen</string>
     <string name="profile_name_editor_title">Moment naam wijzigen</string>
     <string name="profile_name_max_length_error">Houd uw momentnaam onder de 15 tekens</string>
-    <string name="search_app_info_bar_placeholder">Zoek apps</string>
+    <string name="search_app_info_bar_placeholder">Zoek in je apps</string>
     <string name="people_type_everyone">Iedereen</string>
     <string name="people_type_none">Niemand</string>
     <string name="people_type_all_contacts">Alle contacten</string>
     <string name="people_type_starred">Alleen contacten met ster</string>
     <string name="people_type_custom">Kiezen</string>
-    <string name="setting_title_appearance">Pas het uiterlijk aan</string>
+    <string name="setting_title_appearance">Wijzig het uiterlijk</string>
     <string name="setting_title_sound_and_vibration">Geluid &amp; trillingen</string>
     <string name="setting_title_power_saving">Energiebesparende instellingen</string>
     <string name="setting_subtitle_sound_and_vibration">Gebruik apparaatinstellingen</string>

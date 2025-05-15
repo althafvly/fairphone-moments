@@ -35,17 +35,17 @@
     <string name="people_type_none">Nadie</string>
     <string name="people_type_all_contacts">Todos los contactos</string>
     <string name="people_type_starred">Sólo contactos destacados</string>
-    <string name="people_type_custom">Elige</string>
+    <string name="people_type_custom">Elegir</string>
     <string name="setting_subtitle_notification">Ninguno permitido</string>
     <string name="setting_header_visible_apps">Organiza el orden de las aplicaciones en tu pantalla</string>
     <string name="bt_switch_to_profile">Cambiar a este momento</string>
     <string name="bt_change_apps">Cambiar aplicaciones</string>
     <string name="mode_switcher_screen_header">¿Cuál es tu próximo momento?</string>
     <string name="setting_title_notification">Configuración de notificaciones de aplicaciones</string>
-    <string name="setting_title_appearance">Personaliza la apariencia</string>
+    <string name="setting_title_appearance">Personalizar apariencia</string>
     <string name="setting_title_sound_and_vibration">Sonido y vibración</string>
     <string name="setting_title_power_saving">Configuraciones de ahorro de energía</string>
-    <string name="setting_subtitle_sound_and_vibration">Coincidir con la configuración del dispositivo</string>
-    <string name="setting_subtitle_power_saving">Ahorre energía y extiende la vida útil de su batería</string>
+    <string name="setting_subtitle_sound_and_vibration">Usar la configuración del dispositivo</string>
+    <string name="setting_subtitle_power_saving">Ahorre energía y extiende la vida útil de tu batería</string>
     <string name="setting_subtitle_appearance">Cambia el look a tu gusto</string>
 </resources>
