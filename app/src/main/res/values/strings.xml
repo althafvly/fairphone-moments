@@ -28,13 +28,19 @@
 
     <string name="setting_header_allowed_contacts">Who can reach out to you while you\'re in %1$s moment</string>
 
+    <string name="bt_confirm">Confirm</string>
+    <string name="bt_cancel">Cancel</string>
+    <string name="bt_change_apps">Change apps</string>
+    <string name="bt_navigate_back">Back</string>
+    <string name="bt_navigation_close">Close</string>
+    <string name="bt_continue">Continue</string>
+    <string name="bt_create">Create mode</string>
+    <string name="bt_switch_to_profile">Switch to this moment</string>
+
     <string name="profile_state_active">Active</string>
     <string name="visible_apps_count">5 / 5 selected</string>
     <string name="visible_apps_error_empty_selected">Pick at least one app</string>
     <string name="visible_apps_error_max_selected">5 / 5 selected</string>
-    <string name="bt_confirm">Confirm</string>
-    <string name="bt_switch_to_profile">Switch to this moment</string>
-    <string name="bt_change_apps">Change apps</string>
     <string name="profile_name_editor_title">Rename moment</string>
     <string name="profile_name_max_length_error">Keep your moment name under 15 characters</string>
     <string name="search_app_info_bar_placeholder">Search apps</string>
@@ -67,4 +73,26 @@
     <string name="moments_demo_card_text">This Fairphone (Gen. 6) is currently running Moments, a new way to use your phone.\n\n Switch back to regular Android with the lime switch on the side. Or click here to learn more</string>
     <string name="close">Close</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="add_mode_screen_header">What mode would you like to create?</string>
+
+    <string name="choose_app_screen_header">Choose up to 5 apps to show in your Moment</string>
+    <string name="choose_app_screen_subtitle">These are the apps you\'ll see. Phone calls will still come through as normal.</string>
+    <string name="choose_app_background_header">Choose a \n background</string>
+
+    <string name="name_mode_screen_header">Name your moment</string>
+
+    <string name="mode_title_essential" translatable="false">Spring</string>
+    <string name="mode_title_balance" translatable="false">Balance</string>
+    <string name="mode_title_deep_focus" translatable="false">Deep focus</string>
+    <string name="mode_title_custom" translatable="false">Custom</string>
+    <string name="mode_title_journey" translatable="false">Journey</string>
+    <string name="mode_title_recharge" translatable="false">Recharge</string>
+
+    <string name="mode_subtitle_essential" translatable="false">Essentials settings</string>
+    <string name="mode_subtitle_balance">Prioritize your body and mind</string>
+    <string name="mode_subtitle_deep_focus">Unlock your potential by shutting out distractions</string>
+    <string name="mode_subtitle_custom">Start blank and tailor the mode to fit your needs</string>
+    <string name="mode_subtitle_journey">Focus on the road ahead</string>
+    <string name="mode_subtitle_recharge">Wake up refreshed and ready for a new day, every day</string>
+
 </resources>

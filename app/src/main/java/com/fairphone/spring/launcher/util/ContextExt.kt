@@ -30,24 +30,14 @@ import android.net.NetworkCapabilities
 import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.repository.AppInfoRepositoryImpl.Companion.TAG
 
-/**
- * Starts the launcher (home) activity.
- */
-const val RETAIL_DEMO_APP_PACKAGE_NAME = "com.fairphone.retaildemo2"
 
-fun startLauncherIntent(context: Context) {
-    val intent = Intent(Intent.ACTION_MAIN).apply {
-        addCategory(Intent.CATEGORY_HOME)
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_NO_ANIMATION
-    }
-    context.startActivity(intent)
-}
+const val RETAIL_DEMO_APP_PACKAGE_NAME = "com.fairphone.retaildemo2"
 
 /**
  * @return the package name of the default browser app.
@@ -55,7 +45,8 @@ fun startLauncherIntent(context: Context) {
 fun getDefaultBrowserPackageName(context: Context): String {
     val intent = Intent(Intent.ACTION_VIEW, "https://example.com".toUri())
     intent.addCategory(Intent.CATEGORY_BROWSABLE) // Specify that it's for browsing
-    val resolveInfo = context.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+    val resolveInfo =
+        context.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
 
     return resolveInfo?.activityInfo?.packageName ?: "com.android.chrome"
 }
@@ -102,8 +93,9 @@ fun Context.launchApp(app: AppInfo) {
 /**
  * Loads the app infos for the given package names.
  */
-fun Context.loadAppInfosByPackageNames(packageNames: List<String>?
-): List<AppInfo>  {
+fun Context.loadAppInfosByPackageNames(
+    packageNames: List<String>?
+): List<AppInfo> {
     val userManager = getSystemService(Context.USER_SERVICE) as UserManager
     val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
     val density = resources.displayMetrics.densityDpi
@@ -128,13 +120,21 @@ fun Context.loadAppInfosByPackageNames(packageNames: List<String>?
                         userUuid = activityInfo.user.hashCode()
                     )
                 } catch (e: Exception) {
-                    Log.w(TAG, "Failed to load info for ${activityInfo.componentName.flattenToString()}", e)
+                    Log.w(
+                        TAG,
+                        "Failed to load info for ${activityInfo.componentName.flattenToString()}",
+                        e
+                    )
                     null
                 }
             }
         }
     } catch (e: SecurityException) {
-        Log.e(TAG, "SecurityException accessing LauncherApps. Check permissions or device policy.", e)
+        Log.e(
+            TAG,
+            "SecurityException accessing LauncherApps. Check permissions or device policy.",
+            e
+        )
         emptyList() // Return empty on permission errors
     } catch (e: Exception) {
         Log.e(TAG, "Error loading apps using LauncherApps", e)
@@ -160,7 +160,9 @@ private fun Context.getUserHandleFromId(userId: Int): UserHandle? {
     return userProfiles.find { it.hashCode() == userId }
 }
 
-fun Context.notificationManager() = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+fun Context.notificationManager() =
+    getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+
 fun Context.uiModeManager() = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
 fun Context.wallpaperManager() = getSystemService(Context.WALLPAPER_SERVICE) as WallpaperManager
 
@@ -176,3 +178,12 @@ fun Context.isDeviceInRetailDemoMode(): Boolean {
     val dpc = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
     return dpc.isDeviceOwnerApp(RETAIL_DEMO_APP_PACKAGE_NAME)
 }
+
+
+fun Context.fakeApp(name: String): AppInfo =
+    AppInfo(
+        name = name,
+        packageName = name,
+        mainActivityClassName = name,
+        icon = ContextCompat.getDrawable(this, R.drawable.ic_launcher_png)!!
+    )

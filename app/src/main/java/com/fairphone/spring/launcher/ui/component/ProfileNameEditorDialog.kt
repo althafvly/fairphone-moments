@@ -91,7 +91,8 @@ fun ProfileNameEditorDialog(
                 }
             },
             confirmButton = {
-                ConfirmButton(
+                PrimaryButton(
+                    text = stringResource(R.string.bt_confirm),
                     onClick = {
                         if (newName.length < maxNameLength) {
                             onConfirm(newName)

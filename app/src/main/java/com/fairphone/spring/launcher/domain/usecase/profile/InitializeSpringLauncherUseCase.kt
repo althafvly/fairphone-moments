@@ -51,6 +51,7 @@ class InitializeSpringLauncherUseCase(
         val defaultBrowser = getDefaultBrowserPackageName(context)
         val defaultVisibleApps = DEFAULT_VISIBLE_APPS + defaultBrowser
         val essentials = CreateLauncherProfile(
+            id = CreateLauncherProfileUseCase.newId(),
             name = context.getString(R.string.default_profile_name),
             icon = Defaults.DEFAULT_ICON,
             bgColor1 = Defaults.DEFAULT_BG_COLOR1,
@@ -66,43 +67,6 @@ class InitializeSpringLauncherUseCase(
             reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
         )
         val result = createLauncherProfileUseCase.execute(essentials)
-
-        // TODO remove this code (necessary to have 2 default profiles)
-        val balance = CreateLauncherProfile(
-            name = "Balance",
-            icon = Defaults.DEFAULT_ICON,
-            bgColor1 = Defaults.DEFAULT_BG_COLOR1,
-            bgColor2 = Defaults.Color_BG_Blue,
-            visibleApps = defaultVisibleApps,
-            allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
-            repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
-            wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
-            uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
-            blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
-            soundSetting = Defaults.DEFAULT_SOUND_SETTING,
-            batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
-            reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
-        )
-
-        val spring = CreateLauncherProfile(
-            name = "Spring",
-            icon = Defaults.DEFAULT_ICON,
-            bgColor1 = Defaults.DEFAULT_BG_COLOR1,
-            bgColor2 = Defaults.Color_BG_Green,
-            visibleApps = defaultVisibleApps,
-            allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
-            repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
-            wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
-            uiMode = Defaults.DEFAULT_DARK_MODE_SETTING,
-            blueLightFilterEnabled = Defaults.DEFAULT_BLUE_LIGHT_FILTER_ENABLED,
-            soundSetting = Defaults.DEFAULT_SOUND_SETTING,
-            batterySaverEnabled = Defaults.BATTERY_SAVER_ENABLED,
-            reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
-        )
-
-
-        createLauncherProfileUseCase.execute(balance)
-        createLauncherProfileUseCase.execute(spring)
 
         return when {
             result.isFailure -> Result.failure(result.exceptionOrNull() ?: Exception())

@@ -28,10 +28,8 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
-import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
-import org.koin.android.ext.android.inject
 import org.koin.compose.KoinContext
 
 class SpringLauncherHomeActivity : ComponentActivity() {
@@ -53,8 +51,6 @@ class SpringLauncherHomeActivity : ComponentActivity() {
             instance?.finish()
         }
     }
-
-    private val homeScreenViewModel: HomeScreenViewModel by inject<HomeScreenViewModel>()
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {

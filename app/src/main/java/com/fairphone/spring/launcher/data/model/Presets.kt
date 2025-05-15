@@ -17,59 +17,77 @@
 package com.fairphone.spring.launcher.data.model
 
 import androidx.compose.ui.graphics.Color
+import com.fairphone.spring.launcher.R
 
-object Presets {
-    val Essentials = launcherProfile {
-        id = "Spring"
-        name = "Spring"
-        icon = "Vector"
-        bgColor1 = 0xB2C3D1D0
-        bgColor2 = 0xB2FFBA63
-    }
-    val Journey = launcherProfile {
-        id = "Journey"
-        name = "Journey"
-        icon = "Vector"
-        bgColor1 = 0xFFD8FF4F
-        bgColor2 = 0xFF00433D
-    }
-    val Recharge = launcherProfile {
-        id = "Recharge"
-        name = "Recharge"
-        icon = "Vector"
-        bgColor1 = 0xFF66A2DD
-        bgColor2 = 0xFF2D9197
-    }
-    val Balance = launcherProfile {
-        id = "Balance"
-        name = "Balance"
-        icon = "Vector"
-        bgColor1 = 0xFF42CC60
-        bgColor2 = 0xFFD8FF4F
-    }
-    val DeepFocus = launcherProfile {
-        id = "Deep focus"
-        name = "Deep focus"
-        icon = "Vector"
-        bgColor1 = 0xFFF27696
-        bgColor2 = 0xFFF26E6E
-    }
-    val Custom = launcherProfile {
-        id = "Custom"
-        name = "Custom"
-        icon = "Vector"
-        bgColor1 = 0xFFF27696
-        bgColor2 = 0xFFF26E6E
-    }
+const val CUSTOM_PROFILE_ID: String = "custom"
 
-    val All = listOf(
-        Essentials,
-        Journey,
-        Recharge,
-        Balance,
-        DeepFocus,
-        Custom
-    )
+enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: Int) {
+    Custom(
+        profile = launcherProfile {
+            id = CUSTOM_PROFILE_ID
+            name = "Custom"
+            icon = "Extra6"
+            bgColor1 = 0xFFF27696
+            bgColor2 = 0xFFF26E6E
+        },
+        title = R.string.mode_title_custom,
+        subtitle = R.string.mode_subtitle_custom
+    ),
+    Essentials(
+        profile = launcherProfile {
+            id = "spring"
+            name = "Spring"
+            icon = "Spring"
+            bgColor1 = 0xB2C3D1D0
+            bgColor2 = 0xB2FFBA63
+        },
+        title = R.string.mode_title_essential,
+        subtitle = R.string.mode_subtitle_essential
+    ),
+    DeepFocus(
+        profile = launcherProfile {
+            id = "deep_focus"
+            name = "Deep focus"
+            icon = "DeepFocus"
+            bgColor1 = 0xFFF27696
+            bgColor2 = 0xFFF26E6E
+        },
+        title = R.string.mode_title_deep_focus,
+        subtitle = R.string.mode_subtitle_deep_focus
+    ),
+    Balance(
+        profile = launcherProfile {
+            id = "balance"
+            name = "Balance"
+            icon = "Balance"
+            bgColor1 = 0xFF42CC60
+            bgColor2 = 0xFFD8FF4F
+        },
+        title = R.string.mode_title_balance,
+        subtitle = R.string.mode_subtitle_balance
+    ),
+    Journey(
+        profile = launcherProfile {
+            id = "journey"
+            name = "Journey"
+            icon = "Journey"
+            bgColor1 = 0xFFD8FF4F
+            bgColor2 = 0xFF00433D
+        },
+        title = R.string.mode_title_journey,
+        subtitle = R.string.mode_subtitle_journey
+    ),
+    Recharge(
+        profile = launcherProfile {
+            id = "recharge"
+            name = "Recharge"
+            icon = "Recharge"
+            bgColor1 = 0xFF66A2DD
+            bgColor2 = 0xFF2D9197
+        }, title = R.string.mode_title_recharge,
+        subtitle = R.string.mode_subtitle_recharge
+    );
+
 }
 
 fun LauncherProfile.colors(): Pair<Color, Color> {

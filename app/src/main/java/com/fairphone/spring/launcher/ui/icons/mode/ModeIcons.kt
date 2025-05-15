@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.modeicons
+package com.fairphone.spring.launcher.ui.icons.mode
 
+import androidx.annotation.Keep
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,9 +29,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
-import com.fairphone.spring.launcher.ui.ModeIcons
+import com.fairphone.spring.launcher.ui.icons.ModeIcons
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
+@Keep
 enum class ModeIcon(val imageVector: ImageVector) {
     Spring(ModeIcons.Spring),
     Balance(ModeIcons.Balance),
@@ -42,6 +44,7 @@ enum class ModeIcon(val imageVector: ImageVector) {
     Extra4(ModeIcons.Extra4),
     Extra5(ModeIcons.Extra5),
     Extra6(ModeIcons.Extra6),
+    Journey(ModeIcons.Journey),
     Vector(ModeIcons.Extra6);
 
     companion object {
@@ -50,6 +53,10 @@ enum class ModeIcon(val imageVector: ImageVector) {
             val iconIndex = ModeIcon.entries.indexOf(ModeIcon.valueOf(iconName))
             return ModeIcon.entries[(iconIndex + 1) % nbIcons]
         }
+
+        fun customIcons() = listOf(
+            Extra1, Extra2, Extra3, Extra4, Extra5, Extra6
+        )
     }
 }
 

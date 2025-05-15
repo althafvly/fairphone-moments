@@ -1,4 +1,4 @@
-package com.fairphone.spring.launcher.ui.screen.mode.component
+package com.fairphone.spring.launcher.ui.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
@@ -15,20 +16,24 @@ import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun ModeSwitcherHeader() {
+fun ScreenHeader(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: TextStyle = FairphoneTypography.H2
+) {
     Text(
-        text = stringResource(R.string.mode_switcher_screen_header),
-        style = FairphoneTypography.H2,
+        text = text,
+        style = style,
         color = MaterialTheme.colorScheme.onBackground,
         textAlign = TextAlign.Center,
-        modifier = Modifier.padding(16.dp)
+        modifier = modifier.padding(16.dp)
     )
 }
 
 @Composable
 private fun ModeSwitcherHeader_Preview() {
     SpringLauncherTheme {
-        ModeSwitcherHeader()
+        ScreenHeader(stringResource(R.string.mode_switcher_screen_header))
     }
 }
 

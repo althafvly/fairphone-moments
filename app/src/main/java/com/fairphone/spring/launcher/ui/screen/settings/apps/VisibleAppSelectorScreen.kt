@@ -39,15 +39,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.ui.component.ConfirmButton
+import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.ui.FP6Preview
+import com.fairphone.spring.launcher.ui.FP6PreviewDark
+import com.fairphone.spring.launcher.ui.component.PrimaryButton
 import com.fairphone.spring.launcher.ui.component.SearchBar
 import com.fairphone.spring.launcher.ui.component.SelectableListItem
 import com.fairphone.spring.launcher.ui.component.SelectedListItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
+import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+import com.fairphone.spring.launcher.util.fakeApp
 
 @Composable
 fun VisibleAppSelectorScreen(
@@ -73,6 +79,7 @@ fun VisibleAppSelectorScreen(
                     showAppCounter = screenState.data.showAppCounter,
                     showEmptyAppSelectedError = screenState.data.showEmptyAppSelectedError,
                     showMaxAppSelectedError = screenState.data.showMaxAppSelectedError,
+                    confirmButtonTextResource = screenState.data.confirmButtonTextResource,
                     onFilterChanged = onFilterChanged,
                     onAppClick = onAppClick,
                     onAppDeselected = onAppDeselected,
@@ -94,6 +101,7 @@ fun VisibleAppSelectorScreen(
     showAppCounter: Boolean,
     showEmptyAppSelectedError: Boolean,
     showMaxAppSelectedError: Boolean,
+    confirmButtonTextResource: Int,
     onFilterChanged: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit = {},
     onAppDeselected: (AppInfo) -> Unit = {},
@@ -110,10 +118,12 @@ fun VisibleAppSelectorScreen(
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
 
-            SelectedAppsRow(
-                selectedApps = visibleApps,
-                onDeletedClick = onAppDeselected,
-            )
+            if (visibleApps.isNotEmpty()) {
+                SelectedAppsRow(
+                    selectedApps = visibleApps,
+                    onDeletedClick = onAppDeselected,
+                )
+            }
 
             LazyColumn(
                 modifier = Modifier
@@ -167,7 +177,8 @@ fun VisibleAppSelectorScreen(
                 }
             }
             if (showConfirmButton) {
-                ConfirmButton(
+                PrimaryButton(
+                    text = stringResource(confirmButtonTextResource),
                     onClick = onConfirmAppSelection,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -268,4 +279,47 @@ fun SelectedAppsRow(
             )
         }
     }
+}
+
+
+@Composable
+private fun VisibleAppSelectorScreen_Preview() {
+    val context = LocalContext.current
+    SpringLauncherTheme {
+        VisibleAppSelectorScreen(
+            screenState = VisibleAppSelectorScreenState.Ready(
+                data = ScreenData(
+                    profileId = Presets.Essentials.profile.id,
+                    appList = listOf(
+                        context.fakeApp("test"),
+                        context.fakeApp("test1"),
+                        context.fakeApp("test2")
+                    ),
+                    visibleApps = listOf(context.fakeApp("test")),
+                    showConfirmButton = true,
+                    showAppCounter = true,
+                    showEmptyAppSelectedError = true,
+                    showMaxAppSelectedError = true,
+                    confirmButtonTextResource = R.string.bt_confirm
+                )
+            ),
+            filter = "",
+            onAppClick = {},
+            onAppDeselected = {},
+            onConfirmAppSelection = {},
+            onFilterChanged = {}
+        )
+    }
+}
+
+@Composable
+@FP6Preview()
+private fun VisibleAppSelectorScreen_LightPreview() {
+    VisibleAppSelectorScreen_Preview()
+}
+
+@Composable
+@FP6PreviewDark()
+private fun VisibleAppSelectorScreen_DarkPreview() {
+    VisibleAppSelectorScreen_Preview()
 }

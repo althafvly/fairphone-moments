@@ -222,6 +222,6 @@ fun BackgroundBlob(
 @FP6Preview
 fun AnimatedBackground_Preview() {
     AnimatedBackground(
-        colors = Presets.Essentials.colors(),
+        colors = Presets.Essentials.profile.colors(),
     )
 }

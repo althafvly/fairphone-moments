@@ -22,7 +22,7 @@ import com.fairphone.spring.launcher.data.model.launcherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.domain.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.ZenNotificationManager
-import com.fairphone.spring.launcher.util.sanitizeToId
+import java.util.UUID
 
 /**
  * Use case to create a new launcher profile.
@@ -39,7 +39,7 @@ class CreateLauncherProfileUseCase(
 
             // Create launcher profile
             val launcherProfile = launcherProfile {
-                id = createLauncherProfile.name.sanitizeToId()
+                id = createLauncherProfile.id
                 name = createLauncherProfile.name
                 icon = createLauncherProfile.icon
                 bgColor1 = createLauncherProfile.bgColor1
@@ -63,5 +63,10 @@ class CreateLauncherProfileUseCase(
         } catch (e: IllegalStateException) {
             Result.failure(e)
         }
+    }
+
+    companion object {
+        fun newId(): String =
+            UUID.randomUUID().toString()
     }
 }

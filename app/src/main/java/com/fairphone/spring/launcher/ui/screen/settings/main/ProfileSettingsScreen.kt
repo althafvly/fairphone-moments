@@ -216,7 +216,7 @@ fun ProfileSettingsScreen(
 fun ProfileSettings_Preview() {
     SpringLauncherTheme {
         ProfileSettingsScreen(
-            profile = Presets.Essentials,
+            profile = Presets.Essentials.profile,
             visibleApps = emptyList(),
             onEditProfileName = {},
             onProfileIconClick = {},

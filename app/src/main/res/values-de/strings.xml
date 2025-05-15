@@ -38,7 +38,12 @@
     <string name="people_type_custom">Wählen</string>
     <string name="setting_subtitle_notification">Nichts erlaubt</string>
     <string name="setting_header_visible_apps">Ordnen Sie die Reihenfolge der Apps auf Ihrem Bildschirm an</string>
+    <string name="bt_navigate_back">Zurück</string>
+    <string name="bt_navigation_close">Schließen</string>
+    <string name="bt_continue">Weitermachen</string>
+    <string name="bt_create">Erstellen Sie einen Modus</string>
     <string name="bt_switch_to_profile">Wechseln Sie zu diesem Moment</string>
+    <string name="bt_cancel">Stornieren</string>
     <string name="bt_change_apps">Apps ändern</string>
     <string name="mode_switcher_screen_header">Was ist dein nächster Moment?</string>
     <string name="setting_title_notification">App-Benachrichtigungseinstellungen</string>
@@ -55,4 +60,14 @@
     <string name="moments_demo_card_text">Auf diesem Fairphone (Gen. 6) läuft derzeit Fairphone Moments, eine neue Möglichkeit, Ihr Telefon zu nutzen. Wechseln Sie mit dem Lime-Schalter an der Seite zurück zum normalen Android. Oder klicken Sie hier, um mehr zu erfahren.</string>
     <string name="close">Schließen</string>
     <string name="no_internet_connection">Keine Internetverbindung</string>
+    <string name="add_mode_screen_header">Welchen Modus möchten Sie erstellen?</string>
+    <string name="choose_app_screen_header">Wählen Sie bis zu 5 Apps aus, die in Ihrem Moment angezeigt werden sollen</string>
+    <string name="mode_subtitle_balance">Priorisieren Sie Ihren Körper und Geist</string>
+    <string name="mode_subtitle_deep_focus">Entfesseln Sie Ihr Potenzial, indem Sie Ablenkungen ausblenden</string>
+    <string name="mode_subtitle_custom">Beginnen Sie mit einer leeren Version und passen Sie den Modus Ihren Anforderungen an</string>
+    <string name="mode_subtitle_journey">Konzentrieren Sie sich auf die Straße vor Ihnen</string>
+    <string name="mode_subtitle_recharge">Wachen Sie jeden Tag erfrischt und bereit für einen neuen Tag auf</string>
+    <string name="choose_app_screen_subtitle">Dies sind die Apps, die Sie sehen werden. Telefonanrufe werden weiterhin wie gewohnt angenommen.</string>
+    <string name="choose_app_background_header">Wählen Sie einen Hintergrund</string>
+    <string name="name_mode_screen_header">Geben Sie Ihrem Moment einen Namen</string>
 </resources>

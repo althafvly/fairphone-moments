@@ -32,19 +32,18 @@ import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun ModeSwitcherContainer(
-    endColor: Color,
+fun ModeContainer(
+    endColor: Color? = null,
     onClick: () -> Unit = {},
     screenContent: @Composable BoxScope.() -> Unit
 ) {
-
-    val colors = arrayOf(
-        0.0f to MaterialTheme.colorScheme.background,
-        0.3f to MaterialTheme.colorScheme.background,
-        1f to endColor
-    )
-    Box(
-        modifier = Modifier
+    val modifier: Modifier = if(endColor != null) {
+        val colors = arrayOf(
+            0.0f to MaterialTheme.colorScheme.background,
+            0.3f to MaterialTheme.colorScheme.background,
+            1f to endColor
+        )
+        Modifier
             .background(
                 brush = Brush.linearGradient(
                     colorStops = colors,
@@ -52,18 +51,19 @@ fun ModeSwitcherContainer(
                     end = Offset(-1000.0f, Float.POSITIVE_INFINITY),
                 )
             )
-            .clickable {
-                onClick()
-            }
-    ) {
+    } else {
+        Modifier.background(MaterialTheme.colorScheme.background)
+    }
+
+    Box(modifier = modifier.clickable { onClick() }) {
         screenContent()
     }
 }
 
 @Composable
-private fun ModeSwitcherContainer_Preview() {
+private fun ModeContainer_Preview() {
     SpringLauncherTheme {
-        ModeSwitcherContainer(Color_FP_Brand_Lime) {
+        ModeContainer(Color_FP_Brand_Lime) {
 
         }
     }
@@ -71,12 +71,12 @@ private fun ModeSwitcherContainer_Preview() {
 
 @Composable
 @FP6Preview()
-private fun ModeSwitcherContainer_LightPreview() {
-    ModeSwitcherContainer_Preview()
+private fun ModeContainer_LightPreview() {
+    ModeContainer_Preview()
 }
 
 @Composable
 @FP6PreviewDark()
-private fun ModeSwitcherContainer_DarkPreview() {
-    ModeSwitcherContainer_Preview()
+private fun ModeContainer_DarkPreview() {
+    ModeContainer_Preview()
 }

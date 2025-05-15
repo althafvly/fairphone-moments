@@ -25,22 +25,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.CUSTOM_PROFILE_ID
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
+import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
-import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
-import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class VisibleAppSelectorViewModel(
-    context: Application,
+/**
+ * [VisibleAppSelectorViewModel] is used to edit an existing profile, but this one is used
+ * on the creation wizard when the profile is not yet created
+ */
+class CreateModeVisibleAppSelectorViewModel(
+    private val context: Application,
     private val appInfoRepository: AppInfoRepository,
-    private val getEditedProfileUseCase: GetEditedProfileUseCase,
-    private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
 ) : ViewModel() {
 
     private val _screenState: MutableStateFlow<VisibleAppSelectorScreenState> =
@@ -57,28 +58,38 @@ class VisibleAppSelectorViewModel(
     init {
         viewModelScope.launch {
             installedApps.addAll(appInfoRepository.getAllInstalledApps(context))
-            val currentProfile = getEditedProfileUseCase.execute(Unit).first()
-            visibleApps.addAll(
-                appInfoRepository.getAppInfosByPackageNames(
-                    context,
-                    currentProfile.visibleAppsList
-                )
-            )
-
+            // On Init we only initialize the installed apps on the device
             screenData = ScreenData(
-                profileId = currentProfile.id,
+                profileId = CUSTOM_PROFILE_ID,
                 appList = installedApps,
                 visibleApps = visibleApps,
                 showConfirmButton = false,
                 showAppCounter = visibleApps.size == LAUNCHER_MAX_APP_COUNT,
                 showEmptyAppSelectedError = false,
                 showMaxAppSelectedError = false,
-                confirmButtonTextResource = R.string.bt_confirm
+                confirmButtonTextResource = R.string.bt_continue
             )
 
             _screenState.update {
-                VisibleAppSelectorScreenState.Ready(screenData)
+                // Elements ae loaded, and the data will be ready when the updateSelectProfile
+                // function will be called
+                VisibleAppSelectorScreenState.Loading
             }
+        }
+    }
+
+    fun updateSelectProfile(preset: Presets, apps: List<String>) {
+        val expectedProfile = preset.profile
+        visibleApps.addAll(
+            apps.mapNotNull { appPackage ->
+                installedApps.firstOrNull { it.packageName == appPackage }
+            },
+        )
+        _screenState.updateAppSelectorState {
+            screenData.copy(
+                visibleApps = visibleApps,
+                profileId = expectedProfile.id
+            )
         }
     }
 
@@ -89,33 +100,23 @@ class VisibleAppSelectorViewModel(
         }
         if (visibleApps.size < LAUNCHER_MAX_APP_COUNT) {
             visibleApps.add(appInfo)
-            _screenState.update {
-                VisibleAppSelectorScreenState.Ready(
-                    screenData.copy(
-                        visibleApps = visibleApps,
-                        showConfirmButton = true,
-                        showAppCounter = visibleApps.size == LAUNCHER_MAX_APP_COUNT,
-                        showEmptyAppSelectedError = false,
-                        showMaxAppSelectedError = false,
-                    )
+            _screenState.updateAppSelectorState {
+                screenData.copy(
+                    visibleApps = visibleApps,
+                    showConfirmButton = true,
+                    showAppCounter = visibleApps.size == LAUNCHER_MAX_APP_COUNT,
+                    showEmptyAppSelectedError = false,
+                    showMaxAppSelectedError = false,
                 )
             }
         } else if (visibleApps.size == LAUNCHER_MAX_APP_COUNT) {
             viewModelScope.launch {
-                _screenState.update {
-                    VisibleAppSelectorScreenState.Ready(
-                        screenData.copy(
-                            showMaxAppSelectedError = true,
-                        )
-                    )
+                _screenState.updateAppSelectorState {
+                    screenData.copy(showMaxAppSelectedError = true)
                 }
                 delay(3000)
-                _screenState.update {
-                    VisibleAppSelectorScreenState.Ready(
-                        screenData.copy(
-                            showMaxAppSelectedError = false,
-                        )
-                    )
+                _screenState.updateAppSelectorState {
+                    screenData.copy(showMaxAppSelectedError = false)
                 }
             }
 
@@ -147,48 +148,4 @@ class VisibleAppSelectorViewModel(
             )
         }
     }
-
-    fun confirmAppSelection() = viewModelScope.launch {
-        val editedProfile = getEditedProfileUseCase.execute(Unit).first()
-        val newProfile = editedProfile.toBuilder()
-            .clearVisibleApps()
-            .addAllVisibleApps(visibleApps.map { it.packageName })
-            .build()
-        val result = updateLauncherProfileUseCase.execute(newProfile)
-        _screenState.update {
-            if (result.isSuccess) {
-                VisibleAppSelectorScreenState.UpdateAppSelectionSuccess
-            } else {
-                VisibleAppSelectorScreenState.UpdateAppSelectionFailure
-            }
-        }
-    }
 }
-
-fun MutableStateFlow<VisibleAppSelectorScreenState>.updateAppSelectorState(
-    screenDataModifier: () -> ScreenData
-) {
-    update {
-        VisibleAppSelectorScreenState.Ready(
-            screenDataModifier.invoke()
-        )
-    }
-}
-
-sealed class VisibleAppSelectorScreenState {
-    data object Loading : VisibleAppSelectorScreenState()
-    data class Ready(val data: ScreenData) : VisibleAppSelectorScreenState()
-    data object UpdateAppSelectionSuccess : VisibleAppSelectorScreenState()
-    data object UpdateAppSelectionFailure : VisibleAppSelectorScreenState()
-}
-
-data class ScreenData(
-    val profileId: String,
-    val appList: List<AppInfo>,
-    val visibleApps: List<AppInfo>,
-    val showConfirmButton: Boolean,
-    val confirmButtonTextResource: Int,
-    val showAppCounter: Boolean,
-    val showEmptyAppSelectedError: Boolean,
-    val showMaxAppSelectedError: Boolean,
-)

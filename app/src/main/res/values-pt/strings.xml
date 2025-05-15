@@ -38,7 +38,9 @@
     <string name="people_type_custom">Escolher</string>
     <string name="setting_subtitle_notification">Nenhum permitido</string>
     <string name="setting_header_visible_apps">Organize a ordem dos aplicativos na tela</string>
+    <string name="bt_create">Criar um modo</string>
     <string name="bt_switch_to_profile">Mude para este momento</string>
+    <string name="bt_cancel">Cancelar</string>
     <string name="bt_change_apps">Alterar aplicativos</string>
     <string name="mode_switcher_screen_header">Qual é o seu próximo momento?</string>
     <string name="setting_title_notification">Configurações de notificação de aplicativos</string>
@@ -55,4 +57,17 @@
     <string name="moments_demo_card_text">Este Fairphone (Gen. 6) está atualmente executando o Fairphone Moments, uma nova maneira de usar seu telefone. Volte para o Android normal com o botão Lime na lateral. Ou clique aqui para saber mais.</string>
     <string name="close">Ferchar</string>
     <string name="no_internet_connection">Sem conexão com a internet</string>
+    <string name="add_mode_screen_header">Que modo gostaria de criar?</string>
+    <string name="choose_app_screen_header">Escolha até 5 aplicações para mostrar no seu Momento</string>
+    <string name="choose_app_screen_subtitle">Estes são os aplicativos que verá. As chamadas telefónicas continuarão a ser realizadas normalmente.</string>
+    <string name="choose_app_background_header">Escolha um fundo</string>
+    <string name="name_mode_screen_header">Dê um nome ao seu momento</string>
+    <string name="mode_subtitle_balance">Dê prioridade ao seu corpo e à sua mente</string>
+    <string name="mode_subtitle_deep_focus">Liberte o seu potencial excluindo distrações</string>
+    <string name="mode_subtitle_custom">Comece em branco e adapte o modo para se adequar às suas necessidades</string>
+    <string name="mode_subtitle_journey">Concentre-se na estrada à frente</string>
+    <string name="mode_subtitle_recharge">Acorde revigorado e pronto para um novo dia, todos os dias</string>
+    <string name="bt_navigate_back">Costas</string>
+    <string name="bt_navigation_close">Perto</string>
+    <string name="bt_continue">Continuar</string>
 </resources>

@@ -182,7 +182,7 @@ fun LauncherProfileSettingsTopBar(
 fun LauncherProfileSettingsTopBar_Preview() {
     SpringLauncherTheme {
         LauncherProfileSettingsTopBar(
-            currentLauncherProfile = Presets.Essentials,
+            currentLauncherProfile = Presets.Essentials.profile,
             onEditLauncherProfileName = {},
             onIconClick = {}
         )

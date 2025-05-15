@@ -1,4 +1,4 @@
-package com.fairphone.spring.launcher.ui.modeicons
+package com.fairphone.spring.launcher.ui.icons.mode
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType
@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.ui.ModeIcons
+import com.fairphone.spring.launcher.ui.icons.ModeIcons
 
 val ModeIcons.Recharge: ImageVector
     get() {

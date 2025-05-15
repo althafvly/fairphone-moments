@@ -38,7 +38,9 @@
     <string name="people_type_custom">Välja</string>
     <string name="setting_subtitle_notification">Ingen tillåten</string>
     <string name="setting_header_visible_apps">Ordna apparnas ordning på skärmen</string>
+    <string name="bt_create">Skapa läge</string>
     <string name="bt_switch_to_profile">Växla till detta ögonblick</string>
+    <string name="bt_cancel">Annullera</string>
     <string name="bt_change_apps">Byt appar</string>
     <string name="mode_switcher_screen_header">Vad är ditt nästa ögonblick?</string>
     <string name="setting_title_notification">Inställningar för appaviseringar</string>
@@ -55,4 +57,17 @@
     <string name="moments_demo_card_text">Denna Fairphone (Gen. 6) kör för närvarande Fairphone Moments, ett nytt sätt att använda din telefon. Byt tillbaka till vanlig Android med lime switchen på sidan. Eller klicka här för att lära dig mer.</string>
     <string name="close">Stäng</string>
     <string name="no_internet_connection">Ingen internetanslutning</string>
+    <string name="bt_navigate_back">Tillbaka</string>
+    <string name="bt_navigation_close">Nära</string>
+    <string name="bt_continue">Fortsätta</string>
+    <string name="add_mode_screen_header">Vilket läge vill du skapa?</string>
+    <string name="choose_app_screen_header">Välj upp till 5 appar att visa i Ditt ögonblick</string>
+    <string name="choose_app_screen_subtitle">Det här är apparna du kommer att se. Telefonsamtal kommer fortfarande fram som vanligt.</string>
+    <string name="choose_app_background_header">Välj en bakgrund</string>
+    <string name="name_mode_screen_header">Namnge ditt ögonblick</string>
+    <string name="mode_subtitle_balance">Prioritera din kropp och ditt sinne</string>
+    <string name="mode_subtitle_deep_focus">Frigör din potential genom att stänga ute distraktioner</string>
+    <string name="mode_subtitle_custom">Börja tomt och anpassa läget efter dina behov</string>
+    <string name="mode_subtitle_journey">Fokusera på vägen framåt</string>
+    <string name="mode_subtitle_recharge">Vakna upp utvilad och redo för en ny dag, varje dag</string>
 </resources>

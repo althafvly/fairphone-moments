@@ -237,7 +237,7 @@ fun SwitchStateChangeOverlay(
 fun SwitchStateChangeHintEnabled_Preview() {
     SpringLauncherTheme {
         SwitchStateChangeOverlay(
-            profile = Presets.Essentials,
+            profile = Presets.Essentials.profile,
             switchState = SwitchState.ENABLED,
             onAnimationDone = {},
             visibilityState = remember { MutableTransitionState(false) },
@@ -250,7 +250,7 @@ fun SwitchStateChangeHintEnabled_Preview() {
 fun SwitchStateChangeHintDisabled_Preview() {
     SpringLauncherTheme {
         SwitchStateChangeOverlay(
-            profile = Presets.Essentials,
+            profile = Presets.Essentials.profile,
             switchState = SwitchState.DISABLED,
             onAnimationDone = {},
             visibilityState = remember { MutableTransitionState(false) },

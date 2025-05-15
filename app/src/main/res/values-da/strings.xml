@@ -44,7 +44,9 @@
     <string name="setting_subtitle_appearance">Skift udseendet til din smag</string>
     <string name="setting_subtitle_notification">Ingen tilladt</string>
     <string name="setting_header_visible_apps">Arranger rækkefølgen af ​​apps på din skærm</string>
+    <string name="bt_create">Opret en tilstand</string>
     <string name="bt_switch_to_profile">Skift til dette øjeblik</string>
+    <string name="bt_cancel">Ophæve</string>
     <string name="bt_change_apps">Skift apps</string>
     <string name="mode_switcher_screen_header">Hvad er dit næste øjeblik?</string>
     <string name="setting_title_notification">Indstillinger for appbeskeder</string>
@@ -55,4 +57,17 @@
     <string name="moments_demo_card_text">This Fairphone (Gen. 6) is currently running Moments, a new way to use your phone.</string>
     <string name="close">Luk</string>
     <string name="no_internet_connection">Ingen internetforbindelse</string>
+    <string name="mode_subtitle_balance">Prioritér din krop og dit sind</string>
+    <string name="mode_subtitle_deep_focus">Frigør dit potentiale ved at lukke distraktioner ude</string>
+    <string name="mode_subtitle_custom">Start blankt og tilpas tilstanden til dine behov</string>
+    <string name="mode_subtitle_journey">Fokuser på vejen fremad</string>
+    <string name="mode_subtitle_recharge">Vågn op frisk og klar til en ny dag, hver dag</string>
+    <string name="choose_app_screen_header">Vælg op til 5 apps, der skal vises i dit øjeblik</string>
+    <string name="choose_app_screen_subtitle">Dette er de apps, du vil se. Telefonopkald vil stadig komme igennem som normalt.</string>
+    <string name="choose_app_background_header">Vælg en baggrund</string>
+    <string name="name_mode_screen_header">Navngiv dit øjeblik</string>
+    <string name="bt_navigate_back">Tilbage</string>
+    <string name="bt_navigation_close">Tæt</string>
+    <string name="bt_continue">Fortsætte</string>
+    <string name="add_mode_screen_header">Hvilken tilstand vil du gerne oprette?</string>
 </resources>

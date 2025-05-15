@@ -14,82 +14,80 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.mode
+package com.fairphone.spring.launcher.ui.screen.mode.creator
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
-import com.fairphone.spring.launcher.ui.screen.mode.component.ModeSwitcherButton
-import com.fairphone.spring.launcher.ui.screen.mode.component.ModeSwitcherHeader
+import com.fairphone.spring.launcher.ui.component.ScreenHeader
+import com.fairphone.spring.launcher.ui.screen.mode.ModeContainer
+import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun ModeSwitcherScreen(
-    currentLauncherProfile: LauncherProfile,
-    profiles: List<LauncherProfile>,
-    onModeSelected: (LauncherProfile) -> Unit = {},
-    onModeSettingsClick: (LauncherProfile) -> Unit = {},
-    onCancel: () -> Unit = {}
+fun SelectModeScreen(
+    profiles: List<Presets>,
+    onNavigateClose: () -> Unit,
+    onModeSettingsClick: (LauncherProfile) -> Unit = {}
 ) {
-    ModeSwitcherContainer(endColor = Color(currentLauncherProfile.bgColor2), onClick = onCancel) {
+    ModeContainer(onClick = onNavigateClose) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 80.dp, start = 20.dp, end = 20.dp),
+                .background(Color.Transparent)
         ) {
-            ModeSwitcherHeader()
+            CreateMomentTopBar(
+                hasBackButton = false,
+                onNavigateBack = {},
+                onNavigateClose = onNavigateClose
+            )
+
+            ScreenHeader(
+                stringResource(R.string.add_mode_screen_header),
+                modifier = Modifier.padding(horizontal = 36.dp),
+                style = FairphoneTypography.H3
+            )
 
             Spacer(modifier = Modifier.weight(1.0f))
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.padding(horizontal = 20.dp)
             ) {
                 profiles.forEach { mode ->
-                    ModeSwitcherButton(
-                        profile = mode,
-                        isSelected = mode == currentLauncherProfile,
-                        modifier = Modifier.padding(vertical = 4.dp),
-                        onModeSettingsClick = onModeSettingsClick
+                    SelectModeButton(
+                        mode,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        onModeSelected(mode)
+                        onModeSettingsClick(it)
                     }
                 }
             }
-
             Spacer(modifier = Modifier.weight(1.0f))
-
-//            TODO: Add button to add new moment
-//            if (profiles.size < 6) {
-//                ActionButton(
-//                    icon = Icons.Filled.Add,
-//                    description = "Add Moment",
-//                    displayLabel = true,
-//                    modifier = Modifier.padding(bottom = 56.dp)
-//                )
-//            }
         }
     }
 }
 
 @Composable
-private fun ModeSwitcherScreen_Preview(nbMoment: Int = 2) {
+private fun ModeSwitcherScreen_Preview() {
     SpringLauncherTheme {
-        ModeSwitcherScreen(
-            currentLauncherProfile = Presets.Essentials,
-            profiles = Presets.All.subList(0, nbMoment),
-        )
+        SelectModeScreen(Presets.entries, {}, {})
     }
 }
 
@@ -102,17 +100,5 @@ private fun ModeSwitcherScreen_LightPreview() {
 @Composable
 @FP6PreviewDark()
 private fun ModeSwitcherScreen_DarkPreview() {
-    ModeSwitcherScreen_Preview(nbMoment = 3)
-}
-
-@Composable
-@FP6Preview()
-private fun ModeSwitcherFullScreen_LightPreview() {
-    ModeSwitcherScreen_Preview(nbMoment = 6)
-}
-
-@Composable
-@FP6PreviewDark()
-private fun ModeSwitcherFullScreen_DarkPreview() {
-    ModeSwitcherScreen_Preview(nbMoment = 5)
+    ModeSwitcherScreen_Preview()
 }

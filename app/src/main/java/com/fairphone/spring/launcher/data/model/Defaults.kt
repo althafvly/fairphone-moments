@@ -18,7 +18,7 @@
 package com.fairphone.spring.launcher.data.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.fairphone.spring.launcher.ui.modeicons.fromString
+import com.fairphone.spring.launcher.ui.icons.mode.fromString
 
 fun LauncherProfile.getIconVector(): ImageVector =
     ImageVector.fromString(icon)

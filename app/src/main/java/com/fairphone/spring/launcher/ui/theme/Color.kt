@@ -95,6 +95,13 @@ val surfaceContainerDark = Color(0xFF222222)
 val surfaceContainerHighDark = Color(0xFF252B2C)
 val surfaceContainerHighestDark = Color(0xFF303637)
 
+
+val backgroundShapeBackgroundLightStart = Color(0x88E0E7F2)
+val backgroundShapeBorderLightStart = Color(0x99999999)
+val backgroundShapeBackgroundDarkStart = Color(0xff1F1F1F)
+val backgroundShapeBorderDarkStart = Color(0x33666666)
+
+
 val modeButtonBackgroundLight = Color(0x55FFFFFF)
 val actionButtonBackgroundLight = Color(red = 255, green = 255, blue = 255, alpha = 30)
 val actionButtonStrokeLight = Color(0x55FFFFFF)

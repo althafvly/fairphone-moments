@@ -44,7 +44,9 @@
     <string name="setting_subtitle_appearance">Changez l\'apparence à votre guise</string>
     <string name="setting_subtitle_notification">Aucun autorisé</string>
     <string name="setting_header_visible_apps">Organisez l\'ordre des applications sur votre écran</string>
+    <string name="bt_create">Créer mode</string>
     <string name="bt_switch_to_profile">Passer à ce moment</string>
+    <string name="bt_cancel">Annuler</string>
     <string name="bt_change_apps">Changer d\'application</string>
     <string name="mode_switcher_screen_header">Quel est votre prochain moment ?</string>
     <string name="setting_title_notification">Paramètres de notification d\'application</string>
@@ -55,4 +57,17 @@
     <string name="moments_demo_card_text">Ce Fairphone (Gen. 6) exécute actuellement Fairphone Moments, une nouvelle façon d\'utiliser votre téléphone. Revenez à Android standard avec l\'interrupteur vert sur le côté droit. Ou cliquez ici pour en savoir plus.</string>
     <string name="close">Fermer</string>
     <string name="no_internet_connection">Pas de connexion Internet</string>
+    <string name="bt_navigate_back">Retour</string>
+    <string name="bt_navigation_close">Fermer</string>
+    <string name="bt_continue">Continuer</string>
+    <string name="add_mode_screen_header">Quel mode souhaitez-vous créer ?</string>
+    <string name="choose_app_screen_header">Choisissez jusqu\'à 5 applications à afficher dans votre Moment</string>
+    <string name="choose_app_screen_subtitle">Voici les applications que vous verrez. Les appels téléphoniques continueront d\'être traités normalement.</string>
+    <string name="choose_app_background_header">Choisir \\n un arrière plan</string>
+    <string name="name_mode_screen_header">Nommez votre moment</string>
+    <string name="mode_subtitle_balance">Donnez la priorité à votre corps et à votre esprit</string>
+    <string name="mode_subtitle_deep_focus">Libérez votre potentiel en éliminant les distractions</string>
+    <string name="mode_subtitle_custom">Commencez à partir de zéro et personnalisez le mode en fonction de vos besoins</string>
+    <string name="mode_subtitle_journey">Concentrez-vous sur la route devant vous</string>
+    <string name="mode_subtitle_recharge">Réveillez-vous frais et dispos et prêt pour une nouvelle journée, chaque jour</string>
 </resources>

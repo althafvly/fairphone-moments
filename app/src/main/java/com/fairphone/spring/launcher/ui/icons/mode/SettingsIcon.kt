@@ -1,4 +1,4 @@
-package com.fairphone.spring.launcher.ui.modeicons
+package com.fairphone.spring.launcher.ui.icons.mode
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor

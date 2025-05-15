@@ -44,8 +44,8 @@ import com.fairphone.spring.launcher.data.model.colors
 import com.fairphone.spring.launcher.ui.component.AnimatedBackground
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreen
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
-import com.fairphone.spring.launcher.ui.screen.mode.ModeSwitcherScreen
-import com.fairphone.spring.launcher.ui.screen.mode.ModeSwitcherViewModel
+import com.fairphone.spring.launcher.ui.screen.mode.switcher.ModeSwitcherScreen
+import com.fairphone.spring.launcher.ui.screen.mode.switcher.ModeSwitcherViewModel
 import com.fairphone.spring.launcher.util.FairphoneWebViewScreen
 import com.fairphone.spring.launcher.util.MOMENTS_DEMO_URL
 import kotlinx.coroutines.delay
@@ -62,51 +62,50 @@ object ModeSwitcher
 object FairphoneDemoWebView
 
 @Composable
-fun HomeNavigation(
-    navController: NavHostController = rememberNavController(),
-) = NavHost(
-    navController = navController,
-    startDestination = Home
-) {
-    composable<Home>(
-        enterTransition = {
-            expandVertically(
-                expandFrom = Alignment.Top,
-                animationSpec = tween(
-                    durationMillis = 300
-                )
-            )
-        },
-        exitTransition = {
-            shrinkVertically(
-                shrinkTowards = Alignment.Top,
-                animationSpec = tween(
-                    durationMillis = 300
-                )
-            )
-        },
-        popEnterTransition = {
-            expandVertically(
-                expandFrom = Alignment.Top,
-                animationSpec = tween(
-                    durationMillis = 300
-                )
-            )
-        },
-        popExitTransition = {
-            shrinkVertically(
-                shrinkTowards = Alignment.Top,
-                animationSpec = tween(
-                    durationMillis = 300
-                )
-            )
-        }
+fun HomeNavigation(navController: NavHostController = rememberNavController()) =
+    NavHost(
+        navController = navController,
+        startDestination = Home
     ) {
-        val viewModel: HomeScreenViewModel = koinViewModel()
-        val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-        var visibility by remember { mutableStateOf(false) }
+        composable<Home>(
+            enterTransition = {
+                expandVertically(
+                    expandFrom = Alignment.Top,
+                    animationSpec = tween(
+                        durationMillis = 300
+                    )
+                )
+            },
+            exitTransition = {
+                shrinkVertically(
+                    shrinkTowards = Alignment.Top,
+                    animationSpec = tween(
+                        durationMillis = 300
+                    )
+                )
+            },
+            popEnterTransition = {
+                expandVertically(
+                    expandFrom = Alignment.Top,
+                    animationSpec = tween(
+                        durationMillis = 300
+                    )
+                )
+            },
+            popExitTransition = {
+                shrinkVertically(
+                    shrinkTowards = Alignment.Top,
+                    animationSpec = tween(
+                        durationMillis = 300
+                    )
+                )
+            }
+        ) {
+            val viewModel: HomeScreenViewModel = koinViewModel()
+            val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+            var visibility by remember { mutableStateOf(false) }
 
-        if (screenState != null) {
+            if (screenState != null) {
 //            AnimatedVisibility(
 //                visible = visibility,
 //                enter = expandVertically(
@@ -142,50 +141,56 @@ fun HomeNavigation(
                         )
                     }
                 }
-            //}
+                //}
 
-            LaunchedEffect(Unit) {
-                delay(100)
-                visibility = true
+                LaunchedEffect(Unit) {
+                    delay(100)
+                    visibility = true
+                }
             }
         }
-    }
 
-    // Mode Switcher Screen
-    composable<ModeSwitcher>(
-        enterTransition = {
-            fadeIn(animationSpec = tween(200))
-        },
-        exitTransition = {
-            fadeOut(animationSpec = tween(200))
-        },
-        popEnterTransition = {
-            fadeIn(animationSpec = tween(200))
-        },
-        popExitTransition = {
-            fadeOut(animationSpec = tween(200))
-        }
-    ) {
-        val viewModel: ModeSwitcherViewModel = koinViewModel()
-        val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-        val context = LocalContext.current
+        // Mode Switcher Screen
+        composable<ModeSwitcher>(
+            enterTransition = {
+                fadeIn(animationSpec = tween(200))
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(200))
+            },
+            popEnterTransition = {
+                fadeIn(animationSpec = tween(200))
+            },
+            popExitTransition = {
+                fadeOut(animationSpec = tween(200))
+            }
+        ) {
+            val viewModel: ModeSwitcherViewModel = koinViewModel()
+            val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+            val context = LocalContext.current
 
-        if (screenState != null) {
-            ModeSwitcherScreen(
-                currentLauncherProfile = screenState!!.activeProfile,
-                profiles = screenState!!.profiles,
-                onModeSettingsClick = {
-                    viewModel.editActiveProfileSettings(it)
-                    LauncherSettingsActivity.start(context)
-                },
-                onModeSelected = {
-                    viewModel.updateActiveProfile(it)
-                    navController.navigateUp()
-                },
-                onCancel = { navController.navigateUp() }
-            )
+            if (screenState != null) {
+                ModeSwitcherScreen(
+                    currentLauncherProfile = screenState!!.activeProfile,
+                    profiles = screenState!!.profiles,
+                    onModeSettingsClick = {
+                        viewModel.editActiveProfileSettings(it)
+                        LauncherSettingsActivity.start(context)
+                    },
+                    onModeSelected = {
+                        viewModel.updateActiveProfile(it)
+                        navController.navigateUp()
+                    },
+                    onCancel = {
+                        navController.navigateUp()
+                    },
+                    onCreateMomentClick = {
+                        navController.navigate(SelectMode)
+                    }
+                )
+            }
         }
-    }
+
 
     composable<FairphoneDemoWebView>{
         FairphoneWebViewScreen(
@@ -199,4 +204,4 @@ fun HomeNavigation(
     // Create new Mode
     createModeNavGraph(navController)
 
-}
+    }

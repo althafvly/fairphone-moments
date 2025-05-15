@@ -16,7 +16,9 @@
 
 package com.fairphone.spring.launcher.ui.component
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -26,16 +28,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.ui.FP6Preview
+import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
+import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun ConfirmButton(
+fun PrimaryButton(
+    text: String,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,
         modifier = modifier,
+        enabled = enabled,
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -43,9 +51,33 @@ fun ConfirmButton(
         )
     ) {
         Text(
-            text = stringResource(R.string.bt_confirm),
-            style = FairphoneTypography.AppButtonDefault,
+            text = text,
+            style = FairphoneTypography.ButtonDefault,
             color = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
+}
+
+@Composable
+fun PrimaryButton_Preview() {
+    SpringLauncherTheme {
+        Column {
+            PrimaryButton(
+                text = stringResource(R.string.bt_confirm),
+                modifier = Modifier.fillMaxWidth()
+            ) {}
+        }
+    }
+}
+
+@Composable
+@FP6Preview()
+fun PrimaryButton_LightPreview() {
+    PrimaryButton_Preview()
+}
+
+@Composable
+@FP6PreviewDark()
+fun PrimaryButton_DarkPreview() {
+    PrimaryButton_Preview()
 }

@@ -16,7 +16,9 @@
 
 package com.fairphone.spring.launcher.ui.component
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +27,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.fairphone.spring.launcher.ui.FP6Preview
+import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
+import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
 fun CancelButton(
@@ -47,4 +52,25 @@ fun CancelButton(
             color = MaterialTheme.colorScheme.onSecondaryContainer
         )
     }
+}
+
+@Composable
+fun CancelButton_Preview() {
+    SpringLauncherTheme {
+        Column {
+            CancelButton(modifier = Modifier.fillMaxWidth()) {}
+        }
+    }
+}
+
+@Composable
+@FP6Preview()
+fun CancelButton_LightPreview() {
+    CancelButton_Preview()
+}
+
+@Composable
+@FP6PreviewDark()
+fun CancelButton_DarkPreview() {
+    CancelButton_Preview()
 }

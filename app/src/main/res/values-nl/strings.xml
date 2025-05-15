@@ -44,7 +44,12 @@
     <string name="setting_subtitle_appearance">Verander het uiterlijk naar wens</string>
     <string name="setting_subtitle_notification">Geen toegestaan</string>
     <string name="setting_header_visible_apps">Wijzig de volgorde van de apps op je scherm</string>
+    <string name="bt_navigate_back">Rug</string>
+    <string name="bt_navigation_close">Dichtbij</string>
+    <string name="bt_continue">Doorgaan</string>
+    <string name="bt_create">Maak een modus</string>
     <string name="bt_switch_to_profile">Switch naar dit moment</string>
+    <string name="bt_cancel">Annuleren</string>
     <string name="bt_change_apps">Wijzig apps</string>
     <string name="mode_switcher_screen_header">Wat is je volgende moment?</string>
     <string name="setting_title_notification">App notificatie instellingen</string>
@@ -55,4 +60,14 @@
     <string name="moments_demo_card_text">Deze Fairphone (Gen. 6) laat Fairphone Moments zien, een nieuwe manier om je telefoon verantwoord te gebruiken. Zet de groene switch aan de zijkant om om terug te gaan naar het reguliere Android thuisschem. Of klik hier om meer te weten te komen.</string>
     <string name="close">Sluiten</string>
     <string name="no_internet_connection">Geen internetverbinding</string>
+    <string name="add_mode_screen_header">Welke modus wil je creëren?</string>
+    <string name="choose_app_screen_header">Kies maximaal 5 apps om in je Moment te tonen</string>
+    <string name="mode_subtitle_balance">Geef prioriteit aan je lichaam en geest</string>
+    <string name="mode_subtitle_deep_focus">Ontgrendel je potentieel door afleidingen uit te sluiten</string>
+    <string name="mode_subtitle_custom">Begin leeg en pas de modus aan uw behoeften aan</string>
+    <string name="mode_subtitle_journey">Concentreer u op de weg vooruit</string>
+    <string name="mode_subtitle_recharge">Word elke dag uitgerust wakker en klaar voor een nieuwe dag</string>
+    <string name="choose_app_screen_subtitle">Dit zijn de apps die je ziet. Telefoongesprekken komen nog steeds gewoon door.</string>
+    <string name="choose_app_background_header">Kies een achtergrond</string>
+    <string name="name_mode_screen_header">Geef je moment een naam</string>
 </resources>

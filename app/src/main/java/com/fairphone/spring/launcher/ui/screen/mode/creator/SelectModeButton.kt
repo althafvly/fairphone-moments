@@ -1,32 +1,14 @@
-/*
- * Copyright (c) 2025. Fairphone B.V.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package com.fairphone.spring.launcher.ui.screen.mode.component
+package com.fairphone.spring.launcher.ui.screen.mode.creator
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,55 +34,43 @@ import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
-import com.fairphone.spring.launcher.ui.component.ActionButton
-import com.fairphone.spring.launcher.ui.modeicons.SettingsIcon
-import com.fairphone.spring.launcher.ui.modeicons.fromString
+import com.fairphone.spring.launcher.ui.icons.NavIcons
+import com.fairphone.spring.launcher.ui.icons.mode.fromString
+import com.fairphone.spring.launcher.ui.icons.nav.ChevronRight
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.ui.theme.actionButtonStrokeDark
 import com.fairphone.spring.launcher.ui.theme.actionButtonStrokeLight
-import com.fairphone.spring.launcher.ui.theme.focusActionButtonStrokeDark
-import com.fairphone.spring.launcher.ui.theme.focusActionButtonStrokeLight
 import com.fairphone.spring.launcher.ui.theme.modeButtonBackgroundDark
 import com.fairphone.spring.launcher.ui.theme.modeButtonBackgroundLight
-import com.fairphone.spring.launcher.ui.theme.onBackgroundLight
 import com.fairphone.spring.launcher.ui.theme.pressedActionButtonEndGradienDark
 import com.fairphone.spring.launcher.ui.theme.pressedActionButtonEndGradienLight
 import com.fairphone.spring.launcher.ui.theme.pressedActionButtonStartGradienDark
 import com.fairphone.spring.launcher.ui.theme.pressedActionButtonStartGradienLight
-import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradientDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradientLight
 
 @Composable
-fun ModeSwitcherButton(
-    profile: LauncherProfile,
-    isSelected: Boolean,
+fun SelectModeButton(
+    presetProfile: Presets,
     modifier: Modifier = Modifier,
-    onModeSettingsClick: (LauncherProfile) -> Unit = {},
-    onClick: () -> Unit = {},
+    onModeSettingsClick: (LauncherProfile) -> Unit = {}
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isDark = isSystemInDarkTheme()
     val isPressed by interactionSource.collectIsPressedAsState()
-    val isFocus by interactionSource.collectIsFocusedAsState()
 
     Button(
-        onClick = onClick,
-        border = computeButtonBorder(
-            isDark = isDark,
-            isSelected = isSelected,
-            isFocus = isFocus
-        ),
+        onClick = { onModeSettingsClick(presetProfile.profile) },
+        border = computeButtonBorder(isDark = isDark),
         interactionSource = interactionSource,
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = computeButtonBackground(
                 isDark = isDark,
-                isSelected = isSelected,
                 isPressed = isPressed
             ),
-            contentColor = if (isSelected) onBackgroundLight else MaterialTheme.colorScheme.onBackground,
+            contentColor = MaterialTheme.colorScheme.onBackground,
         ),
         contentPadding = PaddingValues(0.dp),
         modifier = modifier
@@ -111,33 +82,41 @@ fun ModeSwitcherButton(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
         ) {
             Icon(
-                imageVector = ImageVector.fromString(profile.icon),
-                contentDescription = profile.name,
+                imageVector = ImageVector.fromString(presetProfile.profile.icon),
+                contentDescription = presetProfile.profile.name,
                 modifier = Modifier
-
                     .padding(start = 16.dp, end = 16.dp)
                     .size(20.dp)
             )
 
-            Text(
-                text = profile.name,
-                style = FairphoneTypography.H5,
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            ActionButton(
-                icon = SettingsIcon,
-                description = stringResource(R.string.setting_title_customization_settings),
-                isSelected = isSelected,
+            Column(
+                modifier = Modifier.weight(2f)
             ) {
-                onModeSettingsClick(profile)
+                Text(
+                    text = stringResource(presetProfile.title),
+                    style = FairphoneTypography.BodyMedium,
+                )
+                Text(
+                    text = stringResource(presetProfile.subtitle),
+                    style = FairphoneTypography.BodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            IconButton(
+                onClick = { onModeSettingsClick(presetProfile.profile) },
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    imageVector = NavIcons.ChevronRight,
+                    contentDescription = stringResource(R.string.add_mode_screen_header),
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.size(16.dp)
+                )
             }
         }
     }
@@ -163,54 +142,31 @@ private fun Modifier.computeButtonModifier(isPressed: Boolean, isDark: Boolean):
             )
     else this
 
-private fun computeButtonBackground(
-    isDark: Boolean,
-    isSelected: Boolean,
-    isPressed: Boolean
-): Color {
-    if (isSelected) {
-        return Color.White
-    }
+private fun computeButtonBackground(isDark: Boolean, isPressed: Boolean): Color {
     if (isPressed) {
         return Color.Transparent
     }
     return if (isDark) modeButtonBackgroundDark else modeButtonBackgroundLight
 }
 
-private fun computeButtonBorder(
-    isDark: Boolean,
-    isFocus: Boolean,
-    isSelected: Boolean
-): BorderStroke {
-    if (isFocus) {
-        return BorderStroke(
-            width = 1.dp,
-            color = if (isDark) focusActionButtonStrokeDark else focusActionButtonStrokeLight
-        )
-    }
-
-    val stroke = if (isDark) {
-        if (isSelected) Color.White else actionButtonStrokeDark
-    } else {
-        if (isSelected) Color.White else actionButtonStrokeLight
-    }
+private fun computeButtonBorder(isDark: Boolean): BorderStroke {
     return BorderStroke(
         width = 1.dp,
-        brush = Brush.verticalGradient(
+        brush = Brush.horizontalGradient(
             listOf(
-                stroke,
-                if (isDark) selectedActionButtonStrokeEndGradientDark else selectedActionButtonStrokeEndGradientLight,
+                if (isDark) actionButtonStrokeDark else actionButtonStrokeLight,
+                if (isDark) selectedActionButtonStrokeEndGradientDark else selectedActionButtonStrokeEndGradientLight
             )
         )
     )
 }
 
 @Composable
-fun ModeSwitcherButton_Preview() {
+fun SelectModeButton_Preview() {
     SpringLauncherTheme {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(8.dp)) {
-            ModeSwitcherButton(profile = Presets.Essentials, isSelected = true)
-            ModeSwitcherButton(profile = Presets.Journey, isSelected = false)
+        Column {
+            SelectModeButton(Presets.Balance)
+            SelectModeButton(Presets.DeepFocus)
         }
 
     }
@@ -218,12 +174,12 @@ fun ModeSwitcherButton_Preview() {
 
 @Composable
 @FP6Preview()
-fun ModeSwitcherButton_LightPreview() {
-    ModeSwitcherButton_Preview()
+fun SelectModeButton_LightPreview() {
+    SelectModeButton_Preview()
 }
 
 @Composable
 @FP6PreviewDark()
-fun ModeSwitcherButton_DarkPreview() {
-    ModeSwitcherButton_Preview()
+fun SelectModeButton_DarkPreview() {
+    SelectModeButton_Preview()
 }

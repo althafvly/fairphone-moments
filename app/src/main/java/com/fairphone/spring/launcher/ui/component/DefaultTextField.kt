@@ -38,8 +38,10 @@ fun DefaultTextField(
     placeHolderText: String? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     showError: Boolean = false,
+    textAlign: TextAlign = TextAlign.Start
 ) {
     OutlinedTextField(
+
         modifier = modifier,
         value = text,
         onValueChange = onValueChange,
@@ -47,7 +49,7 @@ fun DefaultTextField(
             placeHolderText?.let {
                 Text(
                     text = it,
-                    style = FairphoneTypography.ButtonDefault.copy(textAlign = TextAlign.Start),
+                    style = FairphoneTypography.ButtonDefault.copy(textAlign = textAlign),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -55,7 +57,7 @@ fun DefaultTextField(
         leadingIcon = leadingIcon,
         label = null,
         singleLine = true,
-        textStyle = FairphoneTypography.ButtonDefault.copy(textAlign = TextAlign.Start),
+        textStyle = FairphoneTypography.ButtonDefault.copy(textAlign = textAlign),
         shape = RoundedCornerShape(12.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,

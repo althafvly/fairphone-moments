@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.mode
+package com.fairphone.spring.launcher.ui.screen.mode.switcher
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

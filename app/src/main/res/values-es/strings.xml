@@ -38,7 +38,9 @@
     <string name="people_type_custom">Elegir</string>
     <string name="setting_subtitle_notification">Ninguno permitido</string>
     <string name="setting_header_visible_apps">Organiza el orden de las aplicaciones en tu pantalla</string>
+    <string name="bt_create">Crear el modo</string>
     <string name="bt_switch_to_profile">Cambiar a este momento</string>
+    <string name="bt_cancel">Cancelar</string>
     <string name="bt_change_apps">Cambiar aplicaciones</string>
     <string name="mode_switcher_screen_header">¿Cuál es tu próximo momento?</string>
     <string name="setting_title_notification">Configuración de notificaciones de aplicaciones</string>
@@ -55,4 +57,17 @@
     <string name="moments_demo_card_text">Este Fairphone (Gen. 6) actualmente ejecuta Fairphone Moments, una nueva forma de usar su teléfono. Vuelve a Android normal con el interruptor de lima en el lateral. O haga clic aquí para obtener más información.</string>
     <string name="close">Cerrar</string>
     <string name="no_internet_connection">Sin conexión a Internet</string>
+    <string name="mode_subtitle_balance">Prioriza tu cuerpo y tu mente</string>
+    <string name="mode_subtitle_deep_focus">Libera tu potencial eliminando las distracciones</string>
+    <string name="mode_subtitle_custom">Comience en blanco y adapte el modo a sus necesidades</string>
+    <string name="mode_subtitle_journey">Concéntrese en el camino que tiene por delante</string>
+    <string name="mode_subtitle_recharge">Despierta renovado y listo para un nuevo día, todos los días.</string>
+    <string name="bt_navigate_back">Atrás</string>
+    <string name="bt_navigation_close">Cerca</string>
+    <string name="bt_continue">Continuar</string>
+    <string name="add_mode_screen_header">¿Qué modo te gustaría crear?</string>
+    <string name="choose_app_screen_header">Elige hasta 5 aplicaciones para mostrar en tu Momento</string>
+    <string name="choose_app_screen_subtitle">Estas son las aplicaciones que verás. Las llamadas se seguirán recibiendo con normalidad.</string>
+    <string name="choose_app_background_header">Elige un fondo</string>
+    <string name="name_mode_screen_header">Nombra tu momento</string>
 </resources>

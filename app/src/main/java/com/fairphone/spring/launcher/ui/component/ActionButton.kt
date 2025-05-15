@@ -33,7 +33,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
-import com.fairphone.spring.launcher.ui.modeicons.SettingsIcon
+import com.fairphone.spring.launcher.ui.icons.NavIcons
+import com.fairphone.spring.launcher.ui.icons.mode.SettingsIcon
+import com.fairphone.spring.launcher.ui.icons.nav.ArrowLeft
+import com.fairphone.spring.launcher.ui.icons.nav.Close
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.ui.theme.actionButtonBackgroundDark
@@ -53,6 +56,16 @@ import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradientDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradientLight
 
+enum class ButtonSize { Small, Default, Big }
+enum class ButtonType {
+    Round, RoundedCorner;
+
+    fun shape(): RoundedCornerShape =
+        when (this) {
+            Round -> RoundedCornerShape(50.dp)
+            RoundedCorner -> RoundedCornerShape(12.dp)
+        }
+}
 
 @Composable
 fun ActionButton(
@@ -61,6 +74,8 @@ fun ActionButton(
     modifier: Modifier = Modifier,
     displayLabel: Boolean = false,
     isSelected: Boolean = false,
+    size: ButtonSize = ButtonSize.Default,
+    type: ButtonType = ButtonType.Round,
     onClick: () -> Unit = {}
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
@@ -70,8 +85,14 @@ fun ActionButton(
         val isFocus by interactionSource.collectIsFocusedAsState()
         val isHover by interactionSource.collectIsHoveredAsState()
 
+        val (buttonSize, iconSize, paddingValue) = when (size) {
+            ButtonSize.Default -> listOf(48.dp, 24.dp, 12.dp)
+            ButtonSize.Small -> listOf(32.dp, 16.dp, 4.dp)
+            ButtonSize.Big -> listOf(64.dp, 36.dp, 18.dp)
+        }
+
         Button(
-            shape = RoundedCornerShape(50.dp),
+            shape = type.shape(),
             onClick = { onClick() },
             colors = ButtonDefaults.textButtonColors(
                 containerColor = computeButtonBackground(
@@ -82,24 +103,28 @@ fun ActionButton(
                 contentColor = MaterialTheme.colorScheme.onBackground
             ),
             interactionSource = interactionSource,
-            border = computeButtonBorder(
-                isDark = isDark,
-                isFocus = isFocus || isHover,
-                isSelected = isSelected
-            ),
-            contentPadding = PaddingValues(12.dp),
+            border = if (size == ButtonSize.Default) {
+                computeButtonBorder(
+                    isDark = isDark,
+                    isFocus = isFocus || isHover,
+                    isSelected = isSelected
+                )
+            } else {
+                null
+            },
+            contentPadding = PaddingValues(paddingValue),
             modifier = Modifier
                 .computeButtonModifier(isPressed = isPressed, isDark = isDark)
-                .width(48.dp)
-                .height(48.dp)
+                .width(buttonSize)
+                .height(buttonSize)
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = description,
                 tint = if (isSelected) onBackgroundLight else MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
-                    .width(24.dp)
-                    .height(24.dp)
+                    .width(iconSize)
+                    .height(iconSize)
             )
         }
         if (displayLabel) {
@@ -199,6 +224,29 @@ fun ActionButton_Preview() {
                 description = "Update selected moment",
                 isSelected = true,
                 displayLabel = true
+            )
+            ActionButton(
+                icon = NavIcons.Close,
+                description = "Add Moment",
+                size = ButtonSize.Small
+            )
+            ActionButton(
+                icon = NavIcons.ArrowLeft,
+                description = "Add Moment",
+                size = ButtonSize.Small
+            )
+            ActionButton(
+                icon = SettingsIcon,
+                description = "Update moment",
+                size = ButtonSize.Small,
+                isSelected = true
+            )
+            ActionButton(
+                icon = SettingsIcon,
+                description = "Update moment",
+                isSelected = false,
+                size = ButtonSize.Big,
+                type = ButtonType.RoundedCorner
             )
         }
 

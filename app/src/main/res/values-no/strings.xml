@@ -38,7 +38,9 @@
     <string name="people_type_custom">Velge</string>
     <string name="setting_subtitle_notification">Ingen tillatt</string>
     <string name="setting_header_visible_apps">Ordne rekkefølgen på appene på skjermen</string>
+    <string name="bt_create">Opprett modusen</string>
     <string name="bt_switch_to_profile">Bytt til dette øyeblikket</string>
+    <string name="bt_cancel">Kansellere</string>
     <string name="bt_change_apps">Bytt apper</string>
     <string name="mode_switcher_screen_header">Hva er ditt neste øyeblikk?</string>
     <string name="setting_title_notification">Innstillinger for appvarsling</string>
@@ -55,4 +57,17 @@
     <string name="moments_demo_card_text">Denne Fairphone (Gen. 6) kjører for tiden Fairphone Moments, en ny måte å bruke telefonen din på. Bytt tilbake til vanlig Android med kalkbryteren på siden. Eller klikk her for å lære mer.</string>
     <string name="close">Lukk</string>
     <string name="no_internet_connection">Ingen internettforbindelse</string>
+    <string name="bt_navigate_back">Tilbake</string>
+    <string name="bt_navigation_close">Lukke</string>
+    <string name="bt_continue">Fortsette</string>
+    <string name="add_mode_screen_header">Hvilken modus ønsker du å lage?</string>
+    <string name="choose_app_screen_header">Velg opptil 5 apper som skal vises i ditt øyeblikk</string>
+    <string name="choose_app_screen_subtitle">Dette er appene du ser. Telefonsamtaler vil fortsatt komme gjennom som normalt.</string>
+    <string name="choose_app_background_header">Velg en bakgrunn</string>
+    <string name="mode_subtitle_balance">Prioriter kropp og sinn</string>
+    <string name="mode_subtitle_deep_focus">Slipp løs potensialet ditt ved å stenge ute distraksjoner</string>
+    <string name="mode_subtitle_custom">Start blankt og tilpass modusen til dine behov</string>
+    <string name="mode_subtitle_journey">Fokuser på veien videre</string>
+    <string name="mode_subtitle_recharge">Våkn opp uthvilt og klar for en ny dag, hver dag</string>
+    <string name="name_mode_screen_header">Navngi øyeblikket ditt</string>
 </resources>

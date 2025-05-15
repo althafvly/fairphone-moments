@@ -20,6 +20,7 @@ package com.fairphone.spring.launcher.data.model
  * Data Class used to build a new LauncherProfile.
  */
 data class CreateLauncherProfile(
+    val id: String,
     val name: String,
     val icon: String,
     val bgColor1: Long,

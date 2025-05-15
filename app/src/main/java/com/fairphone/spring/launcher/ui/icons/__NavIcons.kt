@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui
+package com.fairphone.spring.launcher.ui.icons
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.fairphone.spring.launcher.ui.modeicons.ModeIcon
+import com.fairphone.spring.launcher.ui.icons.mode.ModeIcon
 import kotlin.collections.List as ____KtList
 
-public object ModeIcons
+object NavIcons
 
 private var __AllIcons: ____KtList<ImageVector>? = null
 
-public val ModeIcons.AllIcons: ____KtList<ImageVector>
+val NavIcons.AllIcons: ____KtList<ImageVector>
   get() {
     if (__AllIcons != null) {
       return __AllIcons!!
