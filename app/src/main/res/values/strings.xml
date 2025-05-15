@@ -26,19 +26,17 @@
     <string name="setting_subtitle_allowed_contacts">%1$s allowed</string>
     <string name="setting_title_customization_settings">Customization settings</string>
 
-    <string name="setting_header_allowed_contacts">Who can reach out to you while you\'re in %1$s mode</string>
+    <string name="setting_header_allowed_contacts">Who can reach out to you while you\'re in %1$s moment</string>
 
     <string name="profile_state_active">Active</string>
-    <string name="profile_state_inactive">Inactive</string>
     <string name="visible_apps_count">5 / 5 selected</string>
     <string name="visible_apps_error_empty_selected">Pick at least one app</string>
     <string name="visible_apps_error_max_selected">5 / 5 selected</string>
     <string name="bt_confirm">Confirm</string>
     <string name="bt_switch_to_profile">Switch to this moment</string>
     <string name="bt_change_apps">Change apps</string>
-    <!-- TODO: Add missing translations -->
-    <string name="profile_name_editor_title">Rename mode</string>
-    <string name="profile_name_max_length_error">Keep your mode name under 15 characters</string>
+    <string name="profile_name_editor_title">Rename moment</string>
+    <string name="profile_name_max_length_error">Keep your moment name under 15 characters</string>
     <string name="search_app_info_bar_placeholder">Search apps</string>
 
     <string name="people_type_everyone">Everyone</string>
@@ -47,17 +45,15 @@
     <string name="people_type_starred">Only starred contacts</string>
     <string name="people_type_custom">Choose</string>
 
-
     <string name="mode_switcher_screen_header">What\'s your next moment?</string>
-    <!-- TODO: Add missing translations -->
-    <string name="mode_switcher_screen_settings">Specific Moment settings</string>
-    <string name="setting_title_notification">Notification settings</string>
+
+    <string name="setting_title_notification">App Notification settings</string>
     <string name="setting_title_appearance">Customize appearance</string>
     <string name="setting_title_sound_and_vibration">Sound &amp; vibration</string>
     <string name="setting_title_power_saving">Power-saving settings</string>
     <string name="setting_subtitle_sound_and_vibration">Match device settings</string>
     <string name="setting_subtitle_power_saving">Save power and extend your battery life</string>
-    <string name="setting_subtitle_appearance">Personalize the look and feel</string>
+    <string name="setting_subtitle_appearance">Change the look at feel to your liking</string>
     <string name="setting_subtitle_notification">None allowed</string>
     <string name="setting_header_visible_apps">Arrange the order of the apps on your screen</string>
 
