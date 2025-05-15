@@ -32,11 +32,7 @@ class LauncherSettingsActivity : ComponentActivity() {
 
     companion object {
         fun start(context: Context) {
-            val intent = Intent(context, LauncherSettingsActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                        Intent.FLAG_ACTIVITY_NO_ANIMATION
-            }
+            val intent = Intent(context, LauncherSettingsActivity::class.java)
             context.startActivity(intent)
         }
     }
