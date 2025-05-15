@@ -18,23 +18,49 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permission needed to access/modify DND policies -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
+
+    <!-- Permission needed to display overlay on top of other activities -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <!-- Permissions needed for demo mode pop-up -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- Permission needed to access all user profiles -->
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MODIFY_DAY_NIGHT_MODE"
-        tools:ignore="ProtectedPermissions" />
+
+    <!-- Permission needed to enable/sable power saving mode -->
     <uses-permission android:name="android.permission.POWER_SAVER"
         tools:ignore="ProtectedPermissions" />
+
+    <!-- Permissions needed to change lockscreen wallpaper -->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_WALLPAPER_INTERNAL"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
+    <!-- Permission needed to change dark/light theme -->
+    <uses-permission android:name="android.permission.MODIFY_DAY_NIGHT_MODE"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- Permission needed to change airplane mode -->
+    <uses-permission android:name="android.permission.NETWORK_AIRPLANE_MODE"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- Permission needed to change screen brightness -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- Permission needed to change audio settings -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_ROUTING"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".App"
