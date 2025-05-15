@@ -23,7 +23,6 @@ import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.domain.usecase.EnableDndUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
-import com.fairphone.spring.launcher.util.LockscreenWallpaperSwitcherWorker
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -53,6 +52,7 @@ class SwitchStateChangeViewModel(
             SwitchState.ENABLED -> true
             SwitchState.DISABLED -> false
         }
-        LockscreenWallpaperSwitcherWorker.enqueueWallpaperWork(context, enableDnd)
+        // TODO: Enable lockscreen wallpaper switch when fixed
+        // LockscreenWallpaperSwitcherWorker.enqueueWallpaperWork(context, enableDnd)
     }
 }
