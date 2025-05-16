@@ -35,6 +35,7 @@ class UpdateLauncherProfileUseCase(
             name = params.name,
             allowedContacts = params.allowedContacts,
             uiMode = params.uiMode,
+            repeatCallEnabled = params.repeatCallEnabled,
         )
 
         if (result.isSuccess) {

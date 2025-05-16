@@ -16,10 +16,8 @@
 
 package com.fairphone.spring.launcher.domain.usecase.profile
 
-import com.fairphone.spring.launcher.data.model.ContactType
+import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
 import com.fairphone.spring.launcher.data.model.LauncherProfile
-import com.fairphone.spring.launcher.data.model.SoundSetting
-import com.fairphone.spring.launcher.data.model.UiMode
 import com.fairphone.spring.launcher.data.model.launcherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.domain.usecase.base.UseCase
@@ -32,47 +30,26 @@ import com.fairphone.spring.launcher.util.sanitizeToId
 class CreateLauncherProfileUseCase(
     private val launcherProfileRepository: LauncherProfileRepository,
     private val zenNotificationManager: ZenNotificationManager,
-) : UseCase<CreateLauncherProfileUseCase.Params, LauncherProfile>() {
+) : UseCase<CreateLauncherProfile, LauncherProfile>() {
 
-    data class Params(
-        val name: String,
-        val icon: String,
-        val bgColor1: Long,
-        val bgColor2: Long,
-        val visibleApps: List<String>,
-        val allowedContacts: ContactType,
-        val customContacts: List<String> = emptyList(),
-        val repeatCallEnabled: Boolean,
-        val wallpaperId: Int,
-        val uiMode: UiMode,
-        val blueLightFilterEnabled: Boolean,
-        val soundSetting: SoundSetting,
-        val batterySaverEnabled: Boolean,
-        val reduceBrightnessEnabled: Boolean,
-    )
-
-    override suspend fun execute(params: Params): Result<LauncherProfile> {
-        val createdZenRuleId = zenNotificationManager.createAutomaticZenRule(
-            name = params.name,
-            allowedContacts = params.allowedContacts,
-            uiMode = params.uiMode,
-        )
+    override suspend fun execute(createLauncherProfile: CreateLauncherProfile): Result<LauncherProfile> {
+        val createdZenRuleId = zenNotificationManager.createAutomaticZenRule(createLauncherProfile)
         val launcherProfile = launcherProfile {
-            id = params.name.sanitizeToId()
-            name = params.name
-            icon = params.icon
-            bgColor1 = params.bgColor1
-            bgColor2 = params.bgColor2
-            visibleApps.addAll(params.visibleApps)
-            allowedContacts = params.allowedContacts
-            customContacts.addAll(params.customContacts)
-            repeatCallEnabled = params.repeatCallEnabled
-            wallpaperId = params.wallpaperId
-            uiMode = params.uiMode
-            blueLightFilterEnabled = params.blueLightFilterEnabled
-            soundSetting = params.soundSetting
-            batterySaverEnabled = params.batterySaverEnabled
-            reduceBrightnessEnabled = params.reduceBrightnessEnabled
+            id = createLauncherProfile.name.sanitizeToId()
+            name = createLauncherProfile.name
+            icon = createLauncherProfile.icon
+            bgColor1 = createLauncherProfile.bgColor1
+            bgColor2 = createLauncherProfile.bgColor2
+            visibleApps.addAll(createLauncherProfile.visibleApps)
+            allowedContacts = createLauncherProfile.allowedContacts
+            customContacts.addAll(createLauncherProfile.customContacts)
+            repeatCallEnabled = createLauncherProfile.repeatCallEnabled
+            wallpaperId = createLauncherProfile.wallpaperId
+            uiMode = createLauncherProfile.uiMode
+            blueLightFilterEnabled = createLauncherProfile.blueLightFilterEnabled
+            soundSetting = createLauncherProfile.soundSetting
+            batterySaverEnabled = createLauncherProfile.batterySaverEnabled
+            reduceBrightnessEnabled = createLauncherProfile.reduceBrightnessEnabled
             zenRuleId = createdZenRuleId
         }
 

@@ -41,7 +41,7 @@ object Defaults {
         "com.google.android.apps.maps",
     )
     val DEFAULT_ALLOWED_CONTACTS = ContactType.CONTACT_TYPE_NONE
-    const val DEFAULT_REPEAT_CALL_ENABLED = true
+    const val DEFAULT_REPEAT_CALL_ENABLED = false
     const val DEFAULT_WALLPAPER_ID = 0
     val DEFAULT_DARK_MODE_SETTING = UiMode.UI_MODE_SYSTEM
     const val DEFAULT_BLUE_LIGHT_FILTER_ENABLED = false

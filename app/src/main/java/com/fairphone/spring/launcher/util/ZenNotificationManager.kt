@@ -25,11 +25,14 @@ import android.service.notification.ZenPolicy
 import androidx.core.net.toUri
 import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
 import com.fairphone.spring.launcher.data.model.ContactType
+import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
 import com.fairphone.spring.launcher.data.model.UiMode
 
 class ZenNotificationManager(private val context: Context) {
 
-    val ZEN_RULE_CONDITION_ID = "com.fairphone.moments".toUri()
+    companion object {
+        val ZEN_RULE_CONDITION_ID = "com.fairphone.moments".toUri()
+    }
 
     /**
      * Enables Do Not Disturb mode for the given rule.
@@ -77,15 +80,12 @@ class ZenNotificationManager(private val context: Context) {
     /**
      * Creates a new automatic zen rule using the given parameters and adds it to the notification manager.
      */
-    fun createAutomaticZenRule(
-        name: String,
-        allowedContacts: ContactType,
-        uiMode: UiMode,
-    ): String {
+    fun createAutomaticZenRule(profile: CreateLauncherProfile): String {
         val zenRule = createZenRule(
-            name = name,
-            allowedContacts = allowedContacts,
-            uiMode = uiMode,
+            name = profile.name,
+            allowedContacts = profile.allowedContacts,
+            uiMode = profile.uiMode,
+            repeatCallEnabled = profile.repeatCallEnabled,
         )
         return context.notificationManager().addAutomaticZenRule(zenRule)
     }
@@ -98,6 +98,7 @@ class ZenNotificationManager(private val context: Context) {
         name: String,
         allowedContacts: ContactType,
         uiMode: UiMode,
+        repeatCallEnabled: Boolean,
     ): Result<AutomaticZenRule> {
         // Disable DND first
         disableDnd(zenRuleId, name)
@@ -107,6 +108,7 @@ class ZenNotificationManager(private val context: Context) {
             name = name,
             allowedContacts = allowedContacts,
             uiMode = uiMode,
+            repeatCallEnabled = repeatCallEnabled,
         )
         val result = context.notificationManager().updateAutomaticZenRule(zenRuleId, updatedZenRule)
 
@@ -127,9 +129,10 @@ class ZenNotificationManager(private val context: Context) {
         name: String,
         allowedContacts: ContactType,
         uiMode: UiMode,
+        repeatCallEnabled: Boolean,
     ): AutomaticZenRule {
         val configActivity = getConfigurationActivity(context)
-        val zenPolicy = createZenPolicy(allowedContacts)
+        val zenPolicy = createZenPolicy(allowedContacts, repeatCallEnabled)
         val zenDeviceEffects = createZenDeviceEffects(uiMode)
 
         return AutomaticZenRule.Builder(name, ZEN_RULE_CONDITION_ID)
@@ -149,6 +152,7 @@ class ZenNotificationManager(private val context: Context) {
 
     private fun createZenPolicy(
         allowedContacts: ContactType,
+        allowRepeatCallers: Boolean,
     ): ZenPolicy {
         val peopleType = when (allowedContacts) {
             ContactType.CONTACT_TYPE_EVERYONE -> ZenPolicy.PEOPLE_TYPE_ANYONE
@@ -164,6 +168,8 @@ class ZenNotificationManager(private val context: Context) {
             .allowMessages(peopleType)
             .allowConversations(peopleType)
             .allowMedia(true)
+            .allowRepeatCallers(false) //TODO: Update to use param from profile
+
         return builder.build()
     }
 

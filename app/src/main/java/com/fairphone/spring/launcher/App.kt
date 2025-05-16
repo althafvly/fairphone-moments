@@ -20,6 +20,7 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
 import com.fairphone.spring.launcher.data.model.Defaults
 import com.fairphone.spring.launcher.data.model.Defaults.DEFAULT_VISIBLE_APPS
 import com.fairphone.spring.launcher.data.prefs.AppPrefs
@@ -88,7 +89,7 @@ class App : Application(), KoinComponent {
     private suspend fun createInitialPresets(context: Context) {
         val defaultBrowser = getDefaultBrowserPackageName(context)
         val defaultVisibleApps = DEFAULT_VISIBLE_APPS + defaultBrowser
-        val essentials = CreateLauncherProfileUseCase.Params(
+        val essentials = CreateLauncherProfile(
             name = context.getString(R.string.default_profile_name),
             icon = Defaults.DEFAULT_ICON,
             bgColor1 = Defaults.DEFAULT_BG_COLOR1,
@@ -106,7 +107,7 @@ class App : Application(), KoinComponent {
         val result = createLauncherProfileUseCase.execute(essentials)
 
         // TODO remove this code (necessary to have 2 default prfiles)
-        val balance = CreateLauncherProfileUseCase.Params(
+        val balance = CreateLauncherProfile(
             name = "Balance",
             icon = Defaults.DEFAULT_ICON,
             bgColor1 = Defaults.DEFAULT_BG_COLOR1,
@@ -122,7 +123,7 @@ class App : Application(), KoinComponent {
             reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
         )
 
-        val spring = CreateLauncherProfileUseCase.Params(
+        val spring = CreateLauncherProfile(
             name = "Spring",
             icon = Defaults.DEFAULT_ICON,
             bgColor1 = Defaults.DEFAULT_BG_COLOR1,
