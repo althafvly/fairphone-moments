@@ -47,7 +47,7 @@ android {
             abiFilters.add("arm64-v8a")
         }
         @Suppress("UnstableApiUsage")
-        androidResources.localeFilters.addAll(listOf("de", "en", "fr", "nl"))
+        androidResources.localeFilters.addAll(listOf("en", "da", "de", "es", "fr", "it", "nl", "no", "pt", "sv"))
         base.archivesName = "SpringLauncher_$versionName"
     }
 
