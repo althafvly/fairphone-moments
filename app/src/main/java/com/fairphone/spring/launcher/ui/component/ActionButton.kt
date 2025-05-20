@@ -168,7 +168,7 @@ private fun computeButtonBorder(
     }
     return BorderStroke(
         width = 1.dp,
-        brush = Brush.horizontalGradient(
+        brush = Brush.verticalGradient(
             listOf(
                 stroke,
                 if (isDark) selectedActionButtonStrokeEndGradientDark else selectedActionButtonStrokeEndGradientLight

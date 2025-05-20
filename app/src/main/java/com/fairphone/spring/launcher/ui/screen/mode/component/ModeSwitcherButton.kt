@@ -182,7 +182,6 @@ private fun computeButtonBorder(
     isFocus: Boolean,
     isSelected: Boolean
 ): BorderStroke {
-    BorderStroke(1.dp, Color.White)
     if (isFocus) {
         return BorderStroke(
             width = 1.dp,
@@ -191,16 +190,16 @@ private fun computeButtonBorder(
     }
 
     val stroke = if (isDark) {
-        if (isSelected) selectedActionButtonStrokeDark else actionButtonStrokeDark
+        if (isSelected) Color.White else actionButtonStrokeDark
     } else {
-        if (isSelected) selectedActionButtonStrokeDark else actionButtonStrokeLight
+        if (isSelected) Color.White else actionButtonStrokeLight
     }
     return BorderStroke(
         width = 1.dp,
-        brush = Brush.horizontalGradient(
+        brush = Brush.verticalGradient(
             listOf(
                 stroke,
-                if (isDark) selectedActionButtonStrokeEndGradientDark else selectedActionButtonStrokeEndGradientLight
+                if (isDark) selectedActionButtonStrokeEndGradientDark else selectedActionButtonStrokeEndGradientLight,
             )
         )
     )
@@ -209,7 +208,7 @@ private fun computeButtonBorder(
 @Composable
 fun ModeSwitcherButton_Preview() {
     SpringLauncherTheme {
-        Column {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(8.dp)) {
             ModeSwitcherButton(profile = Presets.Essentials, isSelected = true)
             ModeSwitcherButton(profile = Presets.Journey, isSelected = false)
         }
