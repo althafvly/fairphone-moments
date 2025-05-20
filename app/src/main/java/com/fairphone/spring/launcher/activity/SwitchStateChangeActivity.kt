@@ -29,6 +29,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,6 +48,11 @@ import org.koin.android.ext.android.inject
 import org.koin.compose.KoinContext
 
 class SwitchStateChangeActivity : ComponentActivity() {
+
+    private val dndPermissionRationaleDialogActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            handleIntent(intent)
+        }
 
     private val viewModel: SwitchStateChangeViewModel by inject()
 
@@ -70,6 +76,15 @@ class SwitchStateChangeActivity : ComponentActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
+        if (!viewModel.isDndPermissionGranted(this)) {
+            Log.d(Constants.LOG_TAG, "DND permission NOT granted")
+            val intent = Intent(this, DoNotDisturbPermissionRationaleDialogActivity::class.java)
+            dndPermissionRationaleDialogActivityLauncher.launch(intent)
+            return
+        } else {
+            Log.d(Constants.LOG_TAG, "DND permission granted")
+        }
+
         val switchState = getSwitchState(intent) ?: run {
             Log.e(Constants.LOG_TAG, "Could not read switch state")
             finish()
@@ -112,6 +127,10 @@ class SwitchStateChangeActivity : ComponentActivity() {
             }
             onAnimationDone(switchState)
         }
+    }
+
+    private fun checkIfDndAccessIsEnabled() {
+
     }
 
     private fun handleDnd(switchState: SwitchState) {

@@ -140,6 +140,10 @@ fun Context.isDarkModeEnabled(): Boolean {
     return uiModeManager().nightMode == UiModeManager.MODE_NIGHT_YES
 }
 
+fun Context.isDoNotDisturbAccessGranted(): Boolean {
+    return notificationManager().isNotificationPolicyAccessGranted
+
+}
 
 /**
  * Gets the user handle from the user ID.

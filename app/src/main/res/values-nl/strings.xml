@@ -50,4 +50,6 @@
     <string name="setting_title_notification">App notificatie instellingen</string>
     <string name="profile_switch_state_enabled">%1$s\nuitgeschakeld</string>
     <string name="profile_switch_state_disabled">%1$s\ningeschakeld</string>
+    <string name="do_not_disturb_access_rationale_title">Niet storen-toegang vereist</string>
+    <string name="do_not_disturb_access_rationale_text">Fairphone Moments heeft toegang tot Niet storen nodig om correct te functioneren. Sta toegang toe in je instellingen.</string>
 </resources>

@@ -23,6 +23,7 @@ import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.InitializeSpringLauncherUseCase
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,6 +41,7 @@ class HomeScreenViewModel(
     context: Context,
     private val appInfoRepository: AppInfoRepository,
     private val getActiveProfileUseCase: GetActiveProfileUseCase,
+    private val initializeSpringLauncherUseCase: InitializeSpringLauncherUseCase,
 ) : ViewModel() {
 
     private val _dateTime: MutableStateFlow<LocalDateTime> = MutableStateFlow(LocalDateTime.now())
@@ -60,6 +62,7 @@ class HomeScreenViewModel(
 
     init {
         refreshTime()
+        initializeSpringLauncher()
     }
 
     private fun refreshTime() = viewModelScope.launch {
@@ -71,6 +74,12 @@ class HomeScreenViewModel(
 
     fun onAppClick(context: Context, appInfo: AppInfo) {
         context.launchApp(appInfo)
+    }
+
+    fun initializeSpringLauncher() {
+        viewModelScope.launch {
+            initializeSpringLauncherUseCase.execute(Unit)
+        }
     }
 }
 

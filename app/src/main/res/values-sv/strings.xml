@@ -50,4 +50,6 @@
     <string name="setting_subtitle_appearance">Ändra utseendet efter din smak</string>
     <string name="profile_switch_state_enabled">%1$s\navaktiverat</string>
     <string name="profile_switch_state_disabled">%1$s\naktiverat</string>
+    <string name="do_not_disturb_access_rationale_title">Behörighet till Stör ej krävs</string>
+    <string name="do_not_disturb_access_rationale_text">Fairphone Moments behöver åtkomst till Stör ej för att fungera korrekt. Tillåt åtkomst i dina inställningar.</string>
 </resources>

@@ -61,4 +61,7 @@
     <string name="profile_switch_state_enabled">%1$s\nenabled</string>
     <string name="profile_switch_state_disabled">%1$s\ndisabled</string>
 
+    <string name="do_not_disturb_access_rationale_title">Do Not Disturb access needed</string>
+    <string name="do_not_disturb_access_rationale_text">Fairphone Moments needs Do Not Disturb access to run correctly. Allow access in your settings.</string>
+
 </resources>

@@ -50,4 +50,6 @@
     <string name="setting_subtitle_appearance">Cambia el look a tu gusto</string>
     <string name="profile_switch_state_enabled">%1$s\ndesactivado</string>
     <string name="profile_switch_state_disabled">%1$s\nactivado</string>
+    <string name="do_not_disturb_access_rationale_title">Se necesita acceso a No molestar</string>
+    <string name="do_not_disturb_access_rationale_text">Fairphone Moments necesita acceso a No molestar para funcionar correctamente. Permite el acceso en tu configuración.</string>
 </resources>

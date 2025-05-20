@@ -36,24 +36,95 @@ class ZenNotificationManager(private val context: Context) {
 
     /**
      * Enables Do Not Disturb mode for the given rule.
+     *
+     * @throws IllegalStateException if Do Not Disturb permission is not granted
      */
+    @Throws(IllegalStateException::class)
     fun enableDnd(zenRuleId: String, name: String) {
+        // Check if Do Not Disturb permission is granted
+        check(context.isDoNotDisturbAccessGranted())
+
         setAutomaticZenRuleState(zenRuleId, name, Condition.STATE_TRUE)
     }
 
     /**
      * Disables Do Not Disturb mode for the given rule.
+     *
+     * @throws IllegalStateException if Do Not Disturb permission is not granted
      */
+    @Throws(IllegalStateException::class)
     fun disableDnd(zenRuleId: String, name: String) {
+        // Check if Do Not Disturb permission is granted
+        check(context.isDoNotDisturbAccessGranted())
+
         setAutomaticZenRuleState(zenRuleId, name, Condition.STATE_FALSE)
     }
 
     /**
      * Disables Do Not Disturb mode for all automatic zen rules.
      */
+    @Throws(IllegalStateException::class)
     fun disableAllDnd() {
+        // Check if Do Not Disturb permission is granted
+        check(context.isDoNotDisturbAccessGranted())
+
         context.notificationManager().automaticZenRules.forEach { ruleId, rule ->
             disableDnd(ruleId, rule.name)
+        }
+    }
+
+    /**
+     * Creates a new automatic zen rule using the given parameters and adds it to the notification manager.
+     *
+     * @throws IllegalStateException if Do Not Disturb permission is not granted
+     */
+    @Throws(IllegalStateException::class)
+    fun createAutomaticZenRule(profile: CreateLauncherProfile): String {
+        // Check if Do Not Disturb permission is granted
+        check(context.isDoNotDisturbAccessGranted())
+
+        val zenRule = createZenRule(
+            name = profile.name,
+            allowedContacts = profile.allowedContacts,
+            uiMode = profile.uiMode,
+            repeatCallEnabled = profile.repeatCallEnabled,
+        )
+        return context.notificationManager().addAutomaticZenRule(zenRule)
+    }
+
+    /**
+     * Updates an existing automatic zen rule using the given parameters.
+     */
+    @Throws(IllegalStateException::class)
+    fun updateAutomaticZenRule(
+        zenRuleId: String,
+        name: String,
+        allowedContacts: ContactType,
+        uiMode: UiMode,
+        repeatCallEnabled: Boolean,
+    ): Result<AutomaticZenRule> {
+        // Check if Do Not Disturb permission is granted
+        check(context.isDoNotDisturbAccessGranted())
+
+        // Disable DND first
+        disableDnd(zenRuleId, name)
+
+        // Update rule
+        val updatedZenRule = createZenRule(
+            name = name,
+            allowedContacts = allowedContacts,
+            uiMode = uiMode,
+            repeatCallEnabled = repeatCallEnabled,
+        )
+        val result = context.notificationManager().updateAutomaticZenRule(zenRuleId, updatedZenRule)
+
+        // Enable DND again
+        enableDnd(zenRuleId, name)
+
+        return if (result) {
+            Result.success(context.notificationManager().getAutomaticZenRule(zenRuleId))
+        } else {
+            Result.failure(Exception("Failed to update automatic zen rule"))
         }
     }
 
@@ -75,51 +146,6 @@ class ZenNotificationManager(private val context: Context) {
                     Condition.SOURCE_USER_ACTION
                 )
             )
-    }
-
-    /**
-     * Creates a new automatic zen rule using the given parameters and adds it to the notification manager.
-     */
-    fun createAutomaticZenRule(profile: CreateLauncherProfile): String {
-        val zenRule = createZenRule(
-            name = profile.name,
-            allowedContacts = profile.allowedContacts,
-            uiMode = profile.uiMode,
-            repeatCallEnabled = profile.repeatCallEnabled,
-        )
-        return context.notificationManager().addAutomaticZenRule(zenRule)
-    }
-
-    /**
-     * Updates an existing automatic zen rule using the given parameters.
-     */
-    fun updateAutomaticZenRule(
-        zenRuleId: String,
-        name: String,
-        allowedContacts: ContactType,
-        uiMode: UiMode,
-        repeatCallEnabled: Boolean,
-    ): Result<AutomaticZenRule> {
-        // Disable DND first
-        disableDnd(zenRuleId, name)
-
-        // Update rule
-        val updatedZenRule = createZenRule(
-            name = name,
-            allowedContacts = allowedContacts,
-            uiMode = uiMode,
-            repeatCallEnabled = repeatCallEnabled,
-        )
-        val result = context.notificationManager().updateAutomaticZenRule(zenRuleId, updatedZenRule)
-
-        // Enable DND again
-        enableDnd(zenRuleId, name)
-
-        return if (result) {
-            Result.success(context.notificationManager().getAutomaticZenRule(zenRuleId))
-        } else {
-            Result.failure(Exception("Failed to update automatic zen rule"))
-        }
     }
 
     /**

@@ -50,4 +50,6 @@
     <string name="setting_subtitle_appearance">Mude a aparência ao seu gosto</string>
     <string name="profile_switch_state_enabled">%1$s\ndesativado</string>
     <string name="profile_switch_state_disabled">%1$s\nativado</string>
+    <string name="do_not_disturb_access_rationale_title">Acesso ao Não Perturbe necessário</string>
+    <string name="do_not_disturb_access_rationale_text">O Fairphone Moments precisa de acesso ao Não Perturbe para funcionar corretamente. Permita o acesso nas suas configurações.</string>
 </resources>

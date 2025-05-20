@@ -30,14 +30,18 @@ class EnableDndUseCase(
 ) : UseCase<Boolean, Unit>() {
 
     override suspend fun execute(params: Boolean): Result<Unit> {
-        val activeProfile = profileRepository.getActiveProfile().firstOrNull()
-            ?: return Result.failure(Exception("No active profile found"))
+        return try {
+            val activeProfile = profileRepository.getActiveProfile().firstOrNull()
+                ?: return Result.failure(Exception("No active profile found"))
 
-        if (params) {
-            zenNotificationManager.enableDnd(activeProfile.zenRuleId, activeProfile.name)
-        } else {
-            zenNotificationManager.disableAllDnd()
+            if (params) {
+                zenNotificationManager.enableDnd(activeProfile.zenRuleId, activeProfile.name)
+            } else {
+                zenNotificationManager.disableAllDnd()
+            }
+            Result.success(Unit)
+        } catch (e: IllegalStateException) {
+            Result.failure(e)
         }
-        return Result.success(Unit)
     }
 }

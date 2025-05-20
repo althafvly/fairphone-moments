@@ -23,6 +23,8 @@ import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.domain.usecase.EnableDndUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.InitializeSpringLauncherUseCase
+import com.fairphone.spring.launcher.util.isDoNotDisturbAccessGranted
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -31,11 +33,22 @@ import kotlinx.coroutines.launch
 class SwitchStateChangeViewModel(
     private val enableDndUseCase: EnableDndUseCase,
     private val getActiveProfileUseCase: GetActiveProfileUseCase,
+    private val initializeSpringLauncherUseCase: InitializeSpringLauncherUseCase,
 ) : ViewModel() {
 
     val activeProfile: StateFlow<LauncherProfile?> =
         getActiveProfileUseCase.execute(Unit)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    init {
+       initializeSpringLauncher()
+    }
+
+    fun initializeSpringLauncher() {
+        viewModelScope.launch {
+            initializeSpringLauncherUseCase.execute(Unit)
+        }
+    }
 
     fun handleDnd(switchState: SwitchState) {
         viewModelScope.launch {
@@ -54,5 +67,9 @@ class SwitchStateChangeViewModel(
         }
         // TODO: Enable lockscreen wallpaper switch when fixed
         // LockscreenWallpaperSwitcherWorker.enqueueWallpaperWork(context, enableDnd)
+    }
+
+    fun isDndPermissionGranted(context: Context): Boolean {
+        return context.isDoNotDisturbAccessGranted()
     }
 }

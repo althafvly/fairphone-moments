@@ -50,4 +50,6 @@
     <string name="setting_subtitle_appearance">Endre utseendet til din smak</string>
     <string name="profile_switch_state_enabled">%1$s\ndeaktivert</string>
     <string name="profile_switch_state_disabled">%1$s\naktiviert</string>
+    <string name="do_not_disturb_access_rationale_title">Tillgang til Ikke forstyrr kreves</string>
+    <string name="do_not_disturb_access_rationale_text">Fairphone Moments trenger tilgang til Ikke forstyrr for å fungere riktig. Tillat tilgang i innstillingene dine.</string>
 </resources>

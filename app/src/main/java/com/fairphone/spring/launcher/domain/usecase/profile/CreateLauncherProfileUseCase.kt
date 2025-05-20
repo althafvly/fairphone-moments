@@ -33,28 +33,35 @@ class CreateLauncherProfileUseCase(
 ) : UseCase<CreateLauncherProfile, LauncherProfile>() {
 
     override suspend fun execute(createLauncherProfile: CreateLauncherProfile): Result<LauncherProfile> {
-        val createdZenRuleId = zenNotificationManager.createAutomaticZenRule(createLauncherProfile)
-        val launcherProfile = launcherProfile {
-            id = createLauncherProfile.name.sanitizeToId()
-            name = createLauncherProfile.name
-            icon = createLauncherProfile.icon
-            bgColor1 = createLauncherProfile.bgColor1
-            bgColor2 = createLauncherProfile.bgColor2
-            visibleApps.addAll(createLauncherProfile.visibleApps)
-            allowedContacts = createLauncherProfile.allowedContacts
-            customContacts.addAll(createLauncherProfile.customContacts)
-            repeatCallEnabled = createLauncherProfile.repeatCallEnabled
-            wallpaperId = createLauncherProfile.wallpaperId
-            uiMode = createLauncherProfile.uiMode
-            blueLightFilterEnabled = createLauncherProfile.blueLightFilterEnabled
-            soundSetting = createLauncherProfile.soundSetting
-            batterySaverEnabled = createLauncherProfile.batterySaverEnabled
-            reduceBrightnessEnabled = createLauncherProfile.reduceBrightnessEnabled
-            zenRuleId = createdZenRuleId
+        return try {
+            // Create automatic zen rule
+            val createdZenRuleId = zenNotificationManager.createAutomaticZenRule(createLauncherProfile)
+
+            // Create launcher profile
+            val launcherProfile = launcherProfile {
+                id = createLauncherProfile.name.sanitizeToId()
+                name = createLauncherProfile.name
+                icon = createLauncherProfile.icon
+                bgColor1 = createLauncherProfile.bgColor1
+                bgColor2 = createLauncherProfile.bgColor2
+                visibleApps.addAll(createLauncherProfile.visibleApps)
+                allowedContacts = createLauncherProfile.allowedContacts
+                customContacts.addAll(createLauncherProfile.customContacts)
+                repeatCallEnabled = createLauncherProfile.repeatCallEnabled
+                wallpaperId = createLauncherProfile.wallpaperId
+                uiMode = createLauncherProfile.uiMode
+                blueLightFilterEnabled = createLauncherProfile.blueLightFilterEnabled
+                soundSetting = createLauncherProfile.soundSetting
+                batterySaverEnabled = createLauncherProfile.batterySaverEnabled
+                reduceBrightnessEnabled = createLauncherProfile.reduceBrightnessEnabled
+                zenRuleId = createdZenRuleId
+            }
+
+            launcherProfileRepository.createProfile(profile = launcherProfile)
+
+            Result.success(launcherProfile)
+        } catch (e: IllegalStateException) {
+            Result.failure(e)
         }
-
-        launcherProfileRepository.createProfile(profile = launcherProfile)
-
-        return Result.success(launcherProfile)
     }
 }

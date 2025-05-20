@@ -50,4 +50,6 @@
     <string name="setting_title_notification">Paramètres de notification d\'application</string>
     <string name="profile_switch_state_enabled">%1$s\ndésactivé</string>
     <string name="profile_switch_state_disabled">%1$s\nactivé</string>
+    <string name="do_not_disturb_access_rationale_title">Accès Ne pas déranger requis</string>
+    <string name="do_not_disturb_access_rationale_text">Fairphone Moments a besoin de l\'accès à Ne pas déranger pour fonctionner correctement. Autorisez l\'accès dans vos paramètres.</string>
 </resources>
