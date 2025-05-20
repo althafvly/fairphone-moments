@@ -55,6 +55,8 @@ import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.FairphoneMomentsDemoCard
+import com.fairphone.spring.launcher.ui.ModeIcons
+import com.fairphone.spring.launcher.ui.modeicons.ModeIcon
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import org.koin.androidx.compose.koinViewModel
@@ -83,7 +85,7 @@ fun HomeScreen(
     HomeScreen(
         date = date,
         time = time,
-        modeButtonIcon = Icons.Filled.Settings,
+        modeButtonIcon = ModeIcon.valueOf(screenState!!.activeProfile.icon).imageVector,
         modeButtonText = screenState!!.activeProfile.name,
         appList = screenState!!.visibleApps,
         isRetailDemoMode = screenState!!.isRetailDemoMode,
@@ -252,7 +254,7 @@ fun HomeScreenDark_Preview() {
         HomeScreen(
             date = "Wed, 13 Feb",
             time = "12:30",
-            modeButtonIcon = Icons.Filled.Settings,
+            modeButtonIcon = ModeIcon.Extra3.imageVector,
             modeButtonText = "Essentials",
             isRetailDemoMode = false,
             appList = previewAppList(LocalContext.current),

@@ -51,6 +51,7 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 fun ProfileSettingsScreen(
     screenState: ProfileSettingsScreenState,
     onEditProfileName: (String) -> Unit,
+    onProfileIconClick: () -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
     onNavigateToAllowedContactSettings: () -> Unit,
     onNavigateToNotificationSettings: () -> Unit,
@@ -70,6 +71,7 @@ fun ProfileSettingsScreen(
                 profile = screenState.profile,
                 visibleApps = screenState.visibleApps,
                 onEditProfileName = onEditProfileName,
+                onProfileIconClick = onProfileIconClick,
                 onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings,
                 onNavigateToAllowedContactSettings = onNavigateToAllowedContactSettings,
                 onNavigateToNotificationSettings = onNavigateToNotificationSettings,
@@ -86,6 +88,7 @@ fun ProfileSettingsScreen(
 fun ProfileSettingsScreen(
     profile: LauncherProfile,
     visibleApps: List<AppInfo>,
+    onProfileIconClick: () -> Unit,
     onEditProfileName: (String) -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
     onNavigateToAllowedContactSettings: () -> Unit,
@@ -109,6 +112,7 @@ fun ProfileSettingsScreen(
                 onEditLauncherProfileName = {
                     showProfileNameEditor = true
                 },
+                onIconClick = onProfileIconClick
                 //modifier = Modifier.windowInsetsPadding(TopAppBarDefaults.windowInsets)
             )
 
@@ -215,6 +219,7 @@ fun ProfileSettings_Preview() {
             profile = Presets.Essentials,
             visibleApps = emptyList(),
             onEditProfileName = {},
+            onProfileIconClick = {},
             onNavigateToVisibleAppSettings = {},
             onNavigateToAllowedContactSettings = {},
             onNavigateToNotificationSettings = {},

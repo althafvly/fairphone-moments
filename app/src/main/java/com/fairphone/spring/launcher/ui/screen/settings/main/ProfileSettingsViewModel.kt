@@ -21,9 +21,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LauncherProfile
+import com.fairphone.spring.launcher.data.model.copy
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
+import com.fairphone.spring.launcher.ui.modeicons.ModeIcon
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -61,6 +63,20 @@ class ProfileSettingsViewModel(
         val editedProfile = getEditedProfileUseCase.execute(Unit).first()
         val updatedProfile = editedProfile.toBuilder().setName(name.trim()).build()
         updateLauncherProfileUseCase.execute(updatedProfile)
+    }
+
+    fun updateProfileIcon() = viewModelScope.launch {
+        when (screenState.first()) {
+            is ProfileSettingsScreenState.Loading -> {}
+            is ProfileSettingsScreenState.Success -> {
+                val element = screenState.first() as ProfileSettingsScreenState.Success
+                val updatedProfile = element.profile.copy {
+                    icon = ModeIcon.nextIcon(element.profile.icon).name
+                }
+                updateLauncherProfileUseCase.execute(updatedProfile)
+            }
+        }
+
     }
 }
 

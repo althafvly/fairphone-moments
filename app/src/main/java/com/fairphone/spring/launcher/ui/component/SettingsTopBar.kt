@@ -20,7 +20,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,7 +51,6 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.model.getIconVector
-import com.fairphone.spring.launcher.data.serializer.LauncherProfilesSerializer
 import com.fairphone.spring.launcher.ui.navigation.AllowedContactSettings
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSelector
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSettings
@@ -106,6 +104,7 @@ fun SettingsTopBar(
 fun LauncherProfileSettingsTopBar(
     currentLauncherProfile: LauncherProfile,
     onEditLauncherProfileName: () -> Unit,
+    onIconClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -116,8 +115,8 @@ fun LauncherProfileSettingsTopBar(
             .padding(bottom = 40.dp)
     ) {
         // LauncherProfile Icon
-        Box(
-            Modifier
+        IconButton(
+            modifier = Modifier
                 .border(
                     width = 1.dp,
                     color = MaterialTheme.colorScheme.outline,
@@ -128,13 +127,13 @@ fun LauncherProfileSettingsTopBar(
                 .background(
                     color = MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(size = 12.dp)
-                )
+                ),
+            onClick = onIconClick
         ) {
             Icon(
                 imageVector = currentLauncherProfile.getIconVector(),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.align(Alignment.Center)
+                tint = MaterialTheme.colorScheme.onSurface
             )
         }
 
@@ -184,7 +183,8 @@ fun LauncherProfileSettingsTopBar_Preview() {
     SpringLauncherTheme {
         LauncherProfileSettingsTopBar(
             currentLauncherProfile = Presets.Essentials,
-            onEditLauncherProfileName = {}
+            onEditLauncherProfileName = {},
+            onIconClick = {}
         )
     }
 }

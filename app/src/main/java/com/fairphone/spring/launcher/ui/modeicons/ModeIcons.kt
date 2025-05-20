@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2025. Fairphone B.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.fairphone.spring.launcher.ui.modeicons
 
 import androidx.compose.foundation.Image
@@ -16,16 +32,25 @@ import com.fairphone.spring.launcher.ui.ModeIcons
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 enum class ModeIcon(val imageVector: ImageVector) {
+    Spring(ModeIcons.Spring),
     Balance(ModeIcons.Balance),
     DeepFocus(ModeIcons.DeepFocus),
+    Recharge(ModeIcons.Recharge),
     Extra1(ModeIcons.Extra1),
     Extra2(ModeIcons.Extra2),
     Extra3(ModeIcons.Extra3),
     Extra4(ModeIcons.Extra4),
     Extra5(ModeIcons.Extra5),
     Extra6(ModeIcons.Extra6),
-    Recharge(ModeIcons.Recharge),
-    Spring(ModeIcons.Spring);
+    Vector(ModeIcons.Extra6);
+
+    companion object {
+        fun nextIcon(iconName: String): ModeIcon {
+            val nbIcons = ModeIcon.entries.size
+            val iconIndex = ModeIcon.entries.indexOf(ModeIcon.valueOf(iconName))
+            return ModeIcon.entries[(iconIndex + 1) % nbIcons]
+        }
+    }
 }
 
 fun ImageVector.Companion.fromString(string: String): ImageVector =

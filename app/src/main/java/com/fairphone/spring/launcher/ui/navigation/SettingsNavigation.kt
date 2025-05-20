@@ -24,7 +24,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsScreen
 import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsViewModel
 import kotlinx.serialization.Serializable
@@ -75,6 +74,7 @@ fun SettingsNavigation(
         ProfileSettingsScreen(
             screenState = screenState,
             onEditProfileName = viewModel::updateProfileName,
+            onProfileIconClick = viewModel::updateProfileIcon,
             onNavigateToVisibleAppSettings = {
                 navController.navigate(VisibleAppSettings)
             },
