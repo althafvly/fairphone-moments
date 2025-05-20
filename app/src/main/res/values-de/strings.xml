@@ -48,4 +48,6 @@
     <string name="setting_subtitle_sound_and_vibration">Geräteeinstellungen anpassen</string>
     <string name="setting_subtitle_power_saving">Sparen Sie Strom und verlängern Sie die Akkulaufzeit</string>
     <string name="setting_subtitle_appearance">Ändern Sie das Erscheinungsbild nach Ihren Wünschen</string>
+    <string name="profile_switch_state_enabled">%1$s\ndeaktiviert</string>
+    <string name="profile_switch_state_disabled">%1$s\naktiviert</string>
 </resources>

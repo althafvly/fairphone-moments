@@ -48,4 +48,6 @@
     <string name="setting_subtitle_sound_and_vibration">Match enhetsinnstillinger</string>
     <string name="setting_subtitle_power_saving">Spar strøm og forleng batterilevetiden</string>
     <string name="setting_subtitle_appearance">Endre utseendet til din smak</string>
+    <string name="profile_switch_state_enabled">%1$s\ndeaktivert</string>
+    <string name="profile_switch_state_disabled">%1$s\naktiviert</string>
 </resources>

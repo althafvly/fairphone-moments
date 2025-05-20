@@ -48,4 +48,6 @@
     <string name="setting_subtitle_sound_and_vibration">Usar la configuración del dispositivo</string>
     <string name="setting_subtitle_power_saving">Ahorre energía y extiende la vida útil de tu batería</string>
     <string name="setting_subtitle_appearance">Cambia el look a tu gusto</string>
+    <string name="profile_switch_state_enabled">%1$s\ndesactivado</string>
+    <string name="profile_switch_state_disabled">%1$s\nactivado</string>
 </resources>

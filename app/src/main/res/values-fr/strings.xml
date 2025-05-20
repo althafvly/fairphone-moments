@@ -48,4 +48,6 @@
     <string name="bt_change_apps">Changer d\'application</string>
     <string name="mode_switcher_screen_header">Quel est votre prochain moment ?</string>
     <string name="setting_title_notification">Paramètres de notification d\'application</string>
+    <string name="profile_switch_state_enabled">%1$s\ndésactivé</string>
+    <string name="profile_switch_state_disabled">%1$s\nactivé</string>
 </resources>

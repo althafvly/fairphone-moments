@@ -52,9 +52,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.model.SwitchState
@@ -139,6 +141,13 @@ fun SwitchStateChangeOverlay(
             )
         }
     )
+    val overlayText = when (switchState) {
+        SwitchState.ENABLED ->
+            stringResource(R.string.profile_switch_state_enabled, profile.name)
+
+        SwitchState.DISABLED ->
+            stringResource(R.string.profile_switch_state_disabled, profile.name)
+    }
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
@@ -171,7 +180,7 @@ fun SwitchStateChangeOverlay(
                     modifier = Modifier.rotate(iconRotationAngle)
                 )
                 Text(
-                    text = "${profile.name}\n${switchState.name.lowercase()}",
+                    text = overlayText,
                     style = FairphoneTypography.SwitchLabel,
                     color = Color.White,
                     textAlign = TextAlign.Right,
@@ -215,7 +224,8 @@ fun SwitchStateChangeOverlay(
         delay(ENTER_ANIMATION_DURATION.toLong())
         visibilityState.targetState = true
         delay(ANIMATION_STILL_DURATION.toLong())
-        greenBarAlignment = if (greenBarAlignment == Alignment.Top) Alignment.Bottom else Alignment.Top
+        greenBarAlignment =
+            if (greenBarAlignment == Alignment.Top) Alignment.Bottom else Alignment.Top
         visibilityState.targetState = false
         delay(EXIT_ANIMATION_DURATION.toLong().times(2))
         onAnimationDone()

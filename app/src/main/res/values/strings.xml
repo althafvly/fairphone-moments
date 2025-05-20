@@ -57,4 +57,8 @@
     <string name="setting_subtitle_notification">None allowed</string>
     <string name="setting_header_visible_apps">Arrange the order of the apps on your screen</string>
 
+    <!-- Switch state change overlay -->
+    <string name="profile_switch_state_enabled">%1$s\nenabled</string>
+    <string name="profile_switch_state_disabled">%1$s\ndisabled</string>
+
 </resources>
