@@ -21,8 +21,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +30,6 @@ import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
-import com.fairphone.spring.launcher.ui.component.ActionButton
 import com.fairphone.spring.launcher.ui.screen.mode.component.ModeSwitcherButton
 import com.fairphone.spring.launcher.ui.screen.mode.component.ModeSwitcherHeader
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
@@ -73,15 +70,15 @@ fun ModeSwitcherScreen(
 
             Spacer(modifier = Modifier.weight(1.0f))
 
-            if (profiles.size < 6) {
-                ActionButton(
-                    icon = Icons.Filled.Add,
-                    description = "Add Moment",
-                    displayLabel = true,
-                    modifier = Modifier.padding(bottom = 56.dp)
-                )
-            }
-
+//            TODO: Add button to add new moment
+//            if (profiles.size < 6) {
+//                ActionButton(
+//                    icon = Icons.Filled.Add,
+//                    description = "Add Moment",
+//                    displayLabel = true,
+//                    modifier = Modifier.padding(bottom = 56.dp)
+//                )
+//            }
         }
     }
 }
