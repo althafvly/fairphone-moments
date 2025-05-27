@@ -43,7 +43,7 @@
     <string name="setting_subtitle_power_saving">Spar strøm og forlænge din batterilevetid</string>
     <string name="setting_subtitle_appearance">Skift udseendet til din smag</string>
     <string name="setting_subtitle_notification">Ingen tilladt</string>
-    <string name="setting_header_visible_apps">Arranger rækkefølgen af ​​apps på din skærm</string>
+    <string name="setting_header_visible_apps">Arranger rækkefølgen af apps på din skærm</string>
     <string name="bt_create">Opret en tilstand</string>
     <string name="bt_switch_to_profile">Skift til dette øjeblik</string>
     <string name="bt_cancel">Ophæve</string>
@@ -69,5 +69,7 @@
     <string name="bt_navigate_back">Tilbage</string>
     <string name="bt_navigation_close">Tæt</string>
     <string name="bt_continue">Fortsætte</string>
+    <string name="setting_remove_mode_confirm">Er du sikker på, at du vil slette denne tilstand?</string>
     <string name="add_mode_screen_header">Hvilken tilstand vil du gerne oprette?</string>
+    <string name="setting_remove_mode">Slet tilstanden</string>
 </resources>

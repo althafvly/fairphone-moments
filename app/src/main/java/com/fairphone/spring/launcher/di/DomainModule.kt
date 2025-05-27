@@ -22,6 +22,7 @@ import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseC
 import com.fairphone.spring.launcher.domain.usecase.profile.GetAllProfilesUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.InitializeSpringLauncherUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.RemoveLauncherProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.SetActiveProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.SetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
@@ -39,6 +40,7 @@ val domainModule = module {
     factoryOf(::SetActiveProfileUseCase)
     factoryOf(::SetEditedProfileUseCase)
     factoryOf(::InitializeSpringLauncherUseCase)
+    factoryOf(::RemoveLauncherProfileUseCase)
 
     factoryOf(::ZenNotificationManager)
 }

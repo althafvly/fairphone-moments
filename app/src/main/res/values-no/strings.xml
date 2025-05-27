@@ -60,6 +60,7 @@
     <string name="bt_navigate_back">Tilbake</string>
     <string name="bt_navigation_close">Lukke</string>
     <string name="bt_continue">Fortsette</string>
+    <string name="setting_remove_mode_confirm">Er du sikker på at du vil slette denne modusen?</string>
     <string name="add_mode_screen_header">Hvilken modus ønsker du å lage?</string>
     <string name="choose_app_screen_header">Velg opptil 5 apper som skal vises i ditt øyeblikk</string>
     <string name="choose_app_screen_subtitle">Dette er appene du ser. Telefonsamtaler vil fortsatt komme gjennom som normalt.</string>
@@ -70,4 +71,5 @@
     <string name="mode_subtitle_journey">Fokuser på veien videre</string>
     <string name="mode_subtitle_recharge">Våkn opp uthvilt og klar for en ny dag, hver dag</string>
     <string name="name_mode_screen_header">Navngi øyeblikket ditt</string>
+    <string name="setting_remove_mode">Slett modusen</string>
 </resources>

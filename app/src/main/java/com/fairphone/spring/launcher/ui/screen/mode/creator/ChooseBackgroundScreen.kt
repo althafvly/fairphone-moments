@@ -70,11 +70,9 @@ fun ChooseBackgroundScreen(
     var selectedColor by remember {
         mutableLongStateOf(colors.first { preset.profile.bgColor2 == it })
     }
-    val width = LocalConfiguration.current.let {
-        // the offset is depending on the screen width and the padding
+    val width = LocalConfiguration.current.let {// the offset is depending on the screen width and the padding
         it.screenWidthDp * 2 - 20
     }
-
     LaunchedEffect(selectedColor) {
         scrollState.scrollTo(
             (colors.indexOf(selectedColor) * width).toInt()

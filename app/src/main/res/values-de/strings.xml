@@ -60,6 +60,7 @@
     <string name="moments_demo_card_text">Auf diesem Fairphone (Gen. 6) läuft derzeit Fairphone Moments, eine neue Möglichkeit, Ihr Telefon zu nutzen. Wechseln Sie mit dem Lime-Schalter an der Seite zurück zum normalen Android. Oder klicken Sie hier, um mehr zu erfahren.</string>
     <string name="close">Schließen</string>
     <string name="no_internet_connection">Keine Internetverbindung</string>
+    <string name="setting_remove_mode_confirm">Möchten Sie diesen Modus wirklich löschen?</string>
     <string name="add_mode_screen_header">Welchen Modus möchten Sie erstellen?</string>
     <string name="choose_app_screen_header">Wählen Sie bis zu 5 Apps aus, die in Ihrem Moment angezeigt werden sollen</string>
     <string name="mode_subtitle_balance">Priorisieren Sie Ihren Körper und Geist</string>
@@ -70,4 +71,5 @@
     <string name="choose_app_screen_subtitle">Dies sind die Apps, die Sie sehen werden. Telefonanrufe werden weiterhin wie gewohnt angenommen.</string>
     <string name="choose_app_background_header">Wählen Sie einen Hintergrund</string>
     <string name="name_mode_screen_header">Geben Sie Ihrem Moment einen Namen</string>
+    <string name="setting_remove_mode">Löschen Sie den Modus</string>
 </resources>

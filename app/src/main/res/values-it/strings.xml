@@ -65,9 +65,11 @@
     <string name="mode_subtitle_custom">Inizia in bianco e personalizza la modalità in base alle tue esigenze</string>
     <string name="mode_subtitle_journey">Concentrati sulla strada da percorrere</string>
     <string name="mode_subtitle_recharge">Svegliati riposato e pronto per un nuovo giorno, ogni giorno</string>
+    <string name="setting_remove_mode_confirm">Sei sicuro di voler eliminare questa modalità?</string>
     <string name="add_mode_screen_header">Quale modalità vorresti creare?</string>
     <string name="choose_app_screen_header">Scegli fino a 5 app da mostrare nel tuo Momento</string>
     <string name="choose_app_screen_subtitle">Queste sono le app che vedrai. Le chiamate telefoniche continueranno a essere ricevute normalmente.</string>
     <string name="choose_app_background_header">Scegli uno sfondo</string>
     <string name="name_mode_screen_header">Dai un nome al tuo momento</string>
+    <string name="setting_remove_mode">Elimina la modalità</string>
 </resources>

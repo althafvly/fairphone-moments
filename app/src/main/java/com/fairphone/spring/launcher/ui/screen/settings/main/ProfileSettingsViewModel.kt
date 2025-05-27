@@ -24,6 +24,7 @@ import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.copy
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.RemoveLauncherProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
 import com.fairphone.spring.launcher.ui.modeicons.ModeIcon
 import kotlinx.coroutines.flow.SharingStarted
@@ -38,6 +39,7 @@ class ProfileSettingsViewModel(
     private val appInfoRepository: AppInfoRepository,
     private val getEditedProfileUseCase: GetEditedProfileUseCase,
     private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
+    private val removeLauncherProfileUseCase: RemoveLauncherProfileUseCase
 ) : ViewModel() {
 
     val screenState: StateFlow<ProfileSettingsScreenState> =
@@ -77,6 +79,11 @@ class ProfileSettingsViewModel(
             }
         }
 
+    }
+
+    fun deleteProfile() = viewModelScope.launch {
+        val editedProfile = getEditedProfileUseCase.execute(Unit).first()
+        removeLauncherProfileUseCase.execute(editedProfile)
     }
 }
 

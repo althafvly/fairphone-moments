@@ -60,6 +60,7 @@
     <string name="bt_navigate_back">Retour</string>
     <string name="bt_navigation_close">Fermer</string>
     <string name="bt_continue">Continuer</string>
+    <string name="setting_remove_mode_confirm">Êtes-vous sûr de vouloir supprimer ce mode ?</string>
     <string name="add_mode_screen_header">Quel mode souhaitez-vous créer ?</string>
     <string name="choose_app_screen_header">Choisissez jusqu\'à 5 applications à afficher dans votre Moment</string>
     <string name="choose_app_screen_subtitle">Voici les applications que vous verrez. Les appels téléphoniques continueront d\'être traités normalement.</string>
@@ -70,4 +71,5 @@
     <string name="mode_subtitle_custom">Commencez à partir de zéro et personnalisez le mode en fonction de vos besoins</string>
     <string name="mode_subtitle_journey">Concentrez-vous sur la route devant vous</string>
     <string name="mode_subtitle_recharge">Réveillez-vous frais et dispos et prêt pour une nouvelle journée, chaque jour</string>
+    <string name="setting_remove_mode">Supprimer le mode</string>
 </resources>

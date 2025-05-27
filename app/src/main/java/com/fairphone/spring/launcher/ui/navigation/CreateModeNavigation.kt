@@ -40,6 +40,7 @@ import com.fairphone.spring.launcher.ui.screen.settings.apps.CreateModeVisibleAp
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreenState
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
 
 @Serializable
 object SelectMode

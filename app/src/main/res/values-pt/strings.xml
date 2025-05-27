@@ -57,6 +57,7 @@
     <string name="moments_demo_card_text">Este Fairphone (Gen. 6) está atualmente executando o Fairphone Moments, uma nova maneira de usar seu telefone. Volte para o Android normal com o botão Lime na lateral. Ou clique aqui para saber mais.</string>
     <string name="close">Ferchar</string>
     <string name="no_internet_connection">Sem conexão com a internet</string>
+    <string name="setting_remove_mode_confirm">Tem a certeza de que pretende eliminar este modo?</string>
     <string name="add_mode_screen_header">Que modo gostaria de criar?</string>
     <string name="choose_app_screen_header">Escolha até 5 aplicações para mostrar no seu Momento</string>
     <string name="choose_app_screen_subtitle">Estes são os aplicativos que verá. As chamadas telefónicas continuarão a ser realizadas normalmente.</string>
@@ -70,4 +71,5 @@
     <string name="bt_navigate_back">Costas</string>
     <string name="bt_navigation_close">Perto</string>
     <string name="bt_continue">Continuar</string>
+    <string name="setting_remove_mode">Apagar o modo</string>
 </resources>

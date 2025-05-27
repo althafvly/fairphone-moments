@@ -46,7 +46,10 @@ fun LauncherSettingsScreen(
         },
         content = { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
-                SettingsNavigation(navController = navController)
+                SettingsNavigation(
+                    navController = navController,
+                    onCloseSettings = onCloseSettings
+                )
             }
         }
     )

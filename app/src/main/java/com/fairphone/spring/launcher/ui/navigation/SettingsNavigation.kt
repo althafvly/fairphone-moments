@@ -38,6 +38,7 @@ object ProfileSettings
 @Composable
 fun SettingsNavigation(
     navController: NavHostController,
+    onCloseSettings: () -> Unit
 ) = NavHost(
     navController = navController,
     startDestination = ProfileSettings,
@@ -84,7 +85,11 @@ fun SettingsNavigation(
             onNavigateToNotificationSettings = {},
             onNavigateToAppearanceSettings = {},
             onNavigateToSoundAndVibrationSettings = {},
-            onNavigateToPowerSavingSettings = {}
+            onNavigateToPowerSavingSettings = {},
+            onModeDeletionClick = {
+                viewModel.deleteProfile()
+                onCloseSettings()
+            }
         )
     }
 

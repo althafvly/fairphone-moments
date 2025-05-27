@@ -23,6 +23,9 @@ val Color_FP_Brand_Forest = Color(0xFF00433D)
 val Color_FP_Brand_Lime = Color(0xFFD8FF4F)
 val Color_Orange = Color(0xFFFFB14E)
 
+val errorColor = Color(0xFFD84D4D)
+val onErrorColor = Color(0xFFFFFFFF)
+
 val primaryLight = Color(0xFF006A61)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF141414)
@@ -100,7 +103,6 @@ val backgroundShapeBackgroundLightStart = Color(0x88E0E7F2)
 val backgroundShapeBorderLightStart = Color(0x99999999)
 val backgroundShapeBackgroundDarkStart = Color(0xff1F1F1F)
 val backgroundShapeBorderDarkStart = Color(0x33666666)
-
 
 val modeButtonBackgroundLight = Color(0x55FFFFFF)
 val actionButtonBackgroundLight = Color(red = 255, green = 255, blue = 255, alpha = 30)

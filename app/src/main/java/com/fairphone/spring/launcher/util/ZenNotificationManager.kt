@@ -128,6 +128,15 @@ class ZenNotificationManager(private val context: Context) {
         }
     }
 
+    fun removeAutomaticZenRule(zenRuleId: String): Result<Unit> {
+        val result = context.notificationManager().removeAutomaticZenRule(zenRuleId)
+        return if (result) {
+            Result.success(Unit)
+        } else {
+            Result.failure(Exception("Failed to remove automatic zen rule"))
+        }
+    }
+
     /**
      * Sets the state of the given automatic zen rule.
      */

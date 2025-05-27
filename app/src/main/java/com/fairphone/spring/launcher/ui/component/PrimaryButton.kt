@@ -32,12 +32,15 @@ import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+import com.fairphone.spring.launcher.ui.theme.errorColor
+import com.fairphone.spring.launcher.ui.theme.onErrorColor
 
 @Composable
 fun PrimaryButton(
     text: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    danger: Boolean = false,
     onClick: () -> Unit,
 ) {
     Button(
@@ -46,14 +49,14 @@ fun PrimaryButton(
         enabled = enabled,
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = if(danger) errorColor else MaterialTheme.colorScheme.primaryContainer,
+            contentColor = if(danger) onErrorColor else MaterialTheme.colorScheme.onPrimaryContainer
         )
     ) {
         Text(
             text = text,
             style = FairphoneTypography.ButtonDefault,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = if(danger) onErrorColor else MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 }
@@ -64,6 +67,12 @@ fun PrimaryButton_Preview() {
         Column {
             PrimaryButton(
                 text = stringResource(R.string.bt_confirm),
+                modifier = Modifier.fillMaxWidth()
+            ) {}
+
+            PrimaryButton(
+                text = stringResource(R.string.bt_confirm),
+                danger = true,
                 modifier = Modifier.fillMaxWidth()
             ) {}
         }

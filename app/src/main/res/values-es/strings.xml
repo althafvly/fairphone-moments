@@ -65,9 +65,11 @@
     <string name="bt_navigate_back">Atrás</string>
     <string name="bt_navigation_close">Cerca</string>
     <string name="bt_continue">Continuar</string>
+    <string name="setting_remove_mode_confirm">¿Estás seguro de que quieres eliminar este modo?</string>
     <string name="add_mode_screen_header">¿Qué modo te gustaría crear?</string>
     <string name="choose_app_screen_header">Elige hasta 5 aplicaciones para mostrar en tu Momento</string>
     <string name="choose_app_screen_subtitle">Estas son las aplicaciones que verás. Las llamadas se seguirán recibiendo con normalidad.</string>
     <string name="choose_app_background_header">Elige un fondo</string>
     <string name="name_mode_screen_header">Nombra tu momento</string>
+    <string name="setting_remove_mode">Eliminar el modo</string>
 </resources>

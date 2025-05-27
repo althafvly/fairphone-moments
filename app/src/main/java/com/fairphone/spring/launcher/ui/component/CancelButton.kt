@@ -48,7 +48,7 @@ fun CancelButton(
     ) {
         Text(
             text = stringResource(android.R.string.cancel),
-            style = FairphoneTypography.AppButtonDefault,
+            style = FairphoneTypography.ButtonDefault,
             color = MaterialTheme.colorScheme.onSecondaryContainer
         )
     }

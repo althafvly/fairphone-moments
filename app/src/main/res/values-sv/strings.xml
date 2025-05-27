@@ -60,6 +60,7 @@
     <string name="bt_navigate_back">Tillbaka</string>
     <string name="bt_navigation_close">Nära</string>
     <string name="bt_continue">Fortsätta</string>
+    <string name="setting_remove_mode_confirm">Är du säker på att du vill ta bort det här läget?</string>
     <string name="add_mode_screen_header">Vilket läge vill du skapa?</string>
     <string name="choose_app_screen_header">Välj upp till 5 appar att visa i Ditt ögonblick</string>
     <string name="choose_app_screen_subtitle">Det här är apparna du kommer att se. Telefonsamtal kommer fortfarande fram som vanligt.</string>
@@ -70,4 +71,5 @@
     <string name="mode_subtitle_custom">Börja tomt och anpassa läget efter dina behov</string>
     <string name="mode_subtitle_journey">Fokusera på vägen framåt</string>
     <string name="mode_subtitle_recharge">Vakna upp utvilad och redo för en ny dag, varje dag</string>
+    <string name="setting_remove_mode">Ta bort läget</string>
 </resources>
