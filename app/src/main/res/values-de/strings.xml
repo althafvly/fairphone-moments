@@ -20,7 +20,7 @@
     <string name="setting_title_visible_apps">Sichtbare Apps</string>
     <string name="setting_title_visible_apps_selector">Wählen Sie sichtbare Apps aus</string>
     <string name="setting_title_allowed_contacts">Erlaubte Kontakte</string>
-    <string name="setting_subtitle_allowed_contacts">%1$s Kontakte erlaubt</string>
+    <string name="setting_subtitle_allowed_contacts">%1$s erlaubt</string>
     <string name="setting_title_customization_settings">Anpassungseinstellungen</string>
     <string name="setting_header_allowed_contacts">Wer kann Sie erreichen, während Sie sich im %1$s-Moment befinden?</string>
     <string name="profile_state_active">Aktiv</string>
