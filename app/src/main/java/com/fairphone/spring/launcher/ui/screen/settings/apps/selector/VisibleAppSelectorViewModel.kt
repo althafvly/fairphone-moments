@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.settings.apps
+package com.fairphone.spring.launcher.ui.screen.settings.apps.selector
 
 import android.app.Application
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.R
@@ -48,8 +45,6 @@ class VisibleAppSelectorViewModel(
     val screenState = _screenState.asStateFlow()
 
     private lateinit var screenData: ScreenData
-
-    var filter: String by mutableStateOf("")
 
     private var installedApps = mutableStateListOf<AppInfo>()
     private var visibleApps = mutableStateListOf<AppInfo>()
@@ -94,7 +89,7 @@ class VisibleAppSelectorViewModel(
                     screenData.copy(
                         visibleApps = visibleApps,
                         showConfirmButton = true,
-                        showAppCounter = visibleApps.size == LAUNCHER_MAX_APP_COUNT,
+                        showAppCounter = true,
                         showEmptyAppSelectedError = false,
                         showMaxAppSelectedError = false,
                     )
@@ -122,26 +117,13 @@ class VisibleAppSelectorViewModel(
         }
     }
 
-    fun onFilterChanged(filter: String) {
-        this.filter = filter
-        _screenState.updateAppSelectorState {
-            screenData.copy(
-                appList = if (filter.isEmpty()) {
-                    installedApps
-                } else {
-                    installedApps.filter { it.name.contains(filter, ignoreCase = true) }
-                }
-            )
-        }
-    }
-
     fun removeVisibleApp(appInfo: AppInfo) {
         visibleApps.remove(appInfo)
         _screenState.updateAppSelectorState {
             screenData.copy(
                 visibleApps = visibleApps,
                 showConfirmButton = visibleApps.isNotEmpty(),
-                showAppCounter = false,
+                showAppCounter = true,
                 showEmptyAppSelectedError = visibleApps.isEmpty(),
                 showMaxAppSelectedError = false,
             )
@@ -191,4 +173,5 @@ data class ScreenData(
     val showAppCounter: Boolean,
     val showEmptyAppSelectedError: Boolean,
     val showMaxAppSelectedError: Boolean,
+    val maxItemCount: Int = 5,
 )

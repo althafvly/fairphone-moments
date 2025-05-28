@@ -37,7 +37,7 @@ interface ProfileDataSource {
     suspend fun setActiveProfile(profileId: String)
     suspend fun setEditedProfile(profileId: String)
     suspend fun createLauncherProfile(profile: LauncherProfile)
-    suspend fun removeLauncherProfile(profile: LauncherProfile)
+    suspend fun deleteLauncherProfile(profile: LauncherProfile)
     suspend fun updateLauncherProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
 }
@@ -123,7 +123,7 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
         }
     }
 
-    override suspend fun removeLauncherProfile(profile: LauncherProfile) {
+    override suspend fun deleteLauncherProfile(profile: LauncherProfile) {
         dataStore.updateData { profiles ->
             val newProfiles = getProfiles().first().filter { it.id != profile.id }.toMutableList()
             profiles

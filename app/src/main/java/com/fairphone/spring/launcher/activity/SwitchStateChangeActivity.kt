@@ -41,6 +41,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.activity.viewmodel.SwitchStateChangeViewModel
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.SwitchState
+import com.fairphone.spring.launcher.ui.component.SwitchAnimationState
 import com.fairphone.spring.launcher.ui.component.SwitchStateChangeOverlayScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
@@ -228,7 +229,7 @@ fun SwitchStateChangeScreen(
         profile = activeProfile,
         switchState = switchButtonSwitchState,
         onAnimationDone = { onOverlayAnimationDone(switchButtonSwitchState) },
-        visibilityState = MutableTransitionState(false)
+        visibilityState = MutableTransitionState(SwitchAnimationState.NOT_STARTED)
     )
 }
 

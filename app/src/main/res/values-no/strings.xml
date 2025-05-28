@@ -24,9 +24,9 @@
     <string name="setting_title_customization_settings">Tilpasningsinnstillinger</string>
     <string name="setting_header_allowed_contacts">Hvem kan nå ut til deg mens du er i %1$s moment?</string>
     <string name="profile_state_active">Aktiv</string>
-    <string name="visible_apps_count">5 / 5 valgt</string>
+    <string name="visible_apps_count">%1$d / %2$d valgt</string>
     <string name="visible_apps_error_empty_selected">Velg minst én app</string>
-    <string name="visible_apps_error_max_selected">5 / 5 valgt</string>
+    <string name="visible_apps_error_max_selected">%1$d / %1$d valgt</string>
     <string name="bt_confirm">Bekrefte</string>
     <string name="profile_name_editor_title">Gi nytt navn til øyeblikket</string>
     <string name="profile_name_max_length_error">Hold øyeblikksnavnet ditt under 15 tegn</string>
@@ -60,7 +60,7 @@
     <string name="bt_navigate_back">Tilbake</string>
     <string name="bt_navigation_close">Lukke</string>
     <string name="bt_continue">Fortsette</string>
-    <string name="setting_remove_mode_confirm">Er du sikker på at du vil slette denne modusen?</string>
+    <string name="setting_delete_mode_confirm">Er du sikker på at du vil slette denne modusen?</string>
     <string name="add_mode_screen_header">Hvilken modus ønsker du å lage?</string>
     <string name="choose_app_screen_header">Velg opptil 5 apper som skal vises i ditt øyeblikk</string>
     <string name="choose_app_screen_subtitle">Dette er appene du ser. Telefonsamtaler vil fortsatt komme gjennom som normalt.</string>
@@ -71,5 +71,5 @@
     <string name="mode_subtitle_journey">Fokuser på veien videre</string>
     <string name="mode_subtitle_recharge">Våkn opp uthvilt og klar for en ny dag, hver dag</string>
     <string name="name_mode_screen_header">Navngi øyeblikket ditt</string>
-    <string name="setting_remove_mode">Slett modusen</string>
+    <string name="setting_button_delete_mode">Slett modusen</string>
 </resources>

@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,12 +40,13 @@ import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.component.AppInfoListItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+import com.fairphone.spring.launcher.util.fakeApp
 
 @Composable
 fun VisibleAppSettingsScreen(
     screenState: VisibleAppSettingsScreenState,
     onChangeAppsClick: () -> Unit,
-){
+) {
     when (screenState) {
         is VisibleAppSettingsScreenState.Loading -> {
             Box(
@@ -118,12 +120,19 @@ fun VisibleAppSettingsScreen(
         }
     }
 }
+
 @Composable
 @Preview
-fun VisibleAppsSettingsScreen_Preview(){
+fun VisibleAppsSettingsScreen_Preview() {
+    val context = LocalContext.current
     SpringLauncherTheme {
         VisibleAppSettingsScreen(
-            visibleApps = emptyList(),
+            visibleApps = listOf(
+                context.fakeApp("app 1"),
+                context.fakeApp("app 2"),
+                context.fakeApp("app 3"),
+                context.fakeApp("app 4")
+            ),
             onChangeAppsClick = {}
         )
     }

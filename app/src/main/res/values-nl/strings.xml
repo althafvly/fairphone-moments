@@ -24,9 +24,9 @@
     <string name="setting_title_customization_settings">Personalisatie instellingen</string>
     <string name="setting_header_allowed_contacts">Wie mag je in %1$s storen?</string>
     <string name="profile_state_active">Actief</string>
-    <string name="visible_apps_count">5 / 5 geselecteerd</string>
+    <string name="visible_apps_count">%1$d / %2$d geselecteerd</string>
     <string name="visible_apps_error_empty_selected">Kies ten minste één app</string>
-    <string name="visible_apps_error_max_selected">5 / 5 geselecteerd</string>
+    <string name="visible_apps_error_max_selected">%1$d / %1$d geselecteerd</string>
     <string name="bt_confirm">Bevestigen</string>
     <string name="profile_name_editor_title">Moment naam wijzigen</string>
     <string name="profile_name_max_length_error">Houd uw momentnaam onder de 15 tekens</string>
@@ -60,7 +60,7 @@
     <string name="moments_demo_card_text">Deze Fairphone (Gen. 6) laat Fairphone Moments zien, een nieuwe manier om je telefoon verantwoord te gebruiken. Zet de groene switch aan de zijkant om om terug te gaan naar het reguliere Android thuisschem. Of klik hier om meer te weten te komen.</string>
     <string name="close">Sluiten</string>
     <string name="no_internet_connection">Geen internetverbinding</string>
-    <string name="setting_remove_mode_confirm">Weet u zeker dat u deze modus wilt verwijderen?</string>
+    <string name="setting_delete_mode_confirm">Weet u zeker dat u deze modus wilt verwijderen?</string>
     <string name="add_mode_screen_header">Welke modus wil je creëren?</string>
     <string name="choose_app_screen_header">Kies maximaal 5 apps om in je Moment te tonen</string>
     <string name="mode_subtitle_balance">Geef prioriteit aan je lichaam en geest</string>
@@ -71,5 +71,5 @@
     <string name="choose_app_screen_subtitle">Dit zijn de apps die je ziet. Telefoongesprekken komen nog steeds gewoon door.</string>
     <string name="choose_app_background_header">Kies een achtergrond</string>
     <string name="name_mode_screen_header">Geef je moment een naam</string>
-    <string name="setting_remove_mode">Verwijder de modus</string>
+    <string name="setting_button_delete_mode">Verwijder de modus</string>
 </resources>

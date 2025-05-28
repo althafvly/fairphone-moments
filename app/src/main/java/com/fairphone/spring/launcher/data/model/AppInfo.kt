@@ -18,13 +18,22 @@ package com.fairphone.spring.launcher.data.model
 
 import android.graphics.drawable.Drawable
 
+interface SelectableItem {
+    val id: String
+    val name: String
+    val icon: Any
+}
+
 data class AppInfo(
-    val name: String,
+    override val name: String,
     val packageName: String,
     val mainActivityClassName: String,
     val userUuid: Int = 0,
-    val icon: Drawable,
-) {
+    override val icon: Drawable,
+): SelectableItem {
+
+    override val id: String = packageName
+
     override fun equals(other: Any?): Boolean {
         return other is AppInfo && other.packageName == packageName
     }

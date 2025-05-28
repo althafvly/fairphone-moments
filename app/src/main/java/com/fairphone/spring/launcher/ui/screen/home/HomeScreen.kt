@@ -55,8 +55,7 @@ import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.FairphoneMomentsDemoCard
-import com.fairphone.spring.launcher.ui.ModeIcons
-import com.fairphone.spring.launcher.ui.modeicons.ModeIcon
+import com.fairphone.spring.launcher.ui.icons.mode.ModeIcon
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import org.koin.androidx.compose.koinViewModel

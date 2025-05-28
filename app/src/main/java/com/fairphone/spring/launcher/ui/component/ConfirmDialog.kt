@@ -96,8 +96,8 @@ private fun ConfirmDialog_DarkPreview() {
     SpringLauncherTheme {
         ConfirmDialog(
             show = true,
-            title = stringResource(R.string.setting_remove_mode),
-            message = stringResource(R.string.setting_remove_mode_confirm),
+            title = stringResource(R.string.setting_button_delete_mode),
+            message = stringResource(R.string.setting_delete_mode_confirm),
             onConfirm = {},
             onDismiss = {}
         )
@@ -110,8 +110,8 @@ private fun ConfirmDialog_LightPreview() {
     SpringLauncherTheme {
         ConfirmDialog(
             show = true,
-            title = stringResource(R.string.setting_remove_mode),
-            message = stringResource(R.string.setting_remove_mode_confirm),
+            title = stringResource(R.string.setting_button_delete_mode),
+            message = stringResource(R.string.setting_delete_mode_confirm),
             onConfirm = {},
             onDismiss = {}
         )

@@ -38,9 +38,9 @@
     <string name="bt_switch_to_profile">Switch to this moment</string>
 
     <string name="profile_state_active">Active</string>
-    <string name="visible_apps_count">5 / 5 selected</string>
+    <string name="visible_apps_count">%1$d / %2$d selected</string>
     <string name="visible_apps_error_empty_selected">Pick at least one app</string>
-    <string name="visible_apps_error_max_selected">5 / 5 selected</string>
+    <string name="visible_apps_error_max_selected">%1$d / %1$d selected</string>
     <string name="profile_name_editor_title">Rename moment</string>
     <string name="profile_name_max_length_error">Keep your moment name under 15 characters</string>
     <string name="search_app_info_bar_placeholder">Search apps</string>
@@ -62,8 +62,9 @@
     <string name="setting_subtitle_appearance">Change the look at feel to your liking</string>
     <string name="setting_subtitle_notification">None allowed</string>
     <string name="setting_header_visible_apps">Arrange the order of the apps on your screen</string>
-    <string name="setting_remove_mode">Delete mode</string>
-    <string name="setting_remove_mode_confirm">Are you sure you want to delete this mode?</string>
+    <string name="setting_button_delete_mode">Delete mode</string>
+    <string name="setting_delete_mode_confirm">Are you sure you want to delete this mode?</string>
+    <string name="setting_button_delete_mode_not_allowed">This is your only mode. It can’t be deleted.</string>
 
     <!-- Switch state change overlay -->
     <string name="profile_switch_state_enabled">%1$s\nenabled</string>

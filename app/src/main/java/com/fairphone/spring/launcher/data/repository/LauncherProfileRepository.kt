@@ -30,7 +30,7 @@ interface LauncherProfileRepository {
     suspend fun setActiveProfile(profileId: String)
     suspend fun setEditedProfile(profileId: String)
     suspend fun createProfile(profile: LauncherProfile)
-    suspend fun removeProfile(profile: LauncherProfile)
+    suspend fun deleteProfile(profile: LauncherProfile)
     suspend fun updateProfile(profile: LauncherProfile)
     suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
 }
@@ -59,8 +59,8 @@ class LauncherProfileRepositoryImpl(private val dataSource: ProfileDataSource) :
     override suspend fun createProfile(profile: LauncherProfile) =
         dataSource.createLauncherProfile(profile)
 
-    override suspend fun removeProfile(profile: LauncherProfile) =
-        dataSource.removeLauncherProfile(profile)
+    override suspend fun deleteProfile(profile: LauncherProfile) =
+        dataSource.deleteLauncherProfile(profile)
 
     override suspend fun updateProfile(profile: LauncherProfile) =
         dataSource.updateLauncherProfile(profile)

@@ -23,32 +23,36 @@ import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.model.copy
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
+import com.fairphone.spring.launcher.domain.usecase.profile.DeleteLauncherProfileUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.GetAllProfilesUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
-import com.fairphone.spring.launcher.domain.usecase.profile.RemoveLauncherProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
-import com.fairphone.spring.launcher.ui.modeicons.ModeIcon
+import com.fairphone.spring.launcher.ui.icons.mode.ModeIcon
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
 class ProfileSettingsViewModel(
     context: Context,
     private val appInfoRepository: AppInfoRepository,
     private val getEditedProfileUseCase: GetEditedProfileUseCase,
+    private val getAllProfilesUseCase: GetAllProfilesUseCase,
     private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
-    private val removeLauncherProfileUseCase: RemoveLauncherProfileUseCase
+    private val deleteLauncherProfileUseCase: DeleteLauncherProfileUseCase
 ) : ViewModel() {
 
     val screenState: StateFlow<ProfileSettingsScreenState> =
-        getEditedProfileUseCase.execute(Unit)
-            .map { profile ->
-                val visibleApps = getAppInfoList(context, profile.visibleAppsList)
+        getAllProfilesUseCase.execute(Unit)
+            .zip(getEditedProfileUseCase.execute(Unit)) { profiles, editedProfile -> Pair(profiles, editedProfile)}.map { combined ->
+                val visibleApps = getAppInfoList(context, combined.second.visibleAppsList)
                 ProfileSettingsScreenState.Success(
-                    profile = profile,
+                    profile = combined.second,
                     visibleApps = visibleApps,
+                    canDeleteProfile = combined.first.size > 1,
                 )
             }.stateIn(
                 scope = viewModelScope,
@@ -83,12 +87,15 @@ class ProfileSettingsViewModel(
 
     fun deleteProfile() = viewModelScope.launch {
         val editedProfile = getEditedProfileUseCase.execute(Unit).first()
-        removeLauncherProfileUseCase.execute(editedProfile)
+        deleteLauncherProfileUseCase.execute(editedProfile)
     }
 }
 
 sealed interface ProfileSettingsScreenState {
     object Loading : ProfileSettingsScreenState
-    data class Success(val profile: LauncherProfile, val visibleApps: List<AppInfo>) :
-        ProfileSettingsScreenState
+    data class Success(
+        val profile: LauncherProfile,
+        val visibleApps: List<AppInfo>,
+        val canDeleteProfile: Boolean,
+    ) : ProfileSettingsScreenState
 }

@@ -22,11 +22,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreen
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreenState
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorViewModel
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsScreen
 import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorScreen
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorScreenState
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorViewModel
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
@@ -65,8 +65,6 @@ fun NavGraphBuilder.visibleAppSettingsNavGraph(navController: NavHostController)
         VisibleAppSelectorScreen(
             screenState = screenState,
             onAppClick = viewModel::onAppClick,
-            filter = viewModel.filter,
-            onFilterChanged = viewModel::onFilterChanged,
             onAppDeselected = viewModel::removeVisibleApp,
             onConfirmAppSelection = {
                 viewModel.confirmAppSelection()

@@ -24,9 +24,9 @@
     <string name="setting_title_customization_settings">Configuración de personalización</string>
     <string name="setting_header_allowed_contacts">¿Quién puede comunicarse contigo mientras estás en %1$s momento?</string>
     <string name="profile_state_active">Activo</string>
-    <string name="visible_apps_count">5/5 seleccionado</string>
+    <string name="visible_apps_count">%1$d / %2$d seleccionado</string>
     <string name="visible_apps_error_empty_selected">Elige al menos una aplicación</string>
-    <string name="visible_apps_error_max_selected">5/5 seleccionado</string>
+    <string name="visible_apps_error_max_selected">%1$d / %1$d seleccionado</string>
     <string name="bt_confirm">Confirmar</string>
     <string name="profile_name_editor_title">Cambiar el nombre del momento</string>
     <string name="profile_name_max_length_error">Mantén el nombre de tu momento en menos de 15 caracteres</string>
@@ -65,11 +65,11 @@
     <string name="bt_navigate_back">Atrás</string>
     <string name="bt_navigation_close">Cerca</string>
     <string name="bt_continue">Continuar</string>
-    <string name="setting_remove_mode_confirm">¿Estás seguro de que quieres eliminar este modo?</string>
+    <string name="setting_delete_mode_confirm">¿Estás seguro de que quieres eliminar este modo?</string>
     <string name="add_mode_screen_header">¿Qué modo te gustaría crear?</string>
     <string name="choose_app_screen_header">Elige hasta 5 aplicaciones para mostrar en tu Momento</string>
     <string name="choose_app_screen_subtitle">Estas son las aplicaciones que verás. Las llamadas se seguirán recibiendo con normalidad.</string>
     <string name="choose_app_background_header">Elige un fondo</string>
     <string name="name_mode_screen_header">Nombra tu momento</string>
-    <string name="setting_remove_mode">Eliminar el modo</string>
+    <string name="setting_button_delete_mode">Eliminar el modo</string>
 </resources>

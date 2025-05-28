@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.component
+package com.fairphone.spring.launcher.ui.component.selector
 
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
@@ -46,20 +46,22 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil3.compose.AsyncImage
 import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.SelectableItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun SelectedListItem(
-    icon: Drawable,
-    title: String,
+fun <T : SelectableItem> SelectedListItem(
+    item: T,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier.wrapContentHeight().width(60.dp)
+        modifier = modifier
+            .wrapContentHeight()
+            .width(60.dp)
     ) {
         Box(
             contentAlignment = Alignment.TopEnd,
@@ -67,10 +69,12 @@ fun SelectedListItem(
                 .padding(top = 4.dp, start = 4.dp, end = 4.dp)
         ) {
             AsyncImage(
-                model = icon,
-                contentDescription = title,
+                model = item.icon,
+                contentDescription = item.name,
                 contentScale = ContentScale.Fit,
-                modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp).size(40.dp),
+                modifier = Modifier
+                    .padding(top = 4.dp, start = 4.dp, end = 4.dp)
+                    .size(40.dp),
             )
 
             IconButton(
@@ -102,7 +106,7 @@ fun SelectedListItem(
         }
 
         Text(
-            text = title,
+            text = item.name,
             style = FairphoneTypography.LabelMedium,
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1,
@@ -113,14 +117,18 @@ fun SelectedListItem(
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-fun SelectedAppInfoListItem_Preview() {
+fun SelectedListItem_Preview() {
     SpringLauncherTheme {
-        SelectedListItem(
-            title = "App Name",
-            icon = ContextCompat.getDrawable(
+        val item = object : SelectableItem {
+            override val id = "id"
+            override val name = "Item name"
+            override val icon: Drawable = ContextCompat.getDrawable(
                 LocalContext.current,
                 R.drawable.ic_launcher_foreground
-            )!!,
+            )!!
+        }
+        SelectedListItem<SelectableItem>(
+            item = item,
             onDeleteClick = {}
         )
     }

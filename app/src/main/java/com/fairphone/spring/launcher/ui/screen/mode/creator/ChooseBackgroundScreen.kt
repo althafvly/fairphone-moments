@@ -16,34 +16,37 @@
 
 package com.fairphone.spring.launcher.ui.screen.mode.creator
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.RadioButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
@@ -52,60 +55,56 @@ import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.PrimaryButton
 import com.fairphone.spring.launcher.ui.component.ScreenHeader
-import com.fairphone.spring.launcher.ui.screen.mode.ModeContainer
-import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.ui.theme.backgroundShapeBorderDarkStart
 import com.fairphone.spring.launcher.ui.theme.backgroundShapeBorderLightStart
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun ChooseBackgroundScreen(
-    preset: Presets,
-    onNavigateBack: () -> Unit,
-    onNavigateClose: () -> Unit,
+    selectedPreset: Presets,
     onContinue: (Long, Long) -> Unit
 ) {
-    val scrollState = rememberScrollState()
+
     val colors = Presets.entries.map { it.profile.bgColor2 }.distinct()
-    var selectedColor by remember {
-        mutableLongStateOf(colors.first { preset.profile.bgColor2 == it })
+
+    val scrollState = rememberLazyListState(
+        initialFirstVisibleItemIndex = colors.indexOfFirst { selectedPreset.profile.bgColor2 == it }
+    )
+
+    var selectedColorIndex = remember {
+        derivedStateOf { scrollState.firstVisibleItemIndex }
     }
-    val width = LocalConfiguration.current.let {// the offset is depending on the screen width and the padding
-        it.screenWidthDp * 2 - 20
-    }
-    LaunchedEffect(selectedColor) {
-        scrollState.scrollTo(
-            (colors.indexOf(selectedColor) * width).toInt()
-        )
+    var scrollToIndex by remember { mutableIntStateOf(selectedColorIndex.value) }
+
+    LaunchedEffect(scrollToIndex) {
+        scrollState.animateScrollToItem(scrollToIndex)
     }
 
-    ModeContainer {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            CreateMomentTopBar(
-                hasBackButton = true,
-                onNavigateBack = onNavigateBack,
-                onNavigateClose = onNavigateClose
-            )
-
             ScreenHeader(
-                stringResource(R.string.choose_app_background_header),
-                modifier = Modifier.padding(horizontal = 40.dp),
-                style = FairphoneTypography.H3
+                title = stringResource(R.string.choose_app_background_header)
             )
 
-            Row(
-                Modifier
-                    .horizontalScroll(scrollState)
-                    .fillMaxWidth()
-                    .padding(start = 76.dp, end = 76.dp, top = 40.dp),
+            LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
+                state = scrollState,
+                modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(horizontal = 80.dp)
             ) {
-                colors.forEach { color ->
+                items(
+                    count = colors.size,
+                    contentType = { index -> colors[index] }
+                ) { index ->
+                    val color = colors[index]
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(32.dp))
@@ -121,7 +120,7 @@ fun ChooseBackgroundScreen(
                             endColor = Color(color),
                             modifier = Modifier.fillMaxSize(),
                             onClick = {
-                                selectedColor = color
+                                scrollToIndex = index
                             }
                         )
                     }
@@ -129,30 +128,43 @@ fun ChooseBackgroundScreen(
             }
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(1.dp)
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 colors.forEachIndexed { i, color ->
-                    RadioButton(
-                        selected = (color == selectedColor),
-                        onClick = {
-                            selectedColor = color
-                        }
+                    val isSelected = (i == selectedColorIndex.value)
+                    Box(
+                        modifier = Modifier
+                            .border(
+                                width = 1.dp,
+                                color = MaterialTheme.colorScheme.outline,
+                                shape = RoundedCornerShape(size = 33.dp)
+                            )
+                            .size(8.dp)
+                            .clip(CircleShape)
+                            .background(if (isSelected) Color.White else Color(0x4DFFFFFF))
+
                     )
+//                    RadioButton(
+//                        selected = (i == selectedColorIndex.value),
+//                        onClick = {
+//                            selectedColorIndex.value = i
+//                        }
+//                    )
                 }
             }
+        }
 
-            Spacer(modifier = Modifier.weight(1.0f))
-
-            PrimaryButton(
-                text = stringResource(R.string.bt_create),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(horizontal = 20.dp, vertical = 16.dp)
-            ) {
-                val preset = Presets.entries.first { it.profile.bgColor2 == selectedColor }
-                onContinue(preset.profile.bgColor1, preset.profile.bgColor2)
-            }
+        PrimaryButton(
+            text = stringResource(R.string.bt_create),
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .height(80.dp)
+                .padding(horizontal = 20.dp, vertical = 16.dp)
+        ) {
+            val preset =
+                Presets.entries.first { it.profile.bgColor2 == colors[selectedColorIndex.value] }
+            onContinue(preset.profile.bgColor1, preset.profile.bgColor2)
         }
     }
 }
@@ -162,9 +174,7 @@ fun ChooseBackgroundScreen(
 private fun ChooseBackgroundScreen_Preview() {
     SpringLauncherTheme {
         ChooseBackgroundScreen(
-            Presets.Balance,
-            onNavigateBack = {},
-            onNavigateClose = {},
+            Presets.Journey,
             onContinue = { color1, color2 -> }
         )
     }

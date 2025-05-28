@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.mode.add.name
+package com.fairphone.spring.launcher.ui.screen.mode.creator
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,7 +36,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -49,8 +49,6 @@ import com.fairphone.spring.launcher.ui.component.DefaultTextField
 import com.fairphone.spring.launcher.ui.component.PrimaryButton
 import com.fairphone.spring.launcher.ui.component.ScreenHeader
 import com.fairphone.spring.launcher.ui.icons.mode.ModeIcon
-import com.fairphone.spring.launcher.ui.screen.mode.ModeContainer
-import com.fairphone.spring.launcher.ui.screen.mode.creator.CreateMomentTopBar
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
@@ -58,8 +56,6 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 fun NameYourMomentScreen(
     modeName: String,
     modeIcon: ModeIcon,
-    onNavigateBack: () -> Unit = {},
-    onNavigateClose: () -> Unit = {},
     onContinue: (String) -> Unit = {}
 ) {
     var isButtonContinueEnabled by remember { mutableStateOf(false) }
@@ -68,24 +64,18 @@ fun NameYourMomentScreen(
     var showError by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
 
-    ModeContainer(onClick = onNavigateBack) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 20.dp),
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)
-                .padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
-            CreateMomentTopBar(
-                hasBackButton = true,
-                onNavigateBack = onNavigateBack,
-                onNavigateClose = onNavigateClose
-            )
-
             ScreenHeader(
-                stringResource(R.string.name_mode_screen_header),
-                modifier = Modifier.padding(horizontal = 36.dp),
-                style = FairphoneTypography.H3
+                title = stringResource(R.string.name_mode_screen_header)
             )
 
             ActionButton(
@@ -102,13 +92,17 @@ fun NameYourMomentScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp)
                         .focusRequester(focusRequester),
                     onValueChange = {
                         showError = it.length >= maxNameLength
                         newName = it
                     },
                     showError = showError,
+                    onDone = {
+                        if (isButtonContinueEnabled) {
+                            onContinue(newName)
+                        }
+                    }
                 )
                 if (showError) {
                     Text(
@@ -118,29 +112,28 @@ fun NameYourMomentScreen(
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.weight(1.0f))
-
-            PrimaryButton(
-                text = stringResource(R.string.bt_continue),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
-                enabled = isButtonContinueEnabled
-            ) {
-                onContinue(newName)
-            }
-
-            LaunchedEffect(newName, showError) {
-                isButtonContinueEnabled = newName.isNotEmpty() && !showError
-            }
-
-            LaunchedEffect(Unit) {
-                // Add the focus in th textfield
-                focusRequester.requestFocus()
-            }
         }
+
+        PrimaryButton(
+            text = stringResource(R.string.bt_continue),
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .height(80.dp)
+                .padding(vertical = 16.dp),
+            enabled = isButtonContinueEnabled,
+        ) {
+            onContinue(newName)
+        }
+    }
+
+    LaunchedEffect(newName, showError) {
+        isButtonContinueEnabled = newName.isNotEmpty() && !showError
+    }
+
+    LaunchedEffect(Unit) {
+        // Add the focus in th text field
+        focusRequester.requestFocus()
     }
 }
 

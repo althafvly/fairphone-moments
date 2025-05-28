@@ -83,6 +83,7 @@ fun ProfileSettingsScreen(
             ProfileSettingsScreen(
                 profile = screenState.profile,
                 visibleApps = screenState.visibleApps,
+                canDeleteProfile = screenState.canDeleteProfile,
                 onEditProfileName = onEditProfileName,
                 onProfileIconClick = onProfileIconClick,
                 onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings,
@@ -102,6 +103,7 @@ fun ProfileSettingsScreen(
 fun ProfileSettingsScreen(
     profile: LauncherProfile,
     visibleApps: List<AppInfo>,
+    canDeleteProfile: Boolean,
     onProfileIconClick: () -> Unit,
     onEditProfileName: (String) -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
@@ -152,7 +154,7 @@ fun ProfileSettingsScreen(
                 text = stringResource(R.string.setting_title_customization_settings),
                 style = FairphoneTypography.BodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)
+                modifier = Modifier.padding(top = 24.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
             )
 
             // Other settings
@@ -211,8 +213,9 @@ fun ProfileSettingsScreen(
             }
 
             DeleteModeButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                onModeDeletionClick = onModeDeletionClick
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 24.dp),
+                onModeDeletionClick = onModeDeletionClick,
+                canDeleteMode = canDeleteProfile,
             )
         }
 
@@ -231,37 +234,51 @@ fun ProfileSettingsScreen(
 }
 
 @Composable
-fun DeleteModeButton(modifier: Modifier = Modifier, onModeDeletionClick: () -> Unit) {
+fun DeleteModeButton(
+    modifier: Modifier = Modifier,
+    canDeleteMode: Boolean = true,
+    onModeDeletionClick: () -> Unit
+) {
     var showDeletionConfirmDialog by remember { mutableStateOf(false) }
 
-    Button(
-        modifier = modifier,
-        onClick = { showDeletionConfirmDialog = true },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-        )
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+    if (canDeleteMode) {
+        Button(
+            modifier = modifier,
+            onClick = { showDeletionConfirmDialog = true },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         ) {
-            Icon(
-                imageVector = Icons.Outlined.Delete,
-                contentDescription = null,
-                tint = errorColor,
-            )
-            Text(
-                text = stringResource(R.string.setting_remove_mode),
-                color = errorColor,
-                style = FairphoneTypography.BodySmall
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Delete,
+                    contentDescription = null,
+                    tint = errorColor,
+                )
+                Text(
+                    text = stringResource(R.string.setting_button_delete_mode),
+                    color = errorColor,
+                    style = FairphoneTypography.BodySmall
+                )
+            }
         }
+    } else {
+        Text(
+            text = stringResource(R.string.setting_button_delete_mode_not_allowed),
+            style = FairphoneTypography.BodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = modifier,
+        )
     }
+
     ConfirmDialog(
         show = showDeletionConfirmDialog,
-        title = stringResource(R.string.setting_remove_mode),
-        message = stringResource(R.string.setting_remove_mode_confirm),
+        title = stringResource(R.string.setting_button_delete_mode),
+        message = stringResource(R.string.setting_delete_mode_confirm),
         onConfirm = {
             showDeletionConfirmDialog = false
             onModeDeletionClick()
@@ -277,6 +294,7 @@ fun ProfileSettings_Preview() {
         ProfileSettingsScreen(
             profile = Presets.Essentials.profile,
             visibleApps = emptyList(),
+            canDeleteProfile = false,
             onEditProfileName = {},
             onProfileIconClick = {},
             onNavigateToVisibleAppSettings = {},
@@ -297,7 +315,9 @@ fun ProfileSettings_LightPreview() {
         ProfileSettingsScreen(
             profile = Presets.Essentials.profile,
             visibleApps = emptyList(),
+            canDeleteProfile = true,
             onEditProfileName = {},
+            onProfileIconClick = {},
             onNavigateToVisibleAppSettings = {},
             onNavigateToAllowedContactSettings = {},
             onNavigateToNotificationSettings = {},

@@ -16,37 +16,38 @@
 
 package com.fairphone.spring.launcher.ui.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
 import com.fairphone.spring.launcher.data.model.CUSTOM_PROFILE_ID
 import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
 import com.fairphone.spring.launcher.data.model.Defaults
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.domain.usecase.profile.CreateLauncherProfileUseCase
 import com.fairphone.spring.launcher.ui.icons.mode.ModeIcon
-import com.fairphone.spring.launcher.ui.screen.mode.add.name.NameYourMomentScreen
 import com.fairphone.spring.launcher.ui.screen.mode.creator.ChooseAppsScreen
 import com.fairphone.spring.launcher.ui.screen.mode.creator.ChooseBackgroundScreen
 import com.fairphone.spring.launcher.ui.screen.mode.creator.CreateModeViewModel
+import com.fairphone.spring.launcher.ui.screen.mode.creator.CreateModeVisibleAppSelectorViewModel
+import com.fairphone.spring.launcher.ui.screen.mode.creator.NameYourMomentScreen
 import com.fairphone.spring.launcher.ui.screen.mode.creator.SelectModeScreen
-import com.fairphone.spring.launcher.ui.screen.settings.apps.CreateModeVisibleAppSelectorViewModel
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreenState
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorScreenState
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
-import java.util.UUID
 
 @Serializable
 object SelectMode
 
 @Serializable
-data class NameYourMoment(val modeName: String = "", val icon: ModeIcon = ModeIcon.Extra6)
+data class NameYourMoment(
+    val modeName: String = "",
+    val icon: ModeIcon = ModeIcon.Extra6
+)
 
 @Serializable
 data class ChooseApps(
@@ -64,20 +65,18 @@ data class ChooseBackground(
     val apps: List<String>
 )
 
-fun NavHostController.closeAndReturnToSwitcher() {
-    navigate(ModeSwitcher) {
-        popUpTo(route = ModeSwitcher) { inclusive = true }
-    }
-}
-
-fun NavGraphBuilder.createModeNavGraph(navController: NavHostController) {
+@Composable
+fun CreateModeNavigation(
+    navController: NavHostController,
+    onModeCreated: () -> Unit,
+) = NavHost(
+    navController = navController,
+    startDestination = SelectMode
+) {
     // Select Mode Screen
     composable<SelectMode> {
         SelectModeScreen(
             profiles = Presets.entries,
-            onNavigateClose = {
-                navController.closeAndReturnToSwitcher()
-            },
             onModeSettingsClick = { selectedProfile ->
                 if (selectedProfile.id == CUSTOM_PROFILE_ID) {
                     navController.navigate(
@@ -107,14 +106,6 @@ fun NavGraphBuilder.createModeNavGraph(navController: NavHostController) {
         NameYourMomentScreen(
             modeName = nameYourMoment.modeName,
             modeIcon = nameYourMoment.icon,
-            onNavigateBack = {
-                navController.navigate(SelectMode) {
-                    popUpTo(route = SelectMode) { inclusive = true }
-                }
-            },
-            onNavigateClose = {
-                navController.closeAndReturnToSwitcher()
-            },
             onContinue = { newName ->
                 navController.navigate(
                     ChooseApps(
@@ -146,21 +137,6 @@ fun NavGraphBuilder.createModeNavGraph(navController: NavHostController) {
             onAppFilterChanged = viewModel::onFilterChanged,
             onAppClick = viewModel::onAppClick,
             onAppDeselected = viewModel::removeVisibleApp,
-            onNavigateBack = {
-                if (ModeIcon.customIcons().contains(chooseApps.icon)) {
-                    val route = NameYourMoment(chooseApps.modeName, chooseApps.icon)
-                    navController.navigate(route) {
-                        popUpTo(route = route) { inclusive = true }
-                    }
-                } else {
-                    navController.navigate(SelectMode) {
-                        popUpTo(route = SelectMode) { inclusive = true }
-                    }
-                }
-            },
-            onNavigateClose = {
-                navController.closeAndReturnToSwitcher()
-            },
             onContinue = {
                 when (viewModel.screenState.value) {
                     is VisibleAppSelectorScreenState.Ready -> {
@@ -176,7 +152,7 @@ fun NavGraphBuilder.createModeNavGraph(navController: NavHostController) {
                     }
 
                     else -> {
-                        // Not possible here
+                        // Ignore
                     }
                 }
 
@@ -187,24 +163,9 @@ fun NavGraphBuilder.createModeNavGraph(navController: NavHostController) {
     composable<ChooseBackground> { backStackEntry ->
         val chooseBackground = backStackEntry.toRoute<ChooseBackground>()
         val viewModel: CreateModeViewModel = koinViewModel()
-        val context = LocalContext.current
 
         ChooseBackgroundScreen(
-            preset = chooseBackground.preset,
-            onNavigateClose = {
-                navController.closeAndReturnToSwitcher()
-            },
-            onNavigateBack = {
-                val route = ChooseApps(
-                    preset = chooseBackground.preset,
-                    icon = chooseBackground.icon,
-                    modeName = chooseBackground.modeName,
-                    apps = chooseBackground.apps
-                )
-                navController.navigate(route) {
-                    popUpTo(route = route) { inclusive = true }
-                }
-            },
+            selectedPreset = chooseBackground.preset,
             onContinue = { color1, color2 ->
                 val params = CreateLauncherProfile(
                     id = CreateLauncherProfileUseCase.newId(),
@@ -223,12 +184,7 @@ fun NavGraphBuilder.createModeNavGraph(navController: NavHostController) {
                     reduceBrightnessEnabled = Defaults.REDUCE_BRIGHTNESS_ENABLED,
                 )
                 viewModel.save(params)
-                // Before moving to the settings, we're going back on the switcher. So, the user will
-                // see this switcher if they close the settings
-                navController.navigate(ModeSwitcher) {
-                    popUpTo(route = ModeSwitcher) { inclusive = true }
-                }
-                LauncherSettingsActivity.start(context)
+                onModeCreated()
             }
         )
     }

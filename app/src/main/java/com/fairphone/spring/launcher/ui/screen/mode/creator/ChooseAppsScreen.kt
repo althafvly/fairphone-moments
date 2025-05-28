@@ -19,27 +19,21 @@ package com.fairphone.spring.launcher.ui.screen.mode.creator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.ScreenHeader
-import com.fairphone.spring.launcher.ui.screen.mode.ModeContainer
-import com.fairphone.spring.launcher.ui.screen.settings.apps.ScreenData
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreen
-import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSelectorScreenState
-import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.ScreenData
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorScreen
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorScreenState
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.fakeApp
 
@@ -48,49 +42,30 @@ fun ChooseAppsScreen(
     screenState: VisibleAppSelectorScreenState,
     filter: String,
     onAppFilterChanged: (String) -> Unit,
-    onAppClick: (AppInfo) -> Unit = {},
-    onAppDeselected: (AppInfo) -> Unit = {},
-    onNavigateBack: () -> Unit = {},
-    onNavigateClose: () -> Unit = {},
-    onContinue: () -> Unit = {}
+    onAppClick: (AppInfo) -> Unit,
+    onAppDeselected: (AppInfo) -> Unit,
+    onContinue: () -> Unit,
 ) {
-    ModeContainer {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)
-        ) {
-            CreateMomentTopBar(
-                hasBackButton = true,
-                onNavigateBack = onNavigateBack,
-                onNavigateClose = onNavigateClose
-            )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        ScreenHeader(
+            title = stringResource(R.string.choose_app_screen_header),
+            subtitle = stringResource(R.string.choose_app_screen_subtitle),
+        )
 
-            ScreenHeader(
-                stringResource(R.string.choose_app_screen_header),
-                modifier = Modifier.padding(horizontal = 40.dp),
-                style = FairphoneTypography.H3
-            )
-
-            Text(
-                text = stringResource(R.string.choose_app_screen_subtitle),
-                style = FairphoneTypography.BodySmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 12.dp, start = 40.dp, end = 40.dp),
-            )
-
-            VisibleAppSelectorScreen(
-                screenState = screenState,
-                filter = filter,
-                onFilterChanged = onAppFilterChanged,
-                onAppClick = onAppClick,
-                onAppDeselected = onAppDeselected,
-                onConfirmAppSelection = {
-                    onContinue()
-                }
-            )
-        }
+        VisibleAppSelectorScreen(
+            screenState = screenState,
+            onAppClick = onAppClick,
+            onAppDeselected = onAppDeselected,
+            onConfirmAppSelection = {
+                onContinue()
+            },
+            modifier = Modifier.weight(1f)
+        )
     }
 }
 
@@ -119,8 +94,6 @@ private fun ChooseAppsScreen_Preview() {
             onAppClick = {},
             onAppDeselected = {},
             onAppFilterChanged = {},
-            onNavigateBack = {},
-            onNavigateClose = {},
             onContinue = {}
         )
     }

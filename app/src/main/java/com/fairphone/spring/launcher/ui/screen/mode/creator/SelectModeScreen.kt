@@ -19,14 +19,12 @@ package com.fairphone.spring.launcher.ui.screen.mode.creator
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
@@ -35,51 +33,35 @@ import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.ScreenHeader
-import com.fairphone.spring.launcher.ui.screen.mode.ModeContainer
-import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
 fun SelectModeScreen(
     profiles: List<Presets>,
-    onNavigateClose: () -> Unit,
-    onModeSettingsClick: (LauncherProfile) -> Unit = {}
+    onModeSettingsClick: (LauncherProfile) -> Unit,
 ) {
-    ModeContainer(onClick = onNavigateClose) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(40.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        ScreenHeader(
+            title = stringResource(R.string.add_mode_screen_header)
+        )
+
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)
+                .padding(horizontal = 20.dp)
         ) {
-            CreateMomentTopBar(
-                hasBackButton = false,
-                onNavigateBack = {},
-                onNavigateClose = onNavigateClose
-            )
-
-            ScreenHeader(
-                stringResource(R.string.add_mode_screen_header),
-                modifier = Modifier.padding(horizontal = 36.dp),
-                style = FairphoneTypography.H3
-            )
-
-            Spacer(modifier = Modifier.weight(1.0f))
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.padding(horizontal = 20.dp)
-            ) {
-                profiles.forEach { mode ->
-                    SelectModeButton(
-                        mode,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        onModeSettingsClick(it)
-                    }
-                }
+            profiles.forEach { mode ->
+                SelectModeButton(
+                    presetProfile = mode,
+                    onModeSettingsClick = onModeSettingsClick,
+                )
             }
-            Spacer(modifier = Modifier.weight(1.0f))
         }
     }
 }
@@ -87,7 +69,7 @@ fun SelectModeScreen(
 @Composable
 private fun ModeSwitcherScreen_Preview() {
     SpringLauncherTheme {
-        SelectModeScreen(Presets.entries, {}, {})
+        SelectModeScreen(Presets.entries, {})
     }
 }
 

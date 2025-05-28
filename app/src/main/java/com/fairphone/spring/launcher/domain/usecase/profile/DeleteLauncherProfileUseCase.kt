@@ -20,21 +20,34 @@ import com.fairphone.spring.launcher.data.model.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.domain.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.ZenNotificationManager
+import kotlinx.coroutines.flow.first
 
 /**
  * Use case to create a new launcher profile.
  */
-class RemoveLauncherProfileUseCase(
+class DeleteLauncherProfileUseCase(
     private val launcherProfileRepository: LauncherProfileRepository,
     private val zenNotificationManager: ZenNotificationManager,
 ) : UseCase<LauncherProfile, LauncherProfile>() {
 
     override suspend fun execute(profile: LauncherProfile): Result<LauncherProfile> {
+        if (launcherProfileRepository.getProfiles().first().size == 1) {
+            return Result.failure(IllegalStateException("Cannot remove last profile"))
+        }
+
+        val activeProfile = launcherProfileRepository.getActiveProfile().first()
+
+        if (activeProfile.id == profile.id) {
+            val profiles = launcherProfileRepository.getProfiles().first().filterNot { it.id == profile.id }
+            launcherProfileRepository.setActiveProfile(profiles.first().id)
+        }
+
         val result = zenNotificationManager.removeAutomaticZenRule(profile.zenRuleId)
+
         if (result.isFailure) {
             return Result.failure(result.exceptionOrNull()!!)
         } else {
-            launcherProfileRepository.removeProfile(profile)
+            launcherProfileRepository.deleteProfile(profile)
             return Result.success(profile)
         }
     }

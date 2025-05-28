@@ -17,12 +17,16 @@
 package com.fairphone.spring.launcher.ui.component
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
@@ -38,10 +42,10 @@ fun DefaultTextField(
     placeHolderText: String? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     showError: Boolean = false,
-    textAlign: TextAlign = TextAlign.Start
+    textAlign: TextAlign = TextAlign.Start,
+    onDone: () -> Unit = {},
 ) {
     OutlinedTextField(
-
         modifier = modifier,
         value = text,
         onValueChange = onValueChange,
@@ -75,6 +79,13 @@ fun DefaultTextField(
             } else {
                 MaterialTheme.colorScheme.outlineVariant.copy(alpha = .5f)
             },
+        ),
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.Words,
+            imeAction = ImeAction.Done,
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { onDone() }
         )
     )
 }

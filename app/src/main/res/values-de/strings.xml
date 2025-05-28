@@ -24,9 +24,9 @@
     <string name="setting_title_customization_settings">Anpassungseinstellungen</string>
     <string name="setting_header_allowed_contacts">Wer kann Sie erreichen, während Sie sich im %1$s-Moment befinden?</string>
     <string name="profile_state_active">Aktiv</string>
-    <string name="visible_apps_count">5 / 5 ausgewählt</string>
+    <string name="visible_apps_count">%1$d / %2$d ausgewählt</string>
     <string name="visible_apps_error_empty_selected">Wählen Sie mindestens eine App aus</string>
-    <string name="visible_apps_error_max_selected">5 / 5 ausgewählt</string>
+    <string name="visible_apps_error_max_selected">%1$d / %1$d ausgewählt</string>
     <string name="bt_confirm">Bestätigen</string>
     <string name="profile_name_editor_title">Moment umbenennen</string>
     <string name="profile_name_max_length_error">Halten Sie Ihren zweiten Namen unter 15 Zeichen</string>
@@ -60,7 +60,7 @@
     <string name="moments_demo_card_text">Auf diesem Fairphone (Gen. 6) läuft derzeit Fairphone Moments, eine neue Möglichkeit, Ihr Telefon zu nutzen. Wechseln Sie mit dem Lime-Schalter an der Seite zurück zum normalen Android. Oder klicken Sie hier, um mehr zu erfahren.</string>
     <string name="close">Schließen</string>
     <string name="no_internet_connection">Keine Internetverbindung</string>
-    <string name="setting_remove_mode_confirm">Möchten Sie diesen Modus wirklich löschen?</string>
+    <string name="setting_delete_mode_confirm">Möchten Sie diesen Modus wirklich löschen?</string>
     <string name="add_mode_screen_header">Welchen Modus möchten Sie erstellen?</string>
     <string name="choose_app_screen_header">Wählen Sie bis zu 5 Apps aus, die in Ihrem Moment angezeigt werden sollen</string>
     <string name="mode_subtitle_balance">Priorisieren Sie Ihren Körper und Geist</string>
@@ -71,5 +71,5 @@
     <string name="choose_app_screen_subtitle">Dies sind die Apps, die Sie sehen werden. Telefonanrufe werden weiterhin wie gewohnt angenommen.</string>
     <string name="choose_app_background_header">Wählen Sie einen Hintergrund</string>
     <string name="name_mode_screen_header">Geben Sie Ihrem Moment einen Namen</string>
-    <string name="setting_remove_mode">Löschen Sie den Modus</string>
+    <string name="setting_button_delete_mode">Löschen Sie den Modus</string>
 </resources>

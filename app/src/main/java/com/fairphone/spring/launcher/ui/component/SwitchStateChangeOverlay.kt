@@ -74,11 +74,17 @@ fun SwitchStateChangeOverlayScreen(
     profile: LauncherProfile,
     switchState: SwitchState,
     onAnimationDone: () -> Unit,
-    visibilityState: MutableTransitionState<Boolean>,
+    visibilityState: MutableTransitionState<SwitchAnimationState>,
 ) {
     val transition = rememberTransition(visibilityState)
     val background by transition.animateColor(
-        targetValueByState = { visible -> if (visible) Color.Black.copy(alpha = 0.6f) else Color.Transparent },
+        targetValueByState = { state ->
+            if (state == SwitchAnimationState.RUNNING) {
+                Color.Black.copy(alpha = 0.6f)
+            } else {
+                Color.Transparent
+            }
+        },
         transitionSpec = {
             tween()
         }
@@ -121,26 +127,40 @@ fun SwitchState.getGreenBarHintAlignment(): Alignment.Vertical {
     }
 }
 
+enum class SwitchAnimationState {
+    NOT_STARTED,
+    RUNNING,
+    DONE,
+}
+
 @Composable
 fun SwitchStateChangeOverlay(
     profile: LauncherProfile,
     switchState: SwitchState,
     onAnimationDone: () -> Unit,
     modifier: Modifier = Modifier,
-    visibilityState: MutableTransitionState<Boolean>,
+    visibilityState: MutableTransitionState<SwitchAnimationState>,
 ) {
+    val isSwitchDown = remember(switchState) { switchState == SwitchState.ENABLED }
     var greenBarAlignment by remember { mutableStateOf(switchState.getGreenBarHintAlignment()) }
     val transition = rememberTransition(visibilityState)
     val iconRotationAngle by transition.animateFloat(
-        targetValueByState = { visible -> if (visible) 180f else 0f },
+        targetValueByState = { state ->
+            when (state) {
+                SwitchAnimationState.NOT_STARTED -> if (isSwitchDown) 0f else 0f
+                SwitchAnimationState.RUNNING -> if (isSwitchDown) 180f else -180f
+                SwitchAnimationState.DONE -> if (isSwitchDown) 180f else -180f
+            }
+        },
         transitionSpec = {
             tween(
                 durationMillis = ENTER_ANIMATION_DURATION,
                 easing = LinearOutSlowInEasing,
-                delayMillis = ENTER_ANIMATION_DURATION
+                delayMillis = ENTER_ANIMATION_DURATION.div(2),
             )
         }
     )
+
     val overlayText = when (switchState) {
         SwitchState.ENABLED ->
             stringResource(R.string.profile_switch_state_enabled, profile.name)
@@ -153,8 +173,9 @@ fun SwitchStateChangeOverlay(
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
         modifier = modifier.defaultMinSize(minHeight = 92.dp)
     ) {
+        // Animated Icon + Text
         AnimatedVisibility(
-            visibleState = visibilityState,
+            visible = visibilityState.targetState == SwitchAnimationState.RUNNING,
             enter = fadeIn(
                 animationSpec = tween(
                     durationMillis = ENTER_ANIMATION_DURATION,
@@ -173,12 +194,14 @@ fun SwitchStateChangeOverlay(
                 verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Top),
                 horizontalAlignment = Alignment.End,
             ) {
+                // Rotating icon
                 Icon(
                     imageVector = profile.getIconVector(),
                     contentDescription = null,
                     tint = Color.White,
                     modifier = Modifier.rotate(iconRotationAngle)
                 )
+                // Mode enabled/disabled text
                 Text(
                     text = overlayText,
                     style = FairphoneTypography.SwitchLabel,
@@ -188,8 +211,9 @@ fun SwitchStateChangeOverlay(
             }
         }
 
+        // Animated Green Bar
         AnimatedVisibility(
-            visibleState = visibilityState,
+            visible = visibilityState.targetState == SwitchAnimationState.RUNNING,
             enter = expandVertically(
                 expandFrom = Alignment.Top,
                 animationSpec = tween(
@@ -220,13 +244,18 @@ fun SwitchStateChangeOverlay(
             )
         }
     }
+
+    // Execute the animation step by step
     LaunchedEffect(Unit) {
         delay(ENTER_ANIMATION_DURATION.toLong())
-        visibilityState.targetState = true
+        visibilityState.targetState = SwitchAnimationState.RUNNING
         delay(ANIMATION_STILL_DURATION.toLong())
-        greenBarAlignment =
-            if (greenBarAlignment == Alignment.Top) Alignment.Bottom else Alignment.Top
-        visibilityState.targetState = false
+        greenBarAlignment = if (greenBarAlignment == Alignment.Top) {
+            Alignment.Bottom
+        } else {
+            Alignment.Top
+        }
+        visibilityState.targetState = SwitchAnimationState.DONE
         delay(EXIT_ANIMATION_DURATION.toLong().times(2))
         onAnimationDone()
     }
@@ -240,7 +269,7 @@ fun SwitchStateChangeHintEnabled_Preview() {
             profile = Presets.Essentials.profile,
             switchState = SwitchState.ENABLED,
             onAnimationDone = {},
-            visibilityState = remember { MutableTransitionState(false) },
+            visibilityState = remember { MutableTransitionState(SwitchAnimationState.NOT_STARTED) },
         )
     }
 }
@@ -253,7 +282,7 @@ fun SwitchStateChangeHintDisabled_Preview() {
             profile = Presets.Essentials.profile,
             switchState = SwitchState.DISABLED,
             onAnimationDone = {},
-            visibilityState = remember { MutableTransitionState(false) },
+            visibilityState = remember { MutableTransitionState(SwitchAnimationState.NOT_STARTED) },
         )
     }
 }

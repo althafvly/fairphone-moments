@@ -24,9 +24,9 @@
     <string name="setting_title_customization_settings">Paramètres de personnalisation</string>
     <string name="setting_header_allowed_contacts">Qui peut vous contacter pendant que vous êtes dans le moment %1$s?</string>
     <string name="profile_state_active">Actif</string>
-    <string name="visible_apps_count">5 / 5 sélectionnés</string>
+    <string name="visible_apps_count">%1$d / %2$d sélectionnés</string>
     <string name="visible_apps_error_empty_selected">Choisissez au moins une application</string>
-    <string name="visible_apps_error_max_selected">5 / 5 sélectionnés</string>
+    <string name="visible_apps_error_max_selected">%1$d / %1$d sélectionnés</string>
     <string name="bt_confirm">Confirmer</string>
     <string name="profile_name_editor_title">Renommer le moment</string>
     <string name="profile_name_max_length_error">Gardez le nom de votre moment sous 15 caractères</string>
@@ -60,7 +60,7 @@
     <string name="bt_navigate_back">Retour</string>
     <string name="bt_navigation_close">Fermer</string>
     <string name="bt_continue">Continuer</string>
-    <string name="setting_remove_mode_confirm">Êtes-vous sûr de vouloir supprimer ce mode ?</string>
+    <string name="setting_delete_mode_confirm">Êtes-vous sûr de vouloir supprimer ce mode ?</string>
     <string name="add_mode_screen_header">Quel mode souhaitez-vous créer ?</string>
     <string name="choose_app_screen_header">Choisissez jusqu\'à 5 applications à afficher dans votre Moment</string>
     <string name="choose_app_screen_subtitle">Voici les applications que vous verrez. Les appels téléphoniques continueront d\'être traités normalement.</string>
@@ -71,5 +71,5 @@
     <string name="mode_subtitle_custom">Commencez à partir de zéro et personnalisez le mode en fonction de vos besoins</string>
     <string name="mode_subtitle_journey">Concentrez-vous sur la route devant vous</string>
     <string name="mode_subtitle_recharge">Réveillez-vous frais et dispos et prêt pour une nouvelle journée, chaque jour</string>
-    <string name="setting_remove_mode">Supprimer le mode</string>
+    <string name="setting_button_delete_mode">Supprimer le mode</string>
 </resources>

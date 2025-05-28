@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.screen.settings.apps
+package com.fairphone.spring.launcher.ui.screen.mode.creator
 
 import android.app.Application
 import androidx.compose.runtime.getValue
@@ -29,6 +29,9 @@ import com.fairphone.spring.launcher.data.model.CUSTOM_PROFILE_ID
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
 import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.ScreenData
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorScreenState
+import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.updateAppSelectorState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,7 +39,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
- * [VisibleAppSelectorViewModel] is used to edit an existing profile, but this one is used
+ * [com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorViewModel] is used to edit an existing profile, but this one is used
  * on the creation wizard when the profile is not yet created
  */
 class CreateModeVisibleAppSelectorViewModel(

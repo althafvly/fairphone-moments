@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fairphone.spring.launcher.ui.component
+package com.fairphone.spring.launcher.ui.component.selector
 
 import android.content.res.Configuration
 import android.graphics.drawable.Drawable
@@ -48,17 +48,17 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil3.compose.AsyncImage
 import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.SelectableItem
 import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun SelectableListItem(
+fun <T : SelectableItem> SelectableListItem(
     modifier: Modifier = Modifier,
-    title: String,
+    item: T,
     isSelected: Boolean,
     onClick: () -> Unit,
-    icon: Drawable? = null,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -68,17 +68,15 @@ fun SelectableListItem(
             .padding(horizontal = 20.dp, vertical = 12.dp)
             .clickable { onClick() },
     ) {
-        icon?.let {
-            AsyncImage(
-                model = it,
-                contentDescription = title,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.size(32.dp),
-            )
-        }
+        AsyncImage(
+            model = item.icon,
+            contentDescription = item.name,
+            contentScale = ContentScale.Fit,
+            modifier = Modifier.size(32.dp),
+        )
 
         Text(
-            text = title,
+            text = item.name,
             style = FairphoneTypography.BodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f),
@@ -112,13 +110,17 @@ fun SelectableListItem(
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 fun AppInfoListItem_Preview() {
+    val item = object : SelectableItem {
+        override val id = "id"
+        override val name = "Item name"
+        override val icon: Drawable = ContextCompat.getDrawable(
+            LocalContext.current,
+            R.drawable.ic_launcher_foreground
+        )!!
+    }
     SpringLauncherTheme {
         SelectableListItem(
-            title = "App Name",
-            icon = ContextCompat.getDrawable(
-                LocalContext.current,
-                R.drawable.ic_launcher_foreground
-            )!!,
+            item = item,
             isSelected = true,
             onClick = {}
         )

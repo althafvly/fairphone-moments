@@ -41,23 +41,26 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     danger: Boolean = false,
+    visible: Boolean = true,
     onClick: () -> Unit,
 ) {
-    Button(
-        onClick = onClick,
-        modifier = modifier,
-        enabled = enabled,
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if(danger) errorColor else MaterialTheme.colorScheme.primaryContainer,
-            contentColor = if(danger) onErrorColor else MaterialTheme.colorScheme.onPrimaryContainer
-        )
-    ) {
-        Text(
-            text = text,
-            style = FairphoneTypography.ButtonDefault,
-            color = if(danger) onErrorColor else MaterialTheme.colorScheme.onPrimaryContainer
-        )
+    if (visible) {
+        Button(
+            onClick = onClick,
+            modifier = modifier,
+            enabled = enabled,
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = if (danger) errorColor else MaterialTheme.colorScheme.primaryContainer,
+                contentColor = if (danger) onErrorColor else MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        ) {
+            Text(
+                text = text,
+                style = FairphoneTypography.ButtonDefault,
+                color = if (danger) onErrorColor else MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
     }
 }
 

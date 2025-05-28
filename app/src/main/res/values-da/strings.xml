@@ -24,9 +24,9 @@
     <string name="setting_title_customization_settings">Tilpasningsindstillinger</string>
     <string name="setting_header_allowed_contacts">Hvem kan nå ud til dig, mens du er i %1$s moment?</string>
     <string name="profile_state_active">Aktiv</string>
-    <string name="visible_apps_count">5 / 5 valgt</string>
+    <string name="visible_apps_count">%1$d / %2$d valgt</string>
     <string name="visible_apps_error_empty_selected">Vælg mindst én app</string>
-    <string name="visible_apps_error_max_selected">5 / 5 valgt</string>
+    <string name="visible_apps_error_max_selected">%1$d / %1$d valgt</string>
     <string name="bt_confirm">Bekræfte</string>
     <string name="profile_name_editor_title">Omdøb øjeblik</string>
     <string name="profile_name_max_length_error">Hold dit øjebliksnavn under 15 tegn</string>
@@ -69,7 +69,7 @@
     <string name="bt_navigate_back">Tilbage</string>
     <string name="bt_navigation_close">Tæt</string>
     <string name="bt_continue">Fortsætte</string>
-    <string name="setting_remove_mode_confirm">Er du sikker på, at du vil slette denne tilstand?</string>
+    <string name="setting_delete_mode_confirm">Er du sikker på, at du vil slette denne tilstand?</string>
     <string name="add_mode_screen_header">Hvilken tilstand vil du gerne oprette?</string>
-    <string name="setting_remove_mode">Slet tilstanden</string>
+    <string name="setting_button_delete_mode">Slet tilstanden</string>
 </resources>

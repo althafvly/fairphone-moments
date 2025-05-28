@@ -24,9 +24,9 @@
     <string name="setting_title_customization_settings">Impostazioni di personalizzazione</string>
     <string name="setting_header_allowed_contacts">Chi può contattarti mentre sei nel momento %1$s?</string>
     <string name="profile_state_active">Attivo</string>
-    <string name="visible_apps_count">5 / 5 selezionato</string>
+    <string name="visible_apps_count">%1$d / %2$d selezionato</string>
     <string name="visible_apps_error_empty_selected">Scegli almeno un\'app</string>
-    <string name="visible_apps_error_max_selected">5 / 5 selezionato</string>
+    <string name="visible_apps_error_max_selected">%1$d / %1$d selezionato</string>
     <string name="bt_confirm">Confermare</string>
     <string name="profile_name_editor_title">Rinomina momento</string>
     <string name="profile_name_max_length_error">Mantieni il tuo secondo nome sotto i 15 caratteri</string>
@@ -65,11 +65,11 @@
     <string name="mode_subtitle_custom">Inizia in bianco e personalizza la modalità in base alle tue esigenze</string>
     <string name="mode_subtitle_journey">Concentrati sulla strada da percorrere</string>
     <string name="mode_subtitle_recharge">Svegliati riposato e pronto per un nuovo giorno, ogni giorno</string>
-    <string name="setting_remove_mode_confirm">Sei sicuro di voler eliminare questa modalità?</string>
+    <string name="setting_delete_mode_confirm">Sei sicuro di voler eliminare questa modalità?</string>
     <string name="add_mode_screen_header">Quale modalità vorresti creare?</string>
     <string name="choose_app_screen_header">Scegli fino a 5 app da mostrare nel tuo Momento</string>
     <string name="choose_app_screen_subtitle">Queste sono le app che vedrai. Le chiamate telefoniche continueranno a essere ricevute normalmente.</string>
     <string name="choose_app_background_header">Scegli uno sfondo</string>
     <string name="name_mode_screen_header">Dai un nome al tuo momento</string>
-    <string name="setting_remove_mode">Elimina la modalità</string>
+    <string name="setting_button_delete_mode">Elimina la modalità</string>
 </resources>
