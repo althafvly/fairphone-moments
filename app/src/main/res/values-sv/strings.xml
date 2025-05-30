@@ -50,6 +50,7 @@
     <string name="setting_subtitle_sound_and_vibration">Matcha enhetsinställningar</string>
     <string name="setting_subtitle_power_saving">Spara ström och förläng batteritiden</string>
     <string name="setting_subtitle_appearance">Ändra utseendet efter din smak</string>
+    <string name="setting_button_delete_mode_not_allowed">Detta är ditt enda ögonblick. Det går inte att radera.</string>
     <string name="profile_switch_state_enabled">%1$s\navaktiverat</string>
     <string name="profile_switch_state_disabled">%1$s\naktiverat</string>
     <string name="do_not_disturb_access_rationale_title">Behörighet till Stör ej krävs</string>

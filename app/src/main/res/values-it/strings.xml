@@ -53,6 +53,7 @@
     <string name="setting_subtitle_sound_and_vibration">Abbina le impostazioni del dispositivo</string>
     <string name="setting_subtitle_power_saving">Risparmia energia e prolunga la durata della batteria</string>
     <string name="setting_subtitle_appearance">Cambia l\'aspetto a tuo piacimento</string>
+    <string name="setting_button_delete_mode_not_allowed">Questo è il tuo unico momento. Non può essere eliminato.</string>
     <string name="profile_switch_state_enabled">%1$s\ndisattivato</string>
     <string name="profile_switch_state_disabled">%1$s\nattivato</string>
     <string name="do_not_disturb_access_rationale_title">Accesso a Non disturbare necessario</string>

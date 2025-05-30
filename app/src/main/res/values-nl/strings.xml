@@ -53,6 +53,7 @@
     <string name="bt_change_apps">Wijzig apps</string>
     <string name="mode_switcher_screen_header">Wat is je volgende moment?</string>
     <string name="setting_title_notification">App notificatie instellingen</string>
+    <string name="setting_button_delete_mode_not_allowed">Dit is je enige moment. Deze kan niet worden verwijderd.</string>
     <string name="profile_switch_state_enabled">%1$s\nuitgeschakeld</string>
     <string name="profile_switch_state_disabled">%1$s\ningeschakeld</string>
     <string name="do_not_disturb_access_rationale_title">Niet storen-toegang vereist</string>

@@ -50,6 +50,7 @@
     <string name="bt_change_apps">Changer d\'application</string>
     <string name="mode_switcher_screen_header">Quel est votre prochain moment ?</string>
     <string name="setting_title_notification">Paramètres de notification d\'application</string>
+    <string name="setting_button_delete_mode_not_allowed">Ce Moment est unique. Il ne peut pas être supprimé.</string>
     <string name="profile_switch_state_enabled">%1$s\ndésactivé</string>
     <string name="profile_switch_state_disabled">%1$s\nactivé</string>
     <string name="do_not_disturb_access_rationale_title">Accès Ne pas déranger requis</string>
