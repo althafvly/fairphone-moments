@@ -40,7 +40,7 @@ object Defaults {
         "com.fps.camera",
         "com.google.android.apps.maps",
     )
-    val DEFAULT_ALLOWED_CONTACTS = ContactType.CONTACT_TYPE_NONE
+    val DEFAULT_ALLOWED_CONTACTS = ContactType.CONTACT_TYPE_STARRED
     const val DEFAULT_REPEAT_CALL_ENABLED = false
     const val DEFAULT_WALLPAPER_ID = 0
     val DEFAULT_DARK_MODE_SETTING = UiMode.UI_MODE_SYSTEM
