@@ -36,6 +36,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -199,7 +200,7 @@ fun SwitchStateChangeOverlay(
                     imageVector = profile.getIconVector(),
                     contentDescription = null,
                     tint = Color.White,
-                    modifier = Modifier.rotate(iconRotationAngle)
+                    modifier = Modifier.size(16.dp).rotate(iconRotationAngle)
                 )
                 // Mode enabled/disabled text
                 Text(
