@@ -88,6 +88,9 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
         subtitle = R.string.mode_subtitle_recharge
     );
 
+    companion object {
+        val presetSelectionForNewMode = Presets.entries.minus(Essentials)
+    }
 }
 
 fun LauncherProfile.colors(): Pair<Color, Color> {

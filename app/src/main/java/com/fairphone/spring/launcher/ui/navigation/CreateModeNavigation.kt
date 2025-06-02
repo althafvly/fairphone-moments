@@ -76,7 +76,7 @@ fun CreateModeNavigation(
     // Select Mode Screen
     composable<SelectMode> {
         SelectModeScreen(
-            profiles = Presets.entries,
+            profiles = Presets.presetSelectionForNewMode,
             onModeSettingsClick = { selectedProfile ->
                 if (selectedProfile.id == CUSTOM_PROFILE_ID) {
                     navController.navigate(

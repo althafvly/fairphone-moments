@@ -69,7 +69,7 @@ fun SelectModeScreen(
 @Composable
 private fun ModeSwitcherScreen_Preview() {
     SpringLauncherTheme {
-        SelectModeScreen(Presets.entries, {})
+        SelectModeScreen(Presets.presetSelectionForNewMode, {})
     }
 }
 
