@@ -47,7 +47,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.Presets
@@ -58,6 +63,7 @@ import com.fairphone.spring.launcher.ui.component.ScreenHeader
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.ui.theme.backgroundShapeBorderDarkStart
 import com.fairphone.spring.launcher.ui.theme.backgroundShapeBorderLightStart
+import kotlin.math.roundToInt
 
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
@@ -67,6 +73,7 @@ fun ChooseBackgroundScreen(
 ) {
 
     val colors = Presets.entries.map { it.profile.bgColor2 }.distinct()
+    val colorSize = colors.size
 
     val scrollState = rememberLazyListState(
         initialFirstVisibleItemIndex = colors.indexOfFirst { selectedPreset.profile.bgColor2 == it }
@@ -76,6 +83,25 @@ fun ChooseBackgroundScreen(
         derivedStateOf { scrollState.firstVisibleItemIndex }
     }
     var scrollToIndex by remember { mutableIntStateOf(selectedColorIndex.value) }
+    val screenWidth =
+        with(LocalDensity.current) { LocalConfiguration.current.screenWidthDp.dp.toPx() }
+
+    // This listener is used to change the scrollIndex when the user scroll to the right or the left
+    val scrollListener = remember {
+        object : NestedScrollConnection {
+            // We wait the end of the scroll
+            override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+                val minJump = if (consumed.x < 0) -1 else 1
+                // We compute the jump depending on the velocity
+                val jumpSize = (consumed.x / 2 / screenWidth).roundToInt()
+                // We always have a jump
+                val newIndex = scrollToIndex - if (jumpSize == 0) minJump else jumpSize
+                scrollToIndex =
+                    if (newIndex >= colorSize) colorSize - 1 else if (newIndex < 0) 0 else newIndex
+                return super.onPostFling(consumed, available)
+            }
+        }
+    }
 
     LaunchedEffect(scrollToIndex) {
         scrollState.animateScrollToItem(scrollToIndex)
@@ -97,7 +123,9 @@ fun ChooseBackgroundScreen(
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(24.dp),
                 state = scrollState,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .nestedScroll(scrollListener),
                 contentPadding = PaddingValues(horizontal = 80.dp)
             ) {
                 items(
@@ -164,6 +192,7 @@ fun ChooseBackgroundScreen(
         ) {
             val preset =
                 Presets.entries.first { it.profile.bgColor2 == colors[selectedColorIndex.value] }
+
             onContinue(preset.profile.bgColor1, preset.profile.bgColor2)
         }
     }
