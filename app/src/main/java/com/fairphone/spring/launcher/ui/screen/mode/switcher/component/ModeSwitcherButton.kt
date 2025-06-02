@@ -67,7 +67,6 @@ import com.fairphone.spring.launcher.ui.theme.pressedActionButtonEndGradienDark
 import com.fairphone.spring.launcher.ui.theme.pressedActionButtonEndGradienLight
 import com.fairphone.spring.launcher.ui.theme.pressedActionButtonStartGradienDark
 import com.fairphone.spring.launcher.ui.theme.pressedActionButtonStartGradienLight
-import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradientDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradientLight
 
@@ -136,6 +135,8 @@ fun ModeSwitcherButton(
                 icon = SettingsIcon,
                 description = stringResource(R.string.mode_switcher_screen_header),
                 isSelected = isSelected,
+                selectedStartColor = Color(profile.bgColor2),
+                selectedEndColor = Color(profile.bgColor1)
             ) {
                 onModeSettingsClick(profile)
             }

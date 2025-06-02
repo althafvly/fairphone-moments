@@ -46,12 +46,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.icons.NavIcons
 import com.fairphone.spring.launcher.ui.icons.mode.SettingsIcon
 import com.fairphone.spring.launcher.ui.icons.nav.ArrowLeft
 import com.fairphone.spring.launcher.ui.icons.nav.Close
+import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.ui.theme.actionButtonBackgroundDark
@@ -67,7 +69,6 @@ import com.fairphone.spring.launcher.ui.theme.pressedActionButtonStartGradienDar
 import com.fairphone.spring.launcher.ui.theme.pressedActionButtonStartGradienLight
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonBackgroundDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonBackgroundLight
-import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradientDark
 import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradientLight
 
@@ -91,6 +92,8 @@ fun ActionButton(
     isSelected: Boolean = false,
     size: ButtonSize = ButtonSize.Default,
     type: ButtonType = ButtonType.Round,
+    selectedStartColor: Color = Color_FP_Brand_Lime,
+    selectedEndColor: Color = Color.White,
     onClick: () -> Unit = {}
 ) {
     Column(
@@ -126,7 +129,9 @@ fun ActionButton(
                 computeButtonBorder(
                     isDark = isDark,
                     isFocus = isFocus || isHover,
-                    isSelected = isSelected
+                    isSelected = isSelected,
+                    selectedStartColor = selectedStartColor,
+                    selectedEndColor = selectedEndColor
                 )
             } else {
                 null
@@ -195,7 +200,9 @@ private fun computeButtonBackground(
 private fun computeButtonBorder(
     isDark: Boolean,
     isFocus: Boolean,
-    isSelected: Boolean
+    isSelected: Boolean,
+    selectedStartColor: Color,
+    selectedEndColor: Color
 ): BorderStroke {
     if (isFocus) {
         return BorderStroke(
@@ -205,16 +212,16 @@ private fun computeButtonBorder(
     }
 
     val stroke = if (isDark) {
-        if (isSelected) selectedActionButtonStrokeDark else actionButtonStrokeDark
+        if (isSelected) selectedStartColor else actionButtonStrokeDark
     } else {
-        if (isSelected) selectedActionButtonStrokeDark else actionButtonStrokeLight
+        if (isSelected) selectedStartColor else actionButtonStrokeLight
     }
     return BorderStroke(
         width = 1.dp,
         brush = Brush.verticalGradient(
             listOf(
                 stroke,
-                if (isDark) selectedActionButtonStrokeEndGradientDark else selectedActionButtonStrokeEndGradientLight
+                if (isSelected) selectedEndColor else if (isDark) selectedActionButtonStrokeEndGradientDark else selectedActionButtonStrokeEndGradientLight
             )
         )
     )
@@ -241,7 +248,17 @@ fun ActionButton_Preview() {
                 icon = SettingsIcon,
                 description = "Update selected moment",
                 isSelected = true,
-                displayLabel = true
+                displayLabel = true,
+                selectedStartColor = Color(Presets.Balance.profile.bgColor2),
+                selectedEndColor = Color(Presets.Balance.profile.bgColor1)
+            )
+            ActionButton(
+                icon = SettingsIcon,
+                description = "Update selected moment",
+                isSelected = true,
+                displayLabel = true,
+                selectedStartColor = Color(Presets.Essentials.profile.bgColor2),
+                selectedEndColor = Color(Presets.Essentials.profile.bgColor1)
             )
             ActionButton(
                 icon = NavIcons.Close,
