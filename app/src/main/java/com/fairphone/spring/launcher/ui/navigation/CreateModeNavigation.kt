@@ -106,12 +106,12 @@ fun CreateModeNavigation(
         NameYourMomentScreen(
             modeName = nameYourMoment.modeName,
             modeIcon = nameYourMoment.icon,
-            onContinue = { newName ->
+            onContinue = { newName, newIcon ->
                 navController.navigate(
                     ChooseApps(
                         preset = Presets.Custom,
                         modeName = newName,
-                        icon = nameYourMoment.icon,
+                        icon = newIcon,
                         apps = emptyList()
                     )
                 )

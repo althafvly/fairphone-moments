@@ -56,10 +56,11 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 fun NameYourMomentScreen(
     modeName: String,
     modeIcon: ModeIcon,
-    onContinue: (String) -> Unit = {}
+    onContinue: (String, ModeIcon) -> Unit
 ) {
     var isButtonContinueEnabled by remember { mutableStateOf(false) }
     var newName by remember { mutableStateOf(modeName) }
+    var newIcon by remember { mutableStateOf(modeIcon) }
     var maxNameLength = 15
     var showError by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -79,11 +80,14 @@ fun NameYourMomentScreen(
             )
 
             ActionButton(
-                icon = modeIcon.imageVector,
+                icon = newIcon.imageVector,
                 description = "Update moment",
                 isSelected = false,
                 type = ButtonType.RoundedCorner,
-                size = ButtonSize.Big
+                size = ButtonSize.Big,
+                onClick = {
+                    newIcon = ModeIcon.nextIcon(newIcon.name)
+                }
             )
 
             Column {
@@ -100,7 +104,7 @@ fun NameYourMomentScreen(
                     showError = showError,
                     onDone = {
                         if (isButtonContinueEnabled) {
-                            onContinue(newName)
+                            onContinue(newName, newIcon)
                         }
                     }
                 )
@@ -123,7 +127,7 @@ fun NameYourMomentScreen(
                 .padding(vertical = 16.dp),
             enabled = isButtonContinueEnabled,
         ) {
-            onContinue(newName)
+            onContinue(newName, newIcon)
         }
     }
 
@@ -143,7 +147,7 @@ private fun NameModeScreen_Preview() {
         NameYourMomentScreen(
             "Essentials",
             ModeIcon.Extra1
-        )
+        ) { name, newIcon -> }
     }
 }
 
