@@ -20,7 +20,6 @@
     <string name="setting_title_visible_apps">Synliga appar</string>
     <string name="setting_title_visible_apps_selector">Välj synliga appar</string>
     <string name="setting_title_allowed_contacts">Tillåtna kontakter</string>
-    <string name="setting_subtitle_allowed_contacts">%1$s tillåtna</string>
     <string name="setting_title_customization_settings">Anpassningsinställningar</string>
     <string name="setting_header_allowed_contacts">Vem kan nå ut till dig när du är i %1$s moment?</string>
     <string name="profile_state_active">Aktiv</string>

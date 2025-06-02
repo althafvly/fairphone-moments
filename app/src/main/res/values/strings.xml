@@ -23,7 +23,6 @@
     <string name="setting_title_visible_apps">Visible apps</string>
     <string name="setting_title_visible_apps_selector">Select visible apps</string>
     <string name="setting_title_allowed_contacts">Allowed contacts</string>
-    <string name="setting_subtitle_allowed_contacts">%1$s allowed</string>
     <string name="setting_title_customization_settings">Customization settings</string>
 
     <string name="setting_header_allowed_contacts">Who can reach out to you while you\'re in %1$s moment</string>

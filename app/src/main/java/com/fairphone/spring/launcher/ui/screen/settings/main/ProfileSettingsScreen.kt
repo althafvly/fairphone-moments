@@ -168,13 +168,9 @@ fun ProfileSettingsScreen(
                     )
                     .clip(RoundedCornerShape(size = 12.dp))
             ) {
-                val contactType = stringResource(profile.allowedContacts.getNameResId())
                 SettingListItem(
                     title = stringResource(R.string.setting_title_allowed_contacts),
-                    subtitle = stringResource(
-                        R.string.setting_subtitle_allowed_contacts,
-                        contactType
-                    ),
+                    subtitle = stringResource(profile.allowedContacts.getNameResId()),
                     onClick = onNavigateToAllowedContactSettings
                 )
 //                SettingListItem(

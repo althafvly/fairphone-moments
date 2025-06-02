@@ -20,7 +20,6 @@
     <string name="setting_title_visible_apps">Sichtbare Apps</string>
     <string name="setting_title_visible_apps_selector">Wählen Sie sichtbare Apps aus</string>
     <string name="setting_title_allowed_contacts">Erlaubte Kontakte</string>
-    <string name="setting_subtitle_allowed_contacts">%1$s erlaubt</string>
     <string name="setting_title_customization_settings">Anpassungseinstellungen</string>
     <string name="setting_header_allowed_contacts">Wer kann Sie erreichen, während Sie sich im %1$s-Moment befinden?</string>
     <string name="profile_state_active">Aktiv</string>
@@ -31,7 +30,7 @@
     <string name="profile_name_editor_title">Moment umbenennen</string>
     <string name="profile_name_max_length_error">Halten Sie Ihren zweiten Namen unter 15 Zeichen</string>
     <string name="search_app_info_bar_placeholder">Apps suchen</string>
-    <string name="people_type_everyone">Alle</string>
+    <string name="people_type_everyone">Jeder</string>
     <string name="people_type_none">Niemand</string>
     <string name="people_type_all_contacts">Alle Kontakte</string>
     <string name="people_type_starred">Nur markierte Kontakte</string>

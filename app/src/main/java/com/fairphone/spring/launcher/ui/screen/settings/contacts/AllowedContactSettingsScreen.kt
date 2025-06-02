@@ -163,5 +163,5 @@ fun ContactType.getNameResId(): Int = when(this) {
     ContactType.CONTACT_TYPE_ALL_CONTACTS -> R.string.people_type_all_contacts
     ContactType.CONTACT_TYPE_STARRED -> R.string.people_type_starred
     ContactType.CONTACT_TYPE_CUSTOM -> R.string.people_type_custom
-    else -> R.string.people_type_none // fallback to 'none'
+    ContactType.UNRECOGNIZED -> R.string.people_type_none // fallback to 'none'
 }
