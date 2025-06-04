@@ -84,7 +84,6 @@
             android:theme="@style/Theme.SpringLauncher.Home"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             tools:ignore="DiscouragedApi,LockedOrientationActivity">
-            <!-- TODO: Deleting priority fixes some bugs but this causes the home app chooser to appear at the end of SUW -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -22,7 +22,7 @@
             android:name=".activity.SpringLauncherHomeActivity"
             android:exported="true">
 
-            <intent-filter android:priority="-1">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SHOW_WORK_APPS" />
 
