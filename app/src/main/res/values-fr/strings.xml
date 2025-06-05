@@ -75,4 +75,19 @@
     <string name="onboarding_home_button_help">Appuyez pour personnaliser\\n votre Moment.</string>
     <string name="bt_apply_changes">Appliquer les modifications</string>
     <string name="onboarding_home_tooltitp">Changez de moment et modifiez les paramètres.</string>
+    <string name="setting_notifications_select_allowed">Sélectionner les notifications autorisées</string>
+    <string name="setting_notifications_app">Notifications d\'application</string>
+    <string name="setting_notifications_none">Aucune autorisée</string>
+    <string name="setting_notifications_allow_repeat_caller">Autoriser les appels répétés</string>
+    <string name="setting_notifications_allow_repeat_caller_desc">Quelqu\'un qui appelle plusieurs fois dans un délai de 15 minutes</string>
+    <plurals name="setting_notifications_nb_allowed">
+        <item quantity="one">%1$d autorisée</item>
+        <item quantity="other">%1$d autorisées</item>
+    </plurals>
+    <string name="app_notifications_permission_header">Autorisations</string>
+    <string name="app_notifications_permission_text">Pour que ce paramètre fonctionne, Fairphone Moments doit avoir les autorisations pour filtrer et republier vos notifications</string>
+    <string name="permission_toggle_title_notification_access">Lire les notifications</string>
+    <string name="permission_toggle_subtitle_notification_access">Autorisation de lire l\'origine de vos notifications</string>
+    <string name="permission_toggle_title_post_notification">Publier des notifications</string>
+    <string name="permission_toggle_subtitle_post_notification">Autorisation de republier les notifications filtrées</string>
 </resources>

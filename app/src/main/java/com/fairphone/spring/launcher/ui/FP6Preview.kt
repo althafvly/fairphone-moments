@@ -45,3 +45,24 @@ annotation class FP6Preview
     locale = "en",
 )
 annotation class FP6PreviewDark
+
+@Preview(
+    name = "FP6",
+    apiLevel = 35,
+    showBackground = true,
+    backgroundColor = 0xFFCED3DC,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    locale = "en",
+)
+annotation class PreviewLight
+
+
+@Preview(
+    name = "FP6",
+    apiLevel = 35,
+    showBackground = true,
+    backgroundColor = 0xFF2C2927,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    locale = "en",
+)
+annotation class PreviewDark

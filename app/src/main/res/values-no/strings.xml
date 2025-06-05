@@ -75,4 +75,20 @@
     <string name="onboarding_home_button_help">Trykk for å tilpasse\\n øyeblikket ditt.</string>
     <string name="bt_apply_changes">Bruk endringer</string>
     <string name="onboarding_home_tooltitp">Bytt øyeblikk og endre innstillinger.</string>
+
+    <string name="setting_notifications_select_allowed">Velg tillatte varsler</string>
+    <string name="setting_notifications_app">Appvarsler</string>
+    <string name="setting_notifications_none">Ingen tillatt</string>
+    <string name="setting_notifications_allow_repeat_caller">Tillat gjentatte innringere</string>
+    <string name="setting_notifications_allow_repeat_caller_desc">Noen som ringer flere ganger i løpet av en 15-minutters periode</string>
+    <plurals name="setting_notifications_nb_allowed">
+        <item quantity="one">%1$d tillatt</item>
+        <item quantity="other">%1$d tillatt</item>
+    </plurals>
+    <string name="app_notifications_permission_header">Tillatelser</string>
+    <string name="app_notifications_permission_text">For at denne innstillingen skal fungere, må Fairphone Moments ha tillatelse til å filtrere og reposte varslene dine</string>
+    <string name="permission_toggle_title_notification_access">Les varsler</string>
+    <string name="permission_toggle_subtitle_notification_access">Tillatelse til å lese opprinnelsen til varslene dine</string>
+    <string name="permission_toggle_title_post_notification">Send varsler</string>
+    <string name="permission_toggle_subtitle_post_notification">Tillatelse til å reposte de filtrerte varslene</string>
 </resources>

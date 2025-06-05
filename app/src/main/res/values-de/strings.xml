@@ -75,4 +75,19 @@
     <string name="onboarding_home_button_help">Tippen Sie, um Ihren\\n Moment anzupassen.</string>
     <string name="bt_apply_changes">Änderungen übernehmen</string>
     <string name="onboarding_home_tooltitp">Wechseln Sie Momente und ändern Sie Einstellungen.</string>
+    <string name="setting_notifications_select_allowed">Erlaubte Benachrichtigungen auswählen</string>
+    <string name="setting_notifications_app">App-Benachrichtigungen</string>
+    <string name="setting_notifications_none">Keine erlaubt</string>
+    <string name="setting_notifications_allow_repeat_caller">Wiederholte Anrufer zulassen</string>
+    <string name="setting_notifications_allow_repeat_caller_desc">Mehrfachanrufe innerhalb von 15 Minuten</string>
+    <plurals name="setting_notifications_nb_allowed">
+        <item quantity="one">%1$d erlaubt</item>
+        <item quantity="other">%1$d erlaubt</item>
+    </plurals>
+    <string name="app_notifications_permission_header">Berechtigungen</string>
+    <string name="app_notifications_permission_text">Damit diese Einstellung funktioniert, benötigt Fairphone Moments die Berechtigungen, um deine Benachrichtigungen zu filtern und erneut zu veröffentlichen</string>
+    <string name="permission_toggle_title_notification_access">Benachrichtigungen lesen</string>
+    <string name="permission_toggle_subtitle_notification_access">Berechtigung, den Ursprung deiner Benachrichtigungen zu lesen</string>
+    <string name="permission_toggle_title_post_notification">Benachrichtigungen posten</string>
+    <string name="permission_toggle_subtitle_post_notification">Berechtigung, die gefilterten Benachrichtigungen erneut zu veröffentlichen</string>
 </resources>

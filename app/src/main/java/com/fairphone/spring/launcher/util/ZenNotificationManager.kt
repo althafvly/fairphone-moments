@@ -203,7 +203,7 @@ class ZenNotificationManager(private val context: Context) {
             .allowMessages(peopleType)
             .allowConversations(peopleType)
             .allowMedia(true)
-            .allowRepeatCallers(false) //TODO: Update to use param from profile
+            .allowRepeatCallers(allowRepeatCallers)
             .hideAllVisualEffects()
 
         return builder.build()

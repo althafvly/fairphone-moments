@@ -86,7 +86,9 @@ fun SettingsNavigation(
                 onNavigateToAllowedContactSettings = {
                     navController.navigate(AllowedContactSettings)
                 },
-                onNavigateToNotificationSettings = {},
+                onNavigateToNotificationSettings = {
+                    navController.navigate(AllowedNotificationSettings)
+                },
                 onNavigateToAppearanceSettings = {},
                 onNavigateToSoundAndVibrationSettings = {},
                 onNavigateToPowerSavingSettings = {},
@@ -102,5 +104,8 @@ fun SettingsNavigation(
 
         // Allowed Contact Settings
         allowedContactSettingsNavGraph(navController)
+
+        // Allowed notification Settings
+        allowedNotificationsSettingsNavGraph(navController)
     }
 }

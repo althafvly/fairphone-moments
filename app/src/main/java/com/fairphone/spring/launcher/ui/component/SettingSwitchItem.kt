@@ -37,34 +37,21 @@ import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun SettingListItem(
+fun SettingSwitchItem(
+    state: Boolean,
     title: String,
     subtitle: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    icon: @Composable ((Boolean) -> Unit) = { enabled ->
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-            contentDescription = null,
-            tint = if (enabled) {
-                MaterialTheme.colorScheme.onSurface
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            }
-        )
-    },
+    onClick: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .clickable { onClick() }
-            .background(color = if (enabled) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceDim)
+            .background(color = MaterialTheme.colorScheme.surface)
             .padding(16.dp),
     ) {
-        val onSurfaceDynamic =
-            if (enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
+        val onSurfaceDynamic =  MaterialTheme.colorScheme.onSurface
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -81,19 +68,31 @@ fun SettingListItem(
                 color = onSurfaceDynamic
             )
         }
-
-        icon(enabled)
+        SwitchButton(
+            state = state,
+            onToggle = onClick
+        )
     }
 }
 
 @Composable
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-fun SettingListItem_Preview() {
+private fun SettingSwitchItem_Preview() {
     SpringLauncherTheme {
-        SettingListItem(
-            title = "Visible apps",
-            subtitle = "Maps, Camera, Message, Chrome, Phone",
-            onClick = {}
-        )
+        Column {
+            SettingSwitchItem(
+                state = true,
+                title = "Visible apps",
+                subtitle = "Maps, Camera, Message, Chrome, Phone",
+                onClick = {}
+            )
+            SettingSwitchItem(
+                state = false,
+                title = "Visible apps",
+                subtitle = "Maps, Camera, Message, Chrome, Phone",
+                onClick = {}
+            )
+        }
+
     }
 }

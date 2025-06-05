@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2025. Fairphone B.V.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -75,4 +74,20 @@
     <string name="onboarding_home_button_help">Tocca per personalizzare\\n il tuo Momento.</string>
     <string name="bt_apply_changes">Applicare modifiche</string>
     <string name="onboarding_home_tooltitp">Cambia momenti e modifica le impostazioni.</string>
+
+    <string name="setting_notifications_select_allowed">Seleziona le notifiche consentite</string>
+    <string name="setting_notifications_app">Notifiche app</string>
+    <string name="setting_notifications_none">Nessuna consentita</string>
+    <string name="setting_notifications_allow_repeat_caller">Consenti chiamate ripetute</string>
+    <string name="setting_notifications_allow_repeat_caller_desc">Qualcuno che chiama più volte nell\'arco di 15 minuti</string>
+    <plurals name="setting_notifications_nb_allowed">
+        <item quantity="one">%1$d consentita</item>
+        <item quantity="other">%1$d consentite</item>
+    </plurals>
+    <string name="app_notifications_permission_header">Permessi</string>
+    <string name="app_notifications_permission_text">Affinché questa impostazione funzioni, Fairphone Moments deve avere i permessi per filtrare e ripubblicare le tue notifiche</string>
+    <string name="permission_toggle_title_notification_access">Leggi notifiche</string>
+    <string name="permission_toggle_subtitle_notification_access">Permesso di leggere l\'origine delle tue notifiche</string>
+    <string name="permission_toggle_title_post_notification">Pubblica notifiche</string>
+    <string name="permission_toggle_subtitle_post_notification">Permesso di ripubblicare le notifiche filtrate</string>
 </resources>

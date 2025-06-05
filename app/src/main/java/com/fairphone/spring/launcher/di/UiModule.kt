@@ -26,6 +26,8 @@ import com.fairphone.spring.launcher.ui.screen.settings.apps.VisibleAppSettingsV
 import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorViewModel
 import com.fairphone.spring.launcher.ui.screen.settings.contacts.AllowedContactSettingsViewModel
 import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.notifications.AllowedNotificationsAppsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.notifications.AllowedNotificationsSettingsViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
@@ -36,6 +38,8 @@ val uiModule = module {
     viewModelOf(::VisibleAppSettingsViewModel)
     viewModelOf(::VisibleAppSelectorViewModel)
     viewModelOf(::AllowedContactSettingsViewModel)
+    viewModelOf(::AllowedNotificationsSettingsViewModel)
+    viewModelOf(::AllowedNotificationsAppsViewModel)
     viewModelOf(::SwitchStateChangeViewModel)
     viewModelOf(::CreateModeViewModel)
     viewModelOf(::OnBoardingViewModel)

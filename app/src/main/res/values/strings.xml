@@ -54,18 +54,28 @@
 
     <string name="onboarding_home_button_help">Tap to customize\n your Moment.</string>
 
-    <string name="setting_title_notification">App Notification settings</string>
     <string name="setting_title_appearance">Customize appearance</string>
     <string name="setting_title_sound_and_vibration">Sound &amp; vibration</string>
     <string name="setting_title_power_saving">Power-saving settings</string>
     <string name="setting_subtitle_sound_and_vibration">Match device settings</string>
     <string name="setting_subtitle_power_saving">Save power and extend your battery life</string>
     <string name="setting_subtitle_appearance">Change the look at feel to your liking</string>
-    <string name="setting_subtitle_notification">None allowed</string>
     <string name="setting_header_visible_apps">Arrange the order of the apps on your screen</string>
     <string name="setting_button_delete_mode">Delete mode</string>
     <string name="setting_delete_mode_confirm">Are you sure you want to delete this mode?</string>
     <string name="setting_button_delete_mode_not_allowed">This is your only mode. It can’t be deleted.</string>
+
+    <string name="setting_title_notification">Notification settings</string>
+    <string name="setting_subtitle_notification">Manage the notifications you receive</string>
+    <string name="setting_notifications_select_allowed">Select allowed notifications</string>
+    <string name="setting_notifications_app">App notifications</string>
+    <string name="setting_notifications_none">None allowed</string>
+    <plurals name="setting_notifications_nb_allowed">
+        <item quantity="one">%1$d allowed</item>
+        <item quantity="other">%1$d allowed</item>
+    </plurals>
+    <string name="setting_notifications_allow_repeat_caller">Allow repeat callers</string>
+    <string name="setting_notifications_allow_repeat_caller_desc">Someone who calls multiple times within a 15-minute period</string>
 
     <!-- Switch state change overlay -->
     <string name="profile_switch_state_enabled">%1$s\nenabled</string>
@@ -100,5 +110,12 @@
     <string name="mode_subtitle_recharge">Wake up refreshed and ready for a new day, every day</string>
     <string name="bt_apply_changes">Apply changes</string>
     <string name="onboarding_home_tooltitp">Switch Moments and change settings.</string>
+
+    <string name="app_notifications_permission_header">Permissions</string>
+    <string name="app_notifications_permission_text">In order for this setting to work, Fairphone Moments needs to have permissions to filter and repost your notifications</string>
+    <string name="permission_toggle_title_notification_access">Read Notifications</string>
+    <string name="permission_toggle_subtitle_notification_access">Permission to read the origin of your notifications</string>
+    <string name="permission_toggle_title_post_notification">Post Notifications</string>
+    <string name="permission_toggle_subtitle_post_notification">Permission to repost the filtered notifications</string>
 
 </resources>

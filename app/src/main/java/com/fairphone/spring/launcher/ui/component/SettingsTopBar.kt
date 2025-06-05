@@ -52,6 +52,8 @@ import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.getIconVector
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.ui.navigation.AllowedContactSettings
+import com.fairphone.spring.launcher.ui.navigation.AllowedNotificationApps
+import com.fairphone.spring.launcher.ui.navigation.AllowedNotificationSettings
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSelector
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSettings
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
@@ -71,6 +73,8 @@ fun SettingsTopBar(
             it.hasRoute<VisibleAppSettings>() -> R.string.setting_title_visible_apps
             it.hasRoute<VisibleAppSelector>() -> R.string.setting_title_visible_apps_selector
             it.hasRoute<AllowedContactSettings>() -> R.string.setting_title_allowed_contacts
+            it.hasRoute<AllowedNotificationSettings>() -> R.string.setting_title_notification
+            it.hasRoute< AllowedNotificationApps>() -> R.string.setting_notifications_select_allowed
             else -> null
         }
     }

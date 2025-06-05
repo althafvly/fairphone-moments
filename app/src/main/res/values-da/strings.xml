@@ -50,6 +50,7 @@
     <string name="mode_switcher_screen_header">Hvad er dit næste øjeblik?</string>
     <string name="setting_title_notification">Indstillinger for appbeskeder</string>
     <string name="setting_button_delete_mode_not_allowed">Dette er dit eneste øjeblik. Det kan ikke slettes.</string>
+    <string name="setting_notifications_allow_repeat_caller_desc">En person, der ringer flere gange inden for en periode på 15 minutter</string>
     <string name="profile_switch_state_enabled">%1$s\naktiveret</string>
     <string name="profile_switch_state_disabled">"%1$s\ndeaktiveret "</string>
     <string name="do_not_disturb_access_rationale_title">Adgang til Forstyr ikke kræves</string>
@@ -75,4 +76,18 @@
     <string name="onboarding_home_button_help">Tryk for at tilpasse \\n dit øjeblik.</string>
     <string name="bt_apply_changes">Anvende ændringer</string>
     <string name="onboarding_home_tooltitp">Skift øjeblikke og skift indstillinger.</string>
+    <string name="setting_notifications_select_allowed">Vælg tilladte notifikationer</string>
+    <string name="setting_notifications_app">App-notifikationer</string>
+    <string name="setting_notifications_allow_repeat_caller">Tillad gentagne opkald</string>
+    <string name="setting_notifications_none">Ingen tilladte</string>
+    <plurals name="setting_notifications_nb_allowed">
+        <item quantity="one">%1$d tilladt</item>
+        <item quantity="other">%1$d tilladt</item>
+    </plurals>
+    <string name="app_notifications_permission_header">Tilladelser</string>
+    <string name="app_notifications_permission_text">For at denne indstilling kan fungere, skal Fairphone Moments have tilladelse til at filtrere og genudsende dine notifikationer</string>
+    <string name="permission_toggle_title_notification_access">Læs notifikationer</string>
+    <string name="permission_toggle_subtitle_notification_access">Tilladelse til at læse oprindelsen af dine notifikationer</string>
+    <string name="permission_toggle_title_post_notification">Send notifikationer</string>
+    <string name="permission_toggle_subtitle_post_notification">Tilladelse til at genudsende de filtrerede notifikationer</string>
 </resources>

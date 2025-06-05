@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) 2025. Fairphone B.V.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.fairphone.spring.launcher.ui.component.switcher
+
+import android.content.res.Configuration
+import android.graphics.drawable.Drawable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import coil3.compose.AsyncImage
+import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.ui.component.SwitchButton
+import com.fairphone.spring.launcher.ui.component.selector.AppInfoIcon
+import com.fairphone.spring.launcher.ui.component.selector.SelectableItem
+import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
+import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+import com.fairphone.spring.launcher.util.fakeApp
+
+@Composable
+fun <T : SelectableItem> SwitcherListItem(
+    modifier: Modifier = Modifier,
+    item: T,
+    isChecked: Boolean,
+    onClick: (Boolean) -> Unit,
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 12.dp),
+    ) {
+        when (item) {
+            is AppInfo -> {
+                AppInfoIcon(appInfo = item, modifier = Modifier.size(40.dp))
+            }
+
+            else -> {
+                AsyncImage(
+                    model = item.icon,
+                    contentDescription = item.name,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.size(32.dp),
+                )
+            }
+        }
+
+        Text(
+            text = item.name,
+            style = FairphoneTypography.BodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.weight(1f),
+        )
+
+        SwitchButton(
+            state = isChecked,
+            onToggle = onClick
+        )
+    }
+}
+
+@Composable
+fun SwitcherListItem_Preview() {
+    val context = LocalContext.current
+    SpringLauncherTheme {
+        Column {
+            SwitcherListItem(
+                item = object : SelectableItem {
+                    override val id = "id"
+                    override val name = "Item name"
+                    override val icon: Drawable = ContextCompat.getDrawable(
+                        LocalContext.current,
+                        R.drawable.ic_launcher_foreground
+                    )!!
+                },
+                isChecked = true,
+                onClick = {}
+            )
+
+            SwitcherListItem(
+                item = context.fakeApp("App name", isWorkApp = true),
+                isChecked = true,
+                onClick = {}
+            )
+        }
+
+    }
+}
+
+@Composable
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun SwitcherListItem_PreviewDark() {
+    SwitcherListItem_Preview()
+}
+
+@Composable
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+fun SwitcherListItem_PreviewLight() {
+    SwitcherListItem_Preview()
+}

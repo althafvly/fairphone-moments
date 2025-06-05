@@ -126,6 +126,15 @@ val focusActionButtonStrokeDark = Color(0xFFFFFFFF)
 val pressedActionButtonStartGradienDark = Color(red = 255, green = 255, blue = 255, alpha = 10)
 val pressedActionButtonEndGradienDark = Color(red = 59, green = 59, blue = 59, alpha = 30)
 
+val switchBorderStartLightColor = Color(0xFFC3C3C3)
+val switchBorderEndLightColor = Color.White
+val switchBackgroundLightColor = Color(0x33CCCCCC)
+val switchBorderStartDarkColor = Color(0xFF303030)
+val switchBorderEndDarkColor = Color(0xFF696969)
+val switchBackgroundDarkColor = Color(0x33CCCCCC)
+val switchThumbColor = Color(0xFF141414)
+val switchCheckedBackground = Color_FP_Brand_Lime
+
 val brandAccentLight = Color(0xFF556423)
 val onBrandAccentLight = Color(0xFFFFFFFF)
 val brandAccentContainerLight = Color(0xFFD9EB9A)

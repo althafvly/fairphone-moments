@@ -20,6 +20,10 @@
 
     <!-- Permission needed to access/modify DND policies -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <!-- Permission needed to post intercepted notifications -->
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -139,5 +143,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ActivityTransparent"
             tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+        
+        <service android:name=".service.AppNotificationsListenerService"
+            android:label="notification listener"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.notification.default_filter_types"
+                android:value="ongoing|conversations|alerting|silent">
+            </meta-data>
+        </service>
     </application>
 </manifest>

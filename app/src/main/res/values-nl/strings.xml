@@ -53,6 +53,7 @@
     <string name="mode_switcher_screen_header">Wat is je volgende moment?</string>
     <string name="setting_title_notification">App notificatie instellingen</string>
     <string name="setting_button_delete_mode_not_allowed">Dit is je enige moment. Deze kan niet worden verwijderd.</string>
+    <string name="setting_notifications_allow_repeat_caller_desc">Iemand die meerdere keren belt binnen een periode van 15 minuten</string>
     <string name="profile_switch_state_enabled">%1$s\ningeschakeld</string>
     <string name="profile_switch_state_disabled">%1$s\nuitgeschakeld</string>
     <string name="do_not_disturb_access_rationale_title">Niet storen-toegang vereist</string>
@@ -75,4 +76,18 @@
     <string name="onboarding_home_button_help">Tik om uw Moment\\n te personaliseren.</string>
     <string name="bt_apply_changes">Wijzigingen toepassen</string>
     <string name="onboarding_home_tooltitp">Wissel van moment en wijzig de instellingen.</string>
+    <string name="setting_notifications_select_allowed">Selecteer toegestane meldingen</string>
+    <string name="setting_notifications_app">App-meldingen</string>
+    <string name="setting_notifications_allow_repeat_caller">Herhaalde bellers toestaan</string>
+    <string name="setting_notifications_none">Geen toegestaan</string>
+    <plurals name="setting_notifications_nb_allowed">
+        <item quantity="one">%1$d toegestaan</item>
+        <item quantity="other">%1$d toegestaan</item>
+    </plurals>
+    <string name="app_notifications_permission_header">Machtigingen</string>
+    <string name="app_notifications_permission_text">Om deze instelling te laten werken, moet Fairphone Moments de rechten hebben om je notificaties te filteren en opnieuw te plaatsen</string>
+    <string name="permission_toggle_title_notification_access">Notificaties lezen</string>
+    <string name="permission_toggle_subtitle_notification_access">Toestemming om de oorsprong van je notificaties te lezen</string>
+    <string name="permission_toggle_title_post_notification">Notificaties plaatsen</string>
+    <string name="permission_toggle_subtitle_post_notification">Toestemming om de gefilterde notificaties opnieuw te plaatsen</string>
 </resources>

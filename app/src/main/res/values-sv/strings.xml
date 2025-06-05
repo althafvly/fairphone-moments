@@ -75,4 +75,20 @@
     <string name="onboarding_home_button_help">Tryck för att anpassa\\n ditt ögonblick.</string>
     <string name="bt_apply_changes">Tillämpa ändringar</string>
     <string name="onboarding_home_tooltitp">Byt ögonblick och ändra inställningar.</string>
+
+    <string name="setting_notifications_select_allowed">Välj tillåtna aviseringar</string>
+    <string name="setting_notifications_app">Appaviseringar</string>
+    <string name="setting_notifications_none">Inga tillåtna</string>
+    <string name="setting_notifications_allow_repeat_caller">Tillåt upprepade uppringare</string>
+    <string name="setting_notifications_allow_repeat_caller_desc">Någon som ringer flera gånger inom en 15-minutersperiod</string>
+    <plurals name="setting_notifications_nb_allowed">
+        <item quantity="one">%1$d tillåten</item>
+        <item quantity="other">%1$d tillåtna</item>
+    </plurals>
+    <string name="app_notifications_permission_header">Behörigheter</string>
+    <string name="app_notifications_permission_text">För att den här inställningen ska fungera måste Fairphone Moments ha behörighet att filtrera och återpublicera dina aviseringar</string>
+    <string name="permission_toggle_title_notification_access">Läs aviseringar</string>
+    <string name="permission_toggle_subtitle_notification_access">Behörighet att läsa ursprunget för dina aviseringar</string>
+    <string name="permission_toggle_title_post_notification">Publicera aviseringar</string>
+    <string name="permission_toggle_subtitle_post_notification">Behörighet att återpublicera de filtrerade aviseringarna</string>
 </resources>

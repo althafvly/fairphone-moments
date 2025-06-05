@@ -55,6 +55,7 @@ import com.fairphone.spring.launcher.ui.component.LauncherProfileSettingsTopBar
 import com.fairphone.spring.launcher.ui.component.ProfileNameEditorDialog
 import com.fairphone.spring.launcher.ui.component.SettingListItem
 import com.fairphone.spring.launcher.ui.screen.settings.contacts.getNameResId
+import com.fairphone.spring.launcher.ui.screen.settings.notifications.notificationSubtitle
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.ui.theme.errorColor
@@ -173,12 +174,11 @@ fun ProfileSettingsScreen(
                     subtitle = stringResource(profile.allowedContacts.getNameResId()),
                     onClick = onNavigateToAllowedContactSettings
                 )
-//                SettingListItem(
-//                    enabled = false,
-//                    title = stringResource(R.string.setting_title_notification),
-//                    subtitle = stringResource(R.string.setting_subtitle_notification),
-//                    onClick = onNavigateToNotificationSettings
-//                )
+                SettingListItem(
+                    title = stringResource(R.string.setting_title_notification),
+                    subtitle = notificationSubtitle(profile.appNotificationsList.size),
+                    onClick = onNavigateToNotificationSettings
+                )
 //                SettingListItem(
 //                    enabled = false,
 //                    title = stringResource(R.string.setting_title_appearance),
@@ -209,7 +209,9 @@ fun ProfileSettingsScreen(
             }
 
             DeleteModeButton(
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 24.dp),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 24.dp),
                 onModeDeletionClick = onModeDeletionClick,
                 canDeleteMode = canDeleteProfile,
             )
