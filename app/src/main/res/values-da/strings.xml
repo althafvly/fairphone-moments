@@ -72,4 +72,7 @@
     <string name="setting_delete_mode_confirm">Er du sikker på, at du vil slette denne tilstand?</string>
     <string name="add_mode_screen_header">Hvilken tilstand vil du gerne oprette?</string>
     <string name="setting_button_delete_mode">Slet tilstanden</string>
+    <string name="onboarding_home_button_help">Tryk for at tilpasse \\n dit øjeblik.</string>
+    <string name="bt_apply_changes">Anvende ændringer</string>
+    <string name="onboarding_home_tooltitp">Skift øjeblikke og skift indstillinger.</string>
 </resources>

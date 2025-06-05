@@ -52,6 +52,8 @@
 
     <string name="mode_switcher_screen_header">What\'s your next moment?</string>
 
+    <string name="onboarding_home_button_help">Tap to customize\n your Moment.</string>
+
     <string name="setting_title_notification">App Notification settings</string>
     <string name="setting_title_appearance">Customize appearance</string>
     <string name="setting_title_sound_and_vibration">Sound &amp; vibration</string>
@@ -96,5 +98,7 @@
     <string name="mode_subtitle_custom">Start blank and tailor the mode to fit your needs</string>
     <string name="mode_subtitle_journey">Focus on the road ahead</string>
     <string name="mode_subtitle_recharge">Wake up refreshed and ready for a new day, every day</string>
+    <string name="bt_apply_changes">Apply changes</string>
+    <string name="onboarding_home_tooltitp">Switch Moments and change settings.</string>
 
 </resources>

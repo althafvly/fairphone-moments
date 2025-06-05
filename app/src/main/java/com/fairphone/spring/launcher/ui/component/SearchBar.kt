@@ -17,6 +17,7 @@
 package com.fairphone.spring.launcher.ui.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,6 +51,7 @@ fun SearchBar(
     ) {
         SearchBar(
             shape = RoundedCornerShape(12.dp),
+            windowInsets = WindowInsets(top = 0.dp),
             inputField = {
                 DefaultTextField(
                     text = query,

@@ -17,6 +17,7 @@
 package com.fairphone.spring.launcher.ui.screen.mode.creator
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.Presets
@@ -48,6 +50,7 @@ fun ChooseAppsScreen(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -61,9 +64,7 @@ fun ChooseAppsScreen(
             screenState = screenState,
             onAppClick = onAppClick,
             onAppDeselected = onAppDeselected,
-            onConfirmAppSelection = {
-                onContinue()
-            },
+            onConfirmAppSelection = onContinue,
             modifier = Modifier.weight(1f)
         )
     }

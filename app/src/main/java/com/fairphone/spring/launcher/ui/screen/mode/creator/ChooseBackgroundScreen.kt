@@ -68,7 +68,8 @@ import kotlin.math.roundToInt
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun ChooseBackgroundScreen(
-    selectedPreset: Presets,
+    selectedColor: Long,
+    continueButtonName: String = stringResource(R.string.bt_create),
     onContinue: (Long, Long) -> Unit
 ) {
 
@@ -76,7 +77,7 @@ fun ChooseBackgroundScreen(
     val colorSize = colors.size
 
     val scrollState = rememberLazyListState(
-        initialFirstVisibleItemIndex = colors.indexOfFirst { selectedPreset.profile.bgColor2 == it }
+        initialFirstVisibleItemIndex = colors.indexOfFirst { selectedColor == it }
     )
 
     var selectedColorIndex = remember {
@@ -183,7 +184,7 @@ fun ChooseBackgroundScreen(
         }
 
         PrimaryButton(
-            text = stringResource(R.string.bt_create),
+            text = continueButtonName,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
@@ -203,7 +204,7 @@ fun ChooseBackgroundScreen(
 private fun ChooseBackgroundScreen_Preview() {
     SpringLauncherTheme {
         ChooseBackgroundScreen(
-            Presets.Journey,
+            Presets.Journey.profile.bgColor2,
             onContinue = { color1, color2 -> }
         )
     }

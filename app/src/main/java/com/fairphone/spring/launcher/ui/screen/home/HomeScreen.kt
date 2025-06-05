@@ -17,47 +17,44 @@
 package com.fairphone.spring.launcher.ui.screen.home
 
 import android.content.Context
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.LauncherProfile
+import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.prefs.UsageMode
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
+import com.fairphone.spring.launcher.ui.component.CardWithAnimatedBorder
 import com.fairphone.spring.launcher.ui.component.FairphoneMomentsDemoCard
-import com.fairphone.spring.launcher.ui.icons.mode.ModeIcon
+import com.fairphone.spring.launcher.ui.screen.home.component.CurrentModeButton
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
+import com.fairphone.spring.launcher.ui.theme.homeButtonBackgroundDarkColor
+import com.fairphone.spring.launcher.ui.theme.homeButtonBackgroundLightColor
 import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 
@@ -82,16 +79,21 @@ fun HomeScreen(
     screenState ?: return
 
     HomeScreen(
+        viewModel = viewModel,
         date = date,
         time = time,
-        modeButtonIcon = ModeIcon.valueOf(screenState!!.activeProfile.icon).imageVector,
-        modeButtonText = screenState!!.activeProfile.name,
+        appUsageMode = screenState!!.appUsageMode,
+        activeProfile = screenState!!.activeProfile,
         appList = screenState!!.visibleApps,
         isRetailDemoMode = screenState!!.isRetailDemoMode,
         onAppClick = { appInfo ->
+            viewModel.finishOnBoarding()
             viewModel.onAppClick(context, appInfo)
         },
-        onModeSwitcherButtonClick = onModeSwitcherButtonClick,
+        onModeSwitcherButtonClick = {
+            viewModel.finishOnBoarding()
+            onModeSwitcherButtonClick()
+        },
         onDemoCardClick = {
             onDemoCardClick()
         }
@@ -100,11 +102,12 @@ fun HomeScreen(
 
 @Composable
 fun HomeScreen(
+    viewModel: HomeScreenViewModel,
     modifier: Modifier = Modifier,
     date: String,
     time: String,
-    modeButtonIcon: ImageVector,
-    modeButtonText: String,
+    appUsageMode: UsageMode,
+    activeProfile: LauncherProfile,
     appList: List<AppInfo>,
     isRetailDemoMode: Boolean,
     onAppClick: (AppInfo) -> Unit,
@@ -135,39 +138,28 @@ fun HomeScreen(
                 color = MaterialTheme.colorScheme.onBackground,
             )
 
-            OutlinedButton(
-                onClick = onModeSwitcherButtonClick,
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                ),
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant),
-                shape = RoundedCornerShape(size = 16.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 14.dp),
+            CardWithAnimatedBorder(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(size = 16.dp))
+                    .clipToBounds()
                     .padding(top = 12.dp)
-                    .align(Alignment.CenterHorizontally)
+                    .wrapContentSize(),
+                // Because of the animation we can't use e background color with opacity
+                backgroundColor = if (isSystemInDarkTheme()) homeButtonBackgroundDarkColor else homeButtonBackgroundLightColor,
+                enableAnimation = appUsageMode == UsageMode.ON_BOARDING,
+                borderColors = listOf(
+                    Color(activeProfile.bgColor1),
+                    Color(activeProfile.bgColor2)
+                )
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        imageVector = modeButtonIcon,
-                        contentDescription = null,
-                        modifier = Modifier.size(ButtonDefaults.IconSize),
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-
-                    Text(
-                        text = modeButtonText,
-                        style = FairphoneTypography.ButtonDefault,
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                }
+                CurrentModeButton(
+                    activeProfile = activeProfile,
+                    appUsageMode = appUsageMode,
+                    onModeSwitcherButtonClick = onModeSwitcherButtonClick,
+                    onTooltipClick = {
+                        viewModel.finishOnBoarding()
+                    }
+                )
             }
-
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -181,7 +173,7 @@ fun HomeScreen(
         )
 
 
-        if(isRetailDemoMode){
+        if (isRetailDemoMode) {
             FairphoneMomentsDemoCard(
                 modifier = Modifier.padding(30.dp),
                 onClick = { onDemoCardClick() }
@@ -189,6 +181,7 @@ fun HomeScreen(
         }
     }
 }
+
 
 @Composable
 fun AppList(
@@ -233,10 +226,11 @@ fun AppButton(appName: String, onAppClick: () -> Unit) {
 fun HomeScreen_Preview() {
     SpringLauncherTheme {
         HomeScreen(
+            viewModel = koinViewModel(),
             date = "Wed, 13 Feb",
             time = "12:30",
-            modeButtonIcon = Icons.Filled.Settings,
-            modeButtonText = "Essentials",
+            appUsageMode = UsageMode.DEFAULT,
+            activeProfile = Presets.Essentials.profile,
             appList = previewAppList(LocalContext.current),
             isRetailDemoMode = false,
             onAppClick = {},
@@ -251,10 +245,11 @@ fun HomeScreen_Preview() {
 fun HomeScreenDark_Preview() {
     SpringLauncherTheme {
         HomeScreen(
+            viewModel = koinViewModel(),
             date = "Wed, 13 Feb",
             time = "12:30",
-            modeButtonIcon = ModeIcon.Extra3.imageVector,
-            modeButtonText = "Essentials",
+            appUsageMode = UsageMode.DEFAULT,
+            activeProfile = Presets.Essentials.profile,
             isRetailDemoMode = false,
             appList = previewAppList(LocalContext.current),
             onAppClick = {},
@@ -263,15 +258,17 @@ fun HomeScreenDark_Preview() {
         )
     }
 }
+
 @Composable
 @FP6Preview
 fun HomeScreenRetailDemo_Preview() {
     SpringLauncherTheme {
         HomeScreen(
+            viewModel = koinViewModel(),
             date = "Wed, 13 Feb",
             time = "12:30",
-            modeButtonIcon = Icons.Filled.Settings,
-            modeButtonText = "Essentials",
+            appUsageMode = UsageMode.ON_BOARDING,
+            activeProfile = Presets.Essentials.profile,
             isRetailDemoMode = true,
             appList = previewAppList(LocalContext.current),
             onAppClick = {},
@@ -286,10 +283,11 @@ fun HomeScreenRetailDemo_Preview() {
 fun HomeScreenRetailDemoDark_Preview() {
     SpringLauncherTheme {
         HomeScreen(
+            viewModel = koinViewModel(),
             date = "Wed, 13 Feb",
             time = "12:30",
-            modeButtonIcon = Icons.Filled.Settings,
-            modeButtonText = "Essentials",
+            appUsageMode = UsageMode.ON_BOARDING,
+            activeProfile = Presets.Essentials.profile,
             isRetailDemoMode = true,
             appList = previewAppList(LocalContext.current),
             onAppClick = {},

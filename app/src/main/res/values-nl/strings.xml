@@ -72,4 +72,7 @@
     <string name="choose_app_background_header">Kies een achtergrond</string>
     <string name="name_mode_screen_header">Geef je moment een naam</string>
     <string name="setting_button_delete_mode">Verwijder de modus</string>
+    <string name="onboarding_home_button_help">Tik om uw Moment\\n te personaliseren.</string>
+    <string name="bt_apply_changes">Wijzigingen toepassen</string>
+    <string name="onboarding_home_tooltitp">Wissel van moment en wijzig de instellingen.</string>
 </resources>

@@ -72,4 +72,7 @@
     <string name="mode_subtitle_recharge">Våkn opp uthvilt og klar for en ny dag, hver dag</string>
     <string name="name_mode_screen_header">Navngi øyeblikket ditt</string>
     <string name="setting_button_delete_mode">Slett modusen</string>
+    <string name="onboarding_home_button_help">Trykk for å tilpasse\\n øyeblikket ditt.</string>
+    <string name="bt_apply_changes">Bruk endringer</string>
+    <string name="onboarding_home_tooltitp">Bytt øyeblikk og endre innstillinger.</string>
 </resources>

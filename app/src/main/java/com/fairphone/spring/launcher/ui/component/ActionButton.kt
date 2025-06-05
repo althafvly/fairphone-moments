@@ -90,6 +90,7 @@ fun ActionButton(
     modifier: Modifier = Modifier,
     displayLabel: Boolean = false,
     isSelected: Boolean = false,
+    horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
     size: ButtonSize = ButtonSize.Default,
     type: ButtonType = ButtonType.Round,
     selectedStartColor: Color = Color_FP_Brand_Lime,
@@ -97,7 +98,7 @@ fun ActionButton(
     onClick: () -> Unit = {}
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = horizontalAlignment,
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
     ) {

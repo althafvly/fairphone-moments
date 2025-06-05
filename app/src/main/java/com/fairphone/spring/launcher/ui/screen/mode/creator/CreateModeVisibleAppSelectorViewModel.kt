@@ -27,7 +27,6 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.CUSTOM_PROFILE_ID
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
-import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.ScreenData
 import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorScreenState
@@ -66,7 +65,7 @@ class CreateModeVisibleAppSelectorViewModel(
                 profileId = CUSTOM_PROFILE_ID,
                 appList = installedApps,
                 visibleApps = visibleApps,
-                showConfirmButton = false,
+                showConfirmButton = installedApps.isNotEmpty(),
                 showAppCounter = visibleApps.size == LAUNCHER_MAX_APP_COUNT,
                 showEmptyAppSelectedError = false,
                 showMaxAppSelectedError = false,
@@ -76,13 +75,12 @@ class CreateModeVisibleAppSelectorViewModel(
             _screenState.update {
                 // Elements ae loaded, and the data will be ready when the updateSelectProfile
                 // function will be called
-                VisibleAppSelectorScreenState.Loading
+                VisibleAppSelectorScreenState.UpdateAppSelectionSuccess
             }
         }
     }
 
-    fun updateSelectProfile(preset: Presets, apps: List<String>) {
-        val expectedProfile = preset.profile
+    fun updateSelectProfile(profileId: String, apps: List<String>) {
         visibleApps.addAll(
             apps.mapNotNull { appPackage ->
                 installedApps.firstOrNull { it.packageName == appPackage }
@@ -91,7 +89,7 @@ class CreateModeVisibleAppSelectorViewModel(
         _screenState.updateAppSelectorState {
             screenData.copy(
                 visibleApps = visibleApps,
-                profileId = expectedProfile.id
+                profileId = profileId
             )
         }
     }

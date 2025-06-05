@@ -72,4 +72,7 @@
     <string name="choose_app_background_header">Scegli uno sfondo</string>
     <string name="name_mode_screen_header">Dai un nome al tuo momento</string>
     <string name="setting_button_delete_mode">Elimina la modalità</string>
+    <string name="onboarding_home_button_help">Tocca per personalizzare\\n il tuo Momento.</string>
+    <string name="bt_apply_changes">Applicare modifiche</string>
+    <string name="onboarding_home_tooltitp">Cambia momenti e modifica le impostazioni.</string>
 </resources>

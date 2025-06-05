@@ -21,9 +21,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LauncherProfile
+import com.fairphone.spring.launcher.data.prefs.AppPrefs
+import com.fairphone.spring.launcher.data.prefs.UsageMode
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.InitializeSpringLauncherUseCase
+import com.fairphone.spring.launcher.domain.usecase.profile.SetApplicationUsageModeUseCase
 import com.fairphone.spring.launcher.util.isDeviceInRetailDemoMode
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
@@ -40,28 +43,33 @@ import java.time.LocalDateTime
 
 class HomeScreenViewModel(
     context: Context,
+    getActiveProfileUseCase: GetActiveProfileUseCase,
+    private val setApplicationUsageModeUseCase: SetApplicationUsageModeUseCase,
+    private val appPrefs: AppPrefs,
     private val appInfoRepository: AppInfoRepository,
-    private val getActiveProfileUseCase: GetActiveProfileUseCase,
     private val initializeSpringLauncherUseCase: InitializeSpringLauncherUseCase,
 ) : ViewModel() {
 
     private val _dateTime: MutableStateFlow<LocalDateTime> = MutableStateFlow(LocalDateTime.now())
     val dateTime: StateFlow<LocalDateTime> = _dateTime.asStateFlow()
 
-    val screenState: StateFlow<HomeScreenState?> = getActiveProfileUseCase.execute(Unit)
-        .map { profile ->
-            val visibleApps = appInfoRepository.getAppInfosByPackageNames(context, profile.visibleAppsList)
+    val screenState: StateFlow<HomeScreenState?> =
+        getActiveProfileUseCase.execute(Unit).map { profile ->
+            val visibleApps =
+                appInfoRepository.getAppInfosByPackageNames(context, profile.visibleAppsList)
             val isRetailDemoMode = context.isDeviceInRetailDemoMode()
             HomeScreenState(
                 activeProfile = profile,
                 visibleApps = visibleApps,
-                isRetailDemoMode = isRetailDemoMode
+                isRetailDemoMode = isRetailDemoMode,
+                appUsageMode = appPrefs.usageMode()
             )
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = null,
-        )
+        }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(),
+                initialValue = null,
+            )
 
     init {
         refreshTime()
@@ -76,7 +84,9 @@ class HomeScreenViewModel(
     }
 
     fun onAppClick(context: Context, appInfo: AppInfo) {
-        context.launchApp(appInfo)
+        viewModelScope.launch {
+            context.launchApp(appInfo)
+        }
     }
 
     fun initializeSpringLauncher() {
@@ -84,10 +94,24 @@ class HomeScreenViewModel(
             initializeSpringLauncherUseCase.execute(Unit)
         }
     }
+
+    /**
+     * When user has clicked on ‘X’ on the onboarding tooltip, or interact with another component
+     * on the screen (i.e., the Mode button or an app) the onboarding is complete and the usage
+     * mode is the default one
+     */
+    fun finishOnBoarding() {
+        viewModelScope.launch {
+            if (screenState.value?.appUsageMode == UsageMode.ON_BOARDING_COMPLETE) {
+                setApplicationUsageModeUseCase.execute(UsageMode.DEFAULT)
+            }
+        }
+    }
 }
 
 data class HomeScreenState(
     val activeProfile: LauncherProfile,
     val visibleApps: List<AppInfo> = emptyList(),
-    val isRetailDemoMode: Boolean = false
+    val isRetailDemoMode: Boolean = false,
+    val appUsageMode: UsageMode = UsageMode.ON_BOARDING
 )

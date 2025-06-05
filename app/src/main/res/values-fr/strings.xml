@@ -72,4 +72,7 @@
     <string name="mode_subtitle_journey">Concentrez-vous sur la route devant vous</string>
     <string name="mode_subtitle_recharge">Réveillez-vous frais et dispos et prêt pour une nouvelle journée, chaque jour</string>
     <string name="setting_button_delete_mode">Supprimer le mode</string>
+    <string name="onboarding_home_button_help">Appuyez pour personnaliser\\n votre Moment.</string>
+    <string name="bt_apply_changes">Appliquer les modifications</string>
+    <string name="onboarding_home_tooltitp">Changez de moment et modifiez les paramètres.</string>
 </resources>

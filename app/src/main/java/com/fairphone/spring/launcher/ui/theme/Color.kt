@@ -98,6 +98,9 @@ val surfaceContainerDark = Color(0xFF222222)
 val surfaceContainerHighDark = Color(0xFF252B2C)
 val surfaceContainerHighestDark = Color(0xFF303637)
 
+val onBoardingLightDescription = Color(0xff767676)
+val homeButtonBackgroundDarkColor = Color(0xFF292928)
+val homeButtonBackgroundLightColor = Color(0xffeff0f2)
 
 val backgroundShapeBackgroundLightStart = Color(0x88E0E7F2)
 val backgroundShapeBorderLightStart = Color(0x99999999)

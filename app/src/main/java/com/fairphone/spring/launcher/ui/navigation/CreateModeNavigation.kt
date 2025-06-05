@@ -51,7 +51,7 @@ data class NameYourMoment(
 
 @Serializable
 data class ChooseApps(
-    val preset: Presets,
+    val profileId: String,
     val modeName: String = "",
     val icon: ModeIcon = ModeIcon.Extra6,
     val apps: List<String> = emptyList()
@@ -59,7 +59,8 @@ data class ChooseApps(
 
 @Serializable
 data class ChooseBackground(
-    val preset: Presets,
+    val profileId: String,
+    val mainColor: Long,
     val modeName: String = "",
     val icon: ModeIcon = ModeIcon.Extra6,
     val apps: List<String>
@@ -90,7 +91,7 @@ fun CreateModeNavigation(
                     val preset = Presets.entries.first { it.profile.id == selectedProfile.id }
                     navController.navigate(
                         ChooseApps(
-                            preset = preset,
+                            profileId = preset.profile.id,
                             modeName = selectedProfile.name,
                             icon = ModeIcon.valueOf(selectedProfile.icon),
                             apps = preset.profile.visibleAppsList
@@ -109,7 +110,7 @@ fun CreateModeNavigation(
             onContinue = { newName, newIcon ->
                 navController.navigate(
                     ChooseApps(
-                        preset = Presets.Custom,
+                        profileId = Presets.Custom.profile.id,
                         modeName = newName,
                         icon = newIcon,
                         apps = emptyList()
@@ -126,8 +127,8 @@ fun CreateModeNavigation(
         val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
         LaunchedEffect(screenState) {
-            if (screenState is VisibleAppSelectorScreenState.Loading) {
-                viewModel.updateSelectProfile(chooseApps.preset, chooseApps.apps)
+            if (screenState is VisibleAppSelectorScreenState.UpdateAppSelectionSuccess) {
+                viewModel.updateSelectProfile(chooseApps.profileId, chooseApps.apps)
             }
         }
 
@@ -146,7 +147,8 @@ fun CreateModeNavigation(
                             apps = data.visibleApps.map { it.packageName },
                             modeName = chooseApps.modeName,
                             icon = chooseApps.icon,
-                            preset = chooseApps.preset
+                            profileId = chooseApps.profileId,
+                            mainColor = Presets.entries.first { it.profile.id == chooseApps.profileId }.profile.bgColor2
                         )
                         navController.navigate(route)
                     }
@@ -165,7 +167,7 @@ fun CreateModeNavigation(
         val viewModel: CreateModeViewModel = koinViewModel()
 
         ChooseBackgroundScreen(
-            selectedPreset = chooseBackground.preset,
+            selectedColor = chooseBackground.mainColor,
             onContinue = { color1, color2 ->
                 val params = CreateLauncherProfile(
                     id = CreateLauncherProfileUseCase.newId(),
