@@ -29,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.ScreenHeader
@@ -42,8 +41,6 @@ import com.fairphone.spring.launcher.util.fakeApp
 @Composable
 fun ChooseAppsScreen(
     screenState: VisibleAppSelectorScreenState,
-    filter: String,
-    onAppFilterChanged: (String) -> Unit,
     onAppClick: (AppInfo) -> Unit,
     onAppDeselected: (AppInfo) -> Unit,
     onContinue: () -> Unit,
@@ -77,7 +74,6 @@ private fun ChooseAppsScreen_Preview() {
         ChooseAppsScreen(
             screenState = VisibleAppSelectorScreenState.Ready(
                 data = ScreenData(
-                    profileId = Presets.Essentials.profile.id,
                     appList = listOf(
                         context.fakeApp("test"),
                         context.fakeApp("test1"),
@@ -91,10 +87,8 @@ private fun ChooseAppsScreen_Preview() {
                     confirmButtonTextResource = R.string.bt_continue
                 )
             ),
-            filter = "",
             onAppClick = {},
             onAppDeselected = {},
-            onAppFilterChanged = {},
             onContinue = {}
         )
     }

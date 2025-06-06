@@ -46,8 +46,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
-import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.Preset
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.icons.NavIcons
@@ -68,16 +67,16 @@ import com.fairphone.spring.launcher.ui.theme.selectedActionButtonStrokeEndGradi
 
 @Composable
 fun SelectModeButton(
-    presetProfile: Presets,
+    presetProfile: Preset,
     modifier: Modifier = Modifier,
-    onModeSettingsClick: (LauncherProfile) -> Unit = {}
+    onModeSettingsClick: (Preset) -> Unit = {}
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isDark = isSystemInDarkTheme()
     val isPressed by interactionSource.collectIsPressedAsState()
 
     Button(
-        onClick = { onModeSettingsClick(presetProfile.profile) },
+        onClick = { onModeSettingsClick(presetProfile) },
         border = computeButtonBorder(isDark = isDark),
         interactionSource = interactionSource,
         shape = RoundedCornerShape(16.dp),
@@ -102,8 +101,8 @@ fun SelectModeButton(
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
         ) {
             Icon(
-                imageVector = ImageVector.fromString(presetProfile.profile.icon),
-                contentDescription = presetProfile.profile.name,
+                imageVector = ImageVector.fromString(presetProfile.icon),
+                contentDescription = presetProfile.name,
                 modifier = Modifier
                     .padding(start = 16.dp, end = 16.dp)
                     .size(20.dp)
@@ -124,7 +123,7 @@ fun SelectModeButton(
             }
 
             IconButton(
-                onClick = { onModeSettingsClick(presetProfile.profile) },
+                onClick = { onModeSettingsClick(presetProfile) },
                 modifier = Modifier.size(48.dp)
             ) {
                 Icon(
@@ -181,8 +180,8 @@ private fun computeButtonBorder(isDark: Boolean): BorderStroke {
 fun SelectModeButton_Preview() {
     SpringLauncherTheme {
         Column {
-            SelectModeButton(Presets.QualityTime)
-            SelectModeButton(Presets.DeepFocus)
+            SelectModeButton(Preset.QualityTime)
+            SelectModeButton(Preset.DeepFocus)
         }
 
     }

@@ -48,23 +48,23 @@ fun VisibleAppSelectorScreen(
     ) {
         when (screenState) {
             is VisibleAppSelectorScreenState.Ready -> {
-                ItemSelectorLayout(
-                    itemList = screenState.data.appList,
-                    selectedItems = screenState.data.visibleApps,
-                    maxItemCount = screenState.data.maxItemCount,
+                VisibleAppSelectorScreen(
+                    appList = screenState.data.appList,
+                    selectedApps = screenState.data.visibleApps,
+                    maxAppCount = screenState.data.maxItemCount,
                     showConfirmButton = screenState.data.showConfirmButton,
-                    showItemCounter = screenState.data.showAppCounter,
-                    showEmptyItemSelectedError = screenState.data.showEmptyAppSelectedError,
-                    showMaxItemSelectedError = screenState.data.showMaxAppSelectedError,
+                    showAppCounter = screenState.data.showAppCounter,
+                    showEmptyAppSelectedError = screenState.data.showEmptyAppSelectedError,
+                    showMaxAppSelectedError = screenState.data.showMaxAppSelectedError,
                     confirmButtonTextResource = screenState.data.confirmButtonTextResource,
-                    onItemClick = onAppClick,
-                    onItemDeselected = onAppDeselected,
-                    onConfirmItemSelection = onConfirmAppSelection,
-                    maxItemCountErrorText = stringResource(
+                    onAppClick = onAppClick,
+                    onAppDeselected = onAppDeselected,
+                    onConfirmAppSelection = onConfirmAppSelection,
+                    maxAppCountErrorText = stringResource(
                         R.string.visible_apps_error_max_selected,
                         screenState.data.maxItemCount,
                     ),
-                    emptyItemSelectedErrorText = stringResource(
+                    emptyAppSelectedErrorText = stringResource(
                         R.string.visible_apps_error_empty_selected,
                     ),
                 )
@@ -73,6 +73,41 @@ fun VisibleAppSelectorScreen(
             else -> {}
         }
     }
+}
+
+@Composable
+fun VisibleAppSelectorScreen(
+    appList: List<AppInfo>,
+    selectedApps: List<AppInfo>,
+    maxAppCount: Int,
+    showConfirmButton: Boolean,
+    showAppCounter: Boolean,
+    showEmptyAppSelectedError: Boolean,
+    showMaxAppSelectedError: Boolean,
+    confirmButtonTextResource: Int,
+    onAppClick: (AppInfo) -> Unit,
+    onAppDeselected: (AppInfo) -> Unit,
+    onConfirmAppSelection: () -> Unit,
+    modifier: Modifier = Modifier,
+    maxAppCountErrorText: String,
+    emptyAppSelectedErrorText: String,
+) {
+    ItemSelectorLayout(
+        modifier = modifier,
+        itemList = appList,
+        selectedItems = selectedApps,
+        maxItemCount = maxAppCount,
+        showConfirmButton = showConfirmButton,
+        showItemCounter = showAppCounter,
+        showEmptyItemSelectedError = showEmptyAppSelectedError,
+        showMaxItemSelectedError = showMaxAppSelectedError,
+        confirmButtonTextResource = confirmButtonTextResource,
+        onItemClick = onAppClick,
+        onItemDeselected = onAppDeselected,
+        onConfirmItemSelection = onConfirmAppSelection,
+        maxItemCountErrorText = maxAppCountErrorText,
+        emptyItemSelectedErrorText = emptyAppSelectedErrorText,
+    )
 }
 
 @Composable

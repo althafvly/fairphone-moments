@@ -17,44 +17,34 @@
 package com.fairphone.spring.launcher.data.model
 
 import android.content.Context
-import androidx.compose.ui.graphics.Color
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.data.model.protos.launcherProfile
 
-const val CUSTOM_PROFILE_ID: String = "custom"
+const val PROFILE_ID_CUSTOM: String = "custom"
 
-enum class Presets(
-    val profile: LauncherProfile,
+enum class Preset(
+    val id: String,
     val title: Int,
     val subtitle: Int,
-    // The default apps are defined here and not in the example profile linked to a Preset, because
-    // we can need to use the context to find the default app
+    val icon: String,
+    val colors: LauncherColors,
     val defaultApps: List<AppPreset>
 ) {
-
     Custom(
-        profile = launcherProfile {
-            id = CUSTOM_PROFILE_ID
-            name = "Custom"
-            icon = "Extra6"
-            bgColor1 = 0xFFF27696
-            bgColor2 = 0xFFF26E6E
-        },
+        id = PROFILE_ID_CUSTOM,
         title = R.string.mode_title_custom,
         subtitle = R.string.mode_subtitle_custom,
+        icon = "Extra6",
+        colors = LauncherColors(mainColor = 0xFFF26E6E, secondaryColor = 0xFFF27696),
         defaultApps = emptyList()
     ),
     Essentials(
-        profile = launcherProfile {
-            id = "spring"
-            name = "Spring"
-            icon = "Spring"
-            bgColor1 = 0xB2C3D1D0
-            bgColor2 = 0xB2FFBA63
-        },
+        id = "spring",
         title = R.string.mode_title_essential,
         subtitle = R.string.mode_subtitle_essential,
+        icon = "Spring",
+        colors = LauncherColors(mainColor = 0xB2FFBA63, secondaryColor = 0xB2C3D1D0),
         defaultApps = listOf(
             AppPreset(Camera),
             AppPreset(DefaultBrowser),
@@ -64,15 +54,11 @@ enum class Presets(
         )
     ),
     DeepFocus(
-        profile = launcherProfile {
-            id = "deep_focus"
-            name = "Deep focus"
-            icon = "DeepFocus"
-            bgColor1 = 0xFFF27696
-            bgColor2 = 0xFFF26E6E
-        },
+        id = "deep_focus",
         title = R.string.mode_title_deep_focus,
         subtitle = R.string.mode_subtitle_deep_focus,
+        icon = "DeepFocus",
+        colors = LauncherColors(mainColor = 0xFFF26E6E, secondaryColor = 0xFFF27696),
         defaultApps = listOf(
             AppPreset(GoogleGmail),
             AppPreset(GoogleCalendar),
@@ -82,15 +68,11 @@ enum class Presets(
         )
     ),
     Journey(
-        profile = launcherProfile {
-            id = "journey"
-            name = "Journey"
-            icon = "Journey"
-            bgColor1 = 0xFFD8FF4F
-            bgColor2 = 0xFF00433D
-        },
+        id = "journey",
         title = R.string.mode_title_journey,
         subtitle = R.string.mode_subtitle_journey,
+        icon = "Journey",
+        colors = LauncherColors(mainColor = 0xFF00433D, secondaryColor = 0xFFD8FF4F),
         defaultApps = listOf(
             AppPreset(Waze, alternatives = listOf(GoogleMaps)),
             AppPreset(Spotify, alternatives = listOf(Tidal, Deezer, GoogleYoutubeMusic)),
@@ -98,36 +80,28 @@ enum class Presets(
         )
     ),
     Recharge(
-        profile = launcherProfile {
-            id = "recharge"
-            name = "Recharge"
-            icon = "Recharge"
-            bgColor1 = 0xFF66A2DD
-            bgColor2 = 0xFF2D9197
-        }, title = R.string.mode_title_recharge,
+        id = "recharge",
+        title = R.string.mode_title_recharge,
         subtitle = R.string.mode_subtitle_recharge,
+        icon = "Recharge",
+        colors = LauncherColors(mainColor = 0xFF2D9197, secondaryColor = 0xFF66A2DD),
         defaultApps = listOf(
             AppPreset(Spotify, alternatives = listOf(Tidal, Deezer, GoogleYoutubeMusic)),
             AppPreset(Headspace, alternatives = listOf(Calm, Clock)),
         )
     ),
     QualityTime(
-        profile = launcherProfile {
-            id = "qualitytime"
-            name = "Quality Time"
-            icon = "QualityTime"
-            bgColor1 = 0xFF42CC60
-            bgColor2 = 0xFFD8FF4F
-        },
+        id = "qualitytime",
         title = R.string.mode_title_quality_time,
         subtitle = R.string.mode_subtitle_quality_time,
+        icon = "QualityTime",
+        colors = LauncherColors(mainColor = 0xFFD8FF4F, secondaryColor = 0xFF42CC60),
         defaultApps = listOf(
             AppPreset(Camera),
             AppPreset(GooglePhoto),
             AppPreset(Whatsapp, alternatives = listOf(Messages)),
         )
     );
-
 
     fun getVisibleAppPackageNames(context: Context): List<String> =
         defaultApps.map { app ->
@@ -148,13 +122,20 @@ enum class Presets(
                     installedApps.firstOrNull { it.packageName == packageName }
                 }
         }
-
-
-    companion object {
-        val presetSelectionForNewMode = Presets.entries.minus(Essentials)
-    }
 }
 
-fun LauncherProfile.colors(): Pair<Color, Color> {
-    return Pair(Color(bgColor1), Color(bgColor2))
+val Mock_Profile = launcherProfile {
+    id = "spring"
+    name = "Spring"
+    icon = "Spring"
+    bgColor1 = 0xB2C3D1D0
+    bgColor2 = 0xB2FFBA63
+}
+
+fun LauncherProfile.colors(): LauncherColors {
+    return LauncherColors(
+        mainColor = bgColor2,
+        secondaryColor = bgColor1
+
+    )
 }

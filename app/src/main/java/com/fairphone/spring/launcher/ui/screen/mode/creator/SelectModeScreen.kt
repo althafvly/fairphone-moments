@@ -28,8 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
-import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.Preset
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.ScreenHeader
@@ -37,8 +36,8 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
 fun SelectModeScreen(
-    profiles: List<Presets>,
-    onModeSettingsClick: (LauncherProfile) -> Unit,
+    profiles: List<Preset>,
+    onPresetSelected: (Preset) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -59,7 +58,7 @@ fun SelectModeScreen(
             profiles.forEach { mode ->
                 SelectModeButton(
                     presetProfile = mode,
-                    onModeSettingsClick = onModeSettingsClick,
+                    onModeSettingsClick = onPresetSelected,
                 )
             }
         }
@@ -69,7 +68,7 @@ fun SelectModeScreen(
 @Composable
 private fun ModeSwitcherScreen_Preview() {
     SpringLauncherTheme {
-        SelectModeScreen(Presets.presetSelectionForNewMode, {})
+        SelectModeScreen(Preset.entries, {})
     }
 }
 

@@ -55,7 +55,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.LauncherColors
+import com.fairphone.spring.launcher.data.model.Mock_Profile
+import com.fairphone.spring.launcher.data.model.Preset
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.PrimaryButton
@@ -70,10 +72,10 @@ import kotlin.math.roundToInt
 fun ChooseBackgroundScreen(
     selectedColor: Long,
     continueButtonName: String = stringResource(R.string.bt_create),
-    onContinue: (Long, Long) -> Unit
+    onContinue: (LauncherColors) -> Unit
 ) {
 
-    val colors = Presets.entries.map { it.profile.bgColor2 }.distinct()
+    val colors = Preset.entries.map { it.colors.mainColor }.distinct()
     val colorSize = colors.size
 
     val scrollState = rememberLazyListState(
@@ -191,10 +193,11 @@ fun ChooseBackgroundScreen(
                 .height(80.dp)
                 .padding(horizontal = 20.dp, vertical = 16.dp)
         ) {
-            val preset =
-                Presets.entries.first { it.profile.bgColor2 == colors[selectedColorIndex.value] }
+            val preset = Preset
+                .entries
+                .first { it.colors.mainColor == colors[selectedColorIndex.value] }
 
-            onContinue(preset.profile.bgColor1, preset.profile.bgColor2)
+            onContinue(preset.colors)
         }
     }
 }
@@ -204,8 +207,8 @@ fun ChooseBackgroundScreen(
 private fun ChooseBackgroundScreen_Preview() {
     SpringLauncherTheme {
         ChooseBackgroundScreen(
-            Presets.Journey.profile.bgColor2,
-            onContinue = { color1, color2 -> }
+            Mock_Profile.bgColor2,
+            onContinue = { }
         )
     }
 }
