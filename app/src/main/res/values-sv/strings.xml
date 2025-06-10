@@ -66,7 +66,7 @@
     <string name="choose_app_screen_subtitle">Det här är apparna du kommer att se. Telefonsamtal kommer fortfarande fram som vanligt.</string>
     <string name="choose_app_background_header">Välj en bakgrund</string>
     <string name="name_mode_screen_header">Namnge ditt ögonblick</string>
-    <string name="mode_subtitle_balance">Prioritera din kropp och ditt sinne</string>
+    <string name="mode_subtitle_quality_time">Prioritera din kropp och ditt sinne</string>
     <string name="mode_subtitle_deep_focus">Frigör din potential genom att stänga ute distraktioner</string>
     <string name="mode_subtitle_custom">Börja tomt och anpassa läget efter dina behov</string>
     <string name="mode_subtitle_journey">Fokusera på vägen framåt</string>

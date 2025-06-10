@@ -165,7 +165,7 @@ private fun computeButtonBorder(isDark: Boolean): BorderStroke {
 fun SelectModeButton_Preview() {
     SpringLauncherTheme {
         Column {
-            SelectModeButton(Presets.Balance)
+            SelectModeButton(Presets.QualityTime)
             SelectModeButton(Presets.DeepFocus)
         }
 

@@ -65,7 +65,7 @@
     <string name="choose_app_screen_header">Velg opptil 5 apper som skal vises i ditt øyeblikk</string>
     <string name="choose_app_screen_subtitle">Dette er appene du ser. Telefonsamtaler vil fortsatt komme gjennom som normalt.</string>
     <string name="choose_app_background_header">Velg en bakgrunn</string>
-    <string name="mode_subtitle_balance">Prioriter kropp og sinn</string>
+    <string name="mode_subtitle_quality_time">Prioriter kropp og sinn</string>
     <string name="mode_subtitle_deep_focus">Slipp løs potensialet ditt ved å stenge ute distraksjoner</string>
     <string name="mode_subtitle_custom">Start blankt og tilpass modusen til dine behov</string>
     <string name="mode_subtitle_journey">Fokuser på veien videre</string>

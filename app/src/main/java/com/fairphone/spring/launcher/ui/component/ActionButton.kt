@@ -250,8 +250,8 @@ fun ActionButton_Preview() {
                 description = "Update selected moment",
                 isSelected = true,
                 displayLabel = true,
-                selectedStartColor = Color(Presets.Balance.profile.bgColor2),
-                selectedEndColor = Color(Presets.Balance.profile.bgColor1)
+                selectedStartColor = Color(Presets.QualityTime.profile.bgColor2),
+                selectedEndColor = Color(Presets.QualityTime.profile.bgColor1)
             )
             ActionButton(
                 icon = SettingsIcon,

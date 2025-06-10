@@ -63,7 +63,7 @@
     <string name="setting_delete_mode_confirm">Möchten Sie diesen Modus wirklich löschen?</string>
     <string name="add_mode_screen_header">Welchen Modus möchten Sie erstellen?</string>
     <string name="choose_app_screen_header">Wählen Sie bis zu 5 Apps aus, die in Ihrem Moment angezeigt werden sollen</string>
-    <string name="mode_subtitle_balance">Priorisieren Sie Ihren Körper und Geist</string>
+    <string name="mode_subtitle_quality_time">Priorisieren Sie Ihren Körper und Geist</string>
     <string name="mode_subtitle_deep_focus">Entfesseln Sie Ihr Potenzial, indem Sie Ablenkungen ausblenden</string>
     <string name="mode_subtitle_custom">Beginnen Sie mit einer leeren Version und passen Sie den Modus Ihren Anforderungen an</string>
     <string name="mode_subtitle_journey">Konzentrieren Sie sich auf die Straße vor Ihnen</string>

@@ -57,7 +57,7 @@
     <string name="moments_demo_card_text">This Fairphone (Gen. 6) is currently running Moments, a new way to use your phone.</string>
     <string name="close">Luk</string>
     <string name="no_internet_connection">Ingen internetforbindelse</string>
-    <string name="mode_subtitle_balance">Prioritér din krop og dit sind</string>
+    <string name="mode_subtitle_quality_time">Prioritér din krop og dit sind</string>
     <string name="mode_subtitle_deep_focus">Frigør dit potentiale ved at lukke distraktioner ude</string>
     <string name="mode_subtitle_custom">Start blankt og tilpas tilstanden til dine behov</string>
     <string name="mode_subtitle_journey">Fokuser på vejen fremad</string>

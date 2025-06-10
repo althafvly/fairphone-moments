@@ -251,7 +251,7 @@ private fun CurrentModeButton_Preview(usageMode: UsageMode) {
     SpringLauncherTheme {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CurrentModeButton(
-                activeProfile = Presets.Balance.profile,
+                activeProfile = Presets.QualityTime.profile,
                 appUsageMode = usageMode,
                 onModeSwitcherButtonClick = {},
                 onTooltipClick= {}

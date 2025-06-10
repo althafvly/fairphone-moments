@@ -38,7 +38,7 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 @Keep
 enum class ModeIcon(val imageVector: ImageVector) {
     Spring(ModeIcons.Spring),
-    Balance(ModeIcons.Balance),
+    QualityTime(ModeIcons.QualityTime),
     DeepFocus(ModeIcons.DeepFocus),
     Recharge(ModeIcons.Recharge),
     Extra1(ModeIcons.Extra1),

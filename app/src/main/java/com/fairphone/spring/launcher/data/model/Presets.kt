@@ -55,17 +55,6 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
         title = R.string.mode_title_deep_focus,
         subtitle = R.string.mode_subtitle_deep_focus
     ),
-    Balance(
-        profile = launcherProfile {
-            id = "balance"
-            name = "Balance"
-            icon = "Balance"
-            bgColor1 = 0xFF42CC60
-            bgColor2 = 0xFFD8FF4F
-        },
-        title = R.string.mode_title_balance,
-        subtitle = R.string.mode_subtitle_balance
-    ),
     Journey(
         profile = launcherProfile {
             id = "journey"
@@ -86,6 +75,17 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
             bgColor2 = 0xFF2D9197
         }, title = R.string.mode_title_recharge,
         subtitle = R.string.mode_subtitle_recharge
+    ),
+    QualityTime(
+        profile = launcherProfile {
+            id = "qualitytime"
+            name = "Quality Time"
+            icon = "QualityTime"
+            bgColor1 = 0xFF42CC60
+            bgColor2 = 0xFFD8FF4F
+        },
+        title = R.string.mode_title_quality_time,
+        subtitle = R.string.mode_subtitle_quality_time
     );
 
     companion object {
