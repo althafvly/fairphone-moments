@@ -38,12 +38,6 @@ object Defaults {
     const val Color_BG_Blue = 0xB282C9F1
     const val Color_BG_Pink = 0xB2F7CAC9
     const val Color_BG_Purple = 0xB2C0AFFF
-    val DEFAULT_VISIBLE_APPS = listOf(
-        "com.google.android.dialer",
-        "com.google.android.apps.messaging",
-        "com.fps.camera",
-        "com.google.android.apps.maps",
-    )
     val DEFAULT_ALLOWED_CONTACTS = ContactType.CONTACT_TYPE_STARRED
     const val DEFAULT_REPEAT_CALL_ENABLED = false
     const val DEFAULT_WALLPAPER_ID = 0

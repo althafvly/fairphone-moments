@@ -16,6 +16,7 @@
 
 package com.fairphone.spring.launcher.data.model
 
+import android.content.Context
 import androidx.compose.ui.graphics.Color
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
@@ -23,7 +24,15 @@ import com.fairphone.spring.launcher.data.model.protos.launcherProfile
 
 const val CUSTOM_PROFILE_ID: String = "custom"
 
-enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: Int) {
+enum class Presets(
+    val profile: LauncherProfile,
+    val title: Int,
+    val subtitle: Int,
+    // The default apps are defined here and not in the example profile linked to a Preset, because
+    // we can need to use the context to find the default app
+    val defaultApps: List<AppPreset>
+) {
+
     Custom(
         profile = launcherProfile {
             id = CUSTOM_PROFILE_ID
@@ -33,7 +42,8 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
             bgColor2 = 0xFFF26E6E
         },
         title = R.string.mode_title_custom,
-        subtitle = R.string.mode_subtitle_custom
+        subtitle = R.string.mode_subtitle_custom,
+        defaultApps = emptyList()
     ),
     Essentials(
         profile = launcherProfile {
@@ -44,7 +54,14 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
             bgColor2 = 0xB2FFBA63
         },
         title = R.string.mode_title_essential,
-        subtitle = R.string.mode_subtitle_essential
+        subtitle = R.string.mode_subtitle_essential,
+        defaultApps = listOf(
+            AppPreset(Camera),
+            AppPreset(DefaultBrowser),
+            AppPreset(GoogleMaps),
+            AppPreset(Messages),
+            AppPreset(Phone),
+        )
     ),
     DeepFocus(
         profile = launcherProfile {
@@ -55,7 +72,14 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
             bgColor2 = 0xFFF26E6E
         },
         title = R.string.mode_title_deep_focus,
-        subtitle = R.string.mode_subtitle_deep_focus
+        subtitle = R.string.mode_subtitle_deep_focus,
+        defaultApps = listOf(
+            AppPreset(GoogleGmail),
+            AppPreset(GoogleCalendar),
+            AppPreset(GoogleDrive),
+            AppPreset(GoogleMeet),
+            AppPreset(GoogleKeepNotes),
+        )
     ),
     Journey(
         profile = launcherProfile {
@@ -66,7 +90,12 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
             bgColor2 = 0xFF00433D
         },
         title = R.string.mode_title_journey,
-        subtitle = R.string.mode_subtitle_journey
+        subtitle = R.string.mode_subtitle_journey,
+        defaultApps = listOf(
+            AppPreset(Waze, alternatives = listOf(GoogleMaps)),
+            AppPreset(Spotify, alternatives = listOf(Tidal, Deezer, GoogleYoutubeMusic)),
+            AppPreset(Phone)
+        )
     ),
     Recharge(
         profile = launcherProfile {
@@ -76,7 +105,11 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
             bgColor1 = 0xFF66A2DD
             bgColor2 = 0xFF2D9197
         }, title = R.string.mode_title_recharge,
-        subtitle = R.string.mode_subtitle_recharge
+        subtitle = R.string.mode_subtitle_recharge,
+        defaultApps = listOf(
+            AppPreset(Spotify, alternatives = listOf(Tidal, Deezer, GoogleYoutubeMusic)),
+            AppPreset(Headspace, alternatives = listOf(Calm, Clock)),
+        )
     ),
     QualityTime(
         profile = launcherProfile {
@@ -87,8 +120,35 @@ enum class Presets(val profile: LauncherProfile, val title: Int, val subtitle: I
             bgColor2 = 0xFFD8FF4F
         },
         title = R.string.mode_title_quality_time,
-        subtitle = R.string.mode_subtitle_quality_time
+        subtitle = R.string.mode_subtitle_quality_time,
+        defaultApps = listOf(
+            AppPreset(Camera),
+            AppPreset(GooglePhoto),
+            AppPreset(Whatsapp, alternatives = listOf(Messages)),
+        )
     );
+
+
+    fun getVisibleAppPackageNames(context: Context): List<String> =
+        defaultApps.map { app ->
+            app.allApps.firstNotNullOf {
+                it.getPackageName(context)
+            }
+        }
+
+    fun getVisibleAppInfos(
+        context: Context,
+        installedApps: List<AppInfo> = emptyList()
+    ): List<AppInfo> =
+        defaultApps.map { app ->
+            app.allApps
+                .map {
+                    it.getPackageName(context)
+                }.firstNotNullOf { packageName ->
+                    installedApps.firstOrNull { it.packageName == packageName }
+                }
+        }
+
 
     companion object {
         val presetSelectionForNewMode = Presets.entries.minus(Essentials)

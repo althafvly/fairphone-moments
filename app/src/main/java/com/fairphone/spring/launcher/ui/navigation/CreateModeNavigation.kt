@@ -53,8 +53,7 @@ data class NameYourMoment(
 data class ChooseApps(
     val profileId: String,
     val modeName: String = "",
-    val icon: ModeIcon = ModeIcon.Extra6,
-    val apps: List<String> = emptyList()
+    val icon: ModeIcon = ModeIcon.Extra6
 )
 
 @Serializable
@@ -93,8 +92,7 @@ fun CreateModeNavigation(
                         ChooseApps(
                             profileId = preset.profile.id,
                             modeName = selectedProfile.name,
-                            icon = ModeIcon.valueOf(selectedProfile.icon),
-                            apps = preset.profile.visibleAppsList
+                            icon = ModeIcon.valueOf(selectedProfile.icon)
                         )
                     )
                 }
@@ -112,8 +110,7 @@ fun CreateModeNavigation(
                     ChooseApps(
                         profileId = Presets.Custom.profile.id,
                         modeName = newName,
-                        icon = newIcon,
-                        apps = emptyList()
+                        icon = newIcon
                     )
                 )
             }
@@ -128,7 +125,7 @@ fun CreateModeNavigation(
 
         LaunchedEffect(screenState) {
             if (screenState is VisibleAppSelectorScreenState.UpdateAppSelectionSuccess) {
-                viewModel.updateSelectProfile(chooseApps.profileId, chooseApps.apps)
+                viewModel.updateSelectProfile(chooseApps.profileId)
             }
         }
 

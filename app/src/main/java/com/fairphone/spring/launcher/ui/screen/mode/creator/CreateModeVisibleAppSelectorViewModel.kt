@@ -27,6 +27,7 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.CUSTOM_PROFILE_ID
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
+import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.ScreenData
 import com.fairphone.spring.launcher.ui.screen.settings.apps.selector.VisibleAppSelectorScreenState
@@ -80,9 +81,29 @@ class CreateModeVisibleAppSelectorViewModel(
         }
     }
 
-    fun updateSelectProfile(profileId: String, apps: List<String>) {
+    /**
+     * Search the default apps in the Preset
+     */
+    fun updateSelectProfile(profileId: String) {
+        val apps = Presets.entries
+            .first { it.profile.id == profileId }
+            .getVisibleAppInfos(context, installedApps)
+
+        visibleApps.addAll(apps)
+        _screenState.updateAppSelectorState {
+            screenData.copy(
+                visibleApps = visibleApps,
+                profileId = profileId
+            )
+        }
+    }
+
+    /**
+     * Initialize the visible apps with the a list of configured app package names
+     */
+    fun updateSelectProfile(profileId: String, appPackageNames: List<String>) {
         visibleApps.addAll(
-            apps.mapNotNull { appPackage ->
+            appPackageNames.mapNotNull { appPackage ->
                 installedApps.firstOrNull { it.packageName == appPackage }
             },
         )
