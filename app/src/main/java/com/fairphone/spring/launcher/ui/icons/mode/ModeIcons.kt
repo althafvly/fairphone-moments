@@ -20,6 +20,9 @@ import androidx.annotation.Keep
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -66,17 +69,21 @@ fun ImageVector.Companion.fromString(string: String): ImageVector =
 @Composable
 fun ModeIcon_Preview() {
     SpringLauncherTheme {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
         ) {
-            ModeIcon.entries.forEach {
-                Text("Icon : ${it.name}", color = MaterialTheme.colorScheme.onBackground)
-                Image(
-                    imageVector = it.imageVector,
-                    contentDescription = "",
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
-                )
+            items(ModeIcon.entries) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Icon : ${it.name}", color = MaterialTheme.colorScheme.onBackground)
+                    Image(
+                        imageVector = it.imageVector,
+                        contentDescription = "",
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+                    )
+                }
             }
         }
     }
