@@ -20,8 +20,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.LauncherProfile
-import com.fairphone.spring.launcher.data.model.copy
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.copy
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.DeleteLauncherProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.GetAllProfilesUseCase

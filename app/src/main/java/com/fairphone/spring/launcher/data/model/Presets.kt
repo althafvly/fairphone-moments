@@ -18,6 +18,8 @@ package com.fairphone.spring.launcher.data.model
 
 import androidx.compose.ui.graphics.Color
 import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.launcherProfile
 
 const val CUSTOM_PROFILE_ID: String = "custom"
 

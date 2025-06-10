@@ -18,6 +18,10 @@
 package com.fairphone.spring.launcher.data.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.fairphone.spring.launcher.data.model.protos.ContactType
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.SoundSetting
+import com.fairphone.spring.launcher.data.model.protos.UiMode
 import com.fairphone.spring.launcher.ui.icons.mode.fromString
 
 fun LauncherProfile.getIconVector(): ImageVector =

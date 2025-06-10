@@ -17,8 +17,8 @@
 package com.fairphone.spring.launcher.domain.usecase.profile
 
 import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
-import com.fairphone.spring.launcher.data.model.LauncherProfile
-import com.fairphone.spring.launcher.data.model.launcherProfile
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.launcherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.domain.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.ZenNotificationManager

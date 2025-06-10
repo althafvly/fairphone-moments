@@ -23,7 +23,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSourceImpl
-import com.fairphone.spring.launcher.data.model.LauncherProfiles
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfiles
 import com.fairphone.spring.launcher.data.prefs.AppPrefs
 import com.fairphone.spring.launcher.data.prefs.AppPrefsImpl
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository

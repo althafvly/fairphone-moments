@@ -18,9 +18,9 @@ package com.fairphone.spring.launcher.data.datasource
 
 import android.util.Log
 import androidx.datastore.core.DataStore
-import com.fairphone.spring.launcher.data.model.LauncherProfile
-import com.fairphone.spring.launcher.data.model.LauncherProfiles
-import com.fairphone.spring.launcher.data.model.launcherProfiles
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfiles
+import com.fairphone.spring.launcher.data.model.protos.launcherProfiles
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first

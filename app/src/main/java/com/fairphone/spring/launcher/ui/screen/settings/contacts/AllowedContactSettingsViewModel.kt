@@ -18,8 +18,8 @@ package com.fairphone.spring.launcher.ui.screen.settings.contacts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fairphone.spring.launcher.data.model.ContactType
 import com.fairphone.spring.launcher.data.model.Defaults
+import com.fairphone.spring.launcher.data.model.protos.ContactType
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
 import kotlinx.coroutines.flow.SharingStarted

@@ -17,7 +17,7 @@
 package com.fairphone.spring.launcher.data.repository
 
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
-import com.fairphone.spring.launcher.data.model.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

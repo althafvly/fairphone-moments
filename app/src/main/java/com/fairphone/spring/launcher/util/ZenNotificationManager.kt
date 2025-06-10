@@ -24,9 +24,9 @@ import android.service.notification.ZenDeviceEffects
 import android.service.notification.ZenPolicy
 import androidx.core.net.toUri
 import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
-import com.fairphone.spring.launcher.data.model.ContactType
 import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
-import com.fairphone.spring.launcher.data.model.UiMode
+import com.fairphone.spring.launcher.data.model.protos.ContactType
+import com.fairphone.spring.launcher.data.model.protos.UiMode
 
 class ZenNotificationManager(private val context: Context) {
 

@@ -16,6 +16,10 @@
 
 package com.fairphone.spring.launcher.data.model
 
+import com.fairphone.spring.launcher.data.model.protos.ContactType
+import com.fairphone.spring.launcher.data.model.protos.SoundSetting
+import com.fairphone.spring.launcher.data.model.protos.UiMode
+
 /**
  * Data Class used to build a new LauncherProfile.
  */

@@ -19,7 +19,7 @@ package com.fairphone.spring.launcher.data.serializer
 import android.util.Log
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.fairphone.spring.launcher.data.model.LauncherProfiles
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfiles
 import kotlinx.serialization.SerializationException
 import java.io.InputStream
 import java.io.OutputStream
