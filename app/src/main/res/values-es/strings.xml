@@ -50,8 +50,8 @@
     <string name="setting_subtitle_power_saving">Ahorre energía y extiende la vida útil de tu batería</string>
     <string name="setting_subtitle_appearance">Cambia el look a tu gusto</string>
     <string name="setting_button_delete_mode_not_allowed">Este es tu único momento. No se puede eliminar.</string>
-    <string name="profile_switch_state_enabled">%1$s\ndesactivado</string>
-    <string name="profile_switch_state_disabled">%1$s\nactivado</string>
+    <string name="profile_switch_state_enabled">%1$s\nactivado</string>
+    <string name="profile_switch_state_disabled">%1$s\ndesactivado</string>
     <string name="do_not_disturb_access_rationale_title">Se necesita acceso a No molestar</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments necesita acceso a No molestar para funcionar correctamente. Permite el acceso en tu configuración.</string>
     <string name="moments_demo_card_text">Este Fairphone (Gen. 6) actualmente ejecuta Fairphone Moments, una nueva forma de usar su teléfono. Vuelve a Android normal con el interruptor de lima en el lateral. O haga clic aquí para obtener más información.</string>
@@ -59,9 +59,9 @@
     <string name="no_internet_connection">Sin conexión a Internet</string>
     <string name="mode_subtitle_quality_time">Prioriza tu cuerpo y tu mente</string>
     <string name="mode_subtitle_deep_focus">Libera tu potencial eliminando las distracciones</string>
-    <string name="mode_subtitle_custom">Comience en blanco y adapte el modo a sus necesidades</string>
-    <string name="mode_subtitle_journey">Concéntrese en el camino que tiene por delante</string>
-    <string name="mode_subtitle_recharge">Despierta renovado y listo para un nuevo día, todos los días.</string>
+    <string name="mode_subtitle_custom">Comienza en blanco y adapta el modo a tus necesidades</string>
+    <string name="mode_subtitle_journey">Concéntrate en el camino que tienes por delante</string>
+    <string name="mode_subtitle_recharge">Despierta renovado y listo para un nuevo día, todos los días</string>
     <string name="bt_navigate_back">Atrás</string>
     <string name="bt_navigation_close">Cerca</string>
     <string name="bt_continue">Continuar</string>
@@ -72,7 +72,7 @@
     <string name="choose_app_background_header">Elige un fondo</string>
     <string name="name_mode_screen_header">Nombra tu momento</string>
     <string name="setting_button_delete_mode">Eliminar el modo</string>
-    <string name="onboarding_home_button_help">Toca para personalizar\\n tu momento.</string>
+    <string name="onboarding_home_button_help">Toca para personalizar tu momento.</string>
     <string name="bt_apply_changes">Aplicar cambios</string>
-    <string name="onboarding_home_tooltitp">Cambiar momentos y cambiar configuraciones.</string>
+    <string name="onboarding_home_tooltitp">Cambia momentos y cambia configuraciones</string>
 </resources>

@@ -53,8 +53,8 @@
     <string name="mode_switcher_screen_header">Wat is je volgende moment?</string>
     <string name="setting_title_notification">App notificatie instellingen</string>
     <string name="setting_button_delete_mode_not_allowed">Dit is je enige moment. Deze kan niet worden verwijderd.</string>
-    <string name="profile_switch_state_enabled">%1$s\nuitgeschakeld</string>
-    <string name="profile_switch_state_disabled">%1$s\ningeschakeld</string>
+    <string name="profile_switch_state_enabled">%1$s\ningeschakeld</string>
+    <string name="profile_switch_state_disabled">%1$s\nuitgeschakeld</string>
     <string name="do_not_disturb_access_rationale_title">Niet storen-toegang vereist</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments heeft toegang tot Niet storen nodig om correct te functioneren. Sta toegang toe in je instellingen.</string>
     <string name="moments_demo_card_text">Deze Fairphone (Gen. 6) laat Fairphone Moments zien, een nieuwe manier om je telefoon verantwoord te gebruiken. Zet de groene switch aan de zijkant om om terug te gaan naar het reguliere Android thuisschem. Of klik hier om meer te weten te komen.</string>

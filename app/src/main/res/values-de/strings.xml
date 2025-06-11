@@ -53,8 +53,8 @@
     <string name="setting_subtitle_power_saving">Sparen Sie Strom und verlängern Sie die Akkulaufzeit</string>
     <string name="setting_subtitle_appearance">Ändern Sie das Erscheinungsbild nach Ihren Wünschen</string>
     <string name="setting_button_delete_mode_not_allowed">Dies ist Ihr einziger Moment. Es kann nicht gelöscht werden.</string>
-    <string name="profile_switch_state_enabled">%1$s\ndeaktiviert</string>
-    <string name="profile_switch_state_disabled">%1$s\naktiviert</string>
+    <string name="profile_switch_state_enabled">%1$s\naktiviert</string>
+    <string name="profile_switch_state_disabled">%1$s\ndeaktiviert</string>
     <string name="do_not_disturb_access_rationale_title">Zugriff auf „Nicht stören“ erforderlich</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments benötigt Zugriff auf „Nicht stören“, um ordnungsgemäß zu funktionieren. Erlaube den Zugriff in deinen Einstellungen.</string>
     <string name="moments_demo_card_text">Auf diesem Fairphone (Gen. 6) läuft derzeit Fairphone Moments, eine neue Möglichkeit, Ihr Telefon zu nutzen. Wechseln Sie mit dem Lime-Schalter an der Seite zurück zum normalen Android. Oder klicken Sie hier, um mehr zu erfahren.</string>

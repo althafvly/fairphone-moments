@@ -53,8 +53,8 @@
     <string name="setting_subtitle_power_saving">Risparmia energia e prolunga la durata della batteria</string>
     <string name="setting_subtitle_appearance">Cambia l\'aspetto a tuo piacimento</string>
     <string name="setting_button_delete_mode_not_allowed">Questo è il tuo unico momento. Non può essere eliminato.</string>
-    <string name="profile_switch_state_enabled">%1$s\ndisattivato</string>
-    <string name="profile_switch_state_disabled">%1$s\nattivato</string>
+    <string name="profile_switch_state_enabled">%1$s\nattivato</string>
+    <string name="profile_switch_state_disabled">%1$s\ndisattivato</string>
     <string name="do_not_disturb_access_rationale_title">Accesso a Non disturbare necessario</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments necessita dell’accesso a Non disturbare per funzionare correttamente. Consenti l’accesso nelle impostazioni.</string>
     <string name="moments_demo_card_text">Questo Fairphone (Gen. 6) è attualmente dotato di Fairphone Moments, un nuovo modo di utilizzare il telefono. Torna al normale Android con lo switch sul lato. Oppure clicca qui per saperne di più.</string>

@@ -81,7 +81,7 @@
 
     <string name="choose_app_screen_header">Choose up to 5 apps to show in your Moment</string>
     <string name="choose_app_screen_subtitle">These are the apps you\'ll see. Phone calls will still come through as normal.</string>
-    <string name="choose_app_background_header">Choose a \n background</string>
+    <string name="choose_app_background_header">Choose a background</string>
 
     <string name="name_mode_screen_header">Name your moment</string>
 

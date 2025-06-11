@@ -50,8 +50,8 @@
     <string name="mode_switcher_screen_header">Quel est votre prochain moment ?</string>
     <string name="setting_title_notification">Paramètres de notification d\'application</string>
     <string name="setting_button_delete_mode_not_allowed">Ce Moment est unique. Il ne peut pas être supprimé.</string>
-    <string name="profile_switch_state_enabled">%1$s\ndésactivé</string>
-    <string name="profile_switch_state_disabled">%1$s\nactivé</string>
+    <string name="profile_switch_state_enabled">%1$s\nactivé</string>
+    <string name="profile_switch_state_disabled">%1$s\ndésactivé</string>
     <string name="do_not_disturb_access_rationale_title">Accès Ne pas déranger requis</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments a besoin de l\'accès à Ne pas déranger pour fonctionner correctement. Autorisez l\'accès dans vos paramètres.</string>
     <string name="moments_demo_card_text">Ce Fairphone (Gen. 6) exécute actuellement Fairphone Moments, une nouvelle façon d\'utiliser votre téléphone. Revenez à Android standard avec l\'interrupteur vert sur le côté droit. Ou cliquez ici pour en savoir plus.</string>
@@ -64,7 +64,7 @@
     <string name="add_mode_screen_header">Quel mode souhaitez-vous créer ?</string>
     <string name="choose_app_screen_header">Choisissez jusqu\'à 5 applications à afficher dans votre Moment</string>
     <string name="choose_app_screen_subtitle">Voici les applications que vous verrez. Les appels téléphoniques continueront d\'être traités normalement.</string>
-    <string name="choose_app_background_header">Choisir \\n un arrière plan</string>
+    <string name="choose_app_background_header">Choisir un arrière plan</string>
     <string name="name_mode_screen_header">Nommez votre moment</string>
     <string name="mode_subtitle_quality_time">Donnez la priorité à votre corps et à votre esprit</string>
     <string name="mode_subtitle_deep_focus">Libérez votre potentiel en éliminant les distractions</string>

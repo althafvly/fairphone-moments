@@ -50,8 +50,8 @@
     <string name="setting_subtitle_power_saving">Spara ström och förläng batteritiden</string>
     <string name="setting_subtitle_appearance">Ändra utseendet efter din smak</string>
     <string name="setting_button_delete_mode_not_allowed">Detta är ditt enda ögonblick. Det går inte att radera.</string>
-    <string name="profile_switch_state_enabled">%1$s\navaktiverat</string>
-    <string name="profile_switch_state_disabled">%1$s\naktiverat</string>
+    <string name="profile_switch_state_enabled">%1$s\naktiverat</string>
+    <string name="profile_switch_state_disabled">%1$s\navaktiverat</string>
     <string name="do_not_disturb_access_rationale_title">Behörighet till Stör ej krävs</string>
     <string name="do_not_disturb_access_rationale_text">Fairphone Moments behöver åtkomst till Stör ej för att fungera korrekt. Tillåt åtkomst i dina inställningar.</string>
     <string name="moments_demo_card_text">Denna Fairphone (Gen. 6) kör för närvarande Fairphone Moments, ett nytt sätt att använda din telefon. Byt tillbaka till vanlig Android med lime switchen på sidan. Eller klicka här för att lära dig mer.</string>
