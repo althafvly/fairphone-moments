@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fairphone.spring.launcher.data.model.Preset
+import com.fairphone.spring.launcher.ui.component.ScreenViewTracker
 import com.fairphone.spring.launcher.ui.screen.mode.creator.ChooseAppsScreen
 import com.fairphone.spring.launcher.ui.screen.mode.creator.ChooseBackgroundScreen
 import com.fairphone.spring.launcher.ui.screen.mode.creator.CreateModeState
@@ -53,6 +54,8 @@ fun CreateModeNavigation(
 ) {
     val viewModel: CreateModeViewModel = koinViewModel()
     val context = LocalContext.current
+
+    ScreenViewTracker(navController = navController)
 
     NavHost(
         navController = navController,

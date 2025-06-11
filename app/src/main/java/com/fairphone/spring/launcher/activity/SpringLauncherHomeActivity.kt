@@ -27,9 +27,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import com.fairphone.spring.launcher.analytics.FirebaseAnalyticsService
+import com.fairphone.spring.launcher.analytics.LocalAnalyticsService
 import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import org.koin.compose.KoinContext
 
 class SpringLauncherHomeActivity : ComponentActivity() {
@@ -73,8 +79,11 @@ class SpringLauncherHomeActivity : ComponentActivity() {
 
         setContent {
             KoinContext {
-                SpringLauncherTheme {
-                    HomeNavigation()
+                val analyticsService = remember { FirebaseAnalyticsService(Firebase.analytics) }
+                CompositionLocalProvider(LocalAnalyticsService provides analyticsService) {
+                    SpringLauncherTheme {
+                        HomeNavigation()
+                    }
                 }
             }
         }

@@ -32,7 +32,6 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
 
 class App : Application(), KoinComponent {
 
@@ -54,7 +53,7 @@ class App : Application(), KoinComponent {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            androidLogger(level = if (BuildConfig.DEBUG) Level.DEBUG else Level.INFO)
+            androidLogger()
             modules(koinModules)
         }
         initApp(this)

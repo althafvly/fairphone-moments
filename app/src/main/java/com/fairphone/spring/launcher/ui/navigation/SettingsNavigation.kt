@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.fairphone.spring.launcher.ui.component.ScreenViewTracker
 import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsScreen
 import com.fairphone.spring.launcher.ui.screen.settings.main.ProfileSettingsViewModel
 import kotlinx.serialization.Serializable
@@ -39,63 +40,67 @@ object ProfileSettings
 fun SettingsNavigation(
     navController: NavHostController,
     onCloseSettings: () -> Unit
-) = NavHost(
-    navController = navController,
-    startDestination = ProfileSettings,
-    enterTransition = {
-        slideIntoContainer(
-            AnimatedContentTransitionScope.SlideDirection.Left,
-            animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
-        )
-    },
-    exitTransition = {
-        slideOutOfContainer(
-            AnimatedContentTransitionScope.SlideDirection.Left,
-            animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
-        )
-    },
-    popEnterTransition = {
-        slideIntoContainer(
-            AnimatedContentTransitionScope.SlideDirection.Right,
-            animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
-        )
-    },
-    popExitTransition = {
-        slideOutOfContainer(
-            AnimatedContentTransitionScope.SlideDirection.Right,
-            animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
-        )
-    }
 ) {
-    // Moment Settings Screen
-    composable<ProfileSettings> {
-        val viewModel: ProfileSettingsViewModel = koinViewModel()
-        val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+    ScreenViewTracker(navController = navController)
 
-        ProfileSettingsScreen(
-            screenState = screenState,
-            onEditProfileName = viewModel::updateProfileName,
-            onProfileIconClick = viewModel::updateProfileIcon,
-            onNavigateToVisibleAppSettings = {
-                navController.navigate(VisibleAppSettings)
-            },
-            onNavigateToAllowedContactSettings = {
-                navController.navigate(AllowedContactSettings)
-            },
-            onNavigateToNotificationSettings = {},
-            onNavigateToAppearanceSettings = {},
-            onNavigateToSoundAndVibrationSettings = {},
-            onNavigateToPowerSavingSettings = {},
-            onModeDeletionClick = {
-                viewModel.deleteProfile()
-                onCloseSettings()
-            }
-        )
+    NavHost(
+        navController = navController,
+        startDestination = ProfileSettings,
+        enterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
+            )
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
+            )
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
+            )
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(SLIDE_ANIMATION_DURATION_MILLIS)
+            )
+        }
+    ) {
+        // Moment Settings Screen
+        composable<ProfileSettings> {
+            val viewModel: ProfileSettingsViewModel = koinViewModel()
+            val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+
+            ProfileSettingsScreen(
+                screenState = screenState,
+                onEditProfileName = viewModel::updateProfileName,
+                onProfileIconClick = viewModel::updateProfileIcon,
+                onNavigateToVisibleAppSettings = {
+                    navController.navigate(VisibleAppSettings)
+                },
+                onNavigateToAllowedContactSettings = {
+                    navController.navigate(AllowedContactSettings)
+                },
+                onNavigateToNotificationSettings = {},
+                onNavigateToAppearanceSettings = {},
+                onNavigateToSoundAndVibrationSettings = {},
+                onNavigateToPowerSavingSettings = {},
+                onModeDeletionClick = {
+                    viewModel.deleteProfile()
+                    onCloseSettings()
+                }
+            )
+        }
+
+        // Visible App Settings
+        visibleAppSettingsNavGraph(navController)
+
+        // Allowed Contact Settings
+        allowedContactSettingsNavGraph(navController)
     }
-
-    // Visible App Settings
-    visibleAppSettingsNavGraph(navController)
-
-    // Allowed Contact Settings
-    allowedContactSettingsNavGraph(navController)
 }

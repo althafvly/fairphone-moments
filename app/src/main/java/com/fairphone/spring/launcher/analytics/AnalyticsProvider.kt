@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.compose) apply false
-    alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.firebase.crashlytics) apply false
-    alias(libs.plugins.google.protobuf) apply false
-    alias(libs.plugins.google.services) apply false
+package com.fairphone.spring.launcher.analytics
+
+import androidx.compose.runtime.compositionLocalOf
+
+/**
+ * CompositionLocal to provide an [AnalyticsService] instance throughout the Composable tree.
+ *
+ * By default, a no-op implementation of [AnalyticsService] is provided.
+ */
+val LocalAnalyticsService = compositionLocalOf<AnalyticsService> {
+    // Provide a no-op implementation as a default
+    object : AnalyticsService {
+        override fun trackScreenView(routeName: String) {}
+    }
 }

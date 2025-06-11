@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "360063494677",
+    "project_id": "fairphone-moments-app",
+    "storage_bucket": "fairphone-moments-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360063494677:android:233437c596eadd6237bc1c",
+        "android_client_info": {
+          "package_name": "com.fairphone.spring.launcher"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAByBwjX-j8dWKfHDfLqq6zEwF06ObIngY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360063494677:android:7a1eff2a3920415937bc1c",
+        "android_client_info": {
+          "package_name": "com.fairphone.spring.launcher.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAByBwjX-j8dWKfHDfLqq6zEwF06ObIngY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

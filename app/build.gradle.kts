@@ -22,7 +22,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.google.protobuf)
+    alias(libs.plugins.google.services)
 }
 
 val versionMajor: String by project
@@ -134,6 +136,9 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.work.runtime)
     implementation(libs.coil)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
