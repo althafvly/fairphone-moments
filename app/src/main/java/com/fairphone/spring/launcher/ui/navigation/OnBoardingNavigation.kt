@@ -97,26 +97,6 @@ fun OnBoardingNavigation(
                 onContinue = {
                     viewModel.updateLauncherProfileApps(viewModel.visibleApps.map { it.packageName })
                     navController.navigate(OnBoardingChooseBackground)
-
-                    /*when (viewModel.screenState.value) {
-                        is VisibleAppSelectorScreenState.Ready -> {
-                            val data =
-                                (viewModel.screenState.value as VisibleAppSelectorScreenState.Ready).data
-                            val route = OnBoardingChooseBackground(
-                                apps = data.visibleApps.map { it.packageName },
-                                modeName = args.modeName,
-                                icon = args.icon,
-                                profileId = args.profileId,
-                                mainColor = Defaults.Color_BG_Orange
-                            )
-                            navController.navigate(OnBoardingChooseBackground)
-                        }
-
-                        else -> {
-                            // Ignore
-                        }
-                    }*/
-
                 }
             )
         }

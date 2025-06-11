@@ -58,7 +58,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.data.model.getIconVector
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
@@ -267,7 +267,7 @@ fun SwitchStateChangeOverlay(
 fun SwitchStateChangeHintEnabled_Preview() {
     SpringLauncherTheme {
         SwitchStateChangeOverlay(
-            profile = Presets.Essentials.profile,
+            profile = Mock_Profile,
             switchState = SwitchState.ENABLED,
             onAnimationDone = {},
             visibilityState = remember { MutableTransitionState(SwitchAnimationState.NOT_STARTED) },
@@ -280,7 +280,7 @@ fun SwitchStateChangeHintEnabled_Preview() {
 fun SwitchStateChangeHintDisabled_Preview() {
     SpringLauncherTheme {
         SwitchStateChangeOverlay(
-            profile = Presets.Essentials.profile,
+            profile = Mock_Profile,
             switchState = SwitchState.DISABLED,
             onAnimationDone = {},
             visibilityState = remember { MutableTransitionState(SwitchAnimationState.NOT_STARTED) },

@@ -48,7 +48,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.getIconVector
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.ui.navigation.AllowedContactSettings
@@ -182,7 +182,7 @@ fun LauncherProfileSettingsTopBar(
 fun LauncherProfileSettingsTopBar_Preview() {
     SpringLauncherTheme {
         LauncherProfileSettingsTopBar(
-            currentLauncherProfile = Presets.Essentials.profile,
+            currentLauncherProfile = Mock_Profile,
             onEditLauncherProfileName = {},
             onIconClick = {}
         )

@@ -42,8 +42,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.data.model.Presets
-import com.fairphone.spring.launcher.data.model.colors
+import com.fairphone.spring.launcher.data.model.LauncherColors
+import com.fairphone.spring.launcher.data.model.Preset
 import com.fairphone.spring.launcher.ui.FP6Preview
 import kotlinx.coroutines.delay
 
@@ -73,7 +73,7 @@ enum class AnimationState {
 @Composable
 fun AnimatedBackground(
     modifier: Modifier = Modifier,
-    colors: Pair<Color, Color>,
+    colors: LauncherColors,
     content: @Composable BoxScope.() -> Unit = {},
 ) {
     var animationState by remember { mutableStateOf(AnimationState.START) }
@@ -186,14 +186,14 @@ fun AnimatedBackground(
         )
 
         BackgroundBlob(
-            color = colors.first,
+            color = Color(colors.secondaryColor),
             modifier = Modifier
                 .offset(x = leftBlobXDp, y = leftBlobYDp)
                 .rotate(leftBlobRotation)
         )
 
         BackgroundBlob(
-            color = colors.second,
+            color = Color(colors.mainColor),
             modifier = Modifier
                 .offset(x = rightBlobXDp, y = rightBlobYDp)
                 .rotate(rightBlobRotation)
@@ -222,6 +222,6 @@ fun BackgroundBlob(
 @FP6Preview
 fun AnimatedBackground_Preview() {
     AnimatedBackground(
-        colors = Presets.Essentials.profile.colors(),
+        colors = Preset.Essentials.colors,
     )
 }

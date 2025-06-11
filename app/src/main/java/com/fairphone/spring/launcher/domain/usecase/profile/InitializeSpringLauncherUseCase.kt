@@ -20,7 +20,7 @@ import android.content.Context
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
 import com.fairphone.spring.launcher.data.model.Defaults
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Preset
 import com.fairphone.spring.launcher.domain.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.isDoNotDisturbAccessGranted
 import kotlinx.coroutines.flow.first
@@ -47,7 +47,7 @@ class InitializeSpringLauncherUseCase(
     }
 
     private suspend fun createInitialPresets(context: Context): Result<Unit> {
-        val defaultVisibleApps = Presets.Essentials.getVisibleAppPackageNames(context)
+        val defaultVisibleApps = Preset.Essentials.getVisibleAppPackageNames(context)
         val essentials = CreateLauncherProfile(
             id = CreateLauncherProfileUseCase.newId(),
             name = context.getString(R.string.default_profile_name),

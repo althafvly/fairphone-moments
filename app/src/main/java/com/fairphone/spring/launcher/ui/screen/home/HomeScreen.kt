@@ -43,7 +43,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.data.prefs.UsageMode
 import com.fairphone.spring.launcher.ui.FP6Preview
@@ -230,7 +230,7 @@ fun HomeScreen_Preview() {
             date = "Wed, 13 Feb",
             time = "12:30",
             appUsageMode = UsageMode.DEFAULT,
-            activeProfile = Presets.Essentials.profile,
+            activeProfile = Mock_Profile,
             appList = previewAppList(LocalContext.current),
             isRetailDemoMode = false,
             onAppClick = {},
@@ -249,7 +249,7 @@ fun HomeScreenDark_Preview() {
             date = "Wed, 13 Feb",
             time = "12:30",
             appUsageMode = UsageMode.DEFAULT,
-            activeProfile = Presets.Essentials.profile,
+            activeProfile = Mock_Profile,
             isRetailDemoMode = false,
             appList = previewAppList(LocalContext.current),
             onAppClick = {},
@@ -268,7 +268,7 @@ fun HomeScreenRetailDemo_Preview() {
             date = "Wed, 13 Feb",
             time = "12:30",
             appUsageMode = UsageMode.ON_BOARDING,
-            activeProfile = Presets.Essentials.profile,
+            activeProfile = Mock_Profile,
             isRetailDemoMode = true,
             appList = previewAppList(LocalContext.current),
             onAppClick = {},
@@ -287,7 +287,7 @@ fun HomeScreenRetailDemoDark_Preview() {
             date = "Wed, 13 Feb",
             time = "12:30",
             appUsageMode = UsageMode.ON_BOARDING,
-            activeProfile = Presets.Essentials.profile,
+            activeProfile = Mock_Profile,
             isRetailDemoMode = true,
             appList = previewAppList(LocalContext.current),
             onAppClick = {},

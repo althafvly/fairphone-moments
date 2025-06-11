@@ -58,7 +58,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupPositionProvider
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.data.prefs.UsageMode
 import com.fairphone.spring.launcher.ui.FP6Preview
@@ -267,7 +267,7 @@ private fun CurrentModeButton_Preview(usageMode: UsageMode) {
     SpringLauncherTheme {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             CurrentModeButton(
-                activeProfile = Presets.QualityTime.profile,
+                activeProfile = Mock_Profile,
                 appUsageMode = usageMode,
                 onModeSwitcherButtonClick = {},
                 onTooltipClick= {}

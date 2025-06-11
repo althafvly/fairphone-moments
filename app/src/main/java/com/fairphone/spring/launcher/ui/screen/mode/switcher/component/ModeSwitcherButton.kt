@@ -47,7 +47,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
@@ -210,8 +210,8 @@ private fun computeButtonBorder(
 fun ModeSwitcherButton_Preview() {
     SpringLauncherTheme {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(8.dp)) {
-            ModeSwitcherButton(profile = Presets.Essentials.profile, isSelected = true)
-            ModeSwitcherButton(profile = Presets.Journey.profile, isSelected = false)
+            ModeSwitcherButton(profile = Mock_Profile, isSelected = true)
+            ModeSwitcherButton(profile = Mock_Profile, isSelected = false)
         }
 
     }

@@ -26,7 +26,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.Presets
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.selector.ItemSelectorLayout
@@ -117,7 +116,6 @@ private fun VisibleAppSelectorScreen_Preview() {
         VisibleAppSelectorScreen(
             screenState = VisibleAppSelectorScreenState.Ready(
                 data = ScreenData(
-                    profileId = Presets.Essentials.profile.id,
                     appList = listOf(
                         context.fakeApp("test"),
                         context.fakeApp("test1"),

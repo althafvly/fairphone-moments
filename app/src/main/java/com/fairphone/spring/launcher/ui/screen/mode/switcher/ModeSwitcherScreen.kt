@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
@@ -95,8 +95,8 @@ fun ModeSwitcherScreen(
 private fun ModeSwitcherScreen_Preview(nbMoment: Int = 2) {
     SpringLauncherTheme {
         ModeSwitcherScreen(
-            currentLauncherProfile = Presets.Essentials.profile,
-            profiles = Presets.entries.map { it.profile }.subList(0, nbMoment),
+            currentLauncherProfile = Mock_Profile,
+            profiles = listOf(Mock_Profile, Mock_Profile, Mock_Profile),
         )
     }
 }

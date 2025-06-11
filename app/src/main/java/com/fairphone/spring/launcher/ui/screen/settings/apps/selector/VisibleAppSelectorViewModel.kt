@@ -61,7 +61,6 @@ class VisibleAppSelectorViewModel(
             )
 
             screenData = ScreenData(
-                profileId = currentProfile.id,
                 appList = installedApps,
                 visibleApps = visibleApps,
                 showConfirmButton = false,
@@ -165,7 +164,6 @@ sealed class VisibleAppSelectorScreenState {
 }
 
 data class ScreenData(
-    val profileId: String,
     val appList: List<AppInfo>,
     val visibleApps: List<AppInfo>,
     val showConfirmButton: Boolean,

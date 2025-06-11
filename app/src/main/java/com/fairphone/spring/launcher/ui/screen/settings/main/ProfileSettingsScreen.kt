@@ -46,7 +46,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
@@ -288,7 +288,7 @@ fun DeleteModeButton(
 fun ProfileSettings_Preview() {
     SpringLauncherTheme {
         ProfileSettingsScreen(
-            profile = Presets.Essentials.profile,
+            profile = Mock_Profile,
             visibleApps = emptyList(),
             canDeleteProfile = false,
             onEditProfileName = {},
@@ -309,7 +309,7 @@ fun ProfileSettings_Preview() {
 fun ProfileSettings_LightPreview() {
     SpringLauncherTheme {
         ProfileSettingsScreen(
-            profile = Presets.Essentials.profile,
+            profile = Mock_Profile,
             visibleApps = emptyList(),
             canDeleteProfile = true,
             onEditProfileName = {},

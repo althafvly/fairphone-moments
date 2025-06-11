@@ -81,8 +81,10 @@ class CreateModeViewModel(
 
         if (preset != Preset.Custom) {
             updateName(context.getString(preset.title))
-            updateIcon(ModeIcon.valueOf(preset.icon))
+        } else {
+            updateName("")
         }
+        updateIcon(ModeIcon.valueOf(preset.icon))
         loadApps(context)
     }
 

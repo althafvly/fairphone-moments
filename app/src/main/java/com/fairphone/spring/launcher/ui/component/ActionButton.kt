@@ -46,7 +46,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.data.model.Presets
+import com.fairphone.spring.launcher.data.model.Preset
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.icons.NavIcons
@@ -250,16 +250,16 @@ fun ActionButton_Preview() {
                 description = "Update selected moment",
                 isSelected = true,
                 displayLabel = true,
-                selectedStartColor = Color(Presets.QualityTime.profile.bgColor2),
-                selectedEndColor = Color(Presets.QualityTime.profile.bgColor1)
+                selectedStartColor = Color(Preset.QualityTime.colors.mainColor),
+                selectedEndColor = Color(Preset.QualityTime.colors.secondaryColor)
             )
             ActionButton(
                 icon = SettingsIcon,
                 description = "Update selected moment",
                 isSelected = true,
                 displayLabel = true,
-                selectedStartColor = Color(Presets.Essentials.profile.bgColor2),
-                selectedEndColor = Color(Presets.Essentials.profile.bgColor1)
+                selectedStartColor = Color(Preset.Essentials.colors.mainColor),
+                selectedEndColor = Color(Preset.Essentials.colors.secondaryColor)
             )
             ActionButton(
                 icon = NavIcons.Close,
