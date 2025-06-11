@@ -18,6 +18,7 @@ package com.fairphone.spring.launcher.data.repository
 
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -32,7 +33,7 @@ interface LauncherProfileRepository {
     suspend fun createProfile(profile: LauncherProfile)
     suspend fun deleteProfile(profile: LauncherProfile)
     suspend fun updateProfile(profile: LauncherProfile)
-    suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
+    suspend fun updateVisibleApps(profileId: String, visibleApps: List<LauncherProfileApp>)
 }
 
 class LauncherProfileRepositoryImpl(private val dataSource: ProfileDataSource) :
@@ -65,6 +66,6 @@ class LauncherProfileRepositoryImpl(private val dataSource: ProfileDataSource) :
     override suspend fun updateProfile(profile: LauncherProfile) =
         dataSource.updateLauncherProfile(profile)
 
-    override suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>) =
+    override suspend fun updateVisibleApps(profileId: String, visibleApps: List<LauncherProfileApp>) =
         dataSource.updateVisibleApps(profileId, visibleApps)
 }

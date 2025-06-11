@@ -15,7 +15,7 @@ message LauncherProfile {
     string icon = 3;
     int64 bgColor1 = 4;
     int64 bgColor2 = 5;
-    repeated string visibleApps = 6;
+    repeated string visibleApps = 6 [deprecated = true];
     ContactType allowedContacts = 7;
     repeated string customContacts = 8;
     bool repeatCallEnabled = 9;
@@ -30,6 +30,12 @@ message LauncherProfile {
     bool alwaysOnDisplayEnabled = 18;
     bool airplaneModeEnabled = 19;
     string zenRuleId = 20;
+    repeated LauncherProfileApp launcher_profile_apps = 21;
+}
+
+message LauncherProfileApp {
+    string packageName = 1;
+    bool isWorkApp = 2;
 }
 
 enum ContactType {

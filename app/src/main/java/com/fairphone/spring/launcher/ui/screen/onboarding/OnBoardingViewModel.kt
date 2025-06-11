@@ -28,6 +28,8 @@ import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
 import com.fairphone.spring.launcher.data.model.LauncherColors
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
+import com.fairphone.spring.launcher.data.model.protos.launcherProfileApp
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
@@ -57,7 +59,7 @@ class OnBoardingViewModel(
     var profileIcon: ModeIcon by mutableStateOf(ModeIcon.customIcons().random())
         private set
 
-    val launcherProfileApps: MutableList<String> = mutableStateListOf()
+    val launcherProfileApps: MutableList<LauncherProfileApp> = mutableStateListOf()
 
     var backgroundColors: LauncherColors by mutableStateOf(LauncherColors(0L, 0L))
         private set
@@ -70,9 +72,14 @@ class OnBoardingViewModel(
         this.profileIcon = icon
     }
 
-    fun updateLauncherProfileApps(visibleApps: List<String>) {
+    fun updateLauncherProfileApps(visibleApps: List<AppInfo>) {
         this.launcherProfileApps.clear()
-        this.launcherProfileApps.addAll(visibleApps)
+        this.launcherProfileApps.addAll(visibleApps.map {
+            launcherProfileApp {
+                packageName = it.packageName
+                isWorkApp = it.isWorkApp
+            }
+        })
     }
 
     fun updateBackgroundColors(colors: LauncherColors) {
@@ -99,8 +106,8 @@ class OnBoardingViewModel(
             .setBgColor1(backgroundColors.secondaryColor)
             .setBgColor2(backgroundColors.mainColor)
             .setIcon(profileIcon.name)
-            .clearVisibleApps()
-            .addAllVisibleApps(launcherProfileApps)
+            .clearLauncherProfileApps()
+            .addAllLauncherProfileApps(launcherProfileApps)
             .build()
         val result = updateLauncherProfileUseCase.execute(updatedProfile)
 

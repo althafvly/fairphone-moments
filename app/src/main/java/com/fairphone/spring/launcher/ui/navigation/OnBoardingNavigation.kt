@@ -95,7 +95,7 @@ fun OnBoardingNavigation(
                 onAppClick = viewModel::onAppClick,
                 onAppDeselected = viewModel::removeVisibleApp,
                 onContinue = {
-                    viewModel.updateLauncherProfileApps(viewModel.visibleApps.map { it.packageName })
+                    viewModel.updateLauncherProfileApps(viewModel.visibleApps)
                     navController.navigate(OnBoardingChooseBackground)
                 }
             )

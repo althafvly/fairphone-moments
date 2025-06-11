@@ -31,6 +31,8 @@ import com.fairphone.spring.launcher.data.model.Defaults
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
 import com.fairphone.spring.launcher.data.model.LauncherColors
 import com.fairphone.spring.launcher.data.model.Preset
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
+import com.fairphone.spring.launcher.data.model.protos.launcherProfileApp
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.CreateLauncherProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.SetEditedProfileUseCase
@@ -63,7 +65,7 @@ class CreateModeViewModel(
     var profileIcon: ModeIcon by mutableStateOf(ModeIcon.customIcons().random())
         private set
 
-    val launcherProfileApps: MutableList<AppInfo> = mutableStateListOf()
+    val launcherProfileApps: MutableList<LauncherProfileApp> = mutableStateListOf()
 
     var backgroundColors: LauncherColors by mutableStateOf(LauncherColors(0L, 0L))
         private set
@@ -90,7 +92,12 @@ class CreateModeViewModel(
 
     fun updateLauncherVisibleApps(visibleApps: List<AppInfo>) {
         this.launcherProfileApps.clear()
-        this.launcherProfileApps.addAll(visibleApps)
+        this.launcherProfileApps.addAll(visibleApps.map {
+            launcherProfileApp {
+                packageName = it.packageName
+                isWorkApp = it.isWorkApp
+            }
+        })
     }
 
     fun updateBackgroundColors(colors: LauncherColors) {
@@ -182,7 +189,7 @@ class CreateModeViewModel(
             icon = profileIcon.name,
             bgColor1 = backgroundColors.secondaryColor,
             bgColor2 = backgroundColors.mainColor,
-            visibleApps = launcherProfileApps.map { it.packageName },
+            launcherProfileApps = launcherProfileApps,
             allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
             repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
             wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,

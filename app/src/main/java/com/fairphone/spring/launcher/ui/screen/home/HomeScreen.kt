@@ -17,15 +17,17 @@
 package com.fairphone.spring.launcher.ui.screen.home
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -50,6 +53,7 @@ import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.CardWithAnimatedBorder
 import com.fairphone.spring.launcher.ui.component.FairphoneMomentsDemoCard
+import com.fairphone.spring.launcher.ui.component.WorkAppBadge
 import com.fairphone.spring.launcher.ui.screen.home.component.CurrentModeButton
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
@@ -79,7 +83,6 @@ fun HomeScreen(
     screenState ?: return
 
     HomeScreen(
-        viewModel = viewModel,
         date = date,
         time = time,
         appUsageMode = screenState!!.appUsageMode,
@@ -96,13 +99,15 @@ fun HomeScreen(
         },
         onDemoCardClick = {
             onDemoCardClick()
+        },
+        onTooltipClick = {
+            viewModel.finishOnBoarding()
         }
     )
 }
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeScreenViewModel,
     modifier: Modifier = Modifier,
     date: String,
     time: String,
@@ -112,7 +117,8 @@ fun HomeScreen(
     isRetailDemoMode: Boolean,
     onAppClick: (AppInfo) -> Unit,
     onModeSwitcherButtonClick: () -> Unit,
-    onDemoCardClick: () -> Unit
+    onDemoCardClick: () -> Unit,
+    onTooltipClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -155,9 +161,7 @@ fun HomeScreen(
                     activeProfile = activeProfile,
                     appUsageMode = appUsageMode,
                     onModeSwitcherButtonClick = onModeSwitcherButtonClick,
-                    onTooltipClick = {
-                        viewModel.finishOnBoarding()
-                    }
+                    onTooltipClick = onTooltipClick
                 )
             }
         }
@@ -175,13 +179,12 @@ fun HomeScreen(
 
         if (isRetailDemoMode) {
             FairphoneMomentsDemoCard(
-                modifier = Modifier.padding(30.dp),
+                modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 30.dp),
                 onClick = { onDemoCardClick() }
             )
         }
     }
 }
-
 
 @Composable
 fun AppList(
@@ -195,38 +198,79 @@ fun AppList(
         modifier = modifier
     ) {
         appList.forEach { app ->
-            AppButton(
+            LauncherAppButton(
                 appName = app.name,
-                onAppClick = { onAppClick(app) }
+                onAppClick = { onAppClick(app) },
+                isWorkApp = app.isWorkApp,
             )
         }
     }
 }
 
 @Composable
-fun AppButton(appName: String, onAppClick: () -> Unit) {
-    Box(
-        contentAlignment = Alignment.Center,
+fun LauncherAppButton(
+    appName: String,
+    onAppClick: () -> Unit,
+    isWorkApp: Boolean = false,
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onAppClick() }
+            .clickable(
+                interactionSource = null,
+                indication = null,
+                onClick = onAppClick
+            )
             .padding(vertical = 8.dp)
     ) {
         Text(
             text = appName,
             style = FairphoneTypography.AppButtonDefault,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.align(Alignment.Center)
         )
+
+        if (isWorkApp) {
+            WorkAppBadge(modifier = Modifier.size(16.dp))
+        }
     }
 }
 
 @Composable
-@FP6Preview
+fun LauncherAppButton_Preview() {
+    SpringLauncherTheme {
+        Column {
+            LauncherAppButton(
+                appName = "App name",
+                onAppClick = {}
+            )
+            LauncherAppButton(
+                appName = "App name",
+                onAppClick = {},
+                isWorkApp = true,
+            )
+        }
+
+    }
+}
+
+@Composable
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+fun LauncherAppButton_PreviewLight() {
+    LauncherAppButton_Preview()
+}
+
+@Composable
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun LauncherAppButton_PreviewDark() {
+    LauncherAppButton_Preview()
+}
+
+@Composable
 fun HomeScreen_Preview() {
     SpringLauncherTheme {
         HomeScreen(
-            viewModel = koinViewModel(),
             date = "Wed, 13 Feb",
             time = "12:30",
             appUsageMode = UsageMode.DEFAULT,
@@ -235,66 +279,22 @@ fun HomeScreen_Preview() {
             isRetailDemoMode = false,
             onAppClick = {},
             onModeSwitcherButtonClick = {},
-            onDemoCardClick = {}
-        )
-    }
-}
-
-@Composable
-@FP6PreviewDark
-fun HomeScreenDark_Preview() {
-    SpringLauncherTheme {
-        HomeScreen(
-            viewModel = koinViewModel(),
-            date = "Wed, 13 Feb",
-            time = "12:30",
-            appUsageMode = UsageMode.DEFAULT,
-            activeProfile = Mock_Profile,
-            isRetailDemoMode = false,
-            appList = previewAppList(LocalContext.current),
-            onAppClick = {},
-            onModeSwitcherButtonClick = {},
-            onDemoCardClick = {}
+            onDemoCardClick = {},
+            onTooltipClick = {}
         )
     }
 }
 
 @Composable
 @FP6Preview
-fun HomeScreenRetailDemo_Preview() {
-    SpringLauncherTheme {
-        HomeScreen(
-            viewModel = koinViewModel(),
-            date = "Wed, 13 Feb",
-            time = "12:30",
-            appUsageMode = UsageMode.ON_BOARDING,
-            activeProfile = Mock_Profile,
-            isRetailDemoMode = true,
-            appList = previewAppList(LocalContext.current),
-            onAppClick = {},
-            onModeSwitcherButtonClick = {},
-            onDemoCardClick = {}
-        )
-    }
+fun HomeScreen_PreviewLight() {
+    HomeScreen_Preview()
 }
 
 @Composable
 @FP6PreviewDark
-fun HomeScreenRetailDemoDark_Preview() {
-    SpringLauncherTheme {
-        HomeScreen(
-            viewModel = koinViewModel(),
-            date = "Wed, 13 Feb",
-            time = "12:30",
-            appUsageMode = UsageMode.ON_BOARDING,
-            activeProfile = Mock_Profile,
-            isRetailDemoMode = true,
-            appList = previewAppList(LocalContext.current),
-            onAppClick = {},
-            onModeSwitcherButtonClick = {},
-            onDemoCardClick = {}
-        )
-    }
+fun HomeScreen_PreviewDark() {
+    HomeScreen_Preview()
 }
 
 fun previewAppList(context: Context) = listOf(

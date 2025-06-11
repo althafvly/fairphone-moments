@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
@@ -54,9 +55,9 @@ class VisibleAppSelectorViewModel(
             installedApps.addAll(appInfoRepository.getAllInstalledApps(context))
             val currentProfile = getEditedProfileUseCase.execute(Unit).first()
             visibleApps.addAll(
-                appInfoRepository.getAppInfosByPackageNames(
+                appInfoRepository.getAppInfosByProfileApps(
                     context,
-                    currentProfile.visibleAppsList
+                    currentProfile.launcherProfileAppsList
                 )
             )
 
@@ -131,9 +132,15 @@ class VisibleAppSelectorViewModel(
 
     fun confirmAppSelection() = viewModelScope.launch {
         val editedProfile = getEditedProfileUseCase.execute(Unit).first()
+        val profileApps = visibleApps.map { appInfo ->
+            LauncherProfileApp.newBuilder()
+                .setPackageName(appInfo.packageName)
+                .setIsWorkApp(appInfo.isWorkApp)
+                .build()
+        }
         val newProfile = editedProfile.toBuilder()
-            .clearVisibleApps()
-            .addAllVisibleApps(visibleApps.map { it.packageName })
+            .clearLauncherProfileApps()
+            .addAllLauncherProfileApps(profileApps)
             .build()
         val result = updateLauncherProfileUseCase.execute(newProfile)
         _screenState.update {

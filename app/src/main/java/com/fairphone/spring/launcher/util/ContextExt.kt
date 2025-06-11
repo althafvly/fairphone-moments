@@ -180,10 +180,11 @@ fun Context.isDeviceInRetailDemoMode(): Boolean {
 }
 
 
-fun Context.fakeApp(name: String): AppInfo =
+fun Context.fakeApp(name: String, isWorkApp: Boolean = false): AppInfo =
     AppInfo(
         name = name,
         packageName = name,
         mainActivityClassName = name,
-        icon = ContextCompat.getDrawable(this, R.drawable.ic_launcher_png)!!
+        icon = ContextCompat.getDrawable(this, R.drawable.ic_launcher_png)!!,
+        isWorkApp = isWorkApp
     )

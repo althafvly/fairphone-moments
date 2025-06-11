@@ -18,9 +18,11 @@ package com.fairphone.spring.launcher.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.fairphone.spring.launcher.data.datasource.MIGRATION_LAUNCHER_PROFILE_APPS
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSourceImpl
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfiles
@@ -53,6 +55,11 @@ val Context.appPrefsDataStore: DataStore<Preferences> by preferencesDataStore(na
  */
 val Context.profileDataStore: DataStore<LauncherProfiles> by dataStore(
     fileName = "profiles.pb",
-    serializer = LauncherProfilesSerializer
+    serializer = LauncherProfilesSerializer,
+    produceMigrations = { context ->
+        listOf(MIGRATION_LAUNCHER_PROFILE_APPS)
+    },
+    corruptionHandler = ReplaceFileCorruptionHandler {
+        LauncherProfiles.getDefaultInstance()
+    }
 )
-

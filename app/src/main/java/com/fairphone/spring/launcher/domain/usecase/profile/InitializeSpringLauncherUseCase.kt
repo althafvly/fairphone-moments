@@ -47,14 +47,14 @@ class InitializeSpringLauncherUseCase(
     }
 
     private suspend fun createInitialPresets(context: Context): Result<Unit> {
-        val defaultVisibleApps = Preset.Essentials.getVisibleAppPackageNames(context)
+        val defaultVisibleApps = Preset.Essentials.getVisibleLauncherApps(context)
         val essentials = CreateLauncherProfile(
             id = CreateLauncherProfileUseCase.newId(),
             name = context.getString(R.string.default_profile_name),
             icon = Defaults.DEFAULT_ICON,
             bgColor1 = Defaults.DEFAULT_BG_COLOR1,
             bgColor2 = Defaults.Color_BG_Orange,
-            visibleApps = defaultVisibleApps,
+            launcherProfileApps = defaultVisibleApps,
             allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
             repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
             wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,

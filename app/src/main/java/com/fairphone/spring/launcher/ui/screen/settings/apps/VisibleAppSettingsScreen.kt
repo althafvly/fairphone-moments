@@ -91,7 +91,8 @@ fun VisibleAppSettingsScreen(
             visibleApps.forEach { appInfo ->
                 AppInfoListItem(
                     icon = appInfo.icon,
-                    title = appInfo.name
+                    name = appInfo.name,
+                    isWorkApp = appInfo.isWorkApp
                 )
             }
         }

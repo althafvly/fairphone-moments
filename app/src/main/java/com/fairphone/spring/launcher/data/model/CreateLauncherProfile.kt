@@ -17,6 +17,7 @@
 package com.fairphone.spring.launcher.data.model
 
 import com.fairphone.spring.launcher.data.model.protos.ContactType
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
 import com.fairphone.spring.launcher.data.model.protos.SoundSetting
 import com.fairphone.spring.launcher.data.model.protos.UiMode
 
@@ -29,7 +30,7 @@ data class CreateLauncherProfile(
     val icon: String,
     val bgColor1: Long,
     val bgColor2: Long,
-    val visibleApps: List<String>,
+    val launcherProfileApps: List<LauncherProfileApp>,
     val allowedContacts: ContactType,
     val customContacts: List<String> = emptyList(),
     val repeatCallEnabled: Boolean,

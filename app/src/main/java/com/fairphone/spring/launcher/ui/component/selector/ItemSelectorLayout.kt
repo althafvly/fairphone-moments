@@ -46,7 +46,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.SelectableItem
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.component.PrimaryButton
 import com.fairphone.spring.launcher.ui.component.SearchBar
@@ -118,12 +117,12 @@ fun <T : SelectableItem> ItemSelectorLayout(
                     contentType = { index -> filteredItemList[index] },
                 ) { index ->
                     val item = filteredItemList[index]
-                    val isSelected = item.id in selectedItems.map { it.id }
+                    val isSelected = item in selectedItems
 
                     SelectableListItem(
                         item = item,
                         isSelected = isSelected,
-                        onClick = { onItemClick(item) }
+                        onClick = { onItemClick(item) },
                     )
                 }
             }

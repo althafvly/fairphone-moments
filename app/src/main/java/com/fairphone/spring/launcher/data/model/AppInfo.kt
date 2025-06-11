@@ -17,12 +17,7 @@
 package com.fairphone.spring.launcher.data.model
 
 import android.graphics.drawable.Drawable
-
-interface SelectableItem {
-    val id: String
-    val name: String
-    val icon: Any
-}
+import com.fairphone.spring.launcher.ui.component.selector.SelectableItem
 
 data class AppInfo(
     override val name: String,
@@ -30,12 +25,16 @@ data class AppInfo(
     val mainActivityClassName: String,
     val userUuid: Int = 0,
     override val icon: Drawable,
-): SelectableItem {
+    val isWorkApp: Boolean = false
+) : SelectableItem {
 
     override val id: String = packageName
 
     override fun equals(other: Any?): Boolean {
-        return other is AppInfo && other.packageName == packageName
+        return other is AppInfo &&
+                other.packageName == packageName &&
+                other.isWorkApp == isWorkApp &&
+                other.userUuid == userUuid
     }
 
     override fun hashCode(): Int {

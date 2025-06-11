@@ -17,8 +17,10 @@
 package com.fairphone.spring.launcher.data.datasource
 
 import android.util.Log
+import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfiles
 import com.fairphone.spring.launcher.data.model.protos.launcherProfiles
 import kotlinx.coroutines.flow.Flow
@@ -39,7 +41,7 @@ interface ProfileDataSource {
     suspend fun createLauncherProfile(profile: LauncherProfile)
     suspend fun deleteLauncherProfile(profile: LauncherProfile)
     suspend fun updateLauncherProfile(profile: LauncherProfile)
-    suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>)
+    suspend fun updateVisibleApps(profileId: String, visibleApps: List<LauncherProfileApp>)
 }
 
 class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) :
@@ -146,15 +148,15 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
         }
     }
 
-    override suspend fun updateVisibleApps(profileId: String, visibleApps: List<String>) {
+    override suspend fun updateVisibleApps(profileId: String, launcherProfileApps: List<LauncherProfileApp>) {
         dataStore.updateData { profiles ->
             profiles
                 .toBuilder()
                 .clearProfiles()
                 .addAllProfiles(updateLauncherProfileInList(profileId) {
                     it.toBuilder()
-                        .clearVisibleApps()
-                        .addAllVisibleApps(visibleApps)
+                        .clearLauncherProfileApps()
+                        .addAllLauncherProfileApps(launcherProfileApps)
                         .build()
                 })
                 .build()
@@ -178,3 +180,74 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
 
 }
 
+/**
+ * Data migration for LauncherProfiles.
+ *
+ * This migration handles the transition from storing visible apps as a list of package name strings
+ * (`visible_apps`) to a list of `LauncherProfileApp` objects (`launcher_profile_apps`).
+ *
+ * The `LauncherProfileApp` object allows for more structured data associated with each app,
+ * potentially including additional metadata in the future.
+ *
+ * Migration logic:
+ * 1. **`shouldMigrate`**: Checks if any profile in the current data has a non-empty `visible_apps` list.
+ *    If so, migration is needed.
+ * 2. **`migrate`**:
+ *    - Iterates through each `LauncherProfile`.
+ *    - If a profile has `visible_apps`:
+ *        - Converts each package name string in `visible_apps` into a `LauncherProfileApp` object.
+ *        - Creates a new `LauncherProfile` with the `launcher_profile_apps` field populated and
+ *          the old `visible_apps` field cleared.
+ *    - If a profile does not need migration (i.e., `visible_apps` is empty), it's kept as is.
+ *    - Reconstructs the `LauncherProfiles` object with the (potentially) migrated profiles.
+ * 3. **`cleanUp`**: No specific cleanup actions are required after this migration.
+ */
+@Suppress("DEPRECATION")
+val MIGRATION_LAUNCHER_PROFILE_APPS = object : DataMigration<LauncherProfiles> {
+    /**
+     * Determines if the migration should be run.
+     * It checks if any profile has data in the old `visibleApps` field.
+     */
+    override suspend fun shouldMigrate(currentData: LauncherProfiles): Boolean {
+        return currentData.profilesList.any { it.visibleAppsCount > 0 }
+    }
+
+    /**
+     * Performs the data migration.
+     * It converts the old `visibleApps` (list of strings) to the new `launcherProfileApps` (list of `LauncherProfileApp` objects).
+     */
+    override suspend fun migrate(currentData: LauncherProfiles): LauncherProfiles {
+        // We start building a new LauncherProfiles object based on the old data.
+        return currentData.toBuilder().apply {
+            // We iterate through each profile and create a migrated version.
+            val migratedProfiles = profilesList.map { profile ->
+                // Check if this specific profile needs migration.
+                if (profile.visibleAppsCount > 0) {
+                    // Convert the old list of strings into the new list of LauncherProfileApp objects.
+                    val newAppsList = profile.visibleAppsList.map { packageName ->
+                        LauncherProfileApp.newBuilder().setPackageName(packageName).build()
+                    }
+
+                    // Build a new profile with the data moved to the new field
+                    // and the old field cleared.
+                    profile.toBuilder()
+                        .clearVisibleApps() // Important: Clear the old field's data.
+                        .addAllLauncherProfileApps(newAppsList) // Add all converted items to the new field.
+                        .build()
+                } else {
+                    // If no migration is needed for this profile, return it as is.
+                    profile
+                }
+            }
+            // Finally, we clear the old profiles list from our builder and
+            // add the newly updated list of profiles.
+            clearProfiles()
+            addAllProfiles(migratedProfiles)
+        }.build()
+    }
+
+    /**
+     * Called after the migration is complete. No cleanup is needed for this migration.
+     */
+    override suspend fun cleanUp() = Unit
+}

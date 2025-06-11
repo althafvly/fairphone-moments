@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
 import com.fairphone.spring.launcher.data.model.protos.copy
 import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.DeleteLauncherProfileUseCase
@@ -48,7 +49,7 @@ class ProfileSettingsViewModel(
     val screenState: StateFlow<ProfileSettingsScreenState> =
         getAllProfilesUseCase.execute(Unit)
             .zip(getEditedProfileUseCase.execute(Unit)) { profiles, editedProfile -> Pair(profiles, editedProfile)}.map { combined ->
-                val visibleApps = getAppInfoList(context, combined.second.visibleAppsList)
+                val visibleApps = getAppInfoList(context, combined.second.launcherProfileAppsList)
                 ProfileSettingsScreenState.Success(
                     profile = combined.second,
                     visibleApps = visibleApps,
@@ -61,8 +62,8 @@ class ProfileSettingsViewModel(
             )
 
 
-    private fun getAppInfoList(context: Context, appIds: List<String>): List<AppInfo> {
-        return appInfoRepository.getAppInfosByPackageNames(context, appIds)
+    private fun getAppInfoList(context: Context, appIds: List<LauncherProfileApp>): List<AppInfo> {
+        return appInfoRepository.getAppInfosByProfileApps(context, appIds)
     }
 
     fun updateProfileName(name: String) = viewModelScope.launch {

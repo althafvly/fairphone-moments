@@ -117,7 +117,7 @@ private fun VisibleAppSelectorScreen_Preview() {
             screenState = VisibleAppSelectorScreenState.Ready(
                 data = ScreenData(
                     appList = listOf(
-                        context.fakeApp("test"),
+                        context.fakeApp("test", isWorkApp = true),
                         context.fakeApp("test1"),
                         context.fakeApp("test2")
                     ),

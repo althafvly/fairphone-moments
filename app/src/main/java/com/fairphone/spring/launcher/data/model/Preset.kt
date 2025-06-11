@@ -19,7 +19,9 @@ package com.fairphone.spring.launcher.data.model
 import android.content.Context
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
 import com.fairphone.spring.launcher.data.model.protos.launcherProfile
+import com.fairphone.spring.launcher.data.model.protos.launcherProfileApp
 
 const val PROFILE_ID_CUSTOM: String = "custom"
 
@@ -107,6 +109,16 @@ enum class Preset(
         defaultApps.map { app ->
             app.allApps.firstNotNullOf {
                 it.getPackageName(context)
+            }
+        }
+
+    fun getVisibleLauncherApps(context: Context): List<LauncherProfileApp> =
+        defaultApps.map { app ->
+            app.allApps.firstNotNullOf {
+                launcherProfileApp {
+                    packageName = it.getPackageName(context)
+                    isWorkApp = it.isWorkApp
+                }
             }
         }
 

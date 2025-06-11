@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.LAUNCHER_MAX_APP_COUNT
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.data.prefs.AppPrefs
 import com.fairphone.spring.launcher.data.prefs.UsageMode
@@ -55,13 +56,14 @@ class HomeScreenViewModel(
 
     val screenState: StateFlow<HomeScreenState?> =
         getActiveProfileUseCase.execute(Unit).map { profile ->
-            val visibleApps =
-                appInfoRepository.getAppInfosByPackageNames(context, profile.visibleAppsList)
-            val isRetailDemoMode = context.isDeviceInRetailDemoMode()
+            val visibleApps = appInfoRepository
+                .getAppInfosByProfileApps(context, profile.launcherProfileAppsList)
+                .take(LAUNCHER_MAX_APP_COUNT) // We only show LAUNCHER_MAX_APP_COUNT apps
+
             HomeScreenState(
                 activeProfile = profile,
                 visibleApps = visibleApps,
-                isRetailDemoMode = isRetailDemoMode,
+                isRetailDemoMode = context.isDeviceInRetailDemoMode(),
                 appUsageMode = appPrefs.usageMode()
             )
         }

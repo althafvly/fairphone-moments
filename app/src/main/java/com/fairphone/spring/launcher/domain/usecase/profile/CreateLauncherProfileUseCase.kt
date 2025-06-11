@@ -44,7 +44,7 @@ class CreateLauncherProfileUseCase(
                 icon = createLauncherProfile.icon
                 bgColor1 = createLauncherProfile.bgColor1
                 bgColor2 = createLauncherProfile.bgColor2
-                visibleApps.addAll(createLauncherProfile.visibleApps)
+                launcherProfileApps.addAll(createLauncherProfile.launcherProfileApps)
                 allowedContacts = createLauncherProfile.allowedContacts
                 customContacts.addAll(createLauncherProfile.customContacts)
                 repeatCallEnabled = createLauncherProfile.repeatCallEnabled
