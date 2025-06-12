@@ -57,7 +57,6 @@ import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.LauncherColors
 import com.fairphone.spring.launcher.data.model.Mock_Profile
-import com.fairphone.spring.launcher.data.model.Preset
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.PrimaryButton
@@ -72,14 +71,15 @@ import kotlin.math.roundToInt
 fun ChooseBackgroundScreen(
     selectedColor: Long,
     continueButtonName: String = stringResource(R.string.bt_create),
-    onContinue: (LauncherColors) -> Unit
+    onBackgroundColorSelected: (LauncherColors) -> Unit
 ) {
-
-    val colors = Preset.entries.map { it.colors.mainColor }.distinct()
+    val colors = LauncherColors.All
     val colorSize = colors.size
 
+    val preSelected = colors.indexOfFirst { selectedColor == it.rightColor }
+
     val scrollState = rememberLazyListState(
-        initialFirstVisibleItemIndex = colors.indexOfFirst { selectedColor == it }
+        initialFirstVisibleItemIndex = if (preSelected == -1) 0 else preSelected
     )
 
     var selectedColorIndex = remember {
@@ -148,7 +148,7 @@ fun ChooseBackgroundScreen(
                             .height(446.dp)
                     ) {
                         ChooseBackgroundExample(
-                            endColor = Color(color),
+                            endColor = Color(color.rightColor),
                             modifier = Modifier.fillMaxSize(),
                             onClick = {
                                 scrollToIndex = index
@@ -193,11 +193,7 @@ fun ChooseBackgroundScreen(
                 .height(80.dp)
                 .padding(horizontal = 20.dp, vertical = 16.dp)
         ) {
-            val preset = Preset
-                .entries
-                .first { it.colors.mainColor == colors[selectedColorIndex.value] }
-
-            onContinue(preset.colors)
+            onBackgroundColorSelected(colors[selectedColorIndex.value])
         }
     }
 }
@@ -208,7 +204,7 @@ private fun ChooseBackgroundScreen_Preview() {
     SpringLauncherTheme {
         ChooseBackgroundScreen(
             Mock_Profile.bgColor2,
-            onContinue = { }
+            onBackgroundColorSelected = { }
         )
     }
 }

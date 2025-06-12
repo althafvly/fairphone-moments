@@ -103,8 +103,8 @@ class OnBoardingViewModel(
         val updatedProfile = profile
             .toBuilder()
             .setName(profileName)
-            .setBgColor1(backgroundColors.secondaryColor)
-            .setBgColor2(backgroundColors.mainColor)
+            .setBgColor1(backgroundColors.leftColor)
+            .setBgColor2(backgroundColors.rightColor)
             .setIcon(profileIcon.name)
             .clearLauncherProfileApps()
             .addAllLauncherProfileApps(launcherProfileApps)

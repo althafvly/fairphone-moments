@@ -188,14 +188,14 @@ fun AnimatedBackground(
         )
 
         BackgroundBlob(
-            color = Color(colors.secondaryColor),
+            color = Color(colors.leftColor),
             modifier = Modifier
                 .offset(x = leftBlobXDp, y = leftBlobYDp)
                 .rotate(leftBlobRotation)
         )
 
         BackgroundBlob(
-            color = Color(colors.mainColor),
+            color = Color(colors.rightColor),
             modifier = Modifier
                 .offset(x = rightBlobXDp, y = rightBlobYDp)
                 .rotate(rightBlobRotation)
@@ -227,6 +227,6 @@ fun BackgroundBlob(
 @FP6Preview
 fun AnimatedBackground_Preview() {
     AnimatedBackground(
-        colors = Preset.Essentials.colors,
+        colors = Preset.Custom.colors,
     )
 }

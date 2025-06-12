@@ -113,8 +113,8 @@ fun CreateModeNavigation(
             val createModeState by viewModel.createModeState.collectAsStateWithLifecycle()
 
             ChooseBackgroundScreen(
-                selectedColor = viewModel.selectedPreset.colors.mainColor,
-                onContinue = { colors ->
+                selectedColor = viewModel.selectedPreset.colors.rightColor,
+                onBackgroundColorSelected = { colors ->
                     viewModel.updateBackgroundColors(colors)
                     viewModel.save()
                 }

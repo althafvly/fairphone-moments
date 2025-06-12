@@ -29,15 +29,14 @@ fun LauncherProfile.getIconVector(): ImageVector =
 
 
 object Defaults {
-    const val DEFAULT_NAME = "Spring"
     const val DEFAULT_ICON = "Spring"
-    const val DEFAULT_BG_COLOR1 = 0xB2C3D1D0
-    const val DEFAULT_BG_COLOR2 = 0xB2FFBA63
-    const val Color_BG_Orange = 0xB2FFBA63
-    const val Color_BG_Green = 0xFFD8FF4F
-    const val Color_BG_Blue = 0xB282C9F1
-    const val Color_BG_Pink = 0xB2F7CAC9
-    const val Color_BG_Purple = 0xB2C0AFFF
+    val DEFAULT_VISIBLE_APPS = listOf(
+        AppPreset(Camera),
+        AppPreset(DefaultBrowser),
+        AppPreset(GoogleMaps),
+        AppPreset(Messages),
+        AppPreset(Phone),
+    )
     val DEFAULT_ALLOWED_CONTACTS = ContactType.CONTACT_TYPE_STARRED
     const val DEFAULT_REPEAT_CALL_ENABLED = false
     const val DEFAULT_WALLPAPER_ID = 0
@@ -46,9 +45,6 @@ object Defaults {
     val DEFAULT_SOUND_SETTING = SoundSetting.SOUND_SETTING_FOLLOW_DEVICE_SETTINGS
     const val BATTERY_SAVER_ENABLED = false
     const val REDUCE_BRIGHTNESS_ENABLED = false
-    const val ECO_CHARGE_ENABLED = false
-    const val ALWAYS_ON_DISPLAY_ENABLED = false
-    const val AIRPLANE_MODE_ENABLED = false
     val CONTACT_TYPE_LIST = listOf(
         ContactType.CONTACT_TYPE_EVERYONE,
         ContactType.CONTACT_TYPE_NONE,

@@ -26,7 +26,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Defaults
+import com.fairphone.spring.launcher.data.model.LauncherColors
 import com.fairphone.spring.launcher.ui.icons.mode.ModeIcon
 import com.fairphone.spring.launcher.ui.screen.mode.creator.ChooseAppsScreen
 import com.fairphone.spring.launcher.ui.screen.mode.creator.ChooseBackgroundScreen
@@ -105,9 +105,9 @@ fun OnBoardingNavigation(
             val updateProfileState by viewModel.updateModeState.collectAsStateWithLifecycle()
 
             ChooseBackgroundScreen(
-                selectedColor = Defaults.Color_BG_Orange,
+                selectedColor = LauncherColors.Default.rightColor,
                 continueButtonName = stringResource(R.string.bt_apply_changes),
-                onContinue = { colors ->
+                onBackgroundColorSelected = { colors ->
                     viewModel.updateBackgroundColors(colors)
                     viewModel.updateProfile()
                 }

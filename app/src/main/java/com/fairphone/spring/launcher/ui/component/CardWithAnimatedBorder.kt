@@ -45,7 +45,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.data.model.Preset
+import com.fairphone.spring.launcher.data.model.LauncherColors
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import kotlinx.coroutines.delay
@@ -131,8 +131,8 @@ fun CardWithAnimatedBorder_Preview() {
         ) {
             CardWithAnimatedBorder(
                 borderColors = listOf(
-                    Color(Preset.QualityTime.colors.secondaryColor),
-                    Color(Preset.QualityTime.colors.mainColor),
+                    Color(LauncherColors.QualityTime.leftColor),
+                    Color(LauncherColors.QualityTime.rightColor),
                 ),
                 enableAnimation = false
             ) {
@@ -144,8 +144,8 @@ fun CardWithAnimatedBorder_Preview() {
 
             CardWithAnimatedBorder(
                 borderColors = listOf(
-                    Color(Preset.QualityTime.colors.secondaryColor),
-                    Color(Preset.QualityTime.colors.mainColor),
+                    Color(LauncherColors.QualityTime.leftColor),
+                    Color(LauncherColors.QualityTime.rightColor),
                 ),
                 enableAnimation = true
             ) {

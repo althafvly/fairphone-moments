@@ -20,7 +20,8 @@ import android.content.Context
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
 import com.fairphone.spring.launcher.data.model.Defaults
-import com.fairphone.spring.launcher.data.model.Preset
+import com.fairphone.spring.launcher.data.model.LauncherColors
+import com.fairphone.spring.launcher.data.model.protos.launcherProfileApp
 import com.fairphone.spring.launcher.domain.usecase.base.UseCase
 import com.fairphone.spring.launcher.util.isDoNotDisturbAccessGranted
 import kotlinx.coroutines.flow.first
@@ -38,7 +39,7 @@ class InitializeSpringLauncherUseCase(
         }
 
         if (context.isDoNotDisturbAccessGranted()) {
-            val result = createInitialPresets(context)
+            val result = createDefaultProfile(context)
 
             return result
         } else {
@@ -46,15 +47,21 @@ class InitializeSpringLauncherUseCase(
         }
     }
 
-    private suspend fun createInitialPresets(context: Context): Result<Unit> {
-        val defaultVisibleApps = Preset.Essentials.getVisibleLauncherApps(context)
+    private suspend fun createDefaultProfile(context: Context): Result<Unit> {
         val essentials = CreateLauncherProfile(
             id = CreateLauncherProfileUseCase.newId(),
             name = context.getString(R.string.default_profile_name),
             icon = Defaults.DEFAULT_ICON,
-            bgColor1 = Defaults.DEFAULT_BG_COLOR1,
-            bgColor2 = Defaults.Color_BG_Orange,
-            launcherProfileApps = defaultVisibleApps,
+            bgColor1 = LauncherColors.Default.leftColor,
+            bgColor2 = LauncherColors.Default.rightColor,
+            launcherProfileApps = Defaults.DEFAULT_VISIBLE_APPS.map { app ->
+                app.allApps.firstNotNullOf {
+                    launcherProfileApp {
+                        packageName = it.getPackageName(context)
+                        isWorkApp = it.isWorkApp
+                    }
+                }
+            },
             allowedContacts = Defaults.DEFAULT_ALLOWED_CONTACTS,
             repeatCallEnabled = Defaults.DEFAULT_REPEAT_CALL_ENABLED,
             wallpaperId = Defaults.DEFAULT_WALLPAPER_ID,
