@@ -37,6 +37,7 @@ object Defaults {
         AppPreset(Messages),
         AppPreset(Phone),
     )
+    const val Color_Transparent = 0x00000000
     val DEFAULT_ALLOWED_CONTACTS = ContactType.CONTACT_TYPE_STARRED
     const val DEFAULT_REPEAT_CALL_ENABLED = true
     const val DEFAULT_WALLPAPER_ID = 0

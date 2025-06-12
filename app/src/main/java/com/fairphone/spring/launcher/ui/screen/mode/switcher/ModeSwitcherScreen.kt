@@ -16,6 +16,7 @@
 
 package com.fairphone.spring.launcher.ui.screen.mode.switcher
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +27,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
@@ -36,7 +36,6 @@ import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.ActionButton
 import com.fairphone.spring.launcher.ui.component.ScreenHeader
-import com.fairphone.spring.launcher.ui.screen.mode.ModeContainer
 import com.fairphone.spring.launcher.ui.screen.mode.switcher.component.ModeSwitcherButton
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
@@ -49,11 +48,12 @@ fun ModeSwitcherScreen(
     onCreateMomentClick: () -> Unit = {},
     onCancel: () -> Unit = {}
 ) {
-    ModeContainer(endColor = Color(currentLauncherProfile.bgColor2), onClick = onCancel) {
+//    ModeContainer(endColor = Color(currentLauncherProfile.bgColor2), onClick = onCancel) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .clickable(onClick = onCancel)
                 .padding(top = 80.dp, start = 20.dp, end = 20.dp),
         ) {
             ScreenHeader(stringResource(R.string.mode_switcher_screen_header))
@@ -87,7 +87,7 @@ fun ModeSwitcherScreen(
             }
 
         }
-    }
+  //  }
 }
 
 @Composable

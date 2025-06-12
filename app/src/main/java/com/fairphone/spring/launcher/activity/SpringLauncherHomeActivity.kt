@@ -27,15 +27,27 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import com.fairphone.spring.launcher.analytics.FirebaseAnalyticsService
 import com.fairphone.spring.launcher.analytics.LocalAnalyticsService
+import com.fairphone.spring.launcher.data.model.Defaults.Color_Transparent
 import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
 import org.koin.compose.KoinContext
 
 class SpringLauncherHomeActivity : ComponentActivity() {
@@ -44,8 +56,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         fun start(context: Context) {
             val intent = Intent(context, SpringLauncherHomeActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                        Intent.FLAG_ACTIVITY_NO_ANIMATION
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             context.startActivity(intent)
         }
@@ -60,16 +71,16 @@ class SpringLauncherHomeActivity : ComponentActivity() {
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
-        overrideActivityTransition(
-            OVERRIDE_TRANSITION_OPEN,
-            android.R.anim.fade_in,
-            android.R.anim.fade_out
-        )
-        overrideActivityTransition(
-            OVERRIDE_TRANSITION_CLOSE,
-            android.R.anim.fade_in,
-            android.R.anim.fade_out
-        )
+//        overrideActivityTransition(
+//            OVERRIDE_TRANSITION_OPEN,
+//            android.R.anim.fade_in,
+//            android.R.anim.fade_out
+//        )
+//        overrideActivityTransition(
+//            OVERRIDE_TRANSITION_CLOSE,
+//            android.R.anim.fade_in,
+//            android.R.anim.fade_out
+//        )
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
@@ -82,7 +93,25 @@ class SpringLauncherHomeActivity : ComponentActivity() {
                 val analyticsService = remember { FirebaseAnalyticsService(Firebase.analytics) }
                 CompositionLocalProvider(LocalAnalyticsService provides analyticsService) {
                     SpringLauncherTheme {
-                        HomeNavigation()
+                        var isFirstLaunch by rememberSaveable { mutableStateOf(true) }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    if (isFirstLaunch) androidx.compose.ui.graphics.Color(
+                                        Color_Transparent
+                                    ) else MaterialTheme.colorScheme.background
+                                )
+                        ) {
+                            HomeNavigation(
+                                isFirstLaunch = isFirstLaunch
+                            )
+                        }
+
+                        LaunchedEffect(Unit) {
+                            delay(1000)
+                            isFirstLaunch = false
+                        }
                     }
                 }
             }
