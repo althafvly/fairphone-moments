@@ -22,6 +22,7 @@ import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
@@ -105,7 +107,7 @@ fun AnimatedBackground(
             targetValueByState = { state ->
                 when (state) {
                     AnimationState.START -> 0f
-                    AnimationState.END -> -35f
+                    AnimationState.END -> 0f
                 }
             },
             transitionSpec = {
@@ -124,7 +126,7 @@ fun AnimatedBackground(
             targetValueByState = { state ->
                 when (state) {
                     AnimationState.START -> 0f
-                    AnimationState.END -> 35f
+                    AnimationState.END -> 0f
                 }
             },
             transitionSpec = {
@@ -143,8 +145,8 @@ fun AnimatedBackground(
         val leftBlobXDp by transition.animateDp(
             targetValueByState = { state ->
                 when (state) {
-                    AnimationState.START -> 186.dp - correctionX
-                    AnimationState.END -> 6.dp - correctionX
+                    AnimationState.START -> -250.dp - correctionX
+                    AnimationState.END -> -70.dp - correctionX
                 }
             },
             transitionSpec = {
@@ -154,7 +156,7 @@ fun AnimatedBackground(
         val leftBlobYDp by transition.animateDp(
             targetValueByState = { state ->
                 when (state) {
-                    AnimationState.START -> 1206.dp - correctionY
+                    AnimationState.START -> 826.dp - correctionY
                     AnimationState.END -> 826.dp - correctionY
                 }
             },
@@ -165,8 +167,8 @@ fun AnimatedBackground(
         val rightBlobXDp by transition.animateDp(
             targetValueByState = { state ->
                 when (state) {
-                    AnimationState.START -> 186.dp - correctionX
-                    AnimationState.END -> 366.dp - correctionX
+                    AnimationState.START -> 630.dp - correctionX
+                    AnimationState.END -> 450.dp - correctionX
                 }
             },
             transitionSpec = {
@@ -176,7 +178,7 @@ fun AnimatedBackground(
         val rightBlobYDp by transition.animateDp(
             targetValueByState = { state ->
                 when (state) {
-                    AnimationState.START -> 1208.dp - correctionY
+                    AnimationState.START -> 828.dp - correctionY
                     AnimationState.END -> 828.dp - correctionY
                 }
             },
@@ -208,13 +210,16 @@ fun BackgroundBlob(
     color: Color,
     modifier: Modifier = Modifier
 ) {
+    val dynamicBlur = if (isSystemInDarkTheme()) 200.dp else 100.dp
+    val dynamicAlpha = if (isSystemInDarkTheme()) 0.7f else 1f
     Surface(
         shape = Blob(),
         color = color,
         modifier = modifier
-            .blur(radius = 100.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+            .blur(radius = dynamicBlur, edgeTreatment = BlurredEdgeTreatment.Unbounded)
             .width(392.dp)
             .height(676.dp)
+            .alpha(dynamicAlpha)
     ) {}
 }
 

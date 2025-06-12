@@ -46,7 +46,7 @@ enum class Preset(
         title = R.string.mode_title_essential,
         subtitle = R.string.mode_subtitle_essential,
         icon = "Spring",
-        colors = LauncherColors(mainColor = 0xB2FFBA63, secondaryColor = 0xB2C3D1D0),
+        colors = LauncherColors(mainColor = 0xB2C3D1D0, secondaryColor = 0xB2FFBA63),
         defaultApps = listOf(
             AppPreset(Camera),
             AppPreset(DefaultBrowser),
@@ -60,7 +60,7 @@ enum class Preset(
         title = R.string.mode_title_deep_focus,
         subtitle = R.string.mode_subtitle_deep_focus,
         icon = "DeepFocus",
-        colors = LauncherColors(mainColor = 0xFFF26E6E, secondaryColor = 0xFFF27696),
+        colors = LauncherColors(mainColor = 0xB282C9F1, secondaryColor = 0xB2CBCEEA),
         defaultApps = listOf(
             AppPreset(GoogleGmail),
             AppPreset(GoogleCalendar),
@@ -74,7 +74,7 @@ enum class Preset(
         title = R.string.mode_title_journey,
         subtitle = R.string.mode_subtitle_journey,
         icon = "Journey",
-        colors = LauncherColors(mainColor = 0xFF00433D, secondaryColor = 0xFFD8FF4F),
+        colors = LauncherColors(mainColor = 0xB2F7CAC9, secondaryColor = 0xB2E5D1F8),
         defaultApps = listOf(
             AppPreset(Waze, alternatives = listOf(GoogleMaps)),
             AppPreset(Spotify, alternatives = listOf(Tidal, Deezer, GoogleYoutubeMusic)),
@@ -86,7 +86,7 @@ enum class Preset(
         title = R.string.mode_title_recharge,
         subtitle = R.string.mode_subtitle_recharge,
         icon = "Recharge",
-        colors = LauncherColors(mainColor = 0xFF2D9197, secondaryColor = 0xFF66A2DD),
+        colors = LauncherColors(mainColor = 0xB2D8FF4F, secondaryColor = 0xB2BBD9D6),
         defaultApps = listOf(
             AppPreset(Spotify, alternatives = listOf(Tidal, Deezer, GoogleYoutubeMusic)),
             AppPreset(Headspace, alternatives = listOf(Calm, Clock)),
@@ -97,7 +97,7 @@ enum class Preset(
         title = R.string.mode_title_quality_time,
         subtitle = R.string.mode_subtitle_quality_time,
         icon = "QualityTime",
-        colors = LauncherColors(mainColor = 0xFFD8FF4F, secondaryColor = 0xFF42CC60),
+        colors = LauncherColors(mainColor = 0xB2C0AFFF, secondaryColor = 0xB2B0CCD8),
         defaultApps = listOf(
             AppPreset(Camera),
             AppPreset(GooglePhoto),
