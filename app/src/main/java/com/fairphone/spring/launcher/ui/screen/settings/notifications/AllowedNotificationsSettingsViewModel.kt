@@ -22,10 +22,8 @@ import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseC
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class AllowedNotificationsSettingsViewModel(
     private val getEditedProfileUseCase: GetEditedProfileUseCase,
@@ -38,7 +36,6 @@ class AllowedNotificationsSettingsViewModel(
                 AllowedNotificationsSettingsScreenState.Success(
                     AllowedNotificationSettingsData(
                         allowedNotificationAppsCount = profile.appNotificationsList.size,
-                        repeatCallEnabled = profile.repeatCallEnabled,
                     )
                 )
             }.stateIn(
@@ -46,17 +43,6 @@ class AllowedNotificationsSettingsViewModel(
                 started = SharingStarted.WhileSubscribed(5000),
                 initialValue = AllowedNotificationsSettingsScreenState.Loading
             )
-
-    /**
-     * Used when the user use the switch button to allow/disallow repeat calls
-     */
-    fun updateRepeatCallEnabledIndicator(indicator: Boolean) =
-        viewModelScope.launch {
-            val profile = getEditedProfileUseCase.execute(Unit).first()
-            updateLauncherProfileUseCase.execute(
-                profile.toBuilder().setRepeatCallEnabled(indicator).build()
-            )
-        }
 }
 
 sealed class AllowedNotificationsSettingsScreenState() {
@@ -69,5 +55,4 @@ sealed class AllowedNotificationsSettingsScreenState() {
 
 data class AllowedNotificationSettingsData(
     val allowedNotificationAppsCount: Int,
-    val repeatCallEnabled: Boolean,
 )

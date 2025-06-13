@@ -59,9 +59,6 @@ fun NavGraphBuilder.allowedNotificationsSettingsNavGraph(navController: NavHostC
             onAppNotificationClick = {
                 navController.navigate(AllowedNotificationApps)
             },
-            onAllowRepeatCallerClick = {
-                viewModel.updateRepeatCallEnabledIndicator(it)
-            },
             onReadNotificationPermissionClick = {
                 context.startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
             },

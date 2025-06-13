@@ -40,6 +40,7 @@ class AllowedContactSettingsViewModel(
                 activeProfileName = profile.name,
                 allowedContactTypeList = Defaults.CONTACT_TYPE_LIST,
                 selectedContactType = profile.allowedContacts,
+                isRepeatCallsEnabled = profile.repeatCallEnabled,
             )
         }.stateIn(
             scope = viewModelScope,
@@ -52,6 +53,17 @@ class AllowedContactSettingsViewModel(
         val updatedProfile = profile.toBuilder().setAllowedContacts(peopleType).build()
         updateLauncherProfileUseCase.execute(updatedProfile)
     }
+
+    /**
+     * Used when the user use the switch button to allow/disallow repeat calls
+     */
+    fun updateRepeatCallEnabledIndicator(indicator: Boolean) =
+        viewModelScope.launch {
+            val profile = getEditedProfileUseCase.execute(Unit).first()
+            updateLauncherProfileUseCase.execute(
+                profile.toBuilder().setRepeatCallEnabled(indicator).build()
+            )
+        }
 }
 
 sealed class AllowedContactSettingsScreenState {
@@ -60,5 +72,6 @@ sealed class AllowedContactSettingsScreenState {
         val activeProfileName: String,
         val allowedContactTypeList: List<ContactType>,
         val selectedContactType: ContactType,
+        val isRepeatCallsEnabled: Boolean,
     ) : AllowedContactSettingsScreenState()
 }

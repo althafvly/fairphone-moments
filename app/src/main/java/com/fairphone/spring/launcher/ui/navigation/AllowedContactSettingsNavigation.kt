@@ -39,7 +39,10 @@ fun NavGraphBuilder.allowedContactSettingsNavGraph(navController: NavHostControl
             screenState = screenState,
             onContactTypeSelected = { contactType ->
                 viewModel.onContactTypeSelected(contactType)
-            }
+            },
+            onAllowRepeatCallsStateChanged = {
+                viewModel.updateRepeatCallEnabledIndicator(it)
+            },
         )
     }
 }

@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.Defaults
 import com.fairphone.spring.launcher.data.model.protos.ContactType
+import com.fairphone.spring.launcher.ui.component.SettingSwitchItem
 import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
@@ -50,6 +51,7 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 fun AllowedContactSettingsScreen(
     screenState: AllowedContactSettingsScreenState,
     onContactTypeSelected: (ContactType) -> Unit,
+    onAllowRepeatCallsStateChanged: (Boolean) -> Unit,
 ) {
     when (screenState) {
         is AllowedContactSettingsScreenState.Loading -> {
@@ -63,7 +65,9 @@ fun AllowedContactSettingsScreen(
                 profileName = screenState.activeProfileName,
                 allowedContactTypeList = screenState.allowedContactTypeList,
                 selectedContactType = screenState.selectedContactType,
-                onContactTypeSelected = onContactTypeSelected
+                onContactTypeSelected = onContactTypeSelected,
+                isRepeatCallsEnabled = screenState.isRepeatCallsEnabled,
+                onAllowRepeatCallsStateChanged = onAllowRepeatCallsStateChanged
             )
         }
     }
@@ -75,6 +79,8 @@ fun AllowedContactSettingsScreen(
     allowedContactTypeList: List<ContactType>,
     selectedContactType: ContactType,
     onContactTypeSelected: (ContactType) -> Unit,
+    isRepeatCallsEnabled: Boolean,
+    onAllowRepeatCallsStateChanged: (Boolean) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -82,6 +88,7 @@ fun AllowedContactSettingsScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 20.dp)
     ) {
         Text(
             text = stringResource(R.string.setting_header_allowed_contacts, profileName),
@@ -94,7 +101,7 @@ fun AllowedContactSettingsScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(horizontal = 20.dp)
+            modifier = Modifier
         ) {
             allowedContactTypeList.forEach { peopleType ->
                 ContactTypeSelectorItem(
@@ -104,6 +111,21 @@ fun AllowedContactSettingsScreen(
                 )
             }
         }
+
+        SettingSwitchItem(
+            state = isRepeatCallsEnabled,
+            title = stringResource(R.string.setting_notifications_allow_repeat_caller),
+            subtitle = stringResource(R.string.setting_notifications_allow_repeat_caller_desc),
+            onClick = onAllowRepeatCallsStateChanged,
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(size = 12.dp)
+                )
+                .clip(RoundedCornerShape(size = 12.dp))
+        )
     }
 }
 
@@ -153,9 +175,18 @@ fun AllowedContactSettingsScreen_Preview() {
             allowedContactTypeList = Defaults.CONTACT_TYPE_LIST,
             selectedContactType = ContactType.CONTACT_TYPE_STARRED,
             onContactTypeSelected = {},
+            isRepeatCallsEnabled = true,
+            onAllowRepeatCallsStateChanged = {}
         )
     }
 }
+
+@Composable
+@Preview(uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES)
+fun AllowedContactSettingsScreen_DarkPreview() {
+    AllowedContactSettingsScreen_Preview()
+}
+
 
 fun ContactType.getNameResId(): Int = when(this) {
     ContactType.CONTACT_TYPE_EVERYONE -> R.string.people_type_everyone

@@ -42,7 +42,6 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.SettingListItem
-import com.fairphone.spring.launcher.ui.component.SettingSwitchItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
@@ -50,7 +49,6 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 fun AllowedNotificationsSettingsScreen(
     screenState: AllowedNotificationsSettingsScreenState,
     onAppNotificationClick: () -> Unit,
-    onAllowRepeatCallerClick: (Boolean) -> Unit,
     onReadNotificationPermissionClick: () -> Unit,
     onPostNotificationPermissionClick: () -> Unit,
 ) {
@@ -65,7 +63,6 @@ fun AllowedNotificationsSettingsScreen(
             AllowedNotificationsSettingsScreen(
                 screenData = screenState.data,
                 onAppNotificationClick = onAppNotificationClick,
-                onAllowRepeatCallerClick = onAllowRepeatCallerClick,
                 onReadNotificationPermissionClick = onReadNotificationPermissionClick,
                 onPostNotificationPermissionClick = onPostNotificationPermissionClick
             )
@@ -78,7 +75,6 @@ fun AllowedNotificationsSettingsScreen(
 fun AllowedNotificationsSettingsScreen(
     screenData: AllowedNotificationSettingsData,
     onAppNotificationClick: () -> Unit,
-    onAllowRepeatCallerClick: (Boolean) -> Unit,
     onReadNotificationPermissionClick: () -> Unit,
     onPostNotificationPermissionClick: () -> Unit,
 ) {
@@ -100,21 +96,6 @@ fun AllowedNotificationsSettingsScreen(
             title = stringResource(R.string.setting_notifications_app),
             subtitle = notificationSubtitle(screenData.allowedNotificationAppsCount),
             onClick = onAppNotificationClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(size = 12.dp)
-                )
-                .clip(RoundedCornerShape(size = 12.dp))
-        )
-
-        SettingSwitchItem(
-            state = screenData.repeatCallEnabled,
-            title = stringResource(R.string.setting_notifications_allow_repeat_caller),
-            subtitle = stringResource(R.string.setting_notifications_allow_repeat_caller_desc),
-            onClick = onAllowRepeatCallerClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .border(
@@ -195,11 +176,9 @@ private fun AllowedNotificationsSettingsScreen_Preview() {
             screenState = AllowedNotificationsSettingsScreenState.Success(
                 AllowedNotificationSettingsData(
                     allowedNotificationAppsCount = 3,
-                    repeatCallEnabled = true,
                 )
             ),
             onAppNotificationClick = {},
-            onAllowRepeatCallerClick = {},
             onReadNotificationPermissionClick = {},
             onPostNotificationPermissionClick = {},
 
