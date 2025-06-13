@@ -70,7 +70,7 @@ import kotlin.math.roundToInt
 @Composable
 fun ChooseBackgroundScreen(
     selectedColor: Long,
-    continueButtonName: String = stringResource(R.string.bt_create),
+    continueButtonName: String = stringResource(R.string.bt_create_moment),
     onBackgroundColorSelected: (LauncherColors) -> Unit
 ) {
     val colors = LauncherColors.All

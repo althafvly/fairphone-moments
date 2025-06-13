@@ -81,7 +81,6 @@ fun NameYourMomentScreen(
 
             ActionButton(
                 icon = newIcon.imageVector,
-                description = "Update moment",
                 isSelected = false,
                 type = ButtonType.RoundedCorner,
                 size = ButtonSize.Big,

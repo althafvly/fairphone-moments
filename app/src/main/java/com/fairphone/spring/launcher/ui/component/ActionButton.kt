@@ -86,9 +86,8 @@ enum class ButtonType {
 @Composable
 fun ActionButton(
     icon: ImageVector,
-    description: String,
+    labelText: String? = null,
     modifier: Modifier = Modifier,
-    displayLabel: Boolean = false,
     isSelected: Boolean = false,
     horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
     size: ButtonSize = ButtonSize.Default,
@@ -145,16 +144,16 @@ fun ActionButton(
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = description,
+                contentDescription = labelText,
                 tint = if (isSelected) onBackgroundLight else MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .width(iconSize)
                     .height(iconSize)
             )
         }
-        if (displayLabel) {
+        if (labelText != null) {
             Text(
-                text = description,
+                text = labelText,
                 style = FairphoneTypography.ButtonLegend,
                 color = MaterialTheme.colorScheme.onBackground,
                 textAlign = TextAlign.Center,
@@ -237,49 +236,40 @@ fun ActionButton_Preview() {
         ) {
             ActionButton(
                 icon = Icons.Filled.Add,
-                description = "Add Moment",
-                displayLabel = true
+                labelText = "Create Moment",
             )
             ActionButton(
                 icon = SettingsIcon,
-                description = "Update moment",
-                isSelected = false
             )
             ActionButton(
                 icon = SettingsIcon,
-                description = "Update selected moment",
+                labelText = "Update selected moment",
                 isSelected = true,
-                displayLabel = true,
                 selectedStartColor = Color(LauncherColors.QualityTime.rightColor),
                 selectedEndColor = Color(LauncherColors.QualityTime.leftColor)
             )
             ActionButton(
                 icon = SettingsIcon,
-                description = "Update selected moment",
+                labelText = "Update selected moment",
                 isSelected = true,
-                displayLabel = true,
                 selectedStartColor = Color(LauncherColors.Custom.rightColor),
                 selectedEndColor = Color(LauncherColors.Custom.leftColor)
             )
             ActionButton(
                 icon = NavIcons.Close,
-                description = "Add Moment",
                 size = ButtonSize.Small
             )
             ActionButton(
                 icon = NavIcons.ArrowLeft,
-                description = "Add Moment",
                 size = ButtonSize.Small
             )
             ActionButton(
                 icon = SettingsIcon,
-                description = "Update moment",
                 size = ButtonSize.Small,
                 isSelected = true
             )
             ActionButton(
                 icon = SettingsIcon,
-                description = "Update moment",
                 isSelected = false,
                 size = ButtonSize.Big,
                 type = ButtonType.RoundedCorner

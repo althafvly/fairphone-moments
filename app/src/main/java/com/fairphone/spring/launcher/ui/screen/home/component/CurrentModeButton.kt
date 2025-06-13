@@ -181,7 +181,6 @@ fun CurrentModeButtonTooltip(
                     )
                     ActionButton(
                         icon = NavIcon.Close.imageVector,
-                        description = stringResource(R.string.bt_cancel),
                         size = ButtonSize.Small,
                         modifier = Modifier.weight(1.0f),
                         horizontalAlignment = Alignment.End,

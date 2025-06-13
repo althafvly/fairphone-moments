@@ -44,9 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.ui.FP6Preview
@@ -133,7 +131,6 @@ fun ModeSwitcherButton(
 
             ActionButton(
                 icon = SettingsIcon,
-                description = stringResource(R.string.mode_switcher_screen_header),
                 isSelected = isSelected,
                 selectedStartColor = Color(profile.bgColor2),
                 selectedEndColor = Color(profile.bgColor1)

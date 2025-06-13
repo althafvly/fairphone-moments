@@ -24,10 +24,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.ui.component.ActionButton
 import com.fairphone.spring.launcher.ui.component.ButtonSize
 import com.fairphone.spring.launcher.ui.icons.NavIcons
@@ -52,7 +50,6 @@ fun CreateMomentTopBar(
             if (hasBackButton) {
                 ActionButton(
                     icon = NavIcons.ArrowLeft,
-                    description = stringResource(R.string.bt_navigate_back),
                     size = ButtonSize.Small,
                     onClick = onNavigateBack
                 )
@@ -61,7 +58,6 @@ fun CreateMomentTopBar(
         actions = {
             ActionButton(
                 icon = NavIcons.Close,
-                description = stringResource(R.string.bt_navigation_close),
                 size = ButtonSize.Small,
                 onClick = onNavigateClose,
             )
