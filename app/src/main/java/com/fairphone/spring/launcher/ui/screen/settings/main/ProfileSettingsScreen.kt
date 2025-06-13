@@ -64,6 +64,7 @@ fun ProfileSettingsScreen(
     screenState: ProfileSettingsScreenState,
     onEditProfileName: (String) -> Unit,
     onProfileIconClick: () -> Unit,
+    onSwitchToThisProfileClick: () -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
     onNavigateToAllowedContactSettings: () -> Unit,
     onNavigateToAllowedAppSettings: () -> Unit,
@@ -84,9 +85,11 @@ fun ProfileSettingsScreen(
             ProfileSettingsScreen(
                 profile = screenState.profile,
                 visibleApps = screenState.visibleApps,
-                canDeleteProfile = screenState.canDeleteProfile,
+                isActiveProfile = screenState.isActiveProfile,
+                hasMultipleProfiles = screenState.hasMultipleProfiles,
                 onEditProfileName = onEditProfileName,
                 onProfileIconClick = onProfileIconClick,
+                onSwitchToThisProfileClick = onSwitchToThisProfileClick,
                 onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings,
                 onNavigateToAllowedContactSettings = onNavigateToAllowedContactSettings,
                 onNavigateToAllowedAppSettings = onNavigateToAllowedAppSettings,
@@ -105,9 +108,11 @@ fun ProfileSettingsScreen(
 fun ProfileSettingsScreen(
     profile: LauncherProfile,
     visibleApps: List<AppInfo>,
-    canDeleteProfile: Boolean,
+    isActiveProfile: Boolean,
+    hasMultipleProfiles: Boolean,
     onProfileIconClick: () -> Unit,
     onEditProfileName: (String) -> Unit,
+    onSwitchToThisProfileClick: () -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
     onNavigateToAllowedContactSettings: () -> Unit,
     onNavigateToAllowedAppSettings: () -> Unit,
@@ -129,10 +134,12 @@ fun ProfileSettingsScreen(
         ) {
             LauncherProfileSettingsTopBar(
                 currentLauncherProfile = profile,
+                isActiveProfile = isActiveProfile,
                 onEditLauncherProfileName = {
                     showProfileNameEditor = true
                 },
-                onIconClick = onProfileIconClick
+                onIconClick = onProfileIconClick,
+                onSetActiveProfileClick = onSwitchToThisProfileClick,
                 //modifier = Modifier.windowInsetsPadding(TopAppBarDefaults.windowInsets)
             )
 
@@ -227,7 +234,7 @@ fun ProfileSettingsScreen(
                     .align(Alignment.CenterHorizontally)
                     .padding(vertical = 24.dp),
                 onModeDeletionClick = onModeDeletionClick,
-                canDeleteMode = canDeleteProfile,
+                canDeleteMode = hasMultipleProfiles,
             )
         }
 
@@ -305,10 +312,12 @@ fun ProfileSettings_Preview() {
         ProfileSettingsScreen(
             profile = Mock_Profile,
             visibleApps = emptyList(),
-            canDeleteProfile = false,
+            isActiveProfile = true,
+            hasMultipleProfiles = true,
             onEditProfileName = {},
             onProfileIconClick = {},
             onNavigateToAllowedAppSettings = {},
+            onSwitchToThisProfileClick = {},
             onNavigateToVisibleAppSettings = {},
             onNavigateToAllowedContactSettings = {},
             onNavigateToNotificationSettings = {},

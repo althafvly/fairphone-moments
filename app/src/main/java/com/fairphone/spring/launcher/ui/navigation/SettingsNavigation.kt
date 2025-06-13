@@ -80,6 +80,7 @@ fun SettingsNavigation(
                 screenState = screenState,
                 onEditProfileName = viewModel::updateProfileName,
                 onProfileIconClick = viewModel::updateProfileIcon,
+                onSwitchToThisProfileClick = viewModel::setEditedProfileAsActive,
                 onNavigateToVisibleAppSettings = {
                     navController.navigate(VisibleAppSettings)
                 },

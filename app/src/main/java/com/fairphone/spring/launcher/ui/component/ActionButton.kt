@@ -182,7 +182,7 @@ private fun Modifier.computeButtonModifier(
         )
     else this
 
-private fun computeButtonBackground(
+fun computeButtonBackground(
     isDark: Boolean,
     isSelected: Boolean,
     isPressed: Boolean
