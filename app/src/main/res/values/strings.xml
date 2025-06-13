@@ -33,7 +33,7 @@
     <string name="bt_navigate_back">Back</string>
     <string name="bt_navigation_close">Close</string>
     <string name="bt_continue">Continue</string>
-    <string name="bt_create">Create mode</string>
+    <string name="bt_create_moment">Create moment</string>
     <string name="bt_switch_to_profile">Switch to this moment</string>
 
     <string name="profile_state_active">Active</string>

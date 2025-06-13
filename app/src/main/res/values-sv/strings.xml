@@ -37,7 +37,7 @@
     <string name="people_type_custom">Välja</string>
     <string name="setting_subtitle_notification">Ingen tillåten</string>
     <string name="setting_header_visible_apps">Ordna apparnas ordning på skärmen</string>
-    <string name="bt_create">Skapa läge</string>
+    <string name="bt_create_moment">Skapa ögonblick</string>
     <string name="bt_switch_to_profile">Växla till detta ögonblick</string>
     <string name="bt_cancel">Annullera</string>
     <string name="bt_change_apps">Byt appar</string>

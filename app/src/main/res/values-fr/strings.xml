@@ -43,7 +43,7 @@
     <string name="setting_subtitle_appearance">Changez l\'apparence à votre guise</string>
     <string name="setting_subtitle_notification">Aucun autorisé</string>
     <string name="setting_header_visible_apps">Organisez l\'ordre des applications sur votre écran</string>
-    <string name="bt_create">Créer mode</string>
+    <string name="bt_create_moment">Créer un moment</string>
     <string name="bt_switch_to_profile">Passer à ce moment</string>
     <string name="bt_cancel">Annuler</string>
     <string name="bt_change_apps">Changer d\'application</string>

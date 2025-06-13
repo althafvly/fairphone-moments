@@ -39,7 +39,7 @@
     <string name="bt_navigate_back">Indietro</string>
     <string name="bt_navigation_close">Vicino</string>
     <string name="bt_continue">Continuare</string>
-    <string name="bt_create">Crea una modalità</string>
+    <string name="bt_create_moment">Crea momento</string>
     <string name="bt_switch_to_profile">Passa a questo momento</string>
     <string name="bt_cancel">Cancellare</string>
     <string name="bt_change_apps">Cambia app</string>

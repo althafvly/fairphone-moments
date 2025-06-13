@@ -40,7 +40,7 @@
     <string name="bt_navigate_back">Zurück</string>
     <string name="bt_navigation_close">Schließen</string>
     <string name="bt_continue">Weitermachen</string>
-    <string name="bt_create">Erstellen Sie einen Modus</string>
+    <string name="bt_create_moment">Moment schaffen</string>
     <string name="bt_switch_to_profile">Wechseln Sie zu diesem Moment</string>
     <string name="bt_cancel">Stornieren</string>
     <string name="bt_change_apps">Apps ändern</string>

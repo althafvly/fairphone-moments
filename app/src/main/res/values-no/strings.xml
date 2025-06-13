@@ -37,7 +37,7 @@
     <string name="people_type_custom">Velge</string>
     <string name="setting_subtitle_notification">Ingen tillatt</string>
     <string name="setting_header_visible_apps">Ordne rekkefølgen på appene på skjermen</string>
-    <string name="bt_create">Opprett modusen</string>
+    <string name="bt_create_moment">Skap øyeblikk</string>
     <string name="bt_switch_to_profile">Bytt til dette øyeblikket</string>
     <string name="bt_cancel">Kansellere</string>
     <string name="bt_change_apps">Bytt apper</string>

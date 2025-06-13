@@ -80,8 +80,7 @@ fun ModeSwitcherScreen(
             if (profiles.size < 6) {
                 ActionButton(
                     icon = Icons.Filled.Add,
-                    description = "Add Moment",
-                    displayLabel = true,
+                    labelText = stringResource(R.string.bt_create_moment),
                     modifier = Modifier.padding(bottom = 56.dp),
                     onClick = onCreateMomentClick
                 )

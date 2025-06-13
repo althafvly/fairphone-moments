@@ -37,7 +37,7 @@
     <string name="people_type_custom">Elegir</string>
     <string name="setting_subtitle_notification">Ninguno permitido</string>
     <string name="setting_header_visible_apps">Organiza el orden de las aplicaciones en tu pantalla</string>
-    <string name="bt_create">Crear el modo</string>
+    <string name="bt_create_moment">Crear momento</string>
     <string name="bt_switch_to_profile">Cambiar a este momento</string>
     <string name="bt_cancel">Cancelar</string>
     <string name="bt_change_apps">Cambiar aplicaciones</string>

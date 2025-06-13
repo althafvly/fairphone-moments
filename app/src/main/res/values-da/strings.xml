@@ -43,7 +43,7 @@
     <string name="setting_subtitle_appearance">Skift udseendet til din smag</string>
     <string name="setting_subtitle_notification">Ingen tilladt</string>
     <string name="setting_header_visible_apps">Arranger rækkefølgen af apps på din skærm</string>
-    <string name="bt_create">Opret en tilstand</string>
+    <string name="bt_create_moment">Skab et øjeblik</string>
     <string name="bt_switch_to_profile">Skift til dette øjeblik</string>
     <string name="bt_cancel">Ophæve</string>
     <string name="bt_change_apps">Skift apps</string>
