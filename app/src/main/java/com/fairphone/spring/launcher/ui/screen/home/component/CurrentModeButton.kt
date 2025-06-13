@@ -16,7 +16,6 @@
 
 package com.fairphone.spring.launcher.ui.screen.home.component
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,11 +25,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RichTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipBox
@@ -43,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.LayoutCoordinates
@@ -71,38 +71,44 @@ import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.ui.theme.homeButtonBackgroundDarkColor
 import com.fairphone.spring.launcher.ui.theme.homeButtonBackgroundLightColor
-import com.fairphone.spring.launcher.ui.theme.onBoardingLightDescription
+import com.fairphone.spring.launcher.util.gradientBorder
 
 @Composable
 fun ColumnScope.CurrentModeButton(
+    modifier: Modifier = Modifier,
     activeProfile: LauncherProfile,
     appUsageMode: UsageMode,
     onModeSwitcherButtonClick: () -> Unit,
     onTooltipClick: () -> Unit
 ) {
     CurrentModeButtonTooltip(
-        modifier = Modifier.align(Alignment.CenterHorizontally),
-        displayed = appUsageMode == UsageMode.ON_BOARDING_COMPLETE,
+        modifier = modifier.align(Alignment.CenterHorizontally),
+        appUsageMode = appUsageMode,
         onTooltipClick = onTooltipClick
     ) { modifier ->
 
-        OutlinedButton(
+        val surfaceColor = MaterialTheme.colorScheme.surface
+        val gradientStroke = Brush.verticalGradient(
+            colors = listOf(surfaceColor.copy(alpha = 2f), surfaceColor.copy(alpha = 0.1f))
+        )
+        val borderWidth = 1.dp
+        val cornerRadius = 12.dp
+
+        Button(
             onClick = onModeSwitcherButtonClick,
             colors = ButtonDefaults.outlinedButtonColors(
                 containerColor = MaterialTheme.colorScheme.surface,
             ),
-            // On onboarding the border is managed by an animation
-            border = if (appUsageMode == UsageMode.ON_BOARDING) {
-                BorderStroke(0.dp, MaterialTheme.colorScheme.surface)
-            } else {
-                BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant)
-            },
-            shape = RoundedCornerShape(size = 12.dp),
+            shape = RoundedCornerShape(size = cornerRadius),
             contentPadding = PaddingValues(
-                horizontal = if (appUsageMode == UsageMode.ON_BOARDING) 48.dp else 16.dp,
-                vertical = if (appUsageMode == UsageMode.ON_BOARDING) 24.dp else 14.dp
+                horizontal = 16.dp,
+                vertical = 14.dp
             ),
-            modifier = modifier
+            modifier = modifier.gradientBorder(
+                borderWidth = borderWidth,
+                brush = gradientStroke,
+                cornerRadius = cornerRadius
+            )
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -125,19 +131,6 @@ fun ColumnScope.CurrentModeButton(
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
-                if (appUsageMode == UsageMode.ON_BOARDING) {
-                    Text(
-                        text = stringResource(R.string.onboarding_home_button_help),
-                        style = FairphoneTypography.BodySmall,
-                        color = if (isSystemInDarkTheme()) {
-                            MaterialTheme.colorScheme.onSurface
-                        } else {
-                            // On light screen we want a gray different of the onSurface color
-                            onBoardingLightDescription
-                        },
-                        textAlign = TextAlign.Center
-                    )
-                }
             }
         }
     }
@@ -146,11 +139,18 @@ fun ColumnScope.CurrentModeButton(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrentModeButtonTooltip(
-    displayed: Boolean,
     modifier: Modifier = Modifier,
+    appUsageMode: UsageMode,
     onTooltipClick: () -> Unit,
     content: @Composable (Modifier) -> Unit,
 ) {
+    val dynamicText = when (appUsageMode) {
+        UsageMode.ON_BOARDING -> stringResource(R.string.onboarding_home_button_help)
+        UsageMode.ON_BOARDING_COMPLETE -> stringResource(R.string.onboarding_home_tooltitp)
+        UsageMode.DEFAULT -> stringResource(R.string.onboarding_home_button_help)
+    }
+    val displayed =
+        appUsageMode == UsageMode.ON_BOARDING || appUsageMode == UsageMode.ON_BOARDING_COMPLETE
 
     val tooltipState = rememberTooltipState(initialIsVisible = displayed, isPersistent = true)
     val anchorBounds: MutableState<LayoutCoordinates?> = remember { mutableStateOf(null) }
@@ -176,8 +176,9 @@ fun CurrentModeButtonTooltip(
                     modifier = Modifier.padding(vertical = 8.dp),
                 ) {
                     Text(
-                        text = stringResource(R.string.onboarding_home_tooltitp),
-                        modifier = Modifier.weight(4.0f)
+                        text = dynamicText.toString(),
+                        modifier = Modifier.weight(4.0f),
+                        textAlign = TextAlign.Center,
                     )
                     ActionButton(
                         icon = NavIcon.Close.imageVector,
@@ -269,7 +270,7 @@ private fun CurrentModeButton_Preview(usageMode: UsageMode) {
                 activeProfile = Mock_Profile,
                 appUsageMode = usageMode,
                 onModeSwitcherButtonClick = {},
-                onTooltipClick= {}
+                onTooltipClick = {}
             )
 
         }

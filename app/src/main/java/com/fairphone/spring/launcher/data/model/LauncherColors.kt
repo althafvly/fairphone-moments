@@ -28,7 +28,7 @@ data class LauncherColors(
 ) {
     companion object {
         val Default = LauncherColors(rightColor = 0xB2FFBA63, leftColor = 0xB2C3D1D0)
-        val Custom = LauncherColors(rightColor = 0xFFF26E6E, leftColor = 0xFFF27696)
+        val Custom = LauncherColors(rightColor = 0xB2FACAC9, leftColor = 0xB2EBD1F8)
         val DeepFocus = LauncherColors(rightColor = 0xB282C9F1, leftColor = 0xB2CBCEEA)
         val Journey = LauncherColors(rightColor = 0xB2F7CAC9, leftColor = 0xB2E5D1F8)
         val Recharge = LauncherColors(rightColor = 0xB2D8FF4F, leftColor = 0xB2BBD9D6)

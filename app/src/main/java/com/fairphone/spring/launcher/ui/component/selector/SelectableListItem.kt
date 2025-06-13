@@ -154,9 +154,12 @@ fun AppInfoIcon(appInfo: AppInfo, modifier: Modifier = Modifier) {
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 4.dp)
-
-
-            )
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = CircleShape
+                )
+        )
 
         if (appInfo.isWorkApp) {
             WorkAppBadge(Modifier.size(16.dp))

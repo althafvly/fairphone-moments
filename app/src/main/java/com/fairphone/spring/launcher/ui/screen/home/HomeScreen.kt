@@ -22,7 +22,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +31,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,8 +41,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,15 +53,11 @@ import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.data.prefs.UsageMode
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
-import com.fairphone.spring.launcher.ui.component.CardWithAnimatedBorder
 import com.fairphone.spring.launcher.ui.component.FairphoneMomentsDemoCard
 import com.fairphone.spring.launcher.ui.component.WorkAppBadge
 import com.fairphone.spring.launcher.ui.screen.home.component.CurrentModeButton
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
-import com.fairphone.spring.launcher.ui.theme.homeButtonBackgroundDarkColor
-import com.fairphone.spring.launcher.ui.theme.homeButtonBackgroundLightColor
-import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 import java.time.format.DateTimeFormatter
 
@@ -73,7 +65,6 @@ const val CLOCK_TIME_FORMAT = "HH:mm"
 const val CLOCK_DATE_FORMAT = "EEE, dd LLL"
 
 private const val CONTENT_FADE_IN_DURATION = 420 // Duration of the text animation
-private const val CONTENT_ANIMATION_DELAY = 0L // Delay between time and date animation
 
 @Composable
 fun HomeScreen(
@@ -134,82 +125,53 @@ fun HomeScreen(
     var visibility by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        delay(CONTENT_ANIMATION_DELAY)
         visibility = true
     }
 
     val fadeInAnimation = remember {
         fadeIn(animationSpec = tween(CONTENT_FADE_IN_DURATION))
     }
-
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-    ) {
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = visibility,
+        enter = fadeInAnimation
+    )
+    {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 40.dp)
+            modifier = modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+                .padding(bottom = 24.dp)
         ) {
-
-            AnimatedVisibility(
-                visible = visibility,
-                enter = fadeInAnimation
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 40.dp)
             ) {
                 Text(
                     text = time,
                     style = FairphoneTypography.Time,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
-            }
-            AnimatedVisibility(
-                visible = visibility,
-                enter = fadeInAnimation
-            ) {
                 Text(
                     text = date,
                     style = FairphoneTypography.Date,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
+
+                CurrentModeButton(
+                    modifier = Modifier.padding(top = 12.dp),
+                    activeProfile = activeProfile,
+                    appUsageMode = appUsageMode,
+                    onModeSwitcherButtonClick = onModeSwitcherButtonClick,
+                    onTooltipClick = onTooltipClick
+                )
             }
 
-            AnimatedVisibility(
-                visible = visibility,
-                enter = fadeInAnimation
-            ) {
-                CardWithAnimatedBorder(
-                    modifier = Modifier
-                        .clipToBounds()
-                        .padding(top = 12.dp)
-                        .wrapContentSize(),
-                    // Because of the animation we can't use e background color with opacity
-                    backgroundColor = if (isSystemInDarkTheme()) homeButtonBackgroundDarkColor else homeButtonBackgroundLightColor,
-                    enableAnimation = appUsageMode == UsageMode.ON_BOARDING,
-                    borderColors = listOf(
-                        Color(activeProfile.bgColor1),
-                        Color(activeProfile.bgColor2)
-                    )
-                ) {
-                    CurrentModeButton(
-                        activeProfile = activeProfile,
-                        appUsageMode = appUsageMode,
-                        onModeSwitcherButtonClick = onModeSwitcherButtonClick,
-                        onTooltipClick = onTooltipClick
-                    )
-                }
-            }
+            Spacer(modifier = Modifier.weight(1f))
 
-
-        }
-
-        Spacer(modifier = Modifier.weight(1f))
-        AnimatedVisibility(
-            visible = visibility,
-            enter = fadeInAnimation
-        ) {
             AppList(
                 appList = appList,
                 onAppClick = onAppClick,
@@ -217,15 +179,13 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(24.dp)
             )
-        }
 
-
-
-        if (isRetailDemoMode) {
-            FairphoneMomentsDemoCard(
-                modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 30.dp),
-                onClick = { onDemoCardClick() }
-            )
+            if (isRetailDemoMode) {
+                FairphoneMomentsDemoCard(
+                    modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 30.dp),
+                    onClick = { onDemoCardClick() }
+                )
+            }
         }
     }
 }

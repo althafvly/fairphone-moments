@@ -41,7 +41,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.fairphone.spring.launcher.analytics.FirebaseAnalyticsService
 import com.fairphone.spring.launcher.analytics.LocalAnalyticsService
-import com.fairphone.spring.launcher.data.model.Defaults.Color_Transparent
 import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
@@ -71,16 +70,6 @@ class SpringLauncherHomeActivity : ComponentActivity() {
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
-//        overrideActivityTransition(
-//            OVERRIDE_TRANSITION_OPEN,
-//            android.R.anim.fade_in,
-//            android.R.anim.fade_out
-//        )
-//        overrideActivityTransition(
-//            OVERRIDE_TRANSITION_CLOSE,
-//            android.R.anim.fade_in,
-//            android.R.anim.fade_out
-//        )
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
             navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
@@ -98,9 +87,9 @@ class SpringLauncherHomeActivity : ComponentActivity() {
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
-                                    if (isFirstLaunch) androidx.compose.ui.graphics.Color(
-                                        Color_Transparent
-                                    ) else MaterialTheme.colorScheme.background
+                                    if (isFirstLaunch)
+                                        androidx.compose.ui.graphics.Color.Transparent
+                                    else MaterialTheme.colorScheme.background
                                 )
                         ) {
                             HomeNavigation(
