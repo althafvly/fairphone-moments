@@ -39,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import com.fairphone.spring.launcher.analytics.FirebaseAnalyticsService
 import com.fairphone.spring.launcher.analytics.LocalAnalyticsService
 import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
@@ -47,7 +48,12 @@ import com.fairphone.spring.launcher.util.Constants
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.compose.KoinContext
+
+private const val ON_FINISH_DELAY = 400L
+private const val SHOW_HOME_SCREEN_DELAY = 100L
+private const val SHOW_ANIMATION_TIME = 1000L
 
 class SpringLauncherHomeActivity : ComponentActivity() {
 
@@ -55,7 +61,8 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         fun start(context: Context) {
             val intent = Intent(context, SpringLauncherHomeActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                        Intent.FLAG_ACTIVITY_NO_ANIMATION
             }
             context.startActivity(intent)
         }
@@ -67,6 +74,9 @@ class SpringLauncherHomeActivity : ComponentActivity() {
             instance?.finish()
         }
     }
+
+
+    private val isContentVisibleState = mutableStateOf(false)
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,28 +92,52 @@ class SpringLauncherHomeActivity : ComponentActivity() {
                 val analyticsService = remember { FirebaseAnalyticsService(Firebase.analytics) }
                 CompositionLocalProvider(LocalAnalyticsService provides analyticsService) {
                     SpringLauncherTheme {
-                        var isFirstLaunch by rememberSaveable { mutableStateOf(true) }
+                        // TODO: Move compose code to a separate composable
+                        /**
+                         * These two boolean flags control:
+                         * - Triggering and synchronization of a Compose animation.
+                         * - Dynamic switching of the UI background
+                         *  (for entry / exit animation, a transparent background is needed).
+                         */
+                        var showEntryAnimation by rememberSaveable { mutableStateOf(true) }
+                        var isContentVisible by rememberSaveable { isContentVisibleState }
+                        LaunchedEffect(Unit) {
+                            delay(SHOW_HOME_SCREEN_DELAY) // delay set to let the entry animation show properly
+                            isContentVisibleState.value = true
+                        }
+                        LaunchedEffect(Unit) {
+                            delay(SHOW_ANIMATION_TIME) // time within the entry animation can run
+                            showEntryAnimation = false
+                        }
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
-                                    if (isFirstLaunch)
+                                    if (showEntryAnimation || !isContentVisible)
                                         androidx.compose.ui.graphics.Color.Transparent
                                     else MaterialTheme.colorScheme.background
                                 )
                         ) {
                             HomeNavigation(
-                                isFirstLaunch = isFirstLaunch
+                                showEntryAnimation = showEntryAnimation,
+                                isContentVisible = isContentVisible
                             )
-                        }
-
-                        LaunchedEffect(Unit) {
-                            delay(1000)
-                            isFirstLaunch = false
                         }
                     }
                 }
             }
+        }
+    }
+
+    override fun finish() {
+        finishWithDelay()
+    }
+
+    private fun finishWithDelay() {
+        isContentVisibleState.value = false
+        lifecycleScope.launch {
+            delay(ON_FINISH_DELAY) // delay set to let the exit animation show properly
+            super.finish()
         }
     }
 

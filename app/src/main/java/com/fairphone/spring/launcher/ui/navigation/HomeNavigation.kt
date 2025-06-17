@@ -21,16 +21,13 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -52,7 +49,6 @@ import com.fairphone.spring.launcher.ui.screen.mode.switcher.ModeSwitcherViewMod
 import com.fairphone.spring.launcher.ui.screen.onboarding.OnBoardingScreen
 import com.fairphone.spring.launcher.util.FairphoneWebViewScreen
 import com.fairphone.spring.launcher.util.MOMENTS_DEMO_URL
-import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
@@ -71,39 +67,47 @@ object ModeCreator
 @Serializable
 object FairphoneDemoWebView
 
+const val ENTER_EXIT_DURATION = 300
+const val FADE_IN_DURATION = 200
+
 @Composable
 fun HomeNavigation(
     navController: NavHostController = rememberNavController(),
-    isFirstLaunch: Boolean
+    showEntryAnimation: Boolean,
+    isContentVisible: Boolean
 ) {
     ScreenViewTracker(navController = navController)
     NavHost(
         navController = navController,
-        startDestination = Home
+        startDestination = Home,
+        enterTransition = { fadeIn(animationSpec = tween(FADE_IN_DURATION)) },
+        exitTransition = { fadeOut(animationSpec = tween(FADE_IN_DURATION)) }
     ) {
-        composable<Home>(
-            exitTransition = {
-                fadeOut(animationSpec = tween(200))
-            }
-        ) {
+        composable<Home> {
             val viewModel: HomeScreenViewModel = koinViewModel()
             val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-
-            var visibility by remember { mutableStateOf(false) }
+            val homeEnterTransition = if (showEntryAnimation) {
+                expandVertically(
+                    expandFrom = Alignment.Top,
+                    animationSpec = tween(
+                        durationMillis = ENTER_EXIT_DURATION
+                    )
+                )
+            } else {
+                fadeIn(animationSpec = tween(FADE_IN_DURATION))
+            }
+            val homeExitTransition = shrinkVertically(
+                shrinkTowards = Alignment.Top,
+                animationSpec = tween(
+                    durationMillis = ENTER_EXIT_DURATION
+                )
+            )
 
             if (screenState != null) {
-                LaunchedEffect(Unit) {
-                    delay(200)
-                    visibility = true
-                }
                 AnimatedVisibility(
-                    visible = visibility,
-                    enter = if (isFirstLaunch) expandVertically(
-                        expandFrom = Alignment.Top,
-                        animationSpec = tween(
-                            durationMillis = 300
-                        )
-                    ) else fadeIn(animationSpec = tween(200)) //exit isn't shown, we need to understand why
+                    visible = isContentVisible,
+                    enter = homeEnterTransition,
+                    exit = homeExitTransition,
                 ) {
                     AnimatedBackground(
                         colors = screenState!!.activeProfile.colors(),
@@ -145,20 +149,7 @@ fun HomeNavigation(
         }
 
         // Create new Mode
-        composable<ModeSwitcher>(
-            enterTransition = {
-                fadeIn(animationSpec = tween(200))
-            },
-            exitTransition = {
-                fadeOut(animationSpec = tween(200))
-            },
-            popEnterTransition = {
-                fadeIn(animationSpec = tween(200))
-            },
-            popExitTransition = {
-                fadeOut(animationSpec = tween(200))
-            }
-        ) {
+        composable<ModeSwitcher> {
             val viewModel: ModeSwitcherViewModel = koinViewModel()
             val screenState by viewModel.screenState.collectAsStateWithLifecycle()
             val context = LocalContext.current
@@ -192,20 +183,7 @@ fun HomeNavigation(
             }
         }
 
-        composable<ModeCreator>(
-            enterTransition = {
-                fadeIn(animationSpec = tween(200))
-            },
-            exitTransition = {
-                fadeOut(animationSpec = tween(200))
-            },
-            popEnterTransition = {
-                fadeIn(animationSpec = tween(200))
-            },
-            popExitTransition = {
-                fadeOut(animationSpec = tween(200))
-            }
-        ) {
+        composable<ModeCreator> {
             val context = LocalContext.current
             CreateModeScreen(
                 onCloseModeCreator = {
@@ -219,20 +197,7 @@ fun HomeNavigation(
         }
 
         // Create new Mode
-        composable<OnBoarding>(
-            enterTransition = {
-                fadeIn(animationSpec = tween(200))
-            },
-            exitTransition = {
-                fadeOut(animationSpec = tween(200))
-            },
-            popEnterTransition = {
-                fadeIn(animationSpec = tween(200))
-            },
-            popExitTransition = {
-                fadeOut(animationSpec = tween(200))
-            }
-        ) {
+        composable<OnBoarding> {
             OnBoardingScreen(
                 onBoardingClose = {
                     navController.navigateUp()
