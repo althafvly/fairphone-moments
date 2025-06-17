@@ -39,7 +39,7 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 @Composable
 fun SettingListItem(
     title: String,
-    subtitle: String,
+    subtitle: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -75,11 +75,13 @@ fun SettingListItem(
                 style = FairphoneTypography.BodyMedium,
                 color = onSurfaceDynamic
             )
-            Text(
-                text = subtitle,
-                style = FairphoneTypography.BodySmall,
-                color = onSurfaceDynamic
-            )
+            subtitle?.let {
+                Text(
+                    text = it,
+                    style = FairphoneTypography.BodySmall,
+                    color = onSurfaceDynamic
+                )
+            }
         }
 
         icon(enabled)

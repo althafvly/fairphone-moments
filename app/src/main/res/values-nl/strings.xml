@@ -90,4 +90,6 @@
     <string name="permission_toggle_subtitle_notification_access">Toestemming om de oorsprong van je notificaties te lezen</string>
     <string name="permission_toggle_title_post_notification">Notificaties plaatsen</string>
     <string name="permission_toggle_subtitle_post_notification">Toestemming om de gefilterde notificaties opnieuw te plaatsen</string>
+    <string name="wallpaper">Achtergrond</string>
+    <string name="update_wallpaper">Achtergrond bijwerken</string>
 </resources>

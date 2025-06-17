@@ -117,5 +117,7 @@
     <string name="permission_toggle_subtitle_notification_access">Permission to read the origin of your notifications</string>
     <string name="permission_toggle_title_post_notification">Post Notifications</string>
     <string name="permission_toggle_subtitle_post_notification">Permission to repost the filtered notifications</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="update_wallpaper">Update wallpaper</string>
 
 </resources>

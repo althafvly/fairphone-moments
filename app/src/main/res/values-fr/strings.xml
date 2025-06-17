@@ -90,4 +90,6 @@
     <string name="permission_toggle_subtitle_notification_access">Autorisation de lire l\'origine de vos notifications</string>
     <string name="permission_toggle_title_post_notification">Publier des notifications</string>
     <string name="permission_toggle_subtitle_post_notification">Autorisation de republier les notifications filtrées</string>
+    <string name="wallpaper">Fond d\'écran</string>
+    <string name="update_wallpaper">Changer le fond d\'écran</string>
 </resources>

@@ -179,6 +179,11 @@ fun ProfileSettingsScreen(
                     subtitle = notificationSubtitle(profile.appNotificationsList.size),
                     onClick = onNavigateToNotificationSettings
                 )
+                SettingListItem(
+                    title = stringResource(R.string.setting_title_appearance),
+                    subtitle = stringResource(R.string.setting_subtitle_appearance),
+                    onClick = onNavigateToAppearanceSettings
+                )
 //                SettingListItem(
 //                    enabled = false,
 //                    title = stringResource(R.string.setting_title_appearance),

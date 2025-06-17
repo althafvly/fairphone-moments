@@ -90,4 +90,6 @@
     <string name="permission_toggle_subtitle_notification_access">Tilladelse til at læse oprindelsen af dine notifikationer</string>
     <string name="permission_toggle_title_post_notification">Send notifikationer</string>
     <string name="permission_toggle_subtitle_post_notification">Tilladelse til at genudsende de filtrerede notifikationer</string>
+    <string name="wallpaper">Tapet</string>
+    <string name="update_wallpaper">Opdater Baggrund</string>
 </resources>

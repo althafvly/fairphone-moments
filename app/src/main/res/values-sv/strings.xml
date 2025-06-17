@@ -91,4 +91,6 @@
     <string name="permission_toggle_subtitle_notification_access">Behörighet att läsa ursprunget för dina aviseringar</string>
     <string name="permission_toggle_title_post_notification">Publicera aviseringar</string>
     <string name="permission_toggle_subtitle_post_notification">Behörighet att återpublicera de filtrerade aviseringarna</string>
+    <string name="wallpaper">Tapet</string>
+    <string name="update_wallpaper">Uppdatera Bakgrund</string>
 </resources>

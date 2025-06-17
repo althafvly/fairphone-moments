@@ -89,7 +89,9 @@ fun SettingsNavigation(
                 onNavigateToNotificationSettings = {
                     navController.navigate(AllowedNotificationSettings)
                 },
-                onNavigateToAppearanceSettings = {},
+                onNavigateToAppearanceSettings = {
+                    navController.navigate(AppearanceSettings)
+                },
                 onNavigateToSoundAndVibrationSettings = {},
                 onNavigateToPowerSavingSettings = {},
                 onModeDeletionClick = {
@@ -107,5 +109,8 @@ fun SettingsNavigation(
 
         // Allowed notification Settings
         allowedNotificationsSettingsNavGraph(navController)
+
+        // Appearance Settings
+        appearenceSettingsNavGraph(navController)
     }
 }
