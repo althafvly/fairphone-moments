@@ -66,6 +66,12 @@
     <string name="choose_app_screen_subtitle">Voici les applications que vous verrez. Les appels téléphoniques continueront d\'être traités normalement.</string>
     <string name="choose_app_background_header">Choisir un arrière plan</string>
     <string name="name_mode_screen_header">Nommez votre moment</string>
+    <string name="mode_title_essential">Essentiels</string>
+    <string name="mode_title_quality_time">Du temps de qualité</string>
+    <string name="mode_title_deep_focus">Focus</string>
+    <string name="mode_title_custom">Paramètre personnalisé</string>
+    <string name="mode_title_journey">Voyage</string>
+    <string name="mode_title_recharge">Recharger</string>
     <string name="mode_subtitle_quality_time">Donnez la priorité à votre corps et à votre esprit</string>
     <string name="mode_subtitle_deep_focus">Libérez votre potentiel en éliminant les distractions</string>
     <string name="mode_subtitle_custom">Commencez à partir de zéro et personnalisez le mode en fonction de vos besoins</string>

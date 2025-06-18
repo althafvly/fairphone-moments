@@ -17,6 +17,12 @@
 
 <resources>
     <string name="default_profile_name">Esenciales</string>
+    <string name="mode_title_essential">Essentials</string>
+    <string name="mode_title_quality_time">Quality Time</string>
+    <string name="mode_title_deep_focus">Deep focus</string>
+    <string name="mode_title_custom">Custom</string>
+    <string name="mode_title_journey">Journey</string>
+    <string name="mode_title_recharge">Recharge</string>
     <string name="setting_title_visible_apps">Aplicaciones visibles</string>
     <string name="setting_title_visible_apps_selector">Seleccionar aplicaciones visibles</string>
     <string name="setting_title_allowed_contacts">Contactos permitidos</string>

@@ -95,14 +95,13 @@
 
     <string name="name_mode_screen_header">Name your moment</string>
 
-    <string name="mode_title_essential" translatable="false">Essentials</string>
-    <string name="mode_title_quality_time" translatable="false">Quality Time</string>
-    <string name="mode_title_deep_focus" translatable="false">Deep focus</string>
-    <string name="mode_title_custom" translatable="false">Custom</string>
-    <string name="mode_title_journey" translatable="false">Journey</string>
-    <string name="mode_title_recharge" translatable="false">Recharge</string>
+    <string name="mode_title_essential">Essentials</string>
+    <string name="mode_title_quality_time">Quality Time</string>
+    <string name="mode_title_deep_focus">Deep focus</string>
+    <string name="mode_title_custom">Custom</string>
+    <string name="mode_title_journey">Journey</string>
+    <string name="mode_title_recharge">Recharge</string>
 
-    <string name="mode_subtitle_essential" translatable="false">Essentials settings</string>
     <string name="mode_subtitle_quality_time">Prioritize your body and mind</string>
     <string name="mode_subtitle_deep_focus">Unlock your potential by shutting out distractions</string>
     <string name="mode_subtitle_custom">Start blank and tailor the mode to fit your needs</string>
