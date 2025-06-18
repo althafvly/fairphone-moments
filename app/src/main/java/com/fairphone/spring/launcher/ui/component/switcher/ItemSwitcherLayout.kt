@@ -34,15 +34,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.ContactInfo
+import com.fairphone.spring.launcher.data.model.SelectableItem
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.component.SearchBar
-import com.fairphone.spring.launcher.ui.component.selector.SelectableItem
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.fakeApp
 
 @Composable
-fun <T : SelectableItem> ItemSwitcherLayout(
+fun <T: SelectableItem> ItemSwitcherLayout(
     itemList: List<T>,
     selectedItems: List<T>,
     onItemClick: (T, Boolean) -> Unit,
@@ -64,6 +68,15 @@ fun <T : SelectableItem> ItemSwitcherLayout(
         SearchBar(
             query = filter,
             onQueryChange = { filter = it },
+            placeholderText = when (itemList[0]) {
+                is AppInfo -> {
+                    stringResource(R.string.search_app_info_bar_placeholder)
+                }
+                is ContactInfo -> {
+                    stringResource(R.string.search_contact_info_bar_placeholder)
+                }
+                else -> null
+            },
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 

@@ -37,6 +37,7 @@
     <string name="profile_name_editor_title">Renomear momento</string>
     <string name="profile_name_max_length_error">Mantenha seu nome do momento com menos de 15 caracteres</string>
     <string name="search_app_info_bar_placeholder">Pesquisar aplicativos</string>
+    <string name="search_contact_info_bar_placeholder">Pesquisar contatos</string>
     <string name="people_type_everyone">Todos</string>
     <string name="people_type_none">Ninguém</string>
     <string name="people_type_all_contacts">Todos os contatos</string>

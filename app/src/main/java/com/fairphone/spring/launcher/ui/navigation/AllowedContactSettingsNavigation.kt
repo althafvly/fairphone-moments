@@ -21,6 +21,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.fairphone.spring.launcher.data.model.protos.ContactType
+import com.fairphone.spring.launcher.ui.screen.settings.contacts.AllowedContactSelectorScreen
+import com.fairphone.spring.launcher.ui.screen.settings.contacts.AllowedContactSelectorViewModel
 import com.fairphone.spring.launcher.ui.screen.settings.contacts.AllowedContactSettingsScreen
 import com.fairphone.spring.launcher.ui.screen.settings.contacts.AllowedContactSettingsViewModel
 import kotlinx.serialization.Serializable
@@ -28,6 +31,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @Serializable
 object AllowedContactSettings
+
+@Serializable
+object AllowedCustomContactSelector
 
 fun NavGraphBuilder.allowedContactSettingsNavGraph(navController: NavHostController) {
     //Allowed Contact Settings Screen
@@ -39,10 +45,35 @@ fun NavGraphBuilder.allowedContactSettingsNavGraph(navController: NavHostControl
             screenState = screenState,
             onContactTypeSelected = { contactType ->
                 viewModel.onContactTypeSelected(contactType)
+                if (contactType == ContactType.CONTACT_TYPE_CUSTOM) {
+                    navController.navigate(AllowedCustomContactSelector)
+                }
             },
-            onAllowRepeatCallsStateChanged = {
-                viewModel.updateRepeatCallEnabledIndicator(it)
+        )
+    }
+
+    composable<AllowedCustomContactSelector> {
+        val viewModel: AllowedContactSelectorViewModel = koinViewModel()
+        val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+
+        AllowedContactSelectorScreen(
+            screenState = screenState,
+            onContactPermissionChanged = { isGranted ->
+                viewModel.onContactPermissionChanged(isGranted)
+                if (!isGranted) {
+                    navController.popBackStack()
+                }
             },
+            onContactSelected = { contactInfo ->
+                viewModel.onContactSelected(contactInfo)
+            },
+            onContactDeselected = { contactInfo ->
+                viewModel.onContactDeselected(contactInfo)
+            },
+            onConfirmContactSelection = {
+                viewModel.confirmContactSelection()
+                navController.popBackStack()
+            }
         )
     }
 }

@@ -17,7 +17,6 @@
 package com.fairphone.spring.launcher.ui.component.selector
 
 import android.content.res.Configuration
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -42,38 +41,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import com.fairphone.spring.launcher.data.model.AppInfo
-import com.fairphone.spring.launcher.ui.component.WorkAppBadge
+import androidx.core.net.toUri
+import com.fairphone.spring.launcher.data.model.ContactInfo
+import com.fairphone.spring.launcher.data.model.SelectableItem
 import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.fakeApp
-
-/**
- * Interface for an item that can be selected in a list.
- */
-interface SelectableItem {
-    /**
-     * The unique identifier of the item.
-     */
-    val id: String
-
-    /**
-     * The name of the item.
-     */
-    val name: String
-
-    /**
-     * The icon of the item. Can be a [Drawable], [ImageVector] or any other type supported by [AsyncImage].
-     */
-    val icon: Any
-}
 
 @Composable
 fun <T : SelectableItem> SelectableListItem(
@@ -90,20 +67,10 @@ fun <T : SelectableItem> SelectableListItem(
             .padding(horizontal = 20.dp, vertical = 8.dp)
             .clickable { onClick() },
     ) {
-        when (item) {
-            is AppInfo -> {
-                AppInfoIcon(appInfo = item, modifier = Modifier.size(40.dp))
-            }
-
-            else -> {
-                AsyncImage(
-                    model = item.icon,
-                    contentDescription = item.name,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.size(32.dp),
-                )
-            }
-        }
+        SelectableItemIcon(
+            item = item,
+            modifier = Modifier.size(48.dp),
+        )
 
         Text(
             text = item.name,
@@ -142,52 +109,6 @@ fun <T : SelectableItem> SelectableListItem(
 }
 
 @Composable
-fun AppInfoIcon(appInfo: AppInfo, modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.BottomEnd,
-        modifier = modifier
-
-    ) {
-        AsyncImage(
-            model = appInfo.icon,
-            contentDescription = appInfo.name,
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 4.dp)
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = CircleShape
-                )
-        )
-
-        if (appInfo.isWorkApp) {
-            WorkAppBadge(Modifier.size(16.dp))
-        }
-    }
-}
-
-
-@Composable
-@Preview
-fun AppInfoIcon_Preview() {
-    SpringLauncherTheme {
-        val context = LocalContext.current
-        Row {
-            AppInfoIcon(
-                appInfo = context.fakeApp("App name"),
-                modifier = Modifier.size(32.dp),
-            )
-            AppInfoIcon(
-                appInfo = context.fakeApp("App name", isWorkApp = true),
-                modifier = Modifier.size(32.dp),
-            )
-        }
-
-    }
-}
-
-@Composable
 fun AppInfoListItem_Preview() {
     val context = LocalContext.current
     SpringLauncherTheme {
@@ -199,6 +120,26 @@ fun AppInfoListItem_Preview() {
             )
             SelectableListItem(
                 item = context.fakeApp("App name", isWorkApp = true),
+                isSelected = true,
+                onClick = {},
+            )
+            SelectableListItem(
+                item = ContactInfo(
+                    id = "",
+                    name = "Contact Name",
+                    icon = null,
+                    contactUri = "".toUri(),
+                ),
+                isSelected = true,
+                onClick = {},
+            )
+            SelectableListItem(
+                item = ContactInfo(
+                    id = "",
+                    name = "Other Contact With Long Name",
+                    icon = null,
+                    contactUri = "".toUri(),
+                ),
                 isSelected = true,
                 onClick = {},
             )

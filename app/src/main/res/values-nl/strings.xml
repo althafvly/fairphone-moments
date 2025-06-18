@@ -37,6 +37,7 @@
     <string name="profile_name_editor_title">Moment naam wijzigen</string>
     <string name="profile_name_max_length_error">Houd uw momentnaam onder de 15 tekens</string>
     <string name="search_app_info_bar_placeholder">Zoek in je apps</string>
+    <string name="search_contact_info_bar_placeholder">Zoek contacten</string>
     <string name="people_type_everyone">Iedereen</string>
     <string name="people_type_none">Niemand</string>
     <string name="people_type_all_contacts">Alle contacten</string>

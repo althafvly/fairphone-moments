@@ -18,6 +18,7 @@ package com.fairphone.spring.launcher.data.model
 
 import android.content.Context
 import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.protos.ContactType
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.data.model.protos.launcherProfile
 
@@ -103,12 +104,17 @@ enum class Preset(
         }
 }
 
+/**
+ * Mock LauncherProfile used for previews
+ */
 val Mock_Profile = launcherProfile {
     id = "spring"
     name = "Spring"
     icon = "Spring"
     bgColor1 = 0xB2C3D1D0
     bgColor2 = 0xB2FFBA63
+    allowedContacts = ContactType.CONTACT_TYPE_CUSTOM
+    customContacts.addAll(listOf("Contact 1", "Contact 2", "Contact 3"))
 }
 
 fun LauncherProfile.colors() = LauncherColors(

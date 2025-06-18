@@ -37,15 +37,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import coil3.compose.AsyncImage
+import androidx.core.net.toUri
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.ContactInfo
+import com.fairphone.spring.launcher.data.model.SelectableItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
@@ -59,32 +60,17 @@ fun <T : SelectableItem> SelectedListItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
-            .width(60.dp)
+            .width(65.dp)
     ) {
         Box(
             contentAlignment = Alignment.TopEnd,
             modifier = Modifier
                 .padding(top = 4.dp, start = 4.dp, end = 4.dp)
         ) {
-            when (item) {
-                is AppInfo -> {
-                    AppInfoIcon(
-                        appInfo = item,
-                        modifier = Modifier
-                            .size(48.dp),
-                        )
-                }
-                else -> {
-                    AsyncImage(
-                        model = item.icon,
-                        contentDescription = item.name,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 4.dp)
-                            .size(40.dp),
-                    )
-                }
-            }
+            SelectableItemIcon(
+                item = item,
+                modifier = Modifier.size(56.dp),
+            )
 
             IconButton(
                 onClick = { onDeleteClick() },
@@ -131,16 +117,17 @@ fun SelectedListItem_Preview() {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             SelectedListItem(
-                item = object : SelectableItem {
-                    override val id = "id"
-                    override val name = "Item name"
-                    override val icon = ContextCompat.getDrawable(context, R.drawable.ic_launcher_png)!!
-                },
+                item = ContactInfo(
+                    id = "id",
+                    name = "Contact name",
+                    icon = ContextCompat.getDrawable(context, R.drawable.ic_launcher_png)!!,
+                    contactUri = "".toUri(),
+                ),
                 onDeleteClick = {},
             )
             SelectedListItem<SelectableItem>(
                 item = AppInfo(
-                    name = "Item name",
+                    name = "App name",
                     packageName = "package",
                     mainActivityClassName = "class",
                     icon = ContextCompat.getDrawable(context, R.drawable.ic_launcher_png)!!,

@@ -46,6 +46,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
+import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.ContactInfo
+import com.fairphone.spring.launcher.data.model.SelectableItem
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.component.PrimaryButton
 import com.fairphone.spring.launcher.ui.component.SearchBar
@@ -62,13 +65,13 @@ fun <T : SelectableItem> ItemSelectorLayout(
     showItemCounter: Boolean,
     showEmptyItemSelectedError: Boolean,
     showMaxItemSelectedError: Boolean,
-    confirmButtonTextResource: Int,
     onItemClick: (T) -> Unit,
     onItemDeselected: (T) -> Unit,
     onConfirmItemSelection: () -> Unit,
     modifier: Modifier = Modifier,
-    maxItemCountErrorText: String,
-    emptyItemSelectedErrorText: String,
+    maxItemCountErrorText: String? = null,
+    emptyItemSelectedErrorText: String? = null,
+    confirmButtonTextResource: Int = R.string.bt_confirm,
 ) {
     var filter: String by remember { mutableStateOf("") }
 
@@ -88,6 +91,15 @@ fun <T : SelectableItem> ItemSelectorLayout(
             SearchBar(
                 query = filter,
                 onQueryChange = { filter = it },
+                placeholderText = when (itemList[0]) {
+                    is AppInfo -> {
+                        stringResource(R.string.search_app_info_bar_placeholder)
+                    }
+                    is ContactInfo -> {
+                        stringResource(R.string.search_contact_info_bar_placeholder)
+                    }
+                    else -> null
+                },
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
 
@@ -136,11 +148,11 @@ fun <T : SelectableItem> ItemSelectorLayout(
                 .padding(bottom = 12.dp),
         ) {
             when {
-                showMaxItemSelectedError -> {
+                showMaxItemSelectedError && maxItemCountErrorText != null -> {
                     ErrorView(errorText = maxItemCountErrorText)
                 }
 
-                showEmptyItemSelectedError -> {
+                showEmptyItemSelectedError && emptyItemSelectedErrorText != null -> {
                     ErrorView(errorText = emptyItemSelectedErrorText)
                 }
 

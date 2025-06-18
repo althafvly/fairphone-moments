@@ -17,7 +17,6 @@
 package com.fairphone.spring.launcher.data.model
 
 import android.graphics.drawable.Drawable
-import com.fairphone.spring.launcher.ui.component.selector.SelectableItem
 
 data class AppInfo(
     override val name: String,

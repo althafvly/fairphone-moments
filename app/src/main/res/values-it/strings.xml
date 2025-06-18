@@ -36,6 +36,7 @@
     <string name="profile_name_editor_title">Rinomina momento</string>
     <string name="profile_name_max_length_error">Mantieni il tuo secondo nome sotto i 15 caratteri</string>
     <string name="search_app_info_bar_placeholder">Cerca app</string>
+    <string name="search_contact_info_bar_placeholder">Cerca contatti</string>
     <string name="people_type_everyone">Tutti</string>
     <string name="people_type_none">Nessuno</string>
     <string name="people_type_all_contacts">Tutti i contatti</string>

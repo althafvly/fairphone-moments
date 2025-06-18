@@ -30,18 +30,17 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
-import com.fairphone.spring.launcher.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
+    placeholderText: String?,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -56,7 +55,7 @@ fun SearchBar(
                 DefaultTextField(
                     text = query,
                     onValueChange = onQueryChange,
-                    placeHolderText = stringResource(R.string.search_app_info_bar_placeholder),
+                    placeHolderText = placeholderText,
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Search,

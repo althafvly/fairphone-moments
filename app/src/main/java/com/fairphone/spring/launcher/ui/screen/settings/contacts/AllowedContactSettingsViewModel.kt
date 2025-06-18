@@ -16,12 +16,13 @@
 
 package com.fairphone.spring.launcher.ui.screen.settings.contacts
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fairphone.spring.launcher.data.model.Defaults
 import com.fairphone.spring.launcher.data.model.protos.ContactType
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
+import com.fairphone.spring.launcher.util.isNotificationAccessGranted
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class AllowedContactSettingsViewModel(
+    context: Context,
     private val getEditedProfileUseCase: GetEditedProfileUseCase,
     private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
 ) : ViewModel() {
@@ -38,8 +40,9 @@ class AllowedContactSettingsViewModel(
         getEditedProfileUseCase.execute(Unit).map { profile ->
             AllowedContactSettingsScreenState.Success(
                 activeProfileName = profile.name,
-                allowedContactTypeList = Defaults.CONTACT_TYPE_LIST,
+                allowedContactTypeList = getAllowedContactTypeList(context),
                 selectedContactType = profile.allowedContacts,
+                allowedCustomContactCount = profile.customContactsCount,
                 isRepeatCallsEnabled = profile.repeatCallEnabled,
             )
         }.stateIn(
@@ -54,16 +57,21 @@ class AllowedContactSettingsViewModel(
         updateLauncherProfileUseCase.execute(updatedProfile)
     }
 
-    /**
-     * Used when the user use the switch button to allow/disallow repeat calls
-     */
-    fun updateRepeatCallEnabledIndicator(indicator: Boolean) =
-        viewModelScope.launch {
-            val profile = getEditedProfileUseCase.execute(Unit).first()
-            updateLauncherProfileUseCase.execute(
-                profile.toBuilder().setRepeatCallEnabled(indicator).build()
-            )
+    private fun getAllowedContactTypeList(context: Context): List<ContactType> {
+        val defaults = mutableListOf(
+            ContactType.CONTACT_TYPE_EVERYONE,
+            ContactType.CONTACT_TYPE_NONE,
+            ContactType.CONTACT_TYPE_ALL_CONTACTS,
+            ContactType.CONTACT_TYPE_STARRED,
+        )
+
+        // Add custom contact type only if notification access is granted
+        if (context.isNotificationAccessGranted()) {
+            defaults.add(ContactType.CONTACT_TYPE_CUSTOM)
         }
+
+        return defaults
+    }
 }
 
 sealed class AllowedContactSettingsScreenState {
@@ -72,6 +80,7 @@ sealed class AllowedContactSettingsScreenState {
         val activeProfileName: String,
         val allowedContactTypeList: List<ContactType>,
         val selectedContactType: ContactType,
+        val allowedCustomContactCount: Int,
         val isRepeatCallsEnabled: Boolean,
     ) : AllowedContactSettingsScreenState()
 }

@@ -31,6 +31,7 @@
     <string name="profile_name_editor_title">Renommer le moment</string>
     <string name="profile_name_max_length_error">Gardez le nom de votre moment sous 15 caractères</string>
     <string name="search_app_info_bar_placeholder">Rechercher des applications</string>
+    <string name="search_contact_info_bar_placeholder">Rechercher les contacts</string>
     <string name="people_type_everyone">Tout le monde</string>
     <string name="people_type_none">Personne</string>
     <string name="people_type_all_contacts">Tous les contacts</string>

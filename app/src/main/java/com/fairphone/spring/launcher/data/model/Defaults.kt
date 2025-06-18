@@ -45,12 +45,4 @@ object Defaults {
     val DEFAULT_SOUND_SETTING = SoundSetting.SOUND_SETTING_FOLLOW_DEVICE_SETTINGS
     const val BATTERY_SAVER_ENABLED = false
     const val REDUCE_BRIGHTNESS_ENABLED = false
-    val CONTACT_TYPE_LIST = listOf(
-        ContactType.CONTACT_TYPE_EVERYONE,
-        ContactType.CONTACT_TYPE_NONE,
-        ContactType.CONTACT_TYPE_ALL_CONTACTS,
-        ContactType.CONTACT_TYPE_STARRED,
-        // TODO: Add custom type when contact list screen is implemented
-        //ContactType.CONTACT_TYPE_CUSTOM,
-    )
 }

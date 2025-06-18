@@ -17,7 +17,6 @@
 package com.fairphone.spring.launcher.ui.component.switcher
 
 import android.content.res.Configuration
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,17 +28,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
-import coil3.compose.AsyncImage
-import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.AppInfo
+import com.fairphone.spring.launcher.data.model.SelectableItem
 import com.fairphone.spring.launcher.ui.component.SwitchButton
-import com.fairphone.spring.launcher.ui.component.selector.AppInfoIcon
-import com.fairphone.spring.launcher.ui.component.selector.SelectableItem
+import com.fairphone.spring.launcher.ui.component.selector.SelectableItemIcon
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.fakeApp
@@ -58,20 +52,10 @@ fun <T : SelectableItem> SwitcherListItem(
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 12.dp),
     ) {
-        when (item) {
-            is AppInfo -> {
-                AppInfoIcon(appInfo = item, modifier = Modifier.size(40.dp))
-            }
-
-            else -> {
-                AsyncImage(
-                    model = item.icon,
-                    contentDescription = item.name,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.size(32.dp),
-                )
-            }
-        }
+        SelectableItemIcon(
+            item = item,
+            modifier = Modifier.size(48.dp),
+        )
 
         Text(
             text = item.name,
@@ -93,20 +77,13 @@ fun SwitcherListItem_Preview() {
     SpringLauncherTheme {
         Column {
             SwitcherListItem(
-                item = object : SelectableItem {
-                    override val id = "id"
-                    override val name = "Item name"
-                    override val icon: Drawable = ContextCompat.getDrawable(
-                        LocalContext.current,
-                        R.drawable.ic_launcher_foreground
-                    )!!
-                },
+                item = context.fakeApp("App name", isWorkApp = false),
                 isChecked = true,
                 onClick = {}
             )
 
             SwitcherListItem(
-                item = context.fakeApp("App name", isWorkApp = true),
+                item = context.fakeApp("Work app name", isWorkApp = true),
                 isChecked = true,
                 onClick = {}
             )

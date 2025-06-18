@@ -17,33 +17,26 @@
 package com.fairphone.spring.launcher.ui.screen.settings.contacts
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.Defaults
 import com.fairphone.spring.launcher.data.model.protos.ContactType
-import com.fairphone.spring.launcher.ui.component.SettingSwitchItem
-import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
+import com.fairphone.spring.launcher.ui.component.RadioButtonListItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
@@ -51,7 +44,6 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 fun AllowedContactSettingsScreen(
     screenState: AllowedContactSettingsScreenState,
     onContactTypeSelected: (ContactType) -> Unit,
-    onAllowRepeatCallsStateChanged: (Boolean) -> Unit,
 ) {
     when (screenState) {
         is AllowedContactSettingsScreenState.Loading -> {
@@ -65,9 +57,8 @@ fun AllowedContactSettingsScreen(
                 profileName = screenState.activeProfileName,
                 allowedContactTypeList = screenState.allowedContactTypeList,
                 selectedContactType = screenState.selectedContactType,
+                allowedCustomContactCount = screenState.allowedCustomContactCount,
                 onContactTypeSelected = onContactTypeSelected,
-                isRepeatCallsEnabled = screenState.isRepeatCallsEnabled,
-                onAllowRepeatCallsStateChanged = onAllowRepeatCallsStateChanged
             )
         }
     }
@@ -78,9 +69,8 @@ fun AllowedContactSettingsScreen(
     profileName: String,
     allowedContactTypeList: List<ContactType>,
     selectedContactType: ContactType,
+    allowedCustomContactCount: Int,
     onContactTypeSelected: (ContactType) -> Unit,
-    isRepeatCallsEnabled: Boolean,
-    onAllowRepeatCallsStateChanged: (Boolean) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -104,67 +94,37 @@ fun AllowedContactSettingsScreen(
             modifier = Modifier
         ) {
             allowedContactTypeList.forEach { peopleType ->
-                ContactTypeSelectorItem(
-                    peopleType = peopleType,
-                    isSelected = peopleType == selectedContactType,
-                    onClick = { onContactTypeSelected(peopleType) }
+                val isSelected = peopleType == selectedContactType
+                RadioButtonListItem(
+                    title = stringResource(peopleType.getNameResId()),
+                    isSelected = isSelected,
+                    onClick = { onContactTypeSelected(peopleType) },
+                    subtitle = when (peopleType) {
+                        ContactType.CONTACT_TYPE_CUSTOM -> {
+                            if (isSelected) {
+                                customAllowedContactsSubtitle(allowedCustomContactCount)
+                            } else null
+                        }
+
+                        else -> null
+                    },
+                    leadingIcon = when (peopleType) {
+                        ContactType.CONTACT_TYPE_CUSTOM -> Icons.AutoMirrored.Filled.KeyboardArrowRight
+                        else -> null
+                    },
                 )
             }
         }
-
-        SettingSwitchItem(
-            state = isRepeatCallsEnabled,
-            title = stringResource(R.string.setting_notifications_allow_repeat_caller),
-            subtitle = stringResource(R.string.setting_notifications_allow_repeat_caller_desc),
-            onClick = onAllowRepeatCallsStateChanged,
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(size = 12.dp)
-                )
-                .clip(RoundedCornerShape(size = 12.dp))
-        )
     }
 }
 
 @Composable
-fun ContactTypeSelectorItem(
-    peopleType: ContactType,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = RoundedCornerShape(size = 12.dp)
-            )
-            .clip(RoundedCornerShape(size = 12.dp))
-            .background(MaterialTheme.colorScheme.surface)
-            .clickable { onClick() }
-            .padding(horizontal = 20.dp, vertical = 16.dp)
-    ) {
-        RadioButton(
-            selected = isSelected,
-            onClick = null,
-            colors = RadioButtonDefaults.colors(
-                selectedColor = Color_FP_Brand_Lime,
-            )
-        )
-
-        Text(
-            text = stringResource(peopleType.getNameResId()),
-            style = FairphoneTypography.BodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
+fun customAllowedContactsSubtitle(count: Int) =
+    if (count == 0) {
+        stringResource(R.string.setting_notifications_none)
+    } else {
+        pluralStringResource(R.plurals.setting_notifications_nb_allowed, count, count)
     }
-}
 
 @Composable
 @Preview
@@ -172,11 +132,16 @@ fun AllowedContactSettingsScreen_Preview() {
     SpringLauncherTheme {
         AllowedContactSettingsScreen(
             profileName = "Essentials",
-            allowedContactTypeList = Defaults.CONTACT_TYPE_LIST,
-            selectedContactType = ContactType.CONTACT_TYPE_STARRED,
+            allowedContactTypeList = listOf(
+                ContactType.CONTACT_TYPE_EVERYONE,
+                ContactType.CONTACT_TYPE_NONE,
+                ContactType.CONTACT_TYPE_ALL_CONTACTS,
+                ContactType.CONTACT_TYPE_STARRED,
+                ContactType.CONTACT_TYPE_CUSTOM,
+            ),
+            selectedContactType = ContactType.CONTACT_TYPE_CUSTOM,
+            allowedCustomContactCount = 3,
             onContactTypeSelected = {},
-            isRepeatCallsEnabled = true,
-            onAllowRepeatCallsStateChanged = {}
         )
     }
 }
@@ -188,7 +153,7 @@ fun AllowedContactSettingsScreen_DarkPreview() {
 }
 
 
-fun ContactType.getNameResId(): Int = when(this) {
+fun ContactType.getNameResId(): Int = when (this) {
     ContactType.CONTACT_TYPE_EVERYONE -> R.string.people_type_everyone
     ContactType.CONTACT_TYPE_NONE -> R.string.people_type_none
     ContactType.CONTACT_TYPE_ALL_CONTACTS -> R.string.people_type_all_contacts
@@ -196,3 +161,11 @@ fun ContactType.getNameResId(): Int = when(this) {
     ContactType.CONTACT_TYPE_CUSTOM -> R.string.people_type_custom
     ContactType.UNRECOGNIZED -> R.string.people_type_none // fallback to 'none'
 }
+
+@Composable
+fun allowedContactSubtitle(contactType: ContactType, customAllowedContactCount: Int) =
+    if (contactType == ContactType.CONTACT_TYPE_CUSTOM) {
+        customAllowedContactsSubtitle(customAllowedContactCount)
+    } else {
+        stringResource(contactType.getNameResId())
+    }

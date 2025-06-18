@@ -22,6 +22,8 @@ import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.fairphone.spring.launcher.data.datasource.DeviceContactDataSource
+import com.fairphone.spring.launcher.data.datasource.DeviceContactDataSourceImpl
 import com.fairphone.spring.launcher.data.datasource.MIGRATION_LAUNCHER_PROFILE_APPS
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSource
 import com.fairphone.spring.launcher.data.datasource.ProfileDataSourceImpl
@@ -41,6 +43,7 @@ import org.koin.dsl.module
 val dataModule = module {
     singleOf(::AppInfoRepositoryImpl) { bind<AppInfoRepository>() }
     singleOf(::LauncherProfileRepositoryImpl) { bind<LauncherProfileRepository>() }
+    singleOf(::DeviceContactDataSourceImpl) { bind<DeviceContactDataSource>() }
     single<ProfileDataSource> { ProfileDataSourceImpl(androidContext().profileDataStore) }
     single<AppPrefs> { AppPrefsImpl(androidContext().appPrefsDataStore) }
 }

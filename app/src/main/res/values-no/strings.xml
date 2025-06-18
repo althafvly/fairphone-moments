@@ -37,6 +37,7 @@
     <string name="profile_name_editor_title">Gi nytt navn til øyeblikket</string>
     <string name="profile_name_max_length_error">Hold øyeblikksnavnet ditt under 15 tegn</string>
     <string name="search_app_info_bar_placeholder">Søk etter apper</string>
+    <string name="search_contact_info_bar_placeholder">Søk etter kontakter</string>
     <string name="people_type_everyone">Alle sammen</string>
     <string name="people_type_none">Ingen</string>
     <string name="people_type_all_contacts">Alle kontakter</string>

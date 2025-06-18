@@ -37,6 +37,7 @@
     <string name="profile_name_editor_title">Byt namn på ögonblick</string>
     <string name="profile_name_max_length_error">Håll ditt ögonblicksnamn under 15 tecken</string>
     <string name="search_app_info_bar_placeholder">Sök appar</string>
+    <string name="search_contact_info_bar_placeholder">Sök kontakter</string>
     <string name="people_type_everyone">Alla</string>
     <string name="people_type_none">Ingen</string>
     <string name="people_type_all_contacts">Alla kontakter</string>

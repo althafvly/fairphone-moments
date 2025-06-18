@@ -37,6 +37,7 @@
     <string name="profile_name_editor_title">Moment umbenennen</string>
     <string name="profile_name_max_length_error">Halten Sie Ihren zweiten Namen unter 15 Zeichen</string>
     <string name="search_app_info_bar_placeholder">Apps suchen</string>
+    <string name="search_contact_info_bar_placeholder">Kontakte suchen</string>
     <string name="people_type_everyone">Jeder</string>
     <string name="people_type_none">Niemand</string>
     <string name="people_type_all_contacts">Alle Kontakte</string>

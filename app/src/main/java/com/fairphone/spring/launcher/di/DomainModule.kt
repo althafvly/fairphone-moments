@@ -17,6 +17,7 @@
 package com.fairphone.spring.launcher.di
 
 import com.fairphone.spring.launcher.domain.usecase.EnableDndUseCase
+import com.fairphone.spring.launcher.domain.usecase.contacts.GetAllContactsUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.CreateLauncherProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.DeleteLauncherProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
@@ -42,6 +43,7 @@ val domainModule = module {
     factoryOf(::SetActiveProfileUseCase)
     factoryOf(::SetEditedProfileUseCase)
     factoryOf(::InitializeSpringLauncherUseCase)
+    factoryOf(::GetAllContactsUseCase)
     factoryOf(::DeleteLauncherProfileUseCase)
     factoryOf(::GetApplicationUsageModeUseCase)
     factoryOf(::SetApplicationUsageModeUseCase)
