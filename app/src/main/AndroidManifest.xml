@@ -18,12 +18,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <!-- Permission needed to access/modify DND policies -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <!-- Permission needed to post intercepted notifications -->
     <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -44,7 +46,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <!-- Permissions needed to change lockscreen wallpaper -->
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_WALLPAPER_INTERNAL"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
@@ -65,6 +67,11 @@
     <!-- Permission needed to change audio settings -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_ROUTING"
         tools:ignore="ProtectedPermissions" />
+
+    <!-- Permissions for Call Interception -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:name=".App"
@@ -100,6 +107,7 @@
         <activity
             android:name=".activity.SwitchStateChangeActivity"
             android:clearTaskOnLaunch="true"
+            android:configChanges="screenSize|keyboardHidden|screenLayout|orientation|layoutDirection|uiMode|colorMode"
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="SwitchStateChange"
@@ -144,8 +152,9 @@
             android:theme="@style/Theme.ActivityTransparent"
             tools:ignore="DiscouragedApi,LockedOrientationActivity" />
         
-        <service android:name=".service.AppNotificationsListenerService"
+        <service android:name=".service.NotificationInterceptorService"
             android:label="notification listener"
+            android:foregroundServiceType="phoneCall"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:enabled="true"
             android:exported="true">
@@ -157,5 +166,14 @@
                 android:value="ongoing|conversations|alerting|silent">
             </meta-data>
         </service>
+
+        <receiver
+            android:name=".receiver.CallInterceptorReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

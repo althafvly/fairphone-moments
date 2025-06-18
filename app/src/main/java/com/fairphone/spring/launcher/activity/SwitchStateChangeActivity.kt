@@ -135,7 +135,7 @@ class SwitchStateChangeActivity : ComponentActivity() {
     }
 
     private fun handleDnd(switchState: SwitchState) {
-        viewModel.handleDnd(switchState)
+        viewModel.handleDnd(this, switchState)
     }
 
     private fun handleLockscreenWallpaper(switchState: SwitchState) {

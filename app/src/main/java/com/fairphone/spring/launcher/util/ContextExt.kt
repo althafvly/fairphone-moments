@@ -202,6 +202,15 @@ fun Context.isDeviceInRetailDemoMode(): Boolean {
     return dpc.isDeviceOwnerApp(RETAIL_DEMO_APP_PACKAGE_NAME)
 }
 
+/**
+ * Checks if the current application is the default launcher.
+ */
+fun Context.isAppDefaultLauncher(): Boolean {
+    val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
+    val resolveInfo = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+    return resolveInfo?.activityInfo?.packageName == packageName
+}
+
 
 fun Context.fakeApp(name: String, isWorkApp: Boolean = false): AppInfo =
     AppInfo(
