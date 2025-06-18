@@ -22,7 +22,6 @@ import androidx.lifecycle.viewModelScope
 import com.fairphone.spring.launcher.data.model.protos.ContactType
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
-import com.fairphone.spring.launcher.util.isNotificationAccessGranted
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -66,9 +65,9 @@ class AllowedContactSettingsViewModel(
         )
 
         // Add custom contact type only if notification access is granted
-        if (context.isNotificationAccessGranted()) {
-            defaults.add(ContactType.CONTACT_TYPE_CUSTOM)
-        }
+//        if (context.isNotificationAccessGranted()) {
+//            defaults.add(ContactType.CONTACT_TYPE_CUSTOM)
+//        }
 
         return defaults
     }

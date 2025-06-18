@@ -55,7 +55,6 @@ import com.fairphone.spring.launcher.ui.component.LauncherProfileSettingsTopBar
 import com.fairphone.spring.launcher.ui.component.ProfileNameEditorDialog
 import com.fairphone.spring.launcher.ui.component.SettingListItem
 import com.fairphone.spring.launcher.ui.screen.settings.contacts.allowedContactSubtitle
-import com.fairphone.spring.launcher.ui.screen.settings.notifications.notificationSubtitle
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.ui.theme.errorColor
@@ -177,11 +176,12 @@ fun ProfileSettingsScreen(
                     subtitle = allowedContactSubtitle(profile.allowedContacts, profile.customContactsCount),
                     onClick = onNavigateToAllowedContactSettings
                 )
-                SettingListItem(
-                    title = stringResource(R.string.setting_title_allowed_apps),
-                    subtitle = notificationSubtitle(profile.appNotificationsList.size),
-                    onClick = onNavigateToAllowedAppSettings
-                )
+                // TODO: Hidden for now until more testing on app notifications is done
+//                SettingListItem(
+//                    title = stringResource(R.string.setting_title_allowed_apps),
+//                    subtitle = notificationSubtitle(profile.appNotificationsList.size),
+//                    onClick = onNavigateToAllowedAppSettings
+//                )
                 SettingListItem(
                     title = stringResource(R.string.setting_title_notification),
                     subtitle = null,

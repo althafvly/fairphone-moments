@@ -18,13 +18,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <!-- Permission needed to access/modify DND policies -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <!-- Permission needed to post intercepted notifications -->
-    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-        tools:ignore="ProtectedPermissions" />
 
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
@@ -46,7 +41,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <!-- Permissions needed to change lockscreen wallpaper -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_WALLPAPER_INTERNAL"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
@@ -68,10 +63,17 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_ROUTING"
         tools:ignore="ProtectedPermissions" />
 
+    <!-- Permission needed to read contacts from device -->
+    <!--<uses-permission android:name="android.permission.READ_CONTACTS" />-->
+
+    <!-- Permission needed to post intercepted notifications -->
+    <!-- Permission needed to post intercepted notifications -->
+    <!--<uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" tools:ignore="ProtectedPermissions" />-->
+    <!--<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />-->
+
     <!-- Permissions for Call Interception -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!--<uses-permission android:name="android.permission.READ_CALL_LOG" />-->
 
     <application
         android:name=".App"
@@ -151,13 +153,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ActivityTransparent"
             tools:ignore="DiscouragedApi,LockedOrientationActivity" />
-        
+
+        <!-- TODO: Disabling these components for now until they are properly implemented -->
+        <!--
         <service android:name=".service.NotificationInterceptorService"
             android:label="notification listener"
             android:foregroundServiceType="phoneCall"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-            android:enabled="true"
-            android:exported="true">
+            android:enabled="false"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
@@ -169,11 +173,12 @@
 
         <receiver
             android:name=".receiver.CallInterceptorReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:enabled="false"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
+        !-->
     </application>
 </manifest>

@@ -43,7 +43,8 @@ class NotificationsSettingsViewModel(
                 AllowedNotificationsSettingsScreenState.Success(
                     AllowedNotificationSettingsData(
                         isRepeatCallsEnabled = profile.repeatCallEnabled,
-                        notificationPermissions = getPermissions(context),
+                        // TODO: Permissions not needed until app notifications are added
+                        notificationPermissions = emptyList() // getPermissions(context),
                     )
                 )
             }.stateIn(
