@@ -84,25 +84,26 @@ fun HomeNavigation(
         enterTransition = { fadeIn(animationSpec = tween(FADE_IN_DURATION)) },
         exitTransition = { fadeOut(animationSpec = tween(FADE_IN_DURATION)) }
     ) {
-        composable<Home> {
-            val viewModel: HomeScreenViewModel = koinViewModel()
-            val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-            val homeEnterTransition = if (showEntryAnimation) {
-                expandVertically(
-                    expandFrom = Alignment.Top,
-                    animationSpec = tween(
-                        durationMillis = ENTER_EXIT_DURATION
-                    )
-                )
-            } else {
-                fadeIn(animationSpec = tween(FADE_IN_DURATION))
-            }
-            val homeExitTransition = shrinkVertically(
-                shrinkTowards = Alignment.Top,
+        val homeEnterTransition = if (showEntryAnimation) {
+            expandVertically(
+                expandFrom = Alignment.Top,
                 animationSpec = tween(
                     durationMillis = ENTER_EXIT_DURATION
                 )
             )
+        } else {
+            fadeIn(animationSpec = tween(FADE_IN_DURATION))
+        }
+        val homeExitTransition = shrinkVertically(
+            shrinkTowards = Alignment.Top,
+            animationSpec = tween(
+                durationMillis = ENTER_EXIT_DURATION
+            )
+        )
+
+        composable<Home> {
+            val viewModel: HomeScreenViewModel = koinViewModel()
+            val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
             if (screenState != null) {
                 AnimatedVisibility(
@@ -143,13 +144,19 @@ fun HomeNavigation(
 
 
         composable<FairphoneDemoWebView> {
-            FairphoneWebViewScreen(
-                url = MOMENTS_DEMO_URL,
-                showCloseButton = true,
-                hideHeaderAndFooter = true,
-                disableUrlLoading = true,
-                onBackPressed = { navController.navigateUp() }
-            )
+            AnimatedVisibility(
+                visible = isContentVisible,
+                enter = homeEnterTransition,
+                exit = homeExitTransition,
+            ) {
+                FairphoneWebViewScreen(
+                    url = MOMENTS_DEMO_URL,
+                    showCloseButton = true,
+                    hideHeaderAndFooter = true,
+                    disableUrlLoading = true,
+                    onBackPressed = { navController.navigateUp() }
+                )
+            }
         }
 
         // Create new Mode
@@ -158,55 +165,89 @@ fun HomeNavigation(
             val screenState by viewModel.screenState.collectAsStateWithLifecycle()
             val context = LocalContext.current
 
-            if (screenState != null) {
-                AnimatedBackground(
-                    colors = screenState!!.activeProfile.colors(),
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background)
-                ) {
-                    ModeSwitcherScreen(
-                        currentLauncherProfile = screenState!!.activeProfile,
-                        profiles = screenState!!.profiles,
-                        onModeSettingsClick = {
-                            viewModel.editActiveProfileSettings(it)
-                            LauncherSettingsActivity.start(context)
-                        },
-                        onModeSelected = {
-                            viewModel.updateActiveProfile(it)
-                            navController.navigateUp()
-                        },
-                        onCancel = {
-                            navController.navigateUp()
-                        },
-                        onCreateMomentClick = {
-                            navController.navigate(ModeCreator)
-                        }
+            val homeEnterTransition = if (showEntryAnimation) {
+                expandVertically(
+                    expandFrom = Alignment.Top,
+                    animationSpec = tween(
+                        durationMillis = ENTER_EXIT_DURATION
                     )
-                }
+                )
+            } else {
+                fadeIn(animationSpec = tween(FADE_IN_DURATION))
+            }
+            val homeExitTransition = shrinkVertically(
+                shrinkTowards = Alignment.Top,
+                animationSpec = tween(
+                    durationMillis = ENTER_EXIT_DURATION
+                )
+            )
 
+            if (screenState != null) {
+                AnimatedVisibility(
+                    visible = isContentVisible,
+                    enter = homeEnterTransition,
+                    exit = homeExitTransition,
+                ) {
+                    AnimatedBackground(
+                        colors = screenState!!.activeProfile.colors(),
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.background)
+                    ) {
+                        ModeSwitcherScreen(
+                            currentLauncherProfile = screenState!!.activeProfile,
+                            profiles = screenState!!.profiles,
+                            onModeSettingsClick = {
+                                viewModel.editActiveProfileSettings(it)
+                                LauncherSettingsActivity.start(context)
+                            },
+                            onModeSelected = {
+                                viewModel.updateActiveProfile(it)
+                                navController.navigateUp()
+                            },
+                            onCancel = {
+                                navController.navigateUp()
+                            },
+                            onCreateMomentClick = {
+                                navController.navigate(ModeCreator)
+                            }
+                        )
+                    }
+                }
             }
         }
 
         composable<ModeCreator> {
             val context = LocalContext.current
-            CreateModeScreen(
-                onCloseModeCreator = {
-                    navController.popBackStack()
-                },
-                onModeCreated = {
-                    navController.popBackStack()
-                    LauncherSettingsActivity.start(context)
-                }
-            )
+            AnimatedVisibility(
+                visible = isContentVisible,
+                enter = homeEnterTransition,
+                exit = homeExitTransition,
+            ) {
+                CreateModeScreen(
+                    onCloseModeCreator = {
+                        navController.popBackStack()
+                    },
+                    onModeCreated = {
+                        navController.popBackStack()
+                        LauncherSettingsActivity.start(context)
+                    }
+                )
+            }
         }
 
         // Create new Mode
         composable<OnBoarding> {
-            OnBoardingScreen(
-                onBoardingClose = {
-                    navController.navigateUp()
-                }
-            )
+            AnimatedVisibility(
+                visible = isContentVisible,
+                enter = homeEnterTransition,
+                exit = homeExitTransition,
+            ) {
+                OnBoardingScreen(
+                    onBoardingClose = {
+                        navController.navigateUp()
+                    }
+                )
+            }
         }
     }
 }
