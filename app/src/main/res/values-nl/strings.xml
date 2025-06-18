@@ -26,6 +26,7 @@
     <string name="setting_title_visible_apps">Zichtbare apps</string>
     <string name="setting_title_visible_apps_selector">Selecteer zichtbare apps</string>
     <string name="setting_title_allowed_contacts">Toegestane contacten</string>
+    <string name="setting_title_allowed_apps">Toegestane apps</string>
     <string name="setting_title_customization_settings">Personalisatie instellingen</string>
     <string name="setting_header_allowed_contacts">Wie mag je in %1$s storen?</string>
     <string name="profile_state_active">Actief</string>

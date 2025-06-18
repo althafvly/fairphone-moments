@@ -28,7 +28,7 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.fakeApp
 
 @Composable
-fun AllowedNotificationsAppsScreen(
+fun AllowedAppsScreen(
     screenState: AllowedNotificationsAppsScreenState,
     onAllowAppSwitchClick: (String, Boolean) -> Unit
 ) {
@@ -40,7 +40,7 @@ fun AllowedNotificationsAppsScreen(
         }
 
         is AllowedNotificationsAppsScreenState.Success -> {
-            AllowedNotificationsAppsScreen(
+            AllowedAppsScreen(
                 screenData = screenState.data,
                 onAllowAppSwitchClick = onAllowAppSwitchClick
             )
@@ -49,7 +49,7 @@ fun AllowedNotificationsAppsScreen(
 }
 
 @Composable
-fun AllowedNotificationsAppsScreen(
+fun AllowedAppsScreen(
     screenData: AllowedNotificationsAppsScreenData,
     onAllowAppSwitchClick: (String, Boolean) -> Unit
 ) {
@@ -67,7 +67,7 @@ fun AllowedNotificationsAppsScreen(
 private fun AllowedNotificationsAppsScreen_Preview() {
     val context = LocalContext.current
     SpringLauncherTheme {
-        AllowedNotificationsAppsScreen(
+        AllowedAppsScreen(
             screenState = AllowedNotificationsAppsScreenState.Success(
                 AllowedNotificationsAppsScreenData(
                     profileId = "test",

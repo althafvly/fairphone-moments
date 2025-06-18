@@ -86,8 +86,11 @@ fun SettingsNavigation(
                 onNavigateToAllowedContactSettings = {
                     navController.navigate(AllowedContactSettings)
                 },
+                onNavigateToAllowedAppSettings = {
+                    navController.navigate(AllowedAppSettings)
+                },
                 onNavigateToNotificationSettings = {
-                    navController.navigate(AllowedNotificationSettings)
+                    navController.navigate(NotificationSettings)
                 },
                 onNavigateToAppearanceSettings = {
                     navController.navigate(AppearanceSettings)
@@ -107,8 +110,11 @@ fun SettingsNavigation(
         // Allowed Contact Settings
         allowedContactSettingsNavGraph(navController)
 
+        // Allowed App Settings
+        allowedAppSettingsNavGraph(navController)
+
         // Allowed notification Settings
-        allowedNotificationsSettingsNavGraph(navController)
+        notificationSettingsNavGraph(navController)
 
         // Appearance Settings
         appearenceSettingsNavGraph(navController)

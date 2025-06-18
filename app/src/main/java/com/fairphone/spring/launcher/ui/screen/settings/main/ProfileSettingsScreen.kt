@@ -54,7 +54,7 @@ import com.fairphone.spring.launcher.ui.component.ConfirmDialog
 import com.fairphone.spring.launcher.ui.component.LauncherProfileSettingsTopBar
 import com.fairphone.spring.launcher.ui.component.ProfileNameEditorDialog
 import com.fairphone.spring.launcher.ui.component.SettingListItem
-import com.fairphone.spring.launcher.ui.screen.settings.contacts.getNameResId
+import com.fairphone.spring.launcher.ui.screen.settings.contacts.allowedContactSubtitle
 import com.fairphone.spring.launcher.ui.screen.settings.notifications.notificationSubtitle
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
@@ -67,6 +67,7 @@ fun ProfileSettingsScreen(
     onProfileIconClick: () -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
     onNavigateToAllowedContactSettings: () -> Unit,
+    onNavigateToAllowedAppSettings: () -> Unit,
     onNavigateToNotificationSettings: () -> Unit,
     onNavigateToAppearanceSettings: () -> Unit,
     onNavigateToSoundAndVibrationSettings: () -> Unit,
@@ -89,6 +90,7 @@ fun ProfileSettingsScreen(
                 onProfileIconClick = onProfileIconClick,
                 onNavigateToVisibleAppSettings = onNavigateToVisibleAppSettings,
                 onNavigateToAllowedContactSettings = onNavigateToAllowedContactSettings,
+                onNavigateToAllowedAppSettings = onNavigateToAllowedAppSettings,
                 onNavigateToNotificationSettings = onNavigateToNotificationSettings,
                 onNavigateToAppearanceSettings = onNavigateToAppearanceSettings,
                 onNavigateToSoundAndVibrationSettings = onNavigateToSoundAndVibrationSettings,
@@ -109,6 +111,7 @@ fun ProfileSettingsScreen(
     onEditProfileName: (String) -> Unit,
     onNavigateToVisibleAppSettings: () -> Unit,
     onNavigateToAllowedContactSettings: () -> Unit,
+    onNavigateToAllowedAppSettings: () -> Unit,
     onNavigateToNotificationSettings: () -> Unit,
     onNavigateToAppearanceSettings: () -> Unit,
     onNavigateToSoundAndVibrationSettings: () -> Unit,
@@ -171,12 +174,18 @@ fun ProfileSettingsScreen(
             ) {
                 SettingListItem(
                     title = stringResource(R.string.setting_title_allowed_contacts),
-                    subtitle = stringResource(profile.allowedContacts.getNameResId()),
+                    subtitle = allowedContactSubtitle(profile.allowedContacts, profile.customContactsCount),
                     onClick = onNavigateToAllowedContactSettings
                 )
                 SettingListItem(
-                    title = stringResource(R.string.setting_title_notification),
+                    title = stringResource(R.string.setting_title_allowed_apps),
                     subtitle = notificationSubtitle(profile.appNotificationsList.size),
+                    onClick = onNavigateToAllowedAppSettings
+                )
+                SettingListItem(
+                    title = stringResource(R.string.setting_title_notification),
+                    subtitle = null,
+                    //subtitle = notificationSubtitle(profile.appNotificationsList.size),
                     onClick = onNavigateToNotificationSettings
                 )
                 SettingListItem(
@@ -291,7 +300,6 @@ fun DeleteModeButton(
 }
 
 @Composable
-@FP6PreviewDark()
 fun ProfileSettings_Preview() {
     SpringLauncherTheme {
         ProfileSettingsScreen(
@@ -300,6 +308,7 @@ fun ProfileSettings_Preview() {
             canDeleteProfile = false,
             onEditProfileName = {},
             onProfileIconClick = {},
+            onNavigateToAllowedAppSettings = {},
             onNavigateToVisibleAppSettings = {},
             onNavigateToAllowedContactSettings = {},
             onNavigateToNotificationSettings = {},
@@ -313,21 +322,12 @@ fun ProfileSettings_Preview() {
 
 @Composable
 @FP6Preview()
-fun ProfileSettings_LightPreview() {
-    SpringLauncherTheme {
-        ProfileSettingsScreen(
-            profile = Mock_Profile,
-            visibleApps = emptyList(),
-            canDeleteProfile = true,
-            onEditProfileName = {},
-            onProfileIconClick = {},
-            onNavigateToVisibleAppSettings = {},
-            onNavigateToAllowedContactSettings = {},
-            onNavigateToNotificationSettings = {},
-            onNavigateToAppearanceSettings = {},
-            onNavigateToSoundAndVibrationSettings = {},
-            onNavigateToPowerSavingSettings = {},
-            onModeDeletionClick = {}
-        )
-    }
+fun ProfileSettings_Preview_Light() {
+    ProfileSettings_Preview()
+}
+
+@Composable
+@FP6PreviewDark()
+fun ProfileSettings_Preview_Dark() {
+    ProfileSettings_Preview()
 }

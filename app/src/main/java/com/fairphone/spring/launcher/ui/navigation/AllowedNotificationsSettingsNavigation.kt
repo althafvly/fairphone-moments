@@ -27,25 +27,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.fairphone.spring.launcher.ui.screen.settings.notifications.AllowedNotificationsAppsScreen
-import com.fairphone.spring.launcher.ui.screen.settings.notifications.AllowedNotificationsAppsViewModel
-import com.fairphone.spring.launcher.ui.screen.settings.notifications.AllowedNotificationsSettingsScreen
-import com.fairphone.spring.launcher.ui.screen.settings.notifications.AllowedNotificationsSettingsViewModel
+import com.fairphone.spring.launcher.ui.screen.settings.notifications.NotificationsSettingsScreen
+import com.fairphone.spring.launcher.ui.screen.settings.notifications.NotificationsSettingsViewModel
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
 @Serializable
-object AllowedNotificationSettings
+object NotificationSettings
 
-@Serializable
-object AllowedNotificationApps
-
-fun NavGraphBuilder.allowedNotificationsSettingsNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.notificationSettingsNavGraph(navController: NavHostController) {
     //Allowed Notification Settings Screen
-    composable<AllowedNotificationSettings> {
-        val viewModel: AllowedNotificationsSettingsViewModel = koinViewModel()
+    composable<NotificationSettings> {
+        val viewModel: NotificationsSettingsViewModel = koinViewModel()
         val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-
         val context = LocalContext.current
         val postNotificationLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.RequestPermission(),
@@ -54,29 +48,18 @@ fun NavGraphBuilder.allowedNotificationsSettingsNavGraph(navController: NavHostC
             }
         )
 
-        AllowedNotificationsSettingsScreen(
+        NotificationsSettingsScreen(
             screenState = screenState,
-            onAppNotificationClick = {
-                navController.navigate(AllowedNotificationApps)
-            },
-            onReadNotificationPermissionClick = {
-                context.startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
-            },
-            onPostNotificationPermissionClick = {
-                postNotificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        )
-    }
-
-    //Allowed Notification Apps Screen
-    composable<AllowedNotificationApps> {
-        val viewModel: AllowedNotificationsAppsViewModel = koinViewModel()
-        val screenState by viewModel.screenState.collectAsStateWithLifecycle()
-
-        AllowedNotificationsAppsScreen(
-            screenState = screenState,
-            onAllowAppSwitchClick = { app, value ->
-                viewModel.updateAppNotificationRight(app, value)
+            onAllowRepeatCallsStateChanged = viewModel::onAllowRepeatCalls,
+            onPermissionClick = {
+               when(it.permissionName) {
+                   Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE -> {
+                       context.startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+                   }
+                   Manifest.permission.POST_NOTIFICATIONS -> {
+                       postNotificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                   }
+               }
             }
         )
     }

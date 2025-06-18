@@ -26,6 +26,7 @@
     <string name="setting_title_visible_apps">Synlige apps</string>
     <string name="setting_title_visible_apps_selector">Vælg synlige apps</string>
     <string name="setting_title_allowed_contacts">Tilladte kontakter</string>
+    <string name="setting_title_allowed_apps">Tilladte apps</string>
     <string name="setting_title_customization_settings">Tilpasningsindstillinger</string>
     <string name="setting_header_allowed_contacts">Hvem kan nå ud til dig, mens du er i %1$s moment?</string>
     <string name="profile_state_active">Aktiv</string>

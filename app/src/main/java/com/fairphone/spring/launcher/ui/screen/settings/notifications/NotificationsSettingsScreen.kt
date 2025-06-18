@@ -16,6 +16,7 @@
 
 package com.fairphone.spring.launcher.ui.screen.settings.notifications
 
+import android.Manifest
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +34,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -42,15 +42,15 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.SettingListItem
+import com.fairphone.spring.launcher.ui.component.SettingSwitchItem
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
 @Composable
-fun AllowedNotificationsSettingsScreen(
+fun NotificationsSettingsScreen(
     screenState: AllowedNotificationsSettingsScreenState,
-    onAppNotificationClick: () -> Unit,
-    onReadNotificationPermissionClick: () -> Unit,
-    onPostNotificationPermissionClick: () -> Unit,
+    onAllowRepeatCallsStateChanged: (Boolean) -> Unit,
+    onPermissionClick: (PermissionSetting) -> Unit,
 ) {
     when (screenState) {
         is AllowedNotificationsSettingsScreenState.Loading -> {
@@ -60,11 +60,11 @@ fun AllowedNotificationsSettingsScreen(
         }
 
         is AllowedNotificationsSettingsScreenState.Success -> {
-            AllowedNotificationsSettingsScreen(
-                screenData = screenState.data,
-                onAppNotificationClick = onAppNotificationClick,
-                onReadNotificationPermissionClick = onReadNotificationPermissionClick,
-                onPostNotificationPermissionClick = onPostNotificationPermissionClick
+            NotificationsSettingsScreen(
+                isRepeatCallsEnabled = screenState.data.isRepeatCallsEnabled,
+                notificationPermissions = screenState.data.notificationPermissions,
+                onAllowRepeatCallsStateChanged = onAllowRepeatCallsStateChanged,
+                onPermissionClick = onPermissionClick,
             )
         }
     }
@@ -72,11 +72,11 @@ fun AllowedNotificationsSettingsScreen(
 }
 
 @Composable
-fun AllowedNotificationsSettingsScreen(
-    screenData: AllowedNotificationSettingsData,
-    onAppNotificationClick: () -> Unit,
-    onReadNotificationPermissionClick: () -> Unit,
-    onPostNotificationPermissionClick: () -> Unit,
+fun NotificationsSettingsScreen(
+    isRepeatCallsEnabled: Boolean,
+    notificationPermissions: List<PermissionSetting>,
+    onAllowRepeatCallsStateChanged: (Boolean) -> Unit,
+    onPermissionClick: (PermissionSetting) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,10 +92,11 @@ fun AllowedNotificationsSettingsScreen(
             modifier = Modifier.padding(top = 24.dp, start = 16.dp, end = 16.dp)
         )
 
-        SettingListItem(
-            title = stringResource(R.string.setting_notifications_app),
-            subtitle = notificationSubtitle(screenData.allowedNotificationAppsCount),
-            onClick = onAppNotificationClick,
+        SettingSwitchItem(
+            state = isRepeatCallsEnabled,
+            title = stringResource(R.string.setting_notifications_allow_repeat_caller),
+            subtitle = stringResource(R.string.setting_notifications_allow_repeat_caller_desc),
+            onClick = onAllowRepeatCallsStateChanged,
             modifier = Modifier
                 .fillMaxWidth()
                 .border(
@@ -106,57 +107,46 @@ fun AllowedNotificationsSettingsScreen(
                 .clip(RoundedCornerShape(size = 12.dp))
         )
 
-        Text(
-            text = stringResource(R.string.app_notifications_permission_header),
-            style = FairphoneTypography.H4,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-
-        Text(
-            text = stringResource(R.string.app_notifications_permission_text),
-            style = FairphoneTypography.BodySmall,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-
-        SettingListItem(
-            title = stringResource(R.string.permission_toggle_title_notification_access),
-            subtitle = stringResource(R.string.permission_toggle_subtitle_notification_access),
-            onClick = { onReadNotificationPermissionClick() },
-            icon = {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.OpenInNew,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            },
-            modifier = Modifier.border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = RoundedCornerShape(size = 12.dp)
+        if (notificationPermissions.isNotEmpty() && notificationPermissions.any { !it.isGranted }) {
+            Text(
+                text = stringResource(R.string.app_notifications_permission_header),
+                style = FairphoneTypography.H4,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 8.dp)
             )
-                .clip(RoundedCornerShape(size = 12.dp)),
-        )
 
-        SettingListItem(
-            title = stringResource(R.string.permission_toggle_title_post_notification),
-            subtitle = stringResource(R.string.permission_toggle_subtitle_post_notification),
-            onClick = { onPostNotificationPermissionClick() },
-            icon = {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.OpenInNew,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            },
-            modifier = Modifier.border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = RoundedCornerShape(size = 12.dp)
+            Text(
+                text = stringResource(R.string.app_notifications_permission_text),
+                style = FairphoneTypography.BodySmall,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-                .clip(RoundedCornerShape(size = 12.dp)),
-        )
+
+            notificationPermissions
+                .filter { !it.isGranted }
+                .forEach {
+                    SettingListItem(
+                        title = stringResource(it.titleResId),
+                        subtitle = stringResource(it.subtitleResId),
+                        onClick = { onPermissionClick(it) },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.OpenInNew,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurface
+                            )
+                        },
+                        modifier = Modifier
+                            .border(
+                                width = 1.dp,
+                                color = MaterialTheme.colorScheme.outline,
+                                shape = RoundedCornerShape(size = 12.dp)
+                            )
+                            .clip(RoundedCornerShape(size = 12.dp)),
+                    )
+                }
+        }
     }
 }
 
@@ -170,18 +160,29 @@ fun notificationSubtitle(size: Int) =
 
 @Composable
 private fun AllowedNotificationsSettingsScreen_Preview() {
-    val context = LocalContext.current
     SpringLauncherTheme {
-        AllowedNotificationsSettingsScreen(
+        NotificationsSettingsScreen(
             screenState = AllowedNotificationsSettingsScreenState.Success(
                 AllowedNotificationSettingsData(
-                    allowedNotificationAppsCount = 3,
+                    isRepeatCallsEnabled = true,
+                    notificationPermissions = listOf(
+                        PermissionSetting(
+                            permissionName = Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE,
+                            titleResId = R.string.permission_toggle_title_notification_access,
+                            subtitleResId = R.string.permission_toggle_subtitle_notification_access,
+                            isGranted = false
+                        ),
+                        PermissionSetting(
+                            permissionName = Manifest.permission.POST_NOTIFICATIONS,
+                            titleResId = R.string.permission_toggle_title_post_notification,
+                            subtitleResId = R.string.permission_toggle_subtitle_post_notification,
+                            isGranted = true
+                        )
+                    )
                 )
             ),
-            onAppNotificationClick = {},
-            onReadNotificationPermissionClick = {},
-            onPostNotificationPermissionClick = {},
-
+            onAllowRepeatCallsStateChanged = {},
+            onPermissionClick = {},
         )
     }
 }

@@ -30,6 +30,7 @@ import android.net.NetworkCapabilities
 import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.fairphone.spring.launcher.R
@@ -167,7 +168,10 @@ fun Context.isDarkModeEnabled(): Boolean {
 
 fun Context.isDoNotDisturbAccessGranted(): Boolean {
     return notificationManager().isNotificationPolicyAccessGranted
+}
 
+fun Context.isNotificationAccessGranted(): Boolean {
+    return NotificationManagerCompat.getEnabledListenerPackages(this).contains(packageName)
 }
 
 /**

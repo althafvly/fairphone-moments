@@ -75,9 +75,9 @@ fun SettingListItem(
                 style = FairphoneTypography.BodyMedium,
                 color = onSurfaceDynamic
             )
-            subtitle?.let {
+            if (!subtitle.isNullOrEmpty()) {
                 Text(
-                    text = it,
+                    text = subtitle,
                     style = FairphoneTypography.BodySmall,
                     color = onSurfaceDynamic
                 )
@@ -89,13 +89,34 @@ fun SettingListItem(
 }
 
 @Composable
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 fun SettingListItem_Preview() {
     SpringLauncherTheme {
-        SettingListItem(
-            title = "Visible apps",
-            subtitle = "Maps, Camera, Message, Chrome, Phone",
-            onClick = {}
-        )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            SettingListItem(
+                title = "Visible apps",
+                subtitle = "Maps, Camera, Message, Chrome, Phone",
+                onClick = {}
+            )
+            SettingListItem(
+                title = "Visible apps",
+                subtitle = null,
+                onClick = {}
+            )
+        }
+
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun SettingListItem_Preview_Light() {
+    SettingListItem_Preview()
+}
+
+@Composable
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun SettingListItem_Preview_Dark() {
+    SettingListItem_Preview()
 }

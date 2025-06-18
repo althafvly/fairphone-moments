@@ -16,16 +16,23 @@
 
 package com.fairphone.spring.launcher.ui.screen.settings.notifications
 
+import android.Manifest
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.domain.usecase.profile.GetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
+import com.fairphone.spring.launcher.util.isNotificationAccessGranted
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class AllowedNotificationsSettingsViewModel(
+class NotificationsSettingsViewModel(
+    context: Context,
     private val getEditedProfileUseCase: GetEditedProfileUseCase,
     private val updateLauncherProfileUseCase: UpdateLauncherProfileUseCase,
 ) : ViewModel() {
@@ -35,14 +42,36 @@ class AllowedNotificationsSettingsViewModel(
             .map { profile ->
                 AllowedNotificationsSettingsScreenState.Success(
                     AllowedNotificationSettingsData(
-                        allowedNotificationAppsCount = profile.appNotificationsList.size,
+                        isRepeatCallsEnabled = profile.repeatCallEnabled,
+                        notificationPermissions = getPermissions(context),
                     )
                 )
             }.stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
+                started = SharingStarted.WhileSubscribed(),
                 initialValue = AllowedNotificationsSettingsScreenState.Loading
             )
+
+    /**
+     * Used when the user use the switch button to allow/disallow repeat calls
+     */
+    fun onAllowRepeatCalls(allow: Boolean) = viewModelScope.launch {
+        val profile = getEditedProfileUseCase.execute(Unit).first()
+        updateLauncherProfileUseCase.execute(
+            profile.toBuilder().setRepeatCallEnabled(allow).build()
+        )
+    }
+
+    private fun getPermissions(context: Context): List<PermissionSetting> {
+        return listOf(
+            PermissionSetting(
+                permissionName = Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE,
+                titleResId = R.string.permission_toggle_title_notification_access,
+                subtitleResId = R.string.permission_toggle_subtitle_notification_access,
+                isGranted = context.isNotificationAccessGranted()
+            ),
+        )
+    }
 }
 
 sealed class AllowedNotificationsSettingsScreenState() {
@@ -54,5 +83,13 @@ sealed class AllowedNotificationsSettingsScreenState() {
 }
 
 data class AllowedNotificationSettingsData(
-    val allowedNotificationAppsCount: Int,
+    val isRepeatCallsEnabled: Boolean,
+    val notificationPermissions: List<PermissionSetting>,
+)
+
+data class PermissionSetting(
+    val permissionName: String,
+    val titleResId: Int,
+    val subtitleResId: Int,
+    val isGranted: Boolean,
 )
