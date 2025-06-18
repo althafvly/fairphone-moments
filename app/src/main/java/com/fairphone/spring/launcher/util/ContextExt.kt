@@ -91,6 +91,25 @@ fun Context.launchApp(app: AppInfo) {
 }
 
 /**
+ * The package name of the Clock app.
+ */
+const val PACKAGE_NAME_CLOCK_APP = "com.google.android.deskclock"
+
+/**
+ * Starts the Clock app.
+ */
+fun Context.launchClockApp() {
+    try {
+        startActivity(Intent(Intent.ACTION_MAIN).apply {
+            setPackage(PACKAGE_NAME_CLOCK_APP)
+            addCategory(Intent.CATEGORY_LAUNCHER)
+        })
+    } catch (e: Exception) {
+        Log.e(javaClass.name, e.message, e)
+    }
+}
+
+/**
  * Loads the app infos for the given package names.
  */
 fun Context.loadAppInfosByPackageNames(

@@ -70,6 +70,7 @@ private const val CONTENT_FADE_IN_DURATION = 420 // Duration of the text animati
 fun HomeScreen(
     onModeSwitcherButtonClick: () -> Unit,
     onDemoCardClick: () -> Unit,
+    onTimeClick: () -> Unit,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -98,12 +99,11 @@ fun HomeScreen(
             viewModel.finishOnBoarding()
             onModeSwitcherButtonClick()
         },
-        onDemoCardClick = {
-            onDemoCardClick()
-        },
+        onDemoCardClick = onDemoCardClick,
         onTooltipClick = {
             viewModel.finishOnBoarding()
-        }
+        },
+        onTimeClick = onTimeClick,
     )
 }
 
@@ -120,6 +120,7 @@ fun HomeScreen(
     onModeSwitcherButtonClick: () -> Unit,
     onDemoCardClick: () -> Unit,
     onTooltipClick: () -> Unit,
+    onTimeClick: () -> Unit,
 ) {
 
     var visibility by remember { mutableStateOf(false) }
@@ -154,6 +155,11 @@ fun HomeScreen(
                     text = time,
                     style = FairphoneTypography.Time,
                     color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.clickable(
+                        interactionSource = null,
+                        indication = null,
+                        onClick = onTimeClick,
+                    )
                 )
                 Text(
                     text = date,
@@ -284,7 +290,8 @@ fun HomeScreen_Preview() {
             onAppClick = {},
             onModeSwitcherButtonClick = {},
             onDemoCardClick = {},
-            onTooltipClick = {}
+            onTooltipClick = {},
+            onTimeClick = {},
         )
     }
 }

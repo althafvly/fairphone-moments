@@ -49,6 +49,7 @@ import com.fairphone.spring.launcher.ui.screen.mode.switcher.ModeSwitcherViewMod
 import com.fairphone.spring.launcher.ui.screen.onboarding.OnBoardingScreen
 import com.fairphone.spring.launcher.util.FairphoneWebViewScreen
 import com.fairphone.spring.launcher.util.MOMENTS_DEMO_URL
+import com.fairphone.spring.launcher.util.launchClockApp
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
@@ -128,6 +129,9 @@ fun HomeNavigation(
                                 },
                                 onDemoCardClick = {
                                     navController.navigate(FairphoneDemoWebView)
+                                },
+                                onTimeClick = {
+                                    navController.context.launchClockApp()
                                 },
                                 viewModel = viewModel,
                             )
