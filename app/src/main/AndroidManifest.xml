@@ -41,7 +41,8 @@
         tools:ignore="ProtectedPermissions" />
 
     <!-- Permissions needed to change lockscreen wallpaper -->
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <!-- TODO: Google rejected our update in PlayStore because of this permission, so we are removing it until the issue is fixed. -->
+    <!--<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
     <uses-permission android:name="android.permission.READ_WALLPAPER_INTERNAL"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
