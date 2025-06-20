@@ -16,7 +16,6 @@
 
 package com.fairphone.spring.launcher.analytics
 
-import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 
 /**
@@ -24,11 +23,12 @@ import com.google.firebase.analytics.FirebaseAnalytics
  */
 interface AnalyticsService {
     /**
-     * Tracks a screen view.
+     * Tracks a generic analytics event.
      *
-     * @param routeName The name of the screen.
+     * @param event The event to track.
      */
-    fun trackScreenView(routeName: String)
+
+    fun trackEvent(event: AnalyticsEvent)
 }
 
 /**
@@ -38,13 +38,11 @@ interface AnalyticsService {
  */
 class FirebaseAnalyticsService(private val firebaseAnalytics: FirebaseAnalytics) : AnalyticsService {
     /**
-     * Tracks a screen view using Firebase Analytics.
+     * Tracks a generic analytics event using Firebase Analytics.
+     *
+     * @param event The event to track.
      */
-    override fun trackScreenView(routeName: String) {
-        val bundle = Bundle().apply {
-            putString(FirebaseAnalytics.Param.SCREEN_NAME, routeName)
-            putString(FirebaseAnalytics.Param.SCREEN_CLASS, routeName)
-        }
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    override fun trackEvent(event: AnalyticsEvent) {
+        firebaseAnalytics.logEvent(event.name, event.params)
     }
 }

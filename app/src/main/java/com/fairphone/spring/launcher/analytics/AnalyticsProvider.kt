@@ -26,6 +26,6 @@ import androidx.compose.runtime.compositionLocalOf
 val LocalAnalyticsService = compositionLocalOf<AnalyticsService> {
     // Provide a no-op implementation as a default
     object : AnalyticsService {
-        override fun trackScreenView(routeName: String) {}
+        override fun trackEvent(event: AnalyticsEvent) {}
     }
 }
