@@ -86,7 +86,7 @@ class CreateModeViewModel(
         } else {
             updateName("")
         }
-        updateIcon(ModeIcon.valueOf(preset.icon))
+        updateIcon(ModeIcon.fromString(preset.icon))
         loadApps(context)
     }
 

@@ -119,7 +119,7 @@ fun ColumnScope.CurrentModeButton(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        imageVector = ModeIcon.valueOf(activeProfile.icon).imageVector,
+                        imageVector = ModeIcon.fromString(activeProfile.icon).imageVector,
                         contentDescription = null,
                         modifier = Modifier.size(ButtonDefaults.IconSize),
                         tint = MaterialTheme.colorScheme.onSurface

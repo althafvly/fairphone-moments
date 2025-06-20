@@ -53,13 +53,17 @@ enum class ModeIcon(val imageVector: ImageVector) {
     companion object {
         fun nextIcon(iconName: String): ModeIcon {
             val nbIcons = ModeIcon.entries.size
-            val iconIndex = ModeIcon.entries.indexOf(ModeIcon.valueOf(iconName))
+            val iconIndex = ModeIcon.entries.indexOf(ModeIcon.fromString(iconName))
             return ModeIcon.entries[(iconIndex + 1) % nbIcons]
         }
 
         fun customIcons() = listOf(
             Extra1, Extra2, Extra3, Extra4, Extra5, Extra6
         )
+
+        fun fromString(string: String): ModeIcon = ModeIcon.entries
+            .firstOrNull { it.name == string }
+            ?: Spring
     }
 }
 

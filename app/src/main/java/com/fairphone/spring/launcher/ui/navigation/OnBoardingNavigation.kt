@@ -74,7 +74,7 @@ fun OnBoardingNavigation(
             if (activeProfile != null) {
                 NameYourMomentScreen(
                     modeName = activeProfile!!.name,
-                    modeIcon = ModeIcon.valueOf(activeProfile!!.icon),
+                    modeIcon = ModeIcon.fromString(activeProfile!!.icon),
                     onContinue = { newName, icon ->
                         viewModel.updateName(newName)
                         viewModel.updateIcon(icon)
