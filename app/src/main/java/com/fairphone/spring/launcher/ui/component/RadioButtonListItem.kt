@@ -26,11 +26,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
@@ -69,7 +71,7 @@ fun RadioButtonListItem(
             .clip(RoundedCornerShape(size = 12.dp))
             .background(MaterialTheme.colorScheme.surface)
             .clickable { onClick() }
-            .padding(horizontal = 20.dp, vertical = 16.dp)
+            .padding(start = 20.dp, end = 12.dp, top = 16.dp, bottom = 16.dp)
     ) {
         RadioButton(
             selected = isSelected,
@@ -102,14 +104,16 @@ fun RadioButtonListItem(
         }
 
         if (leadingIcon != null) {
-            Icon(
-                imageVector = leadingIcon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.clickable {
-                    onIconClick?.invoke() ?: onClick()
-                }
-            )
+            IconButton(
+                onClick = { onIconClick?.invoke() ?: onClick() },
+                modifier = Modifier.clip(CircleShape)
+            ) {
+                Icon(
+                    imageVector = leadingIcon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurface,
+                )
+            }
         }
     }
 }

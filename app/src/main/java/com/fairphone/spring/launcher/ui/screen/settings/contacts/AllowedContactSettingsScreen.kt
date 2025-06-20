@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.protos.ContactType
 import com.fairphone.spring.launcher.ui.component.RadioButtonListItem
+import com.fairphone.spring.launcher.ui.icons.mode.SettingsIcon
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 
@@ -44,6 +45,7 @@ import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 fun AllowedContactSettingsScreen(
     screenState: AllowedContactSettingsScreenState,
     onContactTypeSelected: (ContactType) -> Unit,
+    onOpenStarredContacts: () -> Unit,
 ) {
     when (screenState) {
         is AllowedContactSettingsScreenState.Loading -> {
@@ -59,6 +61,7 @@ fun AllowedContactSettingsScreen(
                 selectedContactType = screenState.selectedContactType,
                 allowedCustomContactCount = screenState.allowedCustomContactCount,
                 onContactTypeSelected = onContactTypeSelected,
+                onOpenStarredContacts = onOpenStarredContacts,
             )
         }
     }
@@ -71,6 +74,7 @@ fun AllowedContactSettingsScreen(
     selectedContactType: ContactType,
     allowedCustomContactCount: Int,
     onContactTypeSelected: (ContactType) -> Unit,
+    onOpenStarredContacts: () -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -109,9 +113,16 @@ fun AllowedContactSettingsScreen(
                         else -> null
                     },
                     leadingIcon = when (peopleType) {
+                        ContactType.CONTACT_TYPE_STARRED -> SettingsIcon
                         ContactType.CONTACT_TYPE_CUSTOM -> Icons.AutoMirrored.Filled.KeyboardArrowRight
                         else -> null
                     },
+                    onIconClick = {
+                        when (peopleType) {
+                            ContactType.CONTACT_TYPE_STARRED -> onOpenStarredContacts()
+                            else -> null
+                        }
+                    }
                 )
             }
         }
@@ -142,6 +153,7 @@ fun AllowedContactSettingsScreen_Preview() {
             selectedContactType = ContactType.CONTACT_TYPE_CUSTOM,
             allowedCustomContactCount = 3,
             onContactTypeSelected = {},
+            onOpenStarredContacts = {},
         )
     }
 }

@@ -16,6 +16,7 @@
 
 package com.fairphone.spring.launcher.ui.navigation
 
+import android.content.Intent
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -35,6 +36,8 @@ object AllowedContactSettings
 @Serializable
 object AllowedCustomContactSelector
 
+const val ACTION_LIST_STARRED = "com.android.contacts.action.LIST_STARRED"
+
 fun NavGraphBuilder.allowedContactSettingsNavGraph(navController: NavHostController) {
     //Allowed Contact Settings Screen
     composable<AllowedContactSettings> {
@@ -49,6 +52,10 @@ fun NavGraphBuilder.allowedContactSettingsNavGraph(navController: NavHostControl
                     navController.navigate(AllowedCustomContactSelector)
                 }
             },
+            onOpenStarredContacts = {
+                val intent = Intent(ACTION_LIST_STARRED)
+                navController.context.startActivity(intent)
+            }
         )
     }
 
