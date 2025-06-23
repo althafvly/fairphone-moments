@@ -100,4 +100,5 @@
     <string name="permission_toggle_subtitle_post_notification">Berechtigung, die gefilterten Benachrichtigungen erneut zu veröffentlichen</string>
     <string name="wallpaper">Tapete</string>
     <string name="update_wallpaper">Hintergrund aktualisieren</string>
+    <string name="maximum_moments_reached_label">Sie haben die maximale Anzahl an Momenten erreicht</string>
 </resources>

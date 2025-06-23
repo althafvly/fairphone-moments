@@ -100,4 +100,5 @@
     <string name="permission_toggle_subtitle_post_notification">Permesso di ripubblicare le notifiche filtrate</string>
     <string name="wallpaper">Sfondo</string>
     <string name="update_wallpaper">Aggiorna Sfondo</string>
+    <string name="maximum_moments_reached_label">Hai raggiunto il numero massimo di momenti</string>
 </resources>

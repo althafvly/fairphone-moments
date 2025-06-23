@@ -196,6 +196,7 @@ fun HomeNavigation(
                         ModeSwitcherScreen(
                             currentLauncherProfile = screenState!!.activeProfile,
                             profiles = screenState!!.profiles,
+                            isMaxProfileCountReached = screenState!!.isMaxProfileCountReached,
                             onModeSettingsClick = {
                                 viewModel.editActiveProfileSettings(it)
                                 LauncherSettingsActivity.start(context)

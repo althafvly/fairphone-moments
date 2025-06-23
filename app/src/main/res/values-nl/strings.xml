@@ -100,4 +100,5 @@
     <string name="permission_toggle_subtitle_post_notification">Toestemming om de gefilterde notificaties opnieuw te plaatsen</string>
     <string name="wallpaper">Achtergrond</string>
     <string name="update_wallpaper">Achtergrond bijwerken</string>
+    <string name="maximum_moments_reached_label">Je hebt het maximale aantal momenten bereikt</string>
 </resources>

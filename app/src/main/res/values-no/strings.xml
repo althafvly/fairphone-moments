@@ -101,4 +101,5 @@
     <string name="permission_toggle_subtitle_post_notification">Tillatelse til å reposte de filtrerte varslene</string>
     <string name="wallpaper">Bakgrunn</string>
     <string name="update_wallpaper">Oppdater bakgrunnsbilde</string>
+    <string name="maximum_moments_reached_label">Du har nådd maksimalt antall øyeblikk</string>
 </resources>

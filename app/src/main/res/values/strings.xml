@@ -120,5 +120,6 @@
     <string name="permission_toggle_subtitle_post_notification">Permission to repost the filtered notifications</string>
     <string name="wallpaper">Wallpaper</string>
     <string name="update_wallpaper">Update wallpaper</string>
+    <string name="maximum_moments_reached_label">You have reached the maximum amount of moments</string>
 
 </resources>

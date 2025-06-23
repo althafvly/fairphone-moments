@@ -100,4 +100,5 @@
     <string name="permission_toggle_subtitle_post_notification">Permiso para volver a publicar las notificaciones filtradas</string>
     <string name="wallpaper">Papel pintado</string>
     <string name="update_wallpaper">Actualizar Fondo de Pantalla</string>
+    <string name="maximum_moments_reached_label">Has alcanzado la cantidad máxima de momentos</string>
 </resources>

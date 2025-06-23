@@ -101,4 +101,5 @@
     <string name="permission_toggle_subtitle_post_notification">Permissão para republicar as notificações filtradas</string>
     <string name="wallpaper">Papel de parede</string>
     <string name="update_wallpaper">Atualizar Papel de Parede</string>
+    <string name="maximum_moments_reached_label">Você atingiu o número máximo de momentos</string>
 </resources>

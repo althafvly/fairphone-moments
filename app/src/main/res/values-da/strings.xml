@@ -100,4 +100,5 @@
     <string name="permission_toggle_subtitle_post_notification">Tilladelse til at genudsende de filtrerede notifikationer</string>
     <string name="wallpaper">Tapet</string>
     <string name="update_wallpaper">Opdater Baggrund</string>
+    <string name="maximum_moments_reached_label">Du har nået det maksimale antal øjeblikke</string>
 </resources>

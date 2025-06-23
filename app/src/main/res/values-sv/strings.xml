@@ -101,4 +101,5 @@
     <string name="permission_toggle_subtitle_post_notification">Behörighet att återpublicera de filtrerade aviseringarna</string>
     <string name="wallpaper">Tapet</string>
     <string name="update_wallpaper">Uppdatera Bakgrund</string>
+    <string name="maximum_moments_reached_label">Du har nått det maximala antalet ögonblick</string>
 </resources>

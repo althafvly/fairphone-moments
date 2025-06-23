@@ -23,6 +23,7 @@ import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseC
 import com.fairphone.spring.launcher.domain.usecase.profile.GetAllProfilesUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.SetActiveProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.SetEditedProfileUseCase
+import com.fairphone.spring.launcher.util.Constants
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -41,7 +42,8 @@ class ModeSwitcherViewModel(
             .zip(getActiveProfileUseCase.execute(Unit)) { profiles, active ->
                 ModeSwitcherScreenState(
                     activeProfile = active,
-                    profiles = profiles
+                    profiles = profiles,
+                    isMaxProfileCountReached = profiles.size >= Constants.MAX_PROFILE_COUNT,
                 )
             }.stateIn(
                 scope = viewModelScope,
@@ -67,4 +69,5 @@ class ModeSwitcherViewModel(
 data class ModeSwitcherScreenState(
     val activeProfile: LauncherProfile,
     val profiles: List<LauncherProfile>,
+    val isMaxProfileCountReached: Boolean,
 )
