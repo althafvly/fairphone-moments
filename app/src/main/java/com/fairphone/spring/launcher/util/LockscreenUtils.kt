@@ -26,9 +26,6 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
 import androidx.core.graphics.drawable.toBitmap
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -36,9 +33,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.fairphone.spring.launcher.R
-import com.fairphone.spring.launcher.data.model.colors
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
-import com.fairphone.spring.launcher.ui.component.AnimatedBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -279,27 +274,5 @@ object LockscreenUtils {
             }
         }
         return true
-    }
-
-    suspend fun createLockscreenWallpaper(context: Context, activeProfile: LauncherProfile) {
-        WallpaperUtils.captureComposableAsBitmap(
-            context = context,
-            targetWidthPx = 1116,
-            targetHeightPx = 2484,
-            composableContent = {
-                AnimatedBackground(
-                    colors = activeProfile.colors(),
-                    content = { Box(modifier = Modifier.fillMaxSize()) }
-                )
-            }
-        )?.let { bitmap ->
-            WallpaperUtils.saveBitmapAsPng(
-                context = context,
-                bitmap = bitmap,
-                fileName = "detox_lockscreen_wallpaper_${activeProfile.name}.png"
-            )
-        }?.let { file ->
-            Log.d(Constants.LOG_TAG, "Saved lockscreen wallpaper to: ${file.absolutePath}")
-        }
     }
 }
