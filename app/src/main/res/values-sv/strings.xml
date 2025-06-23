@@ -80,7 +80,7 @@
     <string name="mode_subtitle_journey">Fokusera på vägen framåt</string>
     <string name="mode_subtitle_recharge">Vakna upp utvilad och redo för en ny dag, varje dag</string>
     <string name="setting_button_delete_mode">Ta bort läget</string>
-    <string name="onboarding_home_button_help">Tryck för att anpassa\\n ditt ögonblick.</string>
+    <string name="onboarding_home_button_help">Tryck för att anpassa\n ditt ögonblick.</string>
     <string name="bt_apply_changes">Tillämpa ändringar</string>
     <string name="onboarding_home_tooltitp">Byt ögonblick och ändra inställningar.</string>
 

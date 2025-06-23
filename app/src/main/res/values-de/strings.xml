@@ -80,7 +80,7 @@
     <string name="choose_app_background_header">Wählen Sie einen Hintergrund</string>
     <string name="name_mode_screen_header">Geben Sie Ihrem Moment einen Namen</string>
     <string name="setting_button_delete_mode">Löschen Sie den Modus</string>
-    <string name="onboarding_home_button_help">Tippen Sie, um Ihren\\n Moment anzupassen.</string>
+    <string name="onboarding_home_button_help">Tippen Sie, um Ihren\n Moment anzupassen.</string>
     <string name="bt_apply_changes">Änderungen übernehmen</string>
     <string name="onboarding_home_tooltitp">Wechseln Sie Momente und ändern Sie Einstellungen.</string>
     <string name="setting_notifications_select_allowed">Erlaubte Benachrichtigungen auswählen</string>
