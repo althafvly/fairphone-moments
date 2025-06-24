@@ -121,6 +121,7 @@ fun HomeNavigation(
                                 .fillMaxSize()
                         ) {
                             HomeScreen(
+                                isContentVisible = isContentVisible,
                                 onModeSwitcherButtonClick = {
                                     if (screenState?.appUsageMode == UsageMode.ON_BOARDING) {
                                         navController.navigate(OnBoarding)

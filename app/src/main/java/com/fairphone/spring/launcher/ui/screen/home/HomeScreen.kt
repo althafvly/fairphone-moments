@@ -19,6 +19,7 @@ package com.fairphone.spring.launcher.ui.screen.home
 import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.clickable
@@ -34,11 +35,8 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -68,6 +66,7 @@ private const val CONTENT_FADE_IN_DURATION = 420 // Duration of the text animati
 
 @Composable
 fun HomeScreen(
+    isContentVisible: Boolean,
     onModeSwitcherButtonClick: () -> Unit,
     onDemoCardClick: () -> Unit,
     onTimeClick: () -> Unit,
@@ -85,6 +84,7 @@ fun HomeScreen(
     screenState ?: return
 
     HomeScreen(
+        isContentVisible = isContentVisible,
         date = date,
         time = time,
         appUsageMode = screenState!!.appUsageMode,
@@ -110,6 +110,7 @@ fun HomeScreen(
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    isContentVisible: Boolean,
     date: String,
     time: String,
     appUsageMode: UsageMode,
@@ -123,19 +124,15 @@ fun HomeScreen(
     onTimeClick: () -> Unit,
 ) {
 
-    var visibility by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        visibility = true
-    }
-
     val fadeInAnimation = remember {
         fadeIn(animationSpec = tween(CONTENT_FADE_IN_DURATION))
     }
+
     AnimatedVisibility(
         modifier = modifier,
-        visible = visibility,
-        enter = fadeInAnimation
+        visible = isContentVisible,
+        enter = fadeInAnimation,
+        exit = ExitTransition.None
     )
     {
         Column(
@@ -281,6 +278,7 @@ fun LauncherAppButton_PreviewDark() {
 fun HomeScreen_Preview() {
     SpringLauncherTheme {
         HomeScreen(
+            isContentVisible = true,
             date = "Wed, 13 Feb",
             time = "12:30",
             appUsageMode = UsageMode.DEFAULT,
