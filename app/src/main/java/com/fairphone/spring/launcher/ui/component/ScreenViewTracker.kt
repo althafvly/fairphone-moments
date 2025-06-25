@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import com.fairphone.spring.launcher.analytics.AnalyticsEvent
 import com.fairphone.spring.launcher.analytics.LocalAnalyticsService
 
 /**
@@ -37,7 +36,7 @@ fun ScreenViewTracker(navController: NavHostController) {
         val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
             destination.route?.let { route ->
                 val screenName = route.substringAfterLast('.')
-                analyticsService.trackEvent(AnalyticsEvent.ScreenView(screenName))
+                analyticsService.trackScreenView(screenName)
             }
         }
         navController.addOnDestinationChangedListener(listener)
