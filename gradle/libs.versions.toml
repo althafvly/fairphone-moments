@@ -27,7 +27,6 @@ firebase-crashlytics-plugin = "3.0.4"
 google-services-plugin = "4.4.2"
 koin-bom = "4.0.3"
 kotlinx-serialization = "1.8.1"
-mockito-kotlin = "5.4.0"
 protobuf = "4.29.2"
 robolectric = "4.13"
 
@@ -68,7 +67,6 @@ koin-android = { group = "io.insert-koin", name = "koin-android" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
 koin-test = { group = "io.insert-koin", name = "koin-test-junit4" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
