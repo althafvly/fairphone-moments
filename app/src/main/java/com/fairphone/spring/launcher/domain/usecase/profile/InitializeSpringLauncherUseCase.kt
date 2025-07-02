@@ -17,6 +17,7 @@
 package com.fairphone.spring.launcher.domain.usecase.profile
 
 import android.content.Context
+import android.util.Log
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
 import com.fairphone.spring.launcher.data.model.Defaults
@@ -30,6 +31,7 @@ class InitializeSpringLauncherUseCase(
     private val context: Context,
     private val createLauncherProfileUseCase: CreateLauncherProfileUseCase,
     private val getAllProfilesUseCase: GetAllProfilesUseCase,
+    private val setActiveProfileUseCase: SetActiveProfileUseCase,
 ) : UseCase<Unit, Unit>() {
 
     override suspend fun execute(params: Unit): Result<Unit> {
@@ -73,9 +75,20 @@ class InitializeSpringLauncherUseCase(
         )
         val result = createLauncherProfileUseCase.execute(essentials)
 
-        return when {
-            result.isFailure -> Result.failure(result.exceptionOrNull() ?: Exception())
+        return when  {
+            result.isFailure -> {
+                Log.e("InitializeSpringLauncher", "createDefaultProfile: ${result.exceptionOrNull()}", result.exceptionOrNull())
+                Result.failure(result.exceptionOrNull() ?: Exception())
+            }
+            result.isSuccess -> {
+                Log.d("InitializeSpringLauncher", "createDefaultProfile: Success")
+                result.getOrNull()?.let { setActiveProfileUseCase.execute(it.id) }
+
+                Result.success(Unit)
+            }
             else -> Result.success(Unit)
         }
+
+
     }
 }

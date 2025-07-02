@@ -155,6 +155,7 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(libs.koin.test)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
