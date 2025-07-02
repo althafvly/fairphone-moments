@@ -16,6 +16,7 @@
 
 package com.fairphone.spring.launcher.domain.usecase.profile
 
+import android.util.Log
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.domain.usecase.base.UseCase
@@ -30,25 +31,31 @@ class DeleteLauncherProfileUseCase(
     private val zenNotificationManager: ZenNotificationManager,
 ) : UseCase<LauncherProfile, LauncherProfile>() {
 
-    override suspend fun execute(profile: LauncherProfile): Result<LauncherProfile> {
+    override suspend fun execute(params: LauncherProfile): Result<LauncherProfile> {
         if (launcherProfileRepository.getProfiles().first().size == 1) {
             return Result.failure(IllegalStateException("Cannot remove last profile"))
         }
 
         val activeProfile = launcherProfileRepository.getActiveProfile().first()
 
-        if (activeProfile.id == profile.id) {
-            val profiles = launcherProfileRepository.getProfiles().first().filterNot { it.id == profile.id }
+        if (activeProfile.id == params.id) {
+            val profiles = launcherProfileRepository.getProfiles().first().filterNot { it.id == params.id }
             launcherProfileRepository.setActiveProfile(profiles.first().id)
         }
 
-        val result = zenNotificationManager.removeAutomaticZenRule(profile.zenRuleId)
+        return try {
+            val result = zenNotificationManager.removeAutomaticZenRule(params.zenRuleId)
 
-        if (result.isFailure) {
-            return Result.failure(result.exceptionOrNull()!!)
-        } else {
-            launcherProfileRepository.deleteProfile(profile)
-            return Result.success(profile)
+            if (result.isFailure) {
+                Result.failure(result.exceptionOrNull()!!)
+            } else {
+                launcherProfileRepository.deleteProfile(params)
+                Result.success(params)
+            }
+        } catch (e: IllegalStateException) {
+            Log.e("DeleteLauncherProfile", "Failed to delete profile", e)
+            Result.failure(e)
         }
+
     }
 }

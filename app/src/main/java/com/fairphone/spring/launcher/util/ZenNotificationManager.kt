@@ -105,6 +105,7 @@ class ZenNotificationManager(private val context: Context) {
     ): Result<AutomaticZenRule> {
         // Check if Do Not Disturb permission is granted
         check(context.isDoNotDisturbAccessGranted())
+        check(context.notificationManager().getAutomaticZenRule(zenRuleId) != null)
 
         // Disable DND first
         disableDnd(zenRuleId, name)
@@ -128,7 +129,15 @@ class ZenNotificationManager(private val context: Context) {
         }
     }
 
+    /**
+     * Removes an existing automatic zen rule.
+     */
+    @Throws(IllegalStateException::class)
     fun removeAutomaticZenRule(zenRuleId: String): Result<Unit> {
+        // Check if Do Not Disturb permission is granted
+        check(context.isDoNotDisturbAccessGranted())
+        check(context.notificationManager().getAutomaticZenRule(zenRuleId) != null)
+
         val result = context.notificationManager().removeAutomaticZenRule(zenRuleId)
         return if (result) {
             Result.success(Unit)
