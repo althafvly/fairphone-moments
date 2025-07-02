@@ -48,8 +48,8 @@ deploy:release:bundle:play-store:internal:
 #    - bundle exec fastlane internal
     - bundle exec fastlane supply
       --aab app/build/outputs/bundle/release/SpringLauncher_${CI_COMMIT_TAG}-release.aab
-      --track internal
-      --release_status draft
+      --track alpha
+      --release_status completed
 
 
 
