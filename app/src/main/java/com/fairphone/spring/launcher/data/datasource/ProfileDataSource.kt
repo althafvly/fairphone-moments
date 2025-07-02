@@ -50,19 +50,21 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
     override fun getActiveProfile(): Flow<LauncherProfile> =
         getLauncherProfiles().transform { profile ->
             if (profile.profilesList.isNotEmpty()) {
-                // We only emit the profile when the list is populated
-                emit(profile.profilesList.first { it.id == profile.active })
+                val activeProfile = profile.profilesList.firstOrNull { it.id == profile.active }
+                    ?: profile.profilesList.first()
+
+                emit(activeProfile)
             }
         }
 
     override fun getEditedProfile(): Flow<LauncherProfile> =
         getLauncherProfiles().transform { profile ->
-            if (profile.profilesList.isNotEmpty()) {
-                // We only emit the profile when the list is populated
-                emit(
-                    profile.profilesList.firstOrNull { it.id == profile.edited }
+            val profileList = profile.profilesList
+            if (profileList.isNotEmpty()) {
+                val editedProfile = profile.profilesList.firstOrNull { it.id == profile.edited }
                     ?: profile.profilesList.first { it.id == profile.active }
-                )
+                    ?: profile.profilesList.first()
+                emit(editedProfile)
             }
         }
 
@@ -148,7 +150,10 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
         }
     }
 
-    override suspend fun updateVisibleApps(profileId: String, launcherProfileApps: List<LauncherProfileApp>) {
+    override suspend fun updateVisibleApps(
+        profileId: String,
+        visibleApps: List<LauncherProfileApp>
+    ) {
         dataStore.updateData { profiles ->
             profiles
                 .toBuilder()
@@ -156,7 +161,7 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
                 .addAllProfiles(updateLauncherProfileInList(profileId) {
                     it.toBuilder()
                         .clearLauncherProfileApps()
-                        .addAllLauncherProfileApps(launcherProfileApps)
+                        .addAllLauncherProfileApps(visibleApps)
                         .build()
                 })
                 .build()
@@ -171,10 +176,10 @@ class ProfileDataSourceImpl(private val dataStore: DataStore<LauncherProfiles>) 
         profileId: String,
         profileUpdateAction: (LauncherProfile) -> LauncherProfile
     ): List<LauncherProfile> =
-        getProfiles().first().toMutableList().also {
-            it.replaceAll {
-                // We update only the given profile id inthe list
-                if (profileId == it.id) profileUpdateAction(it) else it
+        getProfiles().first().toMutableList().also { profiles ->
+            profiles.replaceAll { profile ->
+                // We update only the given profile id in the list
+                if (profileId == profile.id) profileUpdateAction(profile) else profile
             }
         }
 
