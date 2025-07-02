@@ -90,18 +90,23 @@ enum class Preset(
         )
     );
 
+    /**
+     * Returns a list of [AppInfo] that are visible in the launcher based on the installed apps.
+     * @param context The context.
+     * @param installedApps The list of installed apps.
+     * @return The list of visible [AppInfo].
+     */
     fun getVisibleAppInfos(
         context: Context,
         installedApps: List<AppInfo> = emptyList()
-    ): List<AppInfo> =
-        defaultApps.map { app ->
-            app.allApps
-                .map {
-                    it.getPackageName(context)
-                }.firstNotNullOf { packageName ->
-                    installedApps.firstOrNull { it.packageName == packageName }
-                }
+    ): List<AppInfo> {
+        return defaultApps.flatMap { defaultApp ->
+            val defaultAppPackageNames = defaultApp.allApps.map { it.getPackageName(context) }
+            defaultAppPackageNames.mapNotNull { packageName ->
+                installedApps.firstOrNull { it.packageName == packageName }
+            }
         }
+    }
 }
 
 /**
