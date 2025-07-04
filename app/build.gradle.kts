@@ -68,6 +68,11 @@ android {
             storePassword = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEYSTORE_PASSWORD")
             keyAlias = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_ALIAS")
             keyPassword = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_PASSWORD")
+
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = true
         }
     }
 
