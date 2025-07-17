@@ -4,25 +4,25 @@ deploy:release:apk:gitlab-registry:
   extends: .release-rule
   needs:
     - job: build:release
-      artifacts: true
+      artifacts: false
     - job: test:release
       artifacts: false
     - job: lint:release
       artifacts: false
+    - job: sign:release:apk
+      artifacts: true
   variables:
-    FILENAME: SpringLauncher_${CI_COMMIT_TAG}-release.apk
-    ARTIFACT_PREFIX: app/build/outputs/apk/release
-    ARTIFACT_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/apk/${CI_COMMIT_TAG}/${FILENAME}
+    SIGNED_APK_PATH: SpringLauncher_${CI_COMMIT_TAG}-release-signed.apk
+    ARTIFACT_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/apk/${CI_COMMIT_TAG}/${SIGNED_APK_PATH}
   before_script:
     - apk --no-cache add curl
     - echo "Uploading ${ARTIFACT_PREFIX}/${FILENAME} to ${ARTIFACT_URL}"
   script:
     - |
       curl --fail --location --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
-      --upload-file $ARTIFACT_PREFIX/$FILENAME \
-      $ARTIFACT_URL
+      --upload-file $SIGNED_APK_PATH $ARTIFACT_URL
     - echo "ARTIFACT_URL=$ARTIFACT_URL" >> upload.env
-    - echo "FILENAME=$FILENAME" >> upload.env
+    - echo "FILENAME=$SIGNED_APK_PATH" >> upload.env
   artifacts:
     reports:
       dotenv: upload.env
@@ -36,18 +36,22 @@ deploy:release:bundle:play-store:internal:
     - !reference [ .release-rule, rules ]
   needs:
     - job: build:release:bundle
-      artifacts: true
+      artifacts: false
     - job: test:release
       artifacts: false
     - job: lint:release
       artifacts: false
+    - job: sign:release:bundle
+      artifacts: true
+  variables:
+    SIGNED_BUNDLE_PATH: SpringLauncherApp-release-signed.aab
   before_script:
     - echo "$play_store_service_account" > play-store-service-account.json
   script:
     - bundle install
 #    - bundle exec fastlane internal
     - bundle exec fastlane supply
-      --aab app/build/outputs/bundle/release/SpringLauncher_${CI_COMMIT_TAG}-release.aab
+      --aab $SIGNED_BUNDLE_PATH
       --track alpha
       --release_status completed
 

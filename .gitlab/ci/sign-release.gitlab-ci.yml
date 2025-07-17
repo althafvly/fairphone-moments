@@ -3,24 +3,33 @@ sign:release:apk:
   image: openjdk:8-jdk
   interruptible: true
   stage: sign
-  dependencies:
-    - build:release
+  needs:
+    - job: build:release
+      artifacts: true
+    - job: test:release
+      artifacts: false
+    - job: lint:release
+      artifacts: false
   variables:
     APK_BUILD_PATH: app/build/outputs/apk/release
     UNSIGNED_APK_PATH: SpringLauncher_${CI_COMMIT_TAG}-release.apk
+    ZIPALIGNED_APK_PATH: SpringLauncher_${CI_COMMIT_TAG}-release-aligned.apk
     SIGNED_APK_PATH: SpringLauncher_${CI_COMMIT_TAG}-release-signed.apk
-    SECURE_FILES_DOWNLOAD_PATH: '$(pwd)'
+    SECURE_FILES_DOWNLOAD_PATH: './'
     KEYSTORE_FILE: spring_launcher_release_key.jks
   before_script:
+    - apt update && apt install --yes apksigner
+    - apt update && apt install --yes zipalign
     - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
   script:
+    - zipalign -p 4 $APK_BUILD_PATH/$UNSIGNED_APK_PATH $ZIPALIGNED_APK_PATH
     - apksigner sign
       -ks $SECURE_FILES_DOWNLOAD_PATH/$KEYSTORE_FILE
-      --ks-pass env:KEYSTORE_PASSWORD
-      -ks-key-alias $KEY_ALIAS
-      --key-pass env:KEY_PASSWORD
+      --ks-pass env:FAIRPHONE_SPRING_LAUNCHER_KEYSTORE_PASSWORD
+      -ks-key-alias $FAIRPHONE_SPRING_LAUNCHER_KEY_ALIAS
+      --key-pass env:FAIRPHONE_SPRING_LAUNCHER_KEY_PASSWORD
       --out $SIGNED_APK_PATH
-      $APK_BUILD_PATH/$UNSIGNED_APK_PATH
+      $ZIPALIGNED_APK_PATH
   artifacts:
     paths:
       - $SIGNED_APK_PATH
@@ -30,23 +39,34 @@ sign:release:bundle:
   image: openjdk:8-jdk
   interruptible: true
   stage: sign
-  dependencies:
-    - build:release:bundle
+  needs:
+    - job: build:release:bundle
+      artifacts: true
+    - job: test:release
+      artifacts: false
+    - job: lint:release
+      artifacts: false
   variables:
     BUNDLE_BUILD_PATH: app/build/outputs/bundle/release
     UNSIGNED_BUNDLE_PATH: SpringLauncher_${CI_COMMIT_TAG}-release.aab
+    ZIPALIGNED_BUNDLE_PATH: SpringLauncher_${CI_COMMIT_TAG}-release-aligned.aab
     SIGNED_BUNDLE_PATH: SpringLauncherApp-release-signed.aab
-    SECURE_FILES_DOWNLOAD_PATH: '$(pwd)/'
+    SECURE_FILES_DOWNLOAD_PATH: './'
     KEYSTORE_FILE: spring_launcher_release_key.jks
   before_script:
+    - apt update && apt install --yes zip
+    - apt update && apt install --yes zipalign
     - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
   script:
+    - zipalign -p 4 $BUNDLE_BUILD_PATH/$UNSIGNED_BUNDLE_PATH $ZIPALIGNED_BUNDLE_PATH
+    - zip -d $ZIPALIGNED_BUNDLE_PATH META-INF/\*
     - jarsigner
+      -sigalg SHA256withRSA
       -keystore $(pwd)/$KEYSTORE_FILE
-      -storepass $FAIRPHONE_FAIRBUDS_ANDROID_KEYSTORE_PASSWORD
-      -keypass $FAIRPHONE_FAIRBUDS_ANDROID_KEY_PASSWORD
+      -storepass $FAIRPHONE_SPRING_LAUNCHER_KEYSTORE_PASSWORD
+      -keypass $FAIRPHONE_SPRING_LAUNCHER_KEY_PASSWORD
       -signedjar $SIGNED_BUNDLE_PATH
-      $BUNDLE_BUILD_PATH/$UNSIGNED_BUNDLE_PATH $FAIRPHONE_FAIRBUDS_ANDROID_KEY_ALIAS
+      $ZIPALIGNED_BUNDLE_PATH $FAIRPHONE_SPRING_LAUNCHER_KEY_ALIAS
   artifacts:
     paths:
       - $SIGNED_BUNDLE_PATH
