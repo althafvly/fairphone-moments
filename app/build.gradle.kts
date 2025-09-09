@@ -96,13 +96,12 @@ android {
     kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.addAll(
+                "-Xstring-concat=inline",
+                "-Xwhen-guards",
+                "-opt-in=kotlin.time.ExperimentalTime",
+            )
         }
-    }
-    kotlinOptions {
-        freeCompilerArgs = listOf(
-            "-Xstring-concat=inline",
-            "-Xwhen-guards",
-        )
     }
     buildFeatures {
         compose = true

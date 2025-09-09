@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
 
 interface DeviceContactDataSource {
     suspend fun getDeviceContacts(): List<ContactInfo>
-    suspend fun getContactsPhones(contactId: List<String>): Map<String, List<String>>
+    suspend fun getContactsPhones(contactIds: List<String>): Map<String, List<String>>
 }
 
 class DeviceContactDataSourceImpl(

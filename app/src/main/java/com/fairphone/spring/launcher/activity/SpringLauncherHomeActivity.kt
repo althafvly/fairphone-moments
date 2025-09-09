@@ -37,8 +37,8 @@ import com.fairphone.spring.launcher.analytics.LocalAnalyticsService
 import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.analytics
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.KoinContext
@@ -80,41 +80,40 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         instance = this
 
         setContent {
-            KoinContext {
+
                 val analyticsService = remember { FirebaseAnalyticsService(Firebase.analytics) }
                 CompositionLocalProvider(LocalAnalyticsService provides analyticsService) {
                     SpringLauncherTheme {
-                        // TODO: Move compose code to a separate composable
-                        /**
-                         * These two boolean flags control:
-                         * - Triggering and synchronization of a Compose animation.
-                         * - Dynamic switching of the UI background
-                         *  (for entry / exit animation, a transparent background is needed).
-                         */
-                        var showEntryAnimation by rememberSaveable { mutableStateOf(true) }
-                        var isContentVisible by rememberSaveable { isContentVisibleState }
-                        LaunchedEffect(Unit) {
-                            delay(SHOW_HOME_SCREEN_DELAY) // delay set to let the entry animation show properly
-                            isContentVisibleState.value = true
-                        }
-                        LaunchedEffect(Unit) {
-                            delay(SHOW_ANIMATION_TIME) // time within the entry animation can run
-                            showEntryAnimation = false
-                        }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    if (showEntryAnimation || !isContentVisible)
-                                        androidx.compose.ui.graphics.Color.Transparent
-                                    else MaterialTheme.colorScheme.background
-                                )
-                        ) {
-                            HomeNavigation(
-                                showEntryAnimation = showEntryAnimation,
-                                isContentVisible = isContentVisible
+                    // TODO: Move compose code to a separate composable
+                    /**
+                     * These two boolean flags control:
+                     * - Triggering and synchronization of a Compose animation.
+                     * - Dynamic switching of the UI background
+                     *  (for entry / exit animation, a transparent background is needed).
+                     */
+                    var showEntryAnimation by rememberSaveable { mutableStateOf(true) }
+                    var isContentVisible by rememberSaveable { isContentVisibleState }
+                    LaunchedEffect(Unit) {
+                        delay(SHOW_HOME_SCREEN_DELAY) // delay set to let the entry animation show properly
+                        isContentVisibleState.value = true
+                    }
+                    LaunchedEffect(Unit) {
+                        delay(SHOW_ANIMATION_TIME) // time within the entry animation can run
+                        showEntryAnimation = false
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                if (showEntryAnimation || !isContentVisible)
+                                    androidx.compose.ui.graphics.Color.Transparent
+                                else MaterialTheme.colorScheme.background
                             )
-                        }
+                    ) {
+                        HomeNavigation(
+                            showEntryAnimation = showEntryAnimation,
+                            isContentVisible = isContentVisible
+                        )
                     }
                 }
             }

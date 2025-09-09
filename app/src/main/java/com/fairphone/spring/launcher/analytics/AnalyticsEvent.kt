@@ -8,7 +8,7 @@
 
 package com.fairphone.spring.launcher.analytics
 
-import androidx.core.bundle.Bundle
+import android.os.Bundle
 import com.fairphone.spring.launcher.data.model.Preset
 import com.google.firebase.analytics.FirebaseAnalytics
 

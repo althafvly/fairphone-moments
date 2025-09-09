@@ -90,4 +90,3 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 google-protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }
 gradle-license-report = { id = "com.github.jk1.dependency-license-report", version.ref = "gradle-license-report" }
-

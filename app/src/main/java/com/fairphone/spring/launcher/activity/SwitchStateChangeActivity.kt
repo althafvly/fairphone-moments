@@ -38,7 +38,6 @@ import com.fairphone.spring.launcher.ui.component.SwitchStateChangeOverlayScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
 import org.koin.android.ext.android.inject
-import org.koin.compose.KoinContext
 
 class SwitchStateChangeActivity : ComponentActivity() {
 
@@ -92,19 +91,17 @@ class SwitchStateChangeActivity : ComponentActivity() {
 
         if (shouldShowOverlay(intent)) {
             setContent {
-                KoinContext {
-                    SpringLauncherTheme {
-                        val activeProfile by viewModel.activeProfile.collectAsStateWithLifecycle()
+                SpringLauncherTheme {
+                    val activeProfile by viewModel.activeProfile.collectAsStateWithLifecycle()
 
-                        if (activeProfile != null) {
-                            SwitchStateChangeScreen(
-                                activeProfile = activeProfile!!,
-                                switchButtonSwitchState = switchState,
-                                onOverlayAnimationDone = {
-                                    onAnimationDone(switchState)
-                                }
-                            )
-                        }
+                    if (activeProfile != null) {
+                        SwitchStateChangeScreen(
+                            activeProfile = activeProfile!!,
+                            switchButtonSwitchState = switchState,
+                            onOverlayAnimationDone = {
+                                onAnimationDone(switchState)
+                            }
+                        )
                     }
                 }
             }

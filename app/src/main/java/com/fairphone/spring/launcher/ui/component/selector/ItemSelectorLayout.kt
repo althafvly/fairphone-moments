@@ -90,7 +90,6 @@ fun <T : SelectableItem> ItemSelectorLayout(
                     is ContactInfo -> {
                         stringResource(R.string.search_contact_info_bar_placeholder)
                     }
-                    else -> null
                 },
                 modifier = Modifier.padding(horizontal = 20.dp)
             )

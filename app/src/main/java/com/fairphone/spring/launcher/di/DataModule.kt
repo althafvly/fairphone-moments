@@ -29,9 +29,9 @@ import com.fairphone.spring.launcher.data.repository.AppInfoRepositoryImpl
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepository
 import com.fairphone.spring.launcher.data.repository.LauncherProfileRepositoryImpl
 import com.fairphone.spring.launcher.data.serializer.LauncherProfilesSerializer
+import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.analytics.analytics
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
