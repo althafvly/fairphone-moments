@@ -1,7 +1,15 @@
+/*
+ * Copyright (C) 2025 FairPhone B.V.
+ *
+ * SPDX-FileCopyrightText: 2025. FairPhone B.V.
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
 package com.fairphone.spring.launcher.util
 
 /*
- * Copyright (C) 2025 Fairphone B.V.
+ * Copyright (C) 2025 FairPhone B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

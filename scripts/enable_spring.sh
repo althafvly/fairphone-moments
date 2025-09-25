@@ -1,24 +1,64 @@
 #!/bin/sh
+
 #
-# Copyright (C) 2025. Fairphone B.V.
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Copyright (C) 2025 FairPhone B.V.
 #
-#       http://www.apache.org/licenses/LICENSE-2.0
+# SPDX-FileCopyrightText: 2025. FairPhone B.V.
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+# SPDX-License-Identifier: EUPL-1.2
 #
 
 #
 # Emulate enabling the Spring Launcher.
 #
-adb shell am start \
-    -a android.intent.action.MAIN \
-    -n com.fairphone.spring.launcher/com.fairphone.spring.launcher.activity.SwitchStateChangeActivity \
-    --es com.fairphone.spring.launcher.extra.switch_button_state "ENABLED"
+
+############################################################
+# Help                                                     #
+############################################################
+
+show_overlay=false
+
+Help()
+{
+   # Display Help
+   echo "mulate enabling the Spring Launcher."
+   echo
+   echo "Syntax: enable_spring [-o|-h]"
+   echo "options:"
+   echo "o [true|false]    Show switch overlay animation."
+   echo "h                 Print this Help."
+   echo
+}
+
+Enable_Spring()
+{
+  adb shell am start \
+      -a android.intent.action.MAIN \
+      -n com.fairphone.spring.launcher/com.fairphone.spring.launcher.activity.SwitchStateChangeActivity \
+      --es com.fairphone.spring.launcher.extra.switch_button_state "ENABLED" \
+      --ez com.fairphone.spring.launcher.extra.show_overlay $show_overlay
+}
+
+############################################################
+############################################################
+# Main program                                             #
+############################################################
+############################################################
+############################################################
+# Process the input options. Add options as needed.        #
+############################################################
+# Get the options
+while getopts ":ho:" option; do
+   case $option in
+      o) # display overlay
+         show_overlay=$OPTARG;;
+      h) # display Help
+        Help
+        exit;;
+      \?) # Invalid option
+        echo "Error: Invalid option"
+        exit;;
+   esac
+done
+
+Enable_Spring

@@ -1,3 +1,8 @@
+// Copyright (C) 2025 FairPhone B.V.
+// SPDX-FileCopyrightText: 2025. FairPhone B.V.
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 syntax = "proto3";
 
 option java_package = "com.fairphone.spring.launcher.data.model.protos";

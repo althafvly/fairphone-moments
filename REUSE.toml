@@ -1,0 +1,19 @@
+# REUSE.toml
+# This file declares copyright and license information for files that
+# cannot contain SPDX headers, such in accordance with REUSE 3.0.
+version = 1
+
+# Bricolage Grotesque font files
+[[annotations]]
+path-globs = [ "app/src/main/res/font/bricolage_grotesque_*.ttf" ]
+copyright = "Copyright 2023 The Bricolage Grotesque Project Authors (https://github.com/ateliertriay/bricolage)"
+license = "OFL-1.1"
+path = "LICENSES/OFL-1.1.txt"
+
+
+# DM Sans font files
+[[annotations]]
+path-globs = [ "app/src/main/res/font/dm_sans_*.ttf" ]
+copyright = "Copyright 2019 The DM Sans Project Authors (https://github.com/google/fonts)"
+license = "OFL-1.1"
+path = "LICENSES/OFL-1.1.txt"

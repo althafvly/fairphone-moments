@@ -1,17 +1,9 @@
 /*
- * Copyright (c) 2025. Fairphone B.V.
+ * Copyright (C) 2025 FairPhone B.V.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * SPDX-FileCopyrightText: 2025. FairPhone B.V.
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: EUPL-1.2
  */
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -23,4 +15,5 @@ plugins {
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.google.protobuf) apply false
     alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.gradle.license.report) apply false
 }

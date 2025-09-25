@@ -14,3 +14,5 @@
 # Secrets files
 play-store-service-account.json
 spring_launcher_release_key.jks
+service_account.json
+/*/google-services.json

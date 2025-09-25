@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2025 FairPhone B.V.
+ *
+ * SPDX-FileCopyrightText: 2025. FairPhone B.V.
+ *
+ * SPDX-License-Identifier: EUPL-1.2
+ */
+
 package com.fairphone.spring.launcher.ui.component
 
 import android.widget.Toast
