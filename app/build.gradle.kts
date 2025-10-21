@@ -18,6 +18,7 @@ plugins {
     alias(libs.plugins.google.protobuf)
     alias(libs.plugins.google.services)
     alias(libs.plugins.gradle.license.report)
+    alias(libs.plugins.owasp.dependencycheck)
 }
 
 val versionMajor: String by project
@@ -117,6 +118,18 @@ android {
     }
 }
 
+dependencyCheck {
+    nvd.apiKey.set(System.getenv("NVD_API_KEY"))
+
+    // Fail the build if any vulnerability with a CVSS score >= 7.0 is found
+    failBuildOnCVSS.set(7.0f)
+
+    // Define a suppression file for handling false positives
+    suppressionFile.set("config/owasp/suppressions.xml")
+
+    scanConfigurations.set(listOf("productionReleaseeleaseCompileClasspath"))
+}
+
 dependencies {
     compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(libs.androidx.activity.compose)
@@ -177,4 +190,15 @@ protobuf {
             }
         }
     }
+}
+
+// OWASP dependency check configuration
+dependencyCheck {
+    nvd {
+        apiKey = System.getenv("NVD_API_KEY")
+    }
+}
+
+licenseReport {
+    allowedLicensesFile = file("$rootDir/config/licenses/allowed-licenses.json")
 }

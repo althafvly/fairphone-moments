@@ -16,4 +16,5 @@ plugins {
     alias(libs.plugins.google.protobuf) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.gradle.license.report) apply false
+    alias(libs.plugins.owasp.dependencycheck) apply false
 }

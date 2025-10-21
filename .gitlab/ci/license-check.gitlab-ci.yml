@@ -1,0 +1,29 @@
+# Copyright (C) 2025 FairPhone B.V.
+#
+# SPDX-FileCopyrightText: 2025. FairPhone B.V.
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+license:check:
+  extends:
+    - .gradle-android-job
+    - .rule:if-no-version-upgrade-requested
+  interruptible: true
+  stage: license-check
+  script:
+    - ./gradlew checkLicense generateLicenseReport
+  artifacts:
+    reports:
+      license_scanning:
+        - app/build/reports/dependency-license/dependencies-without-allowed-license.json
+    paths:
+      - app/build/reports/dependency-license/index.html
+
+reuse:
+  image:
+    name: fsfe/reuse:latest
+    entrypoint: [""]
+  interruptible: true
+  stage: license-check
+  script:
+    - reuse lint

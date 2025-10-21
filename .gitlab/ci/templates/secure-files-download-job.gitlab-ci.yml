@@ -1,0 +1,13 @@
+# Copyright (C) 2025 FairPhone B.V.
+#
+# SPDX-FileCopyrightText: 2025. FairPhone B.V.
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+.secure-files-download-job:
+  image: registry.gitlab.com/gitlab-org/cli:latest
+  script:
+    - export GITLAB_HOST=$CI_SERVER_URL
+    - glab auth login --job-token $CI_JOB_TOKEN --hostname $CI_SERVER_FQDN --api-protocol $CI_SERVER_PROTOCOL
+    - glab -R $CI_PROJECT_PATH securefile download $SECURE_FILE_ID --path=$SECURE_FILE_PATH
+    - chmod 644 $SECURE_FILE_PATH

@@ -1,0 +1,52 @@
+{
+  "allowedLicenses": [
+    {
+      "moduleLicense": "European Union Public License, Version 1.2"
+    },
+    {
+      "moduleLicense": "SIL Open Font License, Version 1.1"
+    },
+    {
+      "moduleLicense": "The Apache Software License, Version 2.0"
+    },
+    {
+      "moduleLicense": "The Apache License, Version 2.0"
+    },
+    {
+      "moduleLicense": "Apache License, Version 2.0"
+    },
+    {
+      "moduleLicense": "Apache 2.0"
+    },
+    {
+      "moduleLicense": "Apache-2.0"
+    },
+    {
+      "moduleLicense": "The MIT License"
+    },
+    {
+      "moduleLicense": "MIT License"
+    },
+    {
+      "moduleLicense": "MIT"
+    },
+    {
+      "moduleLicense": "BSD-3-Clause"
+    },
+    {
+      "moduleLicense": "Eclipse Public License, Version 2.0"
+    },
+    {
+      "moduleLicense": "Play Core Software Development Kit Terms of Service",
+      "moduleName": "com.google.android.play.*"
+    },
+    {
+      "moduleLicense": "Android Software Development Kit License",
+      "moduleName": "com.google.*"
+    },
+    {
+      "moduleLicense": "Android Software Development Kit License",
+      "moduleName": "androidx.*"
+    }
+  ]
+}

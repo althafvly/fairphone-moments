@@ -1,3 +1,10 @@
+# Copyright (C) 2025 FairPhone B.V.
+#
+# SPDX-FileCopyrightText: 2025. FairPhone B.V.
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+
 # Job to update the version in a new commit.
 #
 # If this is run, no other job should be run because they will not pick up the

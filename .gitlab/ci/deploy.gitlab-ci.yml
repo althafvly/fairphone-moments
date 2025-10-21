@@ -1,3 +1,10 @@
+# Copyright (C) 2025 FairPhone B.V.
+#
+# SPDX-FileCopyrightText: 2025. FairPhone B.V.
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+
 deploy:release:apk:gitlab-registry:
   image: alpine:latest
   stage: deploy

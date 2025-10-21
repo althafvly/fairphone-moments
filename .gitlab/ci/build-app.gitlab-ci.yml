@@ -1,9 +1,19 @@
+# Copyright (C) 2025 FairPhone B.V.
+#
+# SPDX-FileCopyrightText: 2025. FairPhone B.V.
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+
 build:debug:
   extends:
     - .gradle-android-job
     - .rule:if-no-version-upgrade-requested
   interruptible: true
   stage: build
+  needs:
+    - job: download:google-services
+      artifacts: true
   script:
     - ./gradlew assembleDebug
   artifacts:
@@ -19,10 +29,9 @@ build:release:
   stage: build
   needs:
     - job: verify-tag-name
-  variables:
-    SECURE_FILES_DOWNLOAD_PATH: './'
+    - job: download:google-services
+      artifacts: true
   script:
-    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - ./gradlew assembleRelease
   artifacts:
     paths:
@@ -37,10 +46,9 @@ build:release:bundle:
   stage: build
   needs:
     - job: verify-tag-name
-  variables:
-    SECURE_FILES_DOWNLOAD_PATH: './'
+    - job: download:google-services
+      artifacts: true
   script:
-    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - ./gradlew bundleRelease
   artifacts:
     paths:

@@ -1,3 +1,10 @@
+# Copyright (C) 2025 FairPhone B.V.
+#
+# SPDX-FileCopyrightText: 2025. FairPhone B.V.
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+
 # Templates for rules based on the NEW_VERSION variable
 .rule:if-version-upgrade-requested:
   rules:
