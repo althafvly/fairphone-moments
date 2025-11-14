@@ -118,18 +118,6 @@ android {
     }
 }
 
-dependencyCheck {
-    nvd.apiKey.set(System.getenv("NVD_API_KEY"))
-
-    // Fail the build if any vulnerability with a CVSS score >= 7.0 is found
-    failBuildOnCVSS.set(7.0f)
-
-    // Define a suppression file for handling false positives
-    suppressionFile.set("config/owasp/suppressions.xml")
-
-    scanConfigurations.set(listOf("productionReleaseeleaseCompileClasspath"))
-}
-
 dependencies {
     compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(libs.androidx.activity.compose)
@@ -197,6 +185,9 @@ dependencyCheck {
     nvd {
         apiKey = System.getenv("NVD_API_KEY")
     }
+    failBuildOnCVSS = 7.0f
+    suppressionFile = "config/owasp/suppressions.xml"
+    scanConfigurations = listOf("productionReleaseeleaseCompileClasspath")
 }
 
 licenseReport {
