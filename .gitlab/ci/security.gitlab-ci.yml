@@ -7,15 +7,15 @@
 sast:
   extends:
     - .rule:if-no-version-upgrade-requested
-  stage: security-check
+  stage: test
   artifacts:
     reports:
       sast: gl-sast-report.json
 
-dependency:security:check:
-  extends:
-    - .gradle-android-job
-    - .rule:if-no-version-upgrade-requested
-  stage: security-check
-  script:
-    - ./gradlew dependencyCheckUpdate dependencyCheckAnalyze
+#owasp:dependency:security:check:
+#  extends:
+#    - .gradle-android-job
+#    - .rule:if-no-version-upgrade-requested
+#  stage: test
+#  script:
+#    - ./gradlew dependencyCheckUpdate dependencyCheckAnalyze

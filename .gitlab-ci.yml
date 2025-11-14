@@ -26,7 +26,6 @@ include:
 stages:
   - .pre
   - license-check
-  - security-check
   - download-secrets
   - build
   - test
