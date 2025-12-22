@@ -10,7 +10,7 @@ targetSdk = "35"
 # @keep
 minSdk = "35"
 
-agp = "8.13.1"
+agp = "8.13.2"
 kotlin = "2.2.10"
 protobuf-plugin = "0.9.5"
 
