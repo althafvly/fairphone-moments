@@ -53,7 +53,7 @@ enum class Preset(
         icon = "Journey",
         colors = LauncherColors.Journey,
         defaultApps = listOf(
-            AppPreset(Waze, alternatives = listOf(GoogleMaps)),
+            AppPreset(Waze, alternatives = listOf(Navigation)),
             AppPreset(Spotify, alternatives = listOf(Tidal, Deezer, GoogleYoutubeMusic)),
             AppPreset(Phone)
         )

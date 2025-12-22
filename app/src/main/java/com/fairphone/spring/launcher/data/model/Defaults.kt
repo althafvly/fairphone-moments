@@ -23,11 +23,11 @@ fun LauncherProfile.getIconVector(): ImageVector =
 object Defaults {
     const val DEFAULT_ICON = "Spring"
     val DEFAULT_VISIBLE_APPS = listOf(
-        AppPreset(Camera),
-        AppPreset(DefaultBrowser),
-        AppPreset(GoogleMaps),
-        AppPreset(Messages),
-        AppPreset(Phone),
+        AppPreset(default = Camera),
+        AppPreset(default = Browser),
+        AppPreset(default = Navigation),
+        AppPreset(default = Messages),
+        AppPreset(default = Phone),
     )
     val DEFAULT_ALLOWED_CONTACTS = ContactType.CONTACT_TYPE_STARRED
     const val DEFAULT_REPEAT_CALL_ENABLED = true
