@@ -31,6 +31,8 @@ build:release:
     - job: verify-tag-name
     - job: download:google-services
       artifacts: true
+    - job: download:keystore
+      artifacts: true
   script:
     - ./gradlew assembleRelease
   artifacts:
@@ -47,6 +49,8 @@ build:release:bundle:
   needs:
     - job: verify-tag-name
     - job: download:google-services
+      artifacts: true
+    - job: download:keystore
       artifacts: true
   script:
     - ./gradlew bundleRelease
