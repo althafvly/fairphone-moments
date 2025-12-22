@@ -6,11 +6,13 @@
 
 sign:release:apk:
   extends: .release-rule
-  image: openjdk:8-jdk
+  image: eclipse-temurin:17-jdk
   interruptible: true
   stage: sign
   needs:
     - job: build:release
+      artifacts: true
+    - job: download:keystore
       artifacts: true
     - job: test:release
       artifacts: false
@@ -42,11 +44,13 @@ sign:release:apk:
 
 sign:release:bundle:
   extends: .release-rule
-  image: openjdk:8-jdk
+  image: eclipse-temurin:17-jdk
   interruptible: true
   stage: sign
   needs:
     - job: build:release:bundle
+      artifacts: true
+    - job: download:keystore
       artifacts: true
     - job: test:release
       artifacts: false
