@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permissions_required">Autorisations requises</string>
+    <string name="do_not_disturb_access">Accès à Ne pas déranger</string>
+    <string name="modify_system_settings">Modifier les paramètres système</string>
+    <string name="draw_over_other_apps">Afficher par-dessus les autres applis</string>
+    <string name="permission_granted">Autorisation accordée</string>
+    <string name="permission_required">Autorisation requise</string>
+    <string name="done">Terminé</string>
+    <string name="grant">Autoriser</string>
+</resources>

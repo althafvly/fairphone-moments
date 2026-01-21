@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permissions_required">Se requieren permisos</string>
+    <string name="do_not_disturb_access">Acceso a No molestar</string>
+    <string name="modify_system_settings">Modificar la configuración del sistema</string>
+    <string name="draw_over_other_apps">Mostrar sobre otras aplicaciones</string>
+    <string name="permission_granted">Permiso concedido</string>
+    <string name="permission_required">Permiso requerido</string>
+    <string name="done">Listo</string>
+    <string name="grant">Conceder</string>
+</resources>

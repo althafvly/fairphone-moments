@@ -9,16 +9,25 @@
 package com.fairphone.spring.launcher.activity
 
 import android.annotation.SuppressLint
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.window.OnBackInvokedCallback
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
 import com.fairphone.spring.launcher.ui.screen.LauncherHomeScreen
+import com.fairphone.spring.launcher.ui.screen.home.PermissionsScreen
+import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -47,15 +56,38 @@ class SpringLauncherHomeActivity : ComponentActivity() {
 
     private val isContentVisibleState = mutableStateOf(false)
 
+    private val permissionRefreshTrigger = mutableIntStateOf(0)
+
+    fun hasAllRequiredPermissions(context: Context): Boolean {
+        val notificationManager =
+            context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        return notificationManager.isNotificationPolicyAccessGranted &&
+                Settings.System.canWrite(context) &&
+                Settings.canDrawOverlays(context)
+    }
+
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         instance = this
 
         setContent {
-            LauncherHomeScreen(
-                isContentVisibleState = isContentVisibleState,
-            )
+            var hasPermissions by rememberSaveable { mutableStateOf(false) }
+
+            LaunchedEffect(permissionRefreshTrigger.intValue) {
+                hasPermissions = hasAllRequiredPermissions(this)
+            }
+
+            if (!hasPermissions) {
+                SpringLauncherTheme {
+                    PermissionsScreen(context = this)
+                }
+            } else {
+                LauncherHomeScreen(
+                    isContentVisibleState = isContentVisibleState,
+                )
+            }
         }
     }
 
@@ -80,6 +112,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         super.onResume()
         onBackInvokedDispatcher.registerOnBackInvokedCallback(0, onBackInInvokedCallback)
         hideGestureBar()
+        permissionRefreshTrigger.value++
     }
 
     override fun onPause() {
