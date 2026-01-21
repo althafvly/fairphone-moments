@@ -94,4 +94,12 @@
     <string name="wallpaper">Fond d\'écran</string>
     <string name="update_wallpaper">Changer le fond d\'écran</string>
     <string name="maximum_moments_reached_label">Vous avez atteint le nombre maximal de moments</string>
+    <string name="permissions_required">Autorisations requises</string>
+    <string name="do_not_disturb_access">Accès à Ne pas déranger</string>
+    <string name="modify_system_settings">Modifier les paramètres système</string>
+    <string name="draw_over_other_apps">Afficher par-dessus les autres applis</string>
+    <string name="permission_granted">Autorisation accordée</string>
+    <string name="permission_required">Autorisation requise</string>
+    <string name="done">Terminé</string>
+    <string name="grant">Autoriser</string>
 </resources>

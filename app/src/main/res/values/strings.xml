@@ -115,4 +115,13 @@
     <string name="update_wallpaper">Update wallpaper</string>
     <string name="maximum_moments_reached_label">You have reached the maximum amount of moments</string>
 
+    <string name="permissions_required">Permissions required</string>
+    <string name="do_not_disturb_access">Do Not Disturb access</string>
+    <string name="modify_system_settings">Modify system settings</string>
+    <string name="draw_over_other_apps">Draw over other apps</string>
+    <string name="permission_granted">Permission Granted</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="done">Done</string>
+    <string name="grant">Grant</string>
+
 </resources>

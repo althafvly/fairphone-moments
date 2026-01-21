@@ -95,4 +95,12 @@
     <string name="wallpaper">Bakgrunn</string>
     <string name="update_wallpaper">Oppdater bakgrunnsbilde</string>
     <string name="maximum_moments_reached_label">Du har nådd maksimalt antall øyeblikk</string>
+    <string name="permissions_required">Tillatelser kreves</string>
+    <string name="do_not_disturb_access">Tilgang til Ikke forstyrr</string>
+    <string name="modify_system_settings">Endre systeminnstillinger</string>
+    <string name="draw_over_other_apps">Vis over andre apper</string>
+    <string name="permission_granted">Tillatelse gitt</string>
+    <string name="permission_required">Tillatelse kreves</string>
+    <string name="done">Ferdig</string>
+    <string name="grant">Gi</string>
 </resources>

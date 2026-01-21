@@ -95,4 +95,12 @@
     <string name="wallpaper">Tapet</string>
     <string name="update_wallpaper">Uppdatera Bakgrund</string>
     <string name="maximum_moments_reached_label">Du har nått det maximala antalet ögonblick</string>
+    <string name="permissions_required">Behörigheter krävs</string>
+    <string name="do_not_disturb_access">Åtkomst till Stör ej</string>
+    <string name="modify_system_settings">Ändra systeminställningar</string>
+    <string name="draw_over_other_apps">Visa över andra appar</string>
+    <string name="permission_granted">Behörighet beviljad</string>
+    <string name="permission_required">Behörighet krävs</string>
+    <string name="done">Klar</string>
+    <string name="grant">Bevilja</string>
 </resources>

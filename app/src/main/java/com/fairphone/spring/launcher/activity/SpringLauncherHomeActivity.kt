@@ -9,10 +9,12 @@
 package com.fairphone.spring.launcher.activity
 
 import android.annotation.SuppressLint
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.window.OnBackInvokedCallback
 import androidx.activity.ComponentActivity
@@ -26,12 +28,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
+import com.fairphone.spring.launcher.ui.screen.home.PermissionsScreen
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
 import kotlinx.coroutines.delay
@@ -61,8 +65,18 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         }
     }
 
-
     private val isContentVisibleState = mutableStateOf(false)
+
+    private val permissionRefreshTrigger = mutableIntStateOf(0)
+
+    fun hasAllRequiredPermissions(context: Context): Boolean {
+        val notificationManager =
+            context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        return notificationManager.isNotificationPolicyAccessGranted &&
+                Settings.System.canWrite(context) &&
+                Settings.canDrawOverlays(context)
+    }
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,39 +88,49 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         instance = this
 
         setContent {
+            CompositionLocalProvider {
+                SpringLauncherTheme {
+                    var hasPermissions by rememberSaveable { mutableStateOf(false) }
 
-                CompositionLocalProvider {
-                    SpringLauncherTheme {
-                    // TODO: Move compose code to a separate composable
-                    /**
-                     * These two boolean flags control:
-                     * - Triggering and synchronization of a Compose animation.
-                     * - Dynamic switching of the UI background
-                     *  (for entry / exit animation, a transparent background is needed).
-                     */
-                    var showEntryAnimation by rememberSaveable { mutableStateOf(true) }
-                    var isContentVisible by rememberSaveable { isContentVisibleState }
-                    LaunchedEffect(Unit) {
-                        delay(SHOW_HOME_SCREEN_DELAY) // delay set to let the entry animation show properly
-                        isContentVisibleState.value = true
+                    // Re-check whenever onResume() happens
+                    LaunchedEffect(permissionRefreshTrigger.intValue) {
+                        hasPermissions = hasAllRequiredPermissions(this@SpringLauncherHomeActivity)
                     }
-                    LaunchedEffect(Unit) {
-                        delay(SHOW_ANIMATION_TIME) // time within the entry animation can run
-                        showEntryAnimation = false
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                if (showEntryAnimation || !isContentVisible)
-                                    androidx.compose.ui.graphics.Color.Transparent
-                                else MaterialTheme.colorScheme.background
+
+                    if (!hasPermissions) {
+                        PermissionsScreen(context = this@SpringLauncherHomeActivity)
+                    } else {
+                        // TODO: Move compose code to a separate composable
+                        /**
+                         * These two boolean flags control:
+                         * - Triggering and synchronization of a Compose animation.
+                         * - Dynamic switching of the UI background
+                         *  (for entry / exit animation, a transparent background is needed).
+                         */
+                        var showEntryAnimation by rememberSaveable { mutableStateOf(true) }
+                        var isContentVisible by rememberSaveable { isContentVisibleState }
+                        LaunchedEffect(Unit) {
+                            delay(SHOW_HOME_SCREEN_DELAY) // delay set to let the entry animation show properly
+                            isContentVisibleState.value = true
+                        }
+                        LaunchedEffect(Unit) {
+                            delay(SHOW_ANIMATION_TIME) // time within the entry animation can run
+                            showEntryAnimation = false
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    if (showEntryAnimation || !isContentVisible)
+                                        androidx.compose.ui.graphics.Color.Transparent
+                                    else MaterialTheme.colorScheme.background
+                                )
+                        ) {
+                            HomeNavigation(
+                                showEntryAnimation = showEntryAnimation,
+                                isContentVisible = isContentVisible
                             )
-                    ) {
-                        HomeNavigation(
-                            showEntryAnimation = showEntryAnimation,
-                            isContentVisible = isContentVisible
-                        )
+                        }
                     }
                 }
             }
@@ -136,6 +160,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         super.onResume()
         onBackInvokedDispatcher.registerOnBackInvokedCallback(0, onBackInInvokedCallback)
         hideGestureBar()
+        permissionRefreshTrigger.value++
     }
 
     override fun onPause() {

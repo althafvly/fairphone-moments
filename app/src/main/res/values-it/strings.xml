@@ -95,4 +95,12 @@
     <string name="wallpaper">Sfondo</string>
     <string name="update_wallpaper">Aggiorna Sfondo</string>
     <string name="maximum_moments_reached_label">Hai raggiunto il numero massimo di momenti</string>
+    <string name="permissions_required">Autorizzazioni richieste</string>
+    <string name="do_not_disturb_access">Accesso a Non disturbare</string>
+    <string name="modify_system_settings">Modifica impostazioni di sistema</string>
+    <string name="draw_over_other_apps">Mostra sopra altre app</string>
+    <string name="permission_granted">Autorizzazione concessa</string>
+    <string name="permission_required">Autorizzazione richiesta</string>
+    <string name="done">Fatto</string>
+    <string name="grant">Concedi</string>
 </resources>
