@@ -34,7 +34,7 @@ Enable_Spring()
 {
   adb shell am start \
       -a android.intent.action.MAIN \
-      -n com.fairphone.spring.launcher/com.fairphone.spring.launcher.activity.SwitchStateChangeActivity \
+      -n org.thayyil.spring.launcher/com.fairphone.spring.launcher.activity.SwitchStateChangeActivity \
       --es com.fairphone.spring.launcher.extra.switch_button_state "ENABLED" \
       --ez com.fairphone.spring.launcher.extra.show_overlay $show_overlay
 }
