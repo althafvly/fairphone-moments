@@ -53,28 +53,12 @@ android {
         }
     }
 
-
-    signingConfigs {
-        maybeCreate("release").apply {
-            storeFile = file("$rootDir/spring_launcher_release_key.jks")
-            storePassword = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEYSTORE_PASSWORD")
-            keyAlias = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_ALIAS")
-            keyPassword = System.getenv("FAIRPHONE_SPRING_LAUNCHER_KEY_PASSWORD")
-
-            enableV1Signing = true
-            enableV2Signing = true
-            enableV3Signing = true
-            enableV4Signing = true
-        }
-    }
-
     buildTypes {
         release {
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
 
-            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android.txt"),
                 "proguard-rules.pro"
