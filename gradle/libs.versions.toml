@@ -25,10 +25,6 @@ androidx-navigation = "2.9.3"
 androidx-test-core = "1.7.0"
 android-work = "2.10.3"
 coil = "3.3.0"
-firebase-bom = "34.2.0"
-firebase-crashlytics-plugin = "3.0.6"
-google-services-plugin = "4.4.3"
-google-play = "2.0.2"
 gradle-license-report = "2.9"
 koin-bom = "4.1.1"
 kotlinx-coroutines = "1.10.2"
@@ -66,9 +62,6 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }
 androidx-work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "android-work" }
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin-bom" }
@@ -87,8 +80,6 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
 google-protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
-google-services = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }
 gradle-license-report = { id = "com.github.jk1.dependency-license-report", version.ref = "gradle-license-report" }
 owasp-dependencycheck = { id = "org.owasp.dependencycheck", version.ref = "owasp" }

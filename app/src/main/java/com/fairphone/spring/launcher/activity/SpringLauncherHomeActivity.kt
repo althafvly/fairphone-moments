@@ -27,21 +27,15 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.fairphone.spring.launcher.analytics.FirebaseAnalyticsService
-import com.fairphone.spring.launcher.analytics.LocalAnalyticsService
 import com.fairphone.spring.launcher.ui.navigation.HomeNavigation
 import com.fairphone.spring.launcher.ui.theme.SpringLauncherTheme
 import com.fairphone.spring.launcher.util.Constants
-import com.google.firebase.Firebase
-import com.google.firebase.analytics.analytics
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.compose.KoinContext
 
 private const val ON_FINISH_DELAY = 400L
 private const val SHOW_HOME_SCREEN_DELAY = 100L
@@ -81,8 +75,7 @@ class SpringLauncherHomeActivity : ComponentActivity() {
 
         setContent {
 
-                val analyticsService = remember { FirebaseAnalyticsService(Firebase.analytics) }
-                CompositionLocalProvider(LocalAnalyticsService provides analyticsService) {
+                CompositionLocalProvider {
                     SpringLauncherTheme {
                     // TODO: Move compose code to a separate composable
                     /**

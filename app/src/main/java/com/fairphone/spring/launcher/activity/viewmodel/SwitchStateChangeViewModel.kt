@@ -13,8 +13,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fairphone.spring.launcher.analytics.AnalyticsEvent
-import com.fairphone.spring.launcher.analytics.AnalyticsService
 import com.fairphone.spring.launcher.data.model.SwitchState
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
 import com.fairphone.spring.launcher.domain.usecase.EnableDndUseCase
@@ -35,7 +33,6 @@ class SwitchStateChangeViewModel(
     private val getActiveProfileUseCase: GetActiveProfileUseCase,
     private val enableDndUseCase: EnableDndUseCase,
     private val initializeSpringLauncherUseCase: InitializeSpringLauncherUseCase,
-    private val analyticsService: AnalyticsService,
 ) : ViewModel() {
 
     val activeProfile: StateFlow<LauncherProfile?> =
@@ -53,8 +50,6 @@ class SwitchStateChangeViewModel(
     }
 
     fun handleDnd(context: Context, switchState: SwitchState) = viewModelScope.launch {
-        trackSwitchStateChangedEvent(switchState)
-
         val enableDnd = when (switchState) {
             SwitchState.ENABLED -> true
             SwitchState.DISABLED -> false
@@ -95,31 +90,5 @@ class SwitchStateChangeViewModel(
 
     fun isDndPermissionGranted(context: Context): Boolean {
         return context.isDoNotDisturbAccessGranted()
-    }
-
-    @OptIn(ExperimentalTime::class)
-    private suspend fun trackSwitchStateChangedEvent(switchState: SwitchState) {
-        val profile = getActiveProfileUseCase.execute(Unit).first()
-        val event = when (switchState) {
-            SwitchState.ENABLED -> {
-                AnalyticsEvent.SwitchOnEvent(
-                    modeName = profile.name,
-                    modeId = profile.id,
-                    visibleApps = profile.launcherProfileAppsList.map { it.packageName },
-                    timestamp = Clock.System.now().toEpochMilliseconds()
-                )
-            }
-
-            SwitchState.DISABLED -> {
-                AnalyticsEvent.SwitchOffEvent(
-                    modeName = profile.name,
-                    modeId = profile.id,
-                    visibleApps = profile.launcherProfileAppsList.map { it.packageName },
-                    timestamp = Clock.System.now().toEpochMilliseconds()
-                )
-            }
-        }
-
-        analyticsService.trackEvent(event)
     }
 }

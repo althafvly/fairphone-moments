@@ -32,7 +32,6 @@ import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
 import com.fairphone.spring.launcher.data.model.colors
 import com.fairphone.spring.launcher.data.prefs.UsageMode
 import com.fairphone.spring.launcher.ui.component.AnimatedBackground
-import com.fairphone.spring.launcher.ui.component.ScreenViewTracker
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreen
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
 import com.fairphone.spring.launcher.ui.screen.mode.creator.CreateModeScreen
@@ -69,7 +68,6 @@ fun HomeNavigation(
     showEntryAnimation: Boolean,
     isContentVisible: Boolean
 ) {
-    ScreenViewTracker(navController = navController)
     NavHost(
         navController = navController,
         startDestination = Home,

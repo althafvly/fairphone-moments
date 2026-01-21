@@ -12,9 +12,7 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.google.protobuf) apply false
-    alias(libs.plugins.google.services) apply false
     alias(libs.plugins.gradle.license.report) apply false
     alias(libs.plugins.owasp.dependencycheck) apply false
 }
