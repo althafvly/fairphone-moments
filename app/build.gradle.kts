@@ -19,23 +19,16 @@ plugins {
     alias(libs.plugins.owasp.dependencycheck)
 }
 
-val versionMajor: String by project
-val versionMinor: String by project
-val versionPatch: String by project
-
-val appVersionCode = versionMajor.toInt() * 10000 + versionMinor.toInt() * 100 + versionPatch.toInt()
-val appVersionName = "$versionMajor.$versionMinor.$versionPatch"
-
 android {
     namespace = "com.fairphone.spring.launcher"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "org.thayyil.spring.launcher"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = appVersionCode
-        versionName = appVersionName
+        minSdk = 35
+        targetSdk = 35
+        versionCode = 110
+        versionName = "0.1.10"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters.add("arm64-v8a")
