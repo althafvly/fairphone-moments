@@ -17,23 +17,16 @@ plugins {
     alias(libs.plugins.owasp.dependencycheck)
 }
 
-val versionMajor = project.property("versionMajor") as String
-val versionMinor = project.property("versionMinor") as String
-val versionPatch = project.property("versionPatch") as String
-
-val appVersionCode = versionMajor.toInt() * 10000 + versionMinor.toInt() * 100 + versionPatch.toInt()
-val appVersionName = "$versionMajor.$versionMinor.$versionPatch"
-
 android {
     namespace = "com.fairphone.spring.launcher"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "org.thayyil.spring.launcher"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = appVersionCode
-        versionName = appVersionName
+        minSdk = 29
+        targetSdk = 36
+        versionCode = 114
+        versionName = "0.1.14"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters.addAll(listOf("en", "da", "de", "es", "fr", "it", "nl", "no", "pt", "sv"))
