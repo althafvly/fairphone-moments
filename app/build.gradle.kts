@@ -12,9 +12,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.google.protobuf)
-    alias(libs.plugins.google.services)
     alias(libs.plugins.gradle.license.report)
     alias(libs.plugins.owasp.dependencycheck)
 }
@@ -131,7 +129,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.work.runtime)
     implementation(libs.coil)
-    implementation(libs.firebase.crashlytics)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
