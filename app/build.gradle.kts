@@ -27,8 +27,8 @@ android {
         applicationId = "org.thayyil.spring.launcher"
         minSdk = 29
         targetSdk = 35
-        versionCode = 111
-        versionName = "0.1.10.1"
+        versionCode = 112
+        versionName = "0.1.10.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters.add("arm64-v8a")
