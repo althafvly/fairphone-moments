@@ -10,6 +10,7 @@ package com.fairphone.spring.launcher.service
 
 import android.app.Notification
 import android.app.Person
+import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
@@ -106,19 +107,33 @@ class NotificationInterceptorService() : NotificationListenerService() {
 
         val notificationPersons = mutableListOf<Person>()
 
-        notificationPersons.addAll(
+        val peopleList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             extras.getParcelableArrayList(
                 Notification.EXTRA_PEOPLE_LIST,
                 Person::class.java
-            )?.toList() ?: emptyList()
-        )
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            extras.getParcelableArrayList<Person>(Notification.EXTRA_PEOPLE_LIST)
+        }
 
-        extras.getParcelable(Notification.EXTRA_CALL_PERSON, Person::class.java)?.let {
-            notificationPersons.add(it)
+        notificationPersons.addAll(peopleList?.toList() ?: emptyList())
+
+        val callPerson = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            extras.getParcelable(Notification.EXTRA_CALL_PERSON, Person::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            extras.getParcelable<Person>(Notification.EXTRA_CALL_PERSON)
         }
-        extras.getParcelable(Notification.EXTRA_MESSAGING_PERSON, Person::class.java)?.let {
-            notificationPersons.add(it)
+        callPerson?.let { notificationPersons.add(it) }
+
+        val messagingPerson = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            extras.getParcelable(Notification.EXTRA_MESSAGING_PERSON, Person::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            extras.getParcelable<Person>(Notification.EXTRA_MESSAGING_PERSON)
         }
+        messagingPerson?.let { notificationPersons.add(it) }
 
         notificationPersons.forEach { notificationPerson ->
             Log.d(

@@ -9,11 +9,14 @@
 package com.fairphone.spring.launcher.util
 
 import android.app.AutomaticZenRule
+import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
+import android.os.Build
 import android.service.notification.Condition
 import android.service.notification.ZenDeviceEffects
 import android.service.notification.ZenPolicy
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
 import com.fairphone.spring.launcher.data.model.CreateLauncherProfile
@@ -149,12 +152,20 @@ class ZenNotificationManager(private val context: Context) {
         context.notificationManager()
             .setAutomaticZenRuleState(
                 zenRuleId,
-                Condition(
-                    ZEN_RULE_CONDITION_ID,
-                    name,
-                    state,
-                    Condition.SOURCE_USER_ACTION
-                )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                    Condition(
+                        ZEN_RULE_CONDITION_ID,
+                        name,
+                        state,
+                        Condition.SOURCE_USER_ACTION
+                    )
+                } else {
+                    Condition(
+                        ZEN_RULE_CONDITION_ID,
+                        name,
+                        state
+                    )
+                }
             )
     }
 
@@ -169,6 +180,19 @@ class ZenNotificationManager(private val context: Context) {
     ): AutomaticZenRule {
         val configActivity = getConfigurationActivity(context)
         val zenPolicy = createZenPolicy(allowedContacts, repeatCallEnabled)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            return AutomaticZenRule(
+                name,
+                configActivity,
+                configActivity,
+                ZEN_RULE_CONDITION_ID,
+                zenPolicy,
+                NotificationManager.INTERRUPTION_FILTER_PRIORITY,
+                true
+            )
+        }
+
         val zenDeviceEffects = createZenDeviceEffects(uiMode)
 
         return AutomaticZenRule.Builder(name, ZEN_RULE_CONDITION_ID)
@@ -180,10 +204,7 @@ class ZenNotificationManager(private val context: Context) {
     }
 
     private fun getConfigurationActivity(context: Context): ComponentName {
-        return ComponentName(
-            context.packageName,
-            LauncherSettingsActivity::class.java.packageName + ".${LauncherSettingsActivity::class.java.simpleName}"
-        )
+        return ComponentName(context, LauncherSettingsActivity::class.java)
     }
 
     private fun createZenPolicy(
@@ -202,14 +223,18 @@ class ZenNotificationManager(private val context: Context) {
         val builder = ZenPolicy.Builder()
             .allowCalls(peopleType)
             .allowMessages(peopleType)
-            .allowConversations(peopleType)
             .allowMedia(true)
             .allowRepeatCallers(allowRepeatCallers)
             .hideAllVisualEffects()
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            builder.allowConversations(peopleType)
+        }
+
         return builder.build()
     }
 
+    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     private fun createZenDeviceEffects(uiMode: UiMode): ZenDeviceEffects {
         return ZenDeviceEffects.Builder()
             .setShouldUseNightMode(uiMode == UiMode.UI_MODE_DARK)

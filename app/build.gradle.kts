@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "org.thayyil.spring.launcher"
-        minSdk = 35
+        minSdk = 29
         targetSdk = 35
         versionCode = 111
         versionName = "0.1.10.1"
