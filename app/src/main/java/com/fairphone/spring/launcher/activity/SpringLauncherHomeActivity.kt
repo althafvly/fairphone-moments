@@ -12,11 +12,12 @@ import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.window.OnBackInvokedCallback
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,6 +25,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.fairphone.spring.launcher.ui.screen.LauncherHomeScreen
 import com.fairphone.spring.launcher.ui.screen.home.PermissionsScreen
@@ -76,12 +80,12 @@ class SpringLauncherHomeActivity : ComponentActivity() {
             var hasPermissions by rememberSaveable { mutableStateOf(false) }
 
             LaunchedEffect(permissionRefreshTrigger.intValue) {
-                hasPermissions = hasAllRequiredPermissions(this)
+                hasPermissions = hasAllRequiredPermissions(this@SpringLauncherHomeActivity)
             }
 
             if (!hasPermissions) {
                 SpringLauncherTheme {
-                    PermissionsScreen(context = this)
+                    PermissionsScreen(context = this@SpringLauncherHomeActivity)
                 }
             } else {
                 LauncherHomeScreen(
@@ -103,37 +107,45 @@ class SpringLauncherHomeActivity : ComponentActivity() {
         }
     }
 
-    private val onBackInInvokedCallback: OnBackInvokedCallback = OnBackInvokedCallback {
-        // ignore back button
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            // ignore back button
+        }
     }
 
     @SuppressLint("WrongConstant")
     override fun onResume() {
         super.onResume()
-        onBackInvokedDispatcher.registerOnBackInvokedCallback(0, onBackInInvokedCallback)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            onBackInvokedDispatcher.registerOnBackInvokedCallback(0) {
+                // ignore back button
+            }
+        } else {
+            onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        }
         hideGestureBar()
         permissionRefreshTrigger.value++
     }
 
     override fun onPause() {
         super.onPause()
-        onBackInvokedDispatcher.unregisterOnBackInvokedCallback(onBackInInvokedCallback)
+        onBackPressedCallback.remove()
         showGestureBar()
     }
 
     private fun hideGestureBar() {
-        window.insetsController?.apply {
-            hide(android.view.WindowInsets.Type.navigationBars())
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            hide(WindowInsetsCompat.Type.navigationBars())
             systemBarsBehavior =
-                android.view.WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 
     private fun showGestureBar() {
-        window.insetsController?.apply {
-            show(android.view.WindowInsets.Type.navigationBars())
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            show(WindowInsetsCompat.Type.navigationBars())
             systemBarsBehavior =
-                android.view.WindowInsetsController.BEHAVIOR_DEFAULT
+                WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
         }
     }
 }

@@ -9,13 +9,16 @@
 package com.fairphone.spring.launcher.util
 
 import android.app.AutomaticZenRule
+import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.service.notification.Condition
 import android.service.notification.ZenDeviceEffects
 import android.service.notification.ZenPolicy
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
 import com.fairphone.spring.launcher.data.model.protos.ContactType
@@ -296,8 +299,11 @@ class ZenNotificationManagerImpl(
         state: Int
     ): Result<String> = try {
         val conditionId = getConditionId()
-        val source = Condition.SOURCE_USER_ACTION
-        val condition = Condition(conditionId, name, state, source)
+        val condition = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            Condition(conditionId, name, state, Condition.SOURCE_USER_ACTION)
+        } else {
+            Condition(conditionId, name, state)
+        }
         context.notificationManager().setAutomaticZenRuleState(zenRuleId, condition)
         Result.success(zenRuleId)
     } catch (e: Exception) {
@@ -341,6 +347,19 @@ class ZenNotificationManagerImpl(
         val conditionId = getConditionId()
         val configActivity = getConfigurationActivity(context)
         val zenPolicy = buildZenPolicy(allowedContacts, repeatCallEnabled)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            return AutomaticZenRule(
+                name,
+                null,
+                configActivity,
+                conditionId,
+                zenPolicy,
+                NotificationManager.INTERRUPTION_FILTER_PRIORITY,
+                true
+            )
+        }
+
         val zenDeviceEffects = buildZenDeviceEffects(
             uiMode = uiMode,
             isGrayScaleEnabled = isGrayScaleEnabled
@@ -348,7 +367,6 @@ class ZenNotificationManagerImpl(
 
         return AutomaticZenRule.Builder(name, conditionId)
             .setConfigurationActivity(configActivity)
-            .setOwner(configActivity)
             .setDeviceEffects(zenDeviceEffects)
             .setZenPolicy(zenPolicy)
             .build()
@@ -392,14 +410,18 @@ class ZenNotificationManagerImpl(
         val builder = ZenPolicy.Builder()
             .allowCalls(peopleType)
             .allowMessages(peopleType)
-            .allowConversations(peopleType)
             .allowMedia(true)
             .allowRepeatCallers(allowRepeatCallers)
             .hideAllVisualEffects()
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            builder.allowConversations(peopleType)
+        }
+
         return builder.build()
     }
 
+    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     /**
      * Builds a [ZenDeviceEffects] object.
      *

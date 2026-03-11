@@ -10,6 +10,8 @@ package com.fairphone.spring.launcher.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,6 +21,7 @@ import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -166,36 +169,42 @@ class SwitchStateChangeActivity : ComponentActivity() {
     private fun setupWindow() {
         window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
-            attributes.blurBehindRadius = 20
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                attributes.blurBehindRadius = 20
+                attributes = attributes
+            }
             setBackgroundDrawableResource(android.R.color.transparent)
         }
     }
 
     private fun setupWindowBlurListener() {
-        val windowBlurEnabledListener: java.util.function.Consumer<Boolean> =
-            object : java.util.function.Consumer<Boolean> {
-                override fun accept(value: Boolean) {
-                    updateWindowForBlurs(value)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val windowBlurEnabledListener: java.util.function.Consumer<Boolean> =
+                object : java.util.function.Consumer<Boolean> {
+                    override fun accept(value: Boolean) {
+                        updateWindowForBlurs(value)
+                    }
                 }
-            }
-        window.decorView.addOnAttachStateChangeListener(
-            object : OnAttachStateChangeListener {
-                @Override
-                override fun onViewAttachedToWindow(v: View) {
-                    windowManager.addCrossWindowBlurEnabledListener(
-                        windowBlurEnabledListener
-                    )
-                }
+            window.decorView.addOnAttachStateChangeListener(
+                object : OnAttachStateChangeListener {
+                    @Override
+                    override fun onViewAttachedToWindow(v: View) {
+                        windowManager.addCrossWindowBlurEnabledListener(
+                            windowBlurEnabledListener
+                        )
+                    }
 
-                @Override
-                override fun onViewDetachedFromWindow(v: View) {
-                    windowManager.removeCrossWindowBlurEnabledListener(
-                        windowBlurEnabledListener
-                    )
-                }
-            });
+                    @Override
+                    override fun onViewDetachedFromWindow(v: View) {
+                        windowManager.removeCrossWindowBlurEnabledListener(
+                            windowBlurEnabledListener
+                        )
+                    }
+                });
+        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun updateWindowForBlurs(blursEnabled: Boolean) {
         window.apply {
             setDimAmount(if (blursEnabled) .1f else .4f)
@@ -234,7 +243,9 @@ fun BlurBehindActivity(content: @Composable () -> Unit) {
                 // Enable blur behind
                 val window = (context as Activity).window
                 window.addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND)
-                window.attributes.blurBehindRadius = 10
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    window.attributes.blurBehindRadius = 10
+                }
             }
         },
         update = { frameLayout ->

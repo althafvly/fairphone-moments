@@ -8,7 +8,7 @@
   ~ SPDX-License-Identifier: EUPL-1.2
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.SpringLauncher" parent="Theme.AppCompat.Light.NoActionBar">
         <!--<item name="android:windowSplashscreenContent">@null</item>
@@ -38,15 +38,15 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowSplashscreenContent">@null</item>
-        <item name="android:windowSplashScreenAnimationDuration">0</item>
-        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="31">0</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="Theme.SpringLauncher.Settings" parent="@style/Theme.SpringLauncher">
-        <item name="android:windowSplashScreenAnimatedIcon">@null</item>
-        <item name="android:windowSplashScreenAnimationDuration">0</item>
-        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="31">@null</item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="31">0</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>

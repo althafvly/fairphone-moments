@@ -16,6 +16,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
@@ -164,9 +165,14 @@ object LockscreenUtils {
         try {
             // Try getting the specific lock screen drawable
             val currentWallpaperDrawable: Drawable? =
-                wallpaperManager.peekDrawable(WallpaperManager.FLAG_LOCK)
-                    ?: wallpaperManager.getDrawable(WallpaperManager.FLAG_LOCK)
-                    ?: wallpaperManager.getBuiltInDrawable(WallpaperManager.FLAG_LOCK)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    wallpaperManager.peekDrawable(WallpaperManager.FLAG_LOCK)
+                        ?: wallpaperManager.getDrawable(WallpaperManager.FLAG_LOCK)
+                        ?: wallpaperManager.getBuiltInDrawable(WallpaperManager.FLAG_LOCK)
+                } else {
+                    wallpaperManager.drawable
+                        ?: wallpaperManager.builtInDrawable
+                }
             // TODO save bitmap dimensions
 
 //            val currentWallpaperDimensions =
