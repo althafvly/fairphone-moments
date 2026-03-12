@@ -44,7 +44,6 @@ import com.fairphone.spring.launcher.data.prefs.UsageMode
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
 import com.fairphone.spring.launcher.ui.component.DateTime
-import com.fairphone.spring.launcher.ui.component.FairphoneMomentsDemoCard
 import com.fairphone.spring.launcher.ui.component.WorkAppBadge
 import com.fairphone.spring.launcher.ui.screen.home.component.CurrentModeButton
 import com.fairphone.spring.launcher.ui.theme.FairphoneTypography
@@ -58,7 +57,6 @@ private const val CONTENT_FADE_IN_DURATION = 420 // Duration of the text animati
 fun HomeScreen(
     isContentVisible: Boolean,
     onModeSwitcherButtonClick: () -> Unit,
-    onDemoCardClick: () -> Unit,
     onTimeClick: () -> Unit,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
@@ -74,7 +72,6 @@ fun HomeScreen(
         appUsageMode = screenState!!.appUsageMode,
         activeProfile = screenState!!.activeProfile,
         appList = screenState!!.visibleApps,
-        isRetailDemoMode = screenState!!.isRetailDemoMode,
         onAppClick = { appInfo ->
             viewModel.finishOnBoarding()
             viewModel.onAppClick(context, appInfo)
@@ -83,7 +80,6 @@ fun HomeScreen(
             viewModel.finishOnBoarding()
             onModeSwitcherButtonClick()
         },
-        onDemoCardClick = onDemoCardClick,
         onTooltipClick = {
             viewModel.finishOnBoarding()
         },
@@ -99,10 +95,8 @@ fun HomeScreen(
     appUsageMode: UsageMode,
     activeProfile: LauncherProfile,
     appList: List<AppInfo>,
-    isRetailDemoMode: Boolean,
     onAppClick: (AppInfo) -> Unit,
     onModeSwitcherButtonClick: () -> Unit,
-    onDemoCardClick: () -> Unit,
     onTooltipClick: () -> Unit,
     onTimeClick: () -> Unit,
 ) {
@@ -151,13 +145,6 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(24.dp)
             )
-
-            if (isRetailDemoMode) {
-                FairphoneMomentsDemoCard(
-                    modifier = Modifier.padding(start = 30.dp, end = 30.dp, bottom = 30.dp),
-                    onClick = { onDemoCardClick() }
-                )
-            }
         }
     }
 }
@@ -252,10 +239,8 @@ fun HomeScreen_Preview() {
             appUsageMode = UsageMode.DEFAULT,
             activeProfile = Mock_Profile,
             appList = previewAppList(LocalContext.current),
-            isRetailDemoMode = false,
             onAppClick = {},
             onModeSwitcherButtonClick = {},
-            onDemoCardClick = {},
             onTooltipClick = {},
             onTimeClick = {},
         )

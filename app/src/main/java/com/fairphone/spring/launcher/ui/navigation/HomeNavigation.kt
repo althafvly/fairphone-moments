@@ -41,8 +41,6 @@ import com.fairphone.spring.launcher.ui.screen.mode.switcher.ModeSwitcherScreen
 import com.fairphone.spring.launcher.ui.screen.mode.switcher.ModeSwitcherViewModel
 import com.fairphone.spring.launcher.ui.screen.onboarding.OnBoardingScreen
 import com.fairphone.spring.launcher.ui.theme.LocalUseDarkTheme
-import com.fairphone.spring.launcher.util.FairphoneWebViewScreen
-import com.fairphone.spring.launcher.util.MOMENTS_DEMO_URL
 import com.fairphone.spring.launcher.util.launchClockApp
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -59,9 +57,6 @@ object OnBoarding
 
 @Serializable
 object ModeCreator
-
-@Serializable
-object FairphoneDemoWebView
 
 const val ENTER_EXIT_DURATION = 300
 const val FADE_IN_DURATION = 200
@@ -126,9 +121,6 @@ fun HomeNavigation(
                                         navController.navigate(ModeSwitcher)
                                     }
                                 },
-                                onDemoCardClick = {
-                                    navController.navigate(FairphoneDemoWebView)
-                                },
                                 onTimeClick = {
                                     navController.context.launchClockApp()
                                 },
@@ -137,23 +129,6 @@ fun HomeNavigation(
                         }
                     }
                 }
-            }
-        }
-
-
-        composable<FairphoneDemoWebView> {
-            AnimatedVisibility(
-                visible = isContentVisible,
-                enter = homeEnterTransition,
-                exit = homeExitTransition,
-            ) {
-                FairphoneWebViewScreen(
-                    url = MOMENTS_DEMO_URL,
-                    showCloseButton = true,
-                    hideHeaderAndFooter = true,
-                    disableUrlLoading = true,
-                    onBackPressed = { navController.navigateUp() }
-                )
             }
         }
 
