@@ -20,7 +20,6 @@ import com.fairphone.spring.launcher.data.repository.AppInfoRepository
 import com.fairphone.spring.launcher.domain.usecase.profile.GetActiveProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.InitializeSpringLauncherUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.SetApplicationUsageModeUseCase
-import com.fairphone.spring.launcher.util.isDeviceInRetailDemoMode
 import com.fairphone.spring.launcher.util.launchApp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,7 +54,6 @@ class HomeScreenViewModel(
             HomeScreenState(
                 activeProfile = profile,
                 visibleApps = visibleApps,
-                isRetailDemoMode = context.isDeviceInRetailDemoMode(),
                 appUsageMode = appPrefs.usageMode()
             )
         }
@@ -106,6 +104,5 @@ class HomeScreenViewModel(
 data class HomeScreenState(
     val activeProfile: LauncherProfile,
     val visibleApps: List<AppInfo> = emptyList(),
-    val isRetailDemoMode: Boolean = false,
     val appUsageMode: UsageMode = UsageMode.ON_BOARDING
 )

@@ -10,15 +10,11 @@ package com.fairphone.spring.launcher.util
 
 import android.app.UiModeManager
 import android.app.WallpaperManager
-import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
-import android.content.Context.CONNECTIVITY_SERVICE
 import android.content.Intent
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.UserHandle
 import android.os.UserManager
 import android.provider.MediaStore
@@ -31,8 +27,6 @@ import androidx.core.net.toUri
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.repository.AppInfoRepositoryImpl.Companion.TAG
-
-const val RETAIL_DEMO_APP_PACKAGE_NAME = "com.fairphone.retaildemo2"
 
 /**
  * @return the package name of the default browser app.
@@ -241,20 +235,6 @@ fun Context.notificationManager() =
 
 fun Context.uiModeManager() = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
 fun Context.wallpaperManager() = getSystemService(Context.WALLPAPER_SERVICE) as WallpaperManager
-
-fun Context.hasInternetConnection(): Boolean {
-    val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-    val activeNetwork = connectivityManager.activeNetwork ?: return false
-    val networkCapabilities =
-        connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-
-    return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-}
-
-fun Context.isDeviceInRetailDemoMode(): Boolean {
-    val dpc = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
-    return dpc.isDeviceOwnerApp(RETAIL_DEMO_APP_PACKAGE_NAME)
-}
 
 /**
  * Checks if the current application is the default launcher.

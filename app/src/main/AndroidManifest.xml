@@ -20,10 +20,6 @@
     <!-- Permission needed to display overlay on top of other activities -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    <!-- Permissions needed for demo mode pop-up -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <!-- Permission needed to access all user profiles -->
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
         tools:ignore="ProtectedPermissions" />
