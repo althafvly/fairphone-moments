@@ -79,7 +79,6 @@
             android:enableOnBackInvokedCallback="true"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:label="Home"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SpringLauncher.Home"
