@@ -30,9 +30,6 @@ android {
         versionCode = 112
         versionName = "0.1.10.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters.add("arm64-v8a")
-        }
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters.addAll(listOf("en", "da", "de", "es", "fr", "it", "nl", "no", "pt", "sv"))
         base.archivesName = "SpringLauncher_$versionName"
