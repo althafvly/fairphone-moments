@@ -184,7 +184,7 @@ class ZenNotificationManager(private val context: Context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             return AutomaticZenRule(
                 name,
-                configActivity,
+                null,
                 configActivity,
                 ZEN_RULE_CONDITION_ID,
                 zenPolicy,
@@ -197,7 +197,6 @@ class ZenNotificationManager(private val context: Context) {
 
         return AutomaticZenRule.Builder(name, ZEN_RULE_CONDITION_ID)
             .setConfigurationActivity(configActivity)
-            .setOwner(configActivity)
             .setDeviceEffects(zenDeviceEffects)
             .setZenPolicy(zenPolicy)
             .build()
