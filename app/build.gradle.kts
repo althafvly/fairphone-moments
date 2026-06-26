@@ -27,8 +27,8 @@ android {
         applicationId = "org.thayyil.spring.launcher"
         minSdk = 29
         targetSdk = 35
-        versionCode = 112
-        versionName = "0.1.10.2"
+        versionCode = 113
+        versionName = "0.1.10.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters.addAll(listOf("en", "da", "de", "es", "fr", "it", "nl", "no", "pt", "sv"))
