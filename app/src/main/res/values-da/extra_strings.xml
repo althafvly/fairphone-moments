@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permissions_required">Tilladelser kræves</string>
+    <string name="do_not_disturb_access">Adgang til Forstyr ikke</string>
+    <string name="modify_system_settings">Ændr systemindstillinger</string>
+    <string name="draw_over_other_apps">Vis over andre apps</string>
+    <string name="permission_granted">Tilladelse givet</string>
+    <string name="permission_required">Tilladelse kræves</string>
+    <string name="done">Færdig</string>
+    <string name="grant">Giv</string>
+</resources>

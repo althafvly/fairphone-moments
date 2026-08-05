@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permissions_required">Machtigingen vereist</string>
+    <string name="do_not_disturb_access">Toegang tot Niet storen</string>
+    <string name="modify_system_settings">Systeeminstellingen wijzigen</string>
+    <string name="draw_over_other_apps">Teken over andere apps</string>
+    <string name="permission_granted">Machtiging verleend</string>
+    <string name="permission_required">Machtiging vereist</string>
+    <string name="done">Gereed</string>
+    <string name="grant">Toestaan</string>
+</resources>
