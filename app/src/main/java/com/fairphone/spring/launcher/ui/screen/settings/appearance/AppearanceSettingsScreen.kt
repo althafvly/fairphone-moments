@@ -8,6 +8,9 @@
 
 package com.fairphone.spring.launcher.ui.screen.settings.appearance
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,8 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.ui.FP6Preview
 import com.fairphone.spring.launcher.ui.FP6PreviewDark
@@ -38,6 +43,12 @@ fun AppearanceSettingsScreen(
     onGrayscaleSwitchClick: (Boolean) -> Unit,
     onCustomizeWallpaperClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val secureGranted = ContextCompat.checkSelfPermission(
+        context,
+        Manifest.permission.WRITE_SECURE_SETTINGS
+    ) == PackageManager.PERMISSION_GRANTED
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -66,35 +77,39 @@ fun AppearanceSettingsScreen(
                 .clip(RoundedCornerShape(size = 12.dp))
         )
 
-        SettingSwitchItem(
-            state = blueLightFilterEnabled,
-            title = stringResource(R.string.setting_blue_light_filter_title),
-            subtitle = stringResource(R.string.setting_blue_light_filter_descritpion),
-            onClick = onBlueLightFilterClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(size = 12.dp)
-                )
-                .clip(RoundedCornerShape(size = 12.dp))
-        )
+        if (secureGranted) {
+            SettingSwitchItem(
+                state = blueLightFilterEnabled,
+                title = stringResource(R.string.setting_blue_light_filter_title),
+                subtitle = stringResource(R.string.setting_blue_light_filter_descritpion),
+                onClick = onBlueLightFilterClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.outline,
+                        shape = RoundedCornerShape(size = 12.dp)
+                    )
+                    .clip(RoundedCornerShape(size = 12.dp))
+            )
+        }
 
-        SettingSwitchItem(
-            state = grayscaleEnabled,
-            title = stringResource(R.string.setting_grayscale_title),
-            subtitle = stringResource(R.string.setting_grayscale_description),
-            onClick = onGrayscaleSwitchClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(size = 12.dp)
-                )
-                .clip(RoundedCornerShape(size = 12.dp))
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            SettingSwitchItem(
+                state = grayscaleEnabled,
+                title = stringResource(R.string.setting_grayscale_title),
+                subtitle = stringResource(R.string.setting_grayscale_description),
+                onClick = onGrayscaleSwitchClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.outline,
+                        shape = RoundedCornerShape(size = 12.dp)
+                    )
+                    .clip(RoundedCornerShape(size = 12.dp))
+            )
+        }
     }
 }
 
