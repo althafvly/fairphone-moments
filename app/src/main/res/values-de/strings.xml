@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ Copyright (C) 2025 FairPhone B.V.
+  ~ Copyright (C) 2026 FairPhone B.V.
   ~
   ~ SPDX-FileCopyrightText: 2025. FairPhone B.V.
   ~
@@ -53,7 +53,7 @@
     <string name="setting_subtitle_sound_and_vibration">Geräteeinstellungen anpassen</string>
     <string name="setting_subtitle_power_saving">Sparen Sie Strom und verlängern Sie die Akkulaufzeit</string>
     <string name="setting_subtitle_appearance">Ändern Sie das Erscheinungsbild nach Ihren Wünschen</string>
-    <string name="setting_button_delete_mode_not_allowed">Dies ist Ihr einziger Moment. Es kann nicht gelöscht werden.</string>
+    <string name="setting_button_delete_mode_not_allowed">Dies ist Ihr einziger Moment. Er kann nicht gelöscht werden.</string>
     <string name="profile_switch_state_enabled">%1$s\naktiviert</string>
     <string name="profile_switch_state_disabled">%1$s\ndeaktiviert</string>
     <string name="do_not_disturb_access_rationale_title">Zugriff auf „Nicht stören“ erforderlich</string>
@@ -94,4 +94,20 @@
     <string name="wallpaper">Tapete</string>
     <string name="update_wallpaper">Hintergrund aktualisieren</string>
     <string name="maximum_moments_reached_label">Sie haben die maximale Anzahl an Momenten erreicht</string>
+
+    <string name="sound_and_vibration_title">Ton &amp; Vibration</string>
+    <string name="sound_and_vibration_description">Ändern Sie die Ton- und Vibrationseinstellungen Ihres Geräts nach Ihren Wünschen.</string>
+    <string name="sound_and_vibration_match_title">Geräteeinstellungen anpassen</string>
+    <string name="sound_and_vibration_match_subtitle">Aktuelle Geräteeinstellungen übernehmen</string>
+    <string name="sound_and_vibration_loud_title">Laut</string>
+    <string name="sound_and_vibration_loud_subtitle">Alle Töne mit maximaler Lautstärke abspielen</string>
+    <string name="sound_and_vibration_vibrate_title">Vibrieren</string>
+    <string name="sound_and_vibration_vibrate_subtitle">Töne stummschalten und nur Vibration aktivieren</string>
+    <string name="sound_and_vibration_silent_title">Stummschalten</string>
+    <string name="sound_and_vibration_silent_subtitle">Alle Töne und Vibrationen deaktivieren</string>
+
+    <string name="setting_blue_light_filter_title">Blaulichtfilter</string>
+    <string name="setting_blue_light_filter_descritpion">Entlastet Ihre Augen nachts beim Bildschirmlesen</string>
+    <string name="setting_grayscale_title">Graustufen</string>
+    <string name="setting_grayscale_description">Stellt Ihren Bildschirm auf Schwarzweiß um.</string>
 </resources>

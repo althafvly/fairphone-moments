@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 FairPhone B.V.
+ * Copyright (C) 2026 FairPhone B.V.
  *
  * SPDX-FileCopyrightText: 2025. FairPhone B.V.
  *
@@ -8,7 +8,7 @@
 
 package com.fairphone.spring.launcher.di
 
-import com.fairphone.spring.launcher.domain.usecase.EnableDndUseCase
+import com.fairphone.spring.launcher.domain.usecase.ToggleDndUseCase
 import com.fairphone.spring.launcher.domain.usecase.contacts.GetAllContactsUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.CreateLauncherProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.DeleteLauncherProfileUseCase
@@ -21,12 +21,12 @@ import com.fairphone.spring.launcher.domain.usecase.profile.SetActiveProfileUseC
 import com.fairphone.spring.launcher.domain.usecase.profile.SetApplicationUsageModeUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.SetEditedProfileUseCase
 import com.fairphone.spring.launcher.domain.usecase.profile.UpdateLauncherProfileUseCase
-import com.fairphone.spring.launcher.util.ZenNotificationManager
+import com.fairphone.spring.launcher.util.DeviceSoundManager
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val domainModule = module {
-    factoryOf(::EnableDndUseCase)
+    factoryOf(::ToggleDndUseCase)
     factoryOf(::CreateLauncherProfileUseCase)
     factoryOf(::UpdateLauncherProfileUseCase)
     factoryOf(::GetActiveProfileUseCase)
@@ -40,5 +40,5 @@ val domainModule = module {
     factoryOf(::GetApplicationUsageModeUseCase)
     factoryOf(::SetApplicationUsageModeUseCase)
 
-    factoryOf(::ZenNotificationManager)
+    factoryOf(::DeviceSoundManager)
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 FairPhone B.V.
+ * Copyright (C) 2026 FairPhone B.V.
  *
  * SPDX-FileCopyrightText: 2025. FairPhone B.V.
  *
@@ -57,6 +57,7 @@ import com.fairphone.spring.launcher.ui.navigation.AllowedAppSettings
 import com.fairphone.spring.launcher.ui.navigation.AllowedContactSettings
 import com.fairphone.spring.launcher.ui.navigation.AppearanceSettings
 import com.fairphone.spring.launcher.ui.navigation.NotificationSettings
+import com.fairphone.spring.launcher.ui.navigation.SoundAndVibrationSettings
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSelector
 import com.fairphone.spring.launcher.ui.navigation.VisibleAppSettings
 import com.fairphone.spring.launcher.ui.theme.Color_FP_Brand_Lime
@@ -80,6 +81,7 @@ fun SettingsTopBar(
             it.hasRoute<NotificationSettings>() -> R.string.setting_title_notification
             it.hasRoute<AllowedAppSettings>() -> R.string.setting_notifications_select_allowed
             it.hasRoute<AppearanceSettings>() -> R.string.setting_title_appearance
+            it.hasRoute<SoundAndVibrationSettings>() -> R.string.setting_title_sound_and_vibration
             else -> null
         }
     }
@@ -186,8 +188,6 @@ fun ActiveProfileLabel(modifier: Modifier = Modifier) {
                 color = MaterialTheme.colorScheme.outline,
                 shape = RoundedCornerShape(size = 100.dp)
             )
-            .width(74.dp)
-            .height(36.dp)
             .padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 8.dp)
     ) {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 FairPhone B.V.
+ * Copyright (C) 2026 FairPhone B.V.
  *
  * SPDX-FileCopyrightText: 2025. FairPhone B.V.
  *
@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Button
@@ -40,8 +42,11 @@ import com.fairphone.spring.launcher.R
 import com.fairphone.spring.launcher.data.model.AppInfo
 import com.fairphone.spring.launcher.data.model.Mock_Profile
 import com.fairphone.spring.launcher.data.model.protos.LauncherProfile
-import com.fairphone.spring.launcher.ui.FP6Preview
-import com.fairphone.spring.launcher.ui.FP6PreviewDark
+import com.fairphone.spring.launcher.data.model.toVO
+import com.fairphone.spring.launcher.ui.PreviewDark
+import com.fairphone.spring.launcher.ui.PreviewDarkAugmentedFont
+import com.fairphone.spring.launcher.ui.PreviewLight
+import com.fairphone.spring.launcher.ui.PreviewLightAugmentedFont
 import com.fairphone.spring.launcher.ui.component.ConfirmDialog
 import com.fairphone.spring.launcher.ui.component.LauncherProfileSettingsTopBar
 import com.fairphone.spring.launcher.ui.component.ProfileNameEditorDialog
@@ -122,6 +127,7 @@ fun ProfileSettingsScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
         ) {
             LauncherProfileSettingsTopBar(
@@ -172,7 +178,10 @@ fun ProfileSettingsScreen(
             ) {
                 SettingListItem(
                     title = stringResource(R.string.setting_title_allowed_contacts),
-                    subtitle = allowedContactSubtitle(profile.allowedContacts, profile.customContactsCount),
+                    subtitle = allowedContactSubtitle(
+                        profile.allowedContacts,
+                        profile.customContactsCount
+                    ),
                     onClick = onNavigateToAllowedContactSettings
                 )
                 // TODO: Hidden for now until more testing on app notifications is done
@@ -201,15 +210,12 @@ fun ProfileSettingsScreen(
 //                    ),
 //                    onClick = onNavigateToAppearanceSettings
 //                )
-//                SettingListItem(
-//                    enabled = false,
-//                    title = stringResource(R.string.setting_title_sound_and_vibration),
-//                    subtitle = stringResource(
-//                        R.string.setting_subtitle_sound_and_vibration,
-//                        contactType
-//                    ),
-//                    onClick = onNavigateToSoundAndVibrationSettings
-//                )
+
+                SettingListItem(
+                    title = stringResource(R.string.setting_title_sound_and_vibration),
+                    subtitle = stringResource(profile.soundSetting.toVO().titleResource),
+                    onClick = onNavigateToSoundAndVibrationSettings
+                )
 //                SettingListItem(
 //                    enabled = false,
 //                    title = stringResource(R.string.setting_title_power_saving),
@@ -299,6 +305,10 @@ fun DeleteModeButton(
 }
 
 @Composable
+@PreviewLight
+@PreviewDark
+@PreviewLightAugmentedFont
+@PreviewDarkAugmentedFont
 fun ProfileSettings_Preview() {
     SpringLauncherTheme {
         ProfileSettingsScreen(
@@ -319,16 +329,4 @@ fun ProfileSettings_Preview() {
             onModeDeletionClick = {}
         )
     }
-}
-
-@Composable
-@FP6Preview()
-fun ProfileSettings_Preview_Light() {
-    ProfileSettings_Preview()
-}
-
-@Composable
-@FP6PreviewDark()
-fun ProfileSettings_Preview_Dark() {
-    ProfileSettings_Preview()
 }

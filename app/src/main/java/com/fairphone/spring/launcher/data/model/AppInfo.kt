@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 FairPhone B.V.
+ * Copyright (C) 2026 FairPhone B.V.
  *
  * SPDX-FileCopyrightText: 2025. FairPhone B.V.
  *
@@ -9,6 +9,8 @@
 package com.fairphone.spring.launcher.data.model
 
 import android.graphics.drawable.Drawable
+import com.fairphone.spring.launcher.data.model.protos.LauncherProfileApp
+import com.fairphone.spring.launcher.data.model.protos.launcherProfileApp
 
 data class AppInfo(
     override val name: String,
@@ -38,4 +40,17 @@ data class AppInfo(
     }
 }
 
+fun AppInfo.toLauncherProfileApp(): LauncherProfileApp {
+    val appInfoPackageName = this.packageName
+    val appInfoIsWorkApp = this.isWorkApp
+
+    return launcherProfileApp {
+        packageName = appInfoPackageName
+        isWorkApp = appInfoIsWorkApp
+    }
+}
+
+/**
+ * Maximum number of apps that can be visible in the launcher.
+ */
 const val LAUNCHER_MAX_APP_COUNT = 5
