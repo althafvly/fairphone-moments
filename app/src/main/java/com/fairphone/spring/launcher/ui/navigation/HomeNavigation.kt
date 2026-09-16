@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,17 +32,19 @@ import androidx.navigation.compose.rememberNavController
 import com.fairphone.spring.launcher.activity.LauncherSettingsActivity
 import com.fairphone.spring.launcher.data.model.colors
 import com.fairphone.spring.launcher.data.prefs.UsageMode
-import com.fairphone.spring.launcher.ui.component.AnimatedBackground
-import com.fairphone.spring.launcher.ui.component.ScreenViewTracker
+import com.fairphone.spring.launcher.ui.component.LauncherBackground
+import com.fairphone.spring.launcher.ui.component.SystemUiController
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreen
 import com.fairphone.spring.launcher.ui.screen.home.HomeScreenViewModel
 import com.fairphone.spring.launcher.ui.screen.mode.creator.CreateModeScreen
 import com.fairphone.spring.launcher.ui.screen.mode.switcher.ModeSwitcherScreen
 import com.fairphone.spring.launcher.ui.screen.mode.switcher.ModeSwitcherViewModel
 import com.fairphone.spring.launcher.ui.screen.onboarding.OnBoardingScreen
+import com.fairphone.spring.launcher.ui.theme.LocalUseDarkTheme
 import com.fairphone.spring.launcher.util.FairphoneWebViewScreen
 import com.fairphone.spring.launcher.util.MOMENTS_DEMO_URL
 import com.fairphone.spring.launcher.util.launchClockApp
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import org.koin.androidx.compose.koinViewModel
 
@@ -69,7 +72,9 @@ fun HomeNavigation(
     showEntryAnimation: Boolean,
     isContentVisible: Boolean
 ) {
-    ScreenViewTracker(navController = navController)
+    val useDarkTheme = LocalUseDarkTheme.current
+    SystemUiController(useDarkIcons = !useDarkTheme)
+
     NavHost(
         navController = navController,
         startDestination = Home,
@@ -103,7 +108,7 @@ fun HomeNavigation(
                     enter = homeEnterTransition,
                     exit = homeExitTransition,
                 ) {
-                    AnimatedBackground(
+                    LauncherBackground(
                         colors = screenState!!.activeProfile.colors(),
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.background)
@@ -157,6 +162,7 @@ fun HomeNavigation(
             val viewModel: ModeSwitcherViewModel = koinViewModel()
             val screenState by viewModel.screenState.collectAsStateWithLifecycle()
             val context = LocalContext.current
+            val coroutineScope = rememberCoroutineScope()
 
             val homeEnterTransition = if (showEntryAnimation) {
                 expandVertically(
@@ -181,7 +187,7 @@ fun HomeNavigation(
                     enter = homeEnterTransition,
                     exit = homeExitTransition,
                 ) {
-                    AnimatedBackground(
+                    LauncherBackground(
                         colors = screenState!!.activeProfile.colors(),
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.background)
@@ -195,8 +201,10 @@ fun HomeNavigation(
                                 LauncherSettingsActivity.start(context)
                             },
                             onModeSelected = {
-                                viewModel.updateActiveProfile(it)
-                                navController.navigateUp()
+                                coroutineScope.launch {
+                                    viewModel.updateActiveProfile(it)
+                                    navController.navigateUp()
+                                }
                             },
                             onCancel = {
                                 navController.navigateUp()
