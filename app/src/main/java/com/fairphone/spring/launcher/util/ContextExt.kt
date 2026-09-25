@@ -10,6 +10,7 @@ package com.fairphone.spring.launcher.util
 
 import android.app.UiModeManager
 import android.app.WallpaperManager
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -138,21 +139,25 @@ fun Context.launchApp(app: AppInfo) {
     }
 }
 
-/**
- * The package name of the Clock app.
- */
-const val PACKAGE_NAME_CLOCK_APP = "com.google.android.deskclock"
+private val CLOCK_APP_PACKAGE_NAMES = listOf(
+    "com.google.android.deskclock",
+    "com.android.deskclock",
+)
 
 /**
- * Starts the Clock app.
+ * Starts the default Clock app.
  */
 fun Context.launchClockApp() {
+    val launchIntent = CLOCK_APP_PACKAGE_NAMES
+        .firstNotNullOfOrNull { packageName ->
+            packageManager.getLaunchIntentForPackage(packageName)
+        } ?: return
+
     try {
-        startActivity(Intent(Intent.ACTION_MAIN).apply {
-            setPackage(PACKAGE_NAME_CLOCK_APP)
-            addCategory(Intent.CATEGORY_LAUNCHER)
-        })
-    } catch (e: Exception) {
+        startActivity(launchIntent)
+    } catch (e: ActivityNotFoundException) {
+        Log.e(javaClass.name, e.message, e)
+    } catch (e: SecurityException) {
         Log.e(javaClass.name, e.message, e)
     }
 }
